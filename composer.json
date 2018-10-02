@@ -49,7 +49,8 @@
         "ceyhunism/yii2-gentellela-crud-template": "dev-master",
         "warrence/yii2-kartikgii": "dev-master",
         "brussens/yii2-maintenance-mode": "*",
-        "kartik-v/yii2-widget-datetimepicker": "dev-master"
+        "kartik-v/yii2-widget-datetimepicker": "dev-master",
+        "kartik-v/yii2-widget-depdrop": "dev-master"
         
     },
     "require-dev": {
