@@ -40,4 +40,5 @@ Thumbs.db
 
 # vagrant runtime
 /.vagrant
+/static
 
