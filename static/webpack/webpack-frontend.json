@@ -1,0 +1,22 @@
+{
+    "sourceDir": "static",
+    "entry": {
+        "main": "./frontend.js"
+    },
+    "commonBundles": [
+        "vendor"
+    ],
+    "externals": {
+        "jquery": "jquery"
+    },
+    "alias": {},
+    "subDirectories": {
+        "sources": "webpack/src",
+        "dist": "dist-frontend"
+    },
+    "assets": {
+        "styles": "css",
+        "scripts": "js"
+    },
+    "catalog": "assets-catalog.json"
+}

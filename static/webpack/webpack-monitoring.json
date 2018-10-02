@@ -1,0 +1,24 @@
+{
+    "sourceDir": "static",
+    "entry": {
+        "app": "./monitoring.js",
+        "vendor": "./monitoring-vendors.js",
+        "client": "./client.js"
+    },
+    "commonBundles": [
+        "vendor"
+    ],
+    "externals": {
+        "jquery": "jQuery"
+    },
+    "alias": {},
+    "subDirectories": {
+        "sources": "webpack/src",
+        "dist": "dist-monitoring"
+    },
+    "assets": {
+        "styles": "css",
+        "scripts": "js"
+    },
+    "catalog": "assets-catalog.json"
+}

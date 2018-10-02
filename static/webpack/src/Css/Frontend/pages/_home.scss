@@ -1,0 +1,566 @@
+@import "./../colors";
+
+// *********************************** Section => video
+
+section#video {
+    height: 100vh;
+    overflow: hidden;
+    position: relative;
+
+    .video-bg {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 120%;
+        height: 100%;
+        overflow: hidden;
+        z-index: -1;
+
+        video.video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            z-index: -100;
+
+            @include transform(translate(-50%, -55%));
+        }
+    }
+
+    i.arrow {
+        position: absolute;
+        display: block;
+        left: 49.3%;
+        bottom: 200px;
+
+        color: #fff;
+        z-index: 9;
+
+        @include transform(translate(-50%, -50%));
+
+        @include animation(bounce 2s infinite);
+    }
+
+    div.overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 2;
+        width: 100%;
+        height: 100%;
+
+        background-color: rgba(8, 87, 119, .6);
+    }
+
+    div.description {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        z-index: 3;
+        color: #fff;
+        width: 80%;
+        text-align: center;
+
+        @include transform(translate(-50%, -50%));
+
+        i.icon-madeinlux {
+            width: 60px;
+            height: 48px;
+            margin: 0 auto;
+            margin-bottom: 20px;
+            margin-top: 20px;
+        }
+
+        span.words {
+            font-size: 40px;
+            font-weight: 700;
+            text-transform: uppercase;
+            display: block;
+
+            span.point {
+                font-weight: 100;
+            }
+        }
+
+        span.intro {
+            font-size: 18px;
+            font-weight: 400;
+            margin-top: 20px;
+            display: block;
+        }
+    }
+
+    svg#waves {
+        position: absolute;
+        bottom: 0;
+        z-index: 3;
+        width: 101%;
+    }
+
+    @media screen and(max-width: 1295px) {
+        div.description {
+            span.words {
+                font-size: 30px;
+            }
+        }
+    }
+
+    @media screen and(max-width: 1100px) {
+        div.description {
+            span.words {
+                font-size: 25px;
+            }
+        }
+    }
+
+    @media screen and(max-width: 960px) {
+        height: 65vh;
+
+        div.description {
+            top: 55%;
+
+            span.words {
+                font-size: 20px;
+            }
+        }
+
+        div.video-bg {
+            background-image: url('/static/images/frontend/bg-people.jpg');
+            background-size: cover;
+        }
+
+        i.arrow,
+        video.video,
+        svg#waves {
+            display: none;
+        }
+    }
+
+    @media screen and(max-width: 800px) {
+        div.description {
+            width: 95%;
+
+            span.words {
+                font-size: 13px;
+            }
+
+            span.intro {
+                font-size: 12px;
+            }
+        }
+    }
+}
+
+// *********************************** Section => graphic
+
+section#graphic {
+    background-color: #fff;
+
+    @media screen and(max-width: 960px) {
+        padding-top: 70px;
+    }
+
+    div.illustration {
+        div.column {
+            width: 200px;
+            height: auto;
+            padding: 10px;
+            margin-bottom: 40px;
+
+            span.number {
+                width: 100px;
+                height: 100px;
+                line-height: 100px;
+                display: block;
+                text-align: center;
+                color: #fff;
+                margin: 0 auto;
+                border-radius: 50%;
+                border: 1px solid $blue;
+                background-color: $blue;
+                font-size: 32px;
+                font-weight: 400;
+
+                @include transition(all .3s ease);
+            }
+
+            &:hover {
+                span.number {
+                    @include transform(scale(1.1));
+                }
+            }
+
+            a {
+                font-size: 11px;
+            }
+
+            span.text {
+                font-size: 12px;
+                color: #262f38;
+                font-weight: 400;
+                width: 100%;
+                height: auto;
+                display: block;
+                text-align: center;
+                margin-top: 15px;
+                line-height: 1.5;
+            }
+        }
+    }
+
+    div.testing {
+        text-align: center;
+
+        h3 {
+            font-size: 16px;
+            font-weight: 400;
+            margin-bottom: 20px;
+        }
+    }
+}
+
+// *********************************** Section => solutions
+
+section#solutions {
+    padding-bottom: 60px;
+    padding-top: 60px;
+    position: relative;
+    overflow: hidden;
+
+    background: bottom fixed url('/static/images/frontend/bg-construction-site.jpg');
+    background-size: cover;
+
+    .overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+
+        width: 100%;
+        height: 100%;
+
+        background-color: rgba(0,0,0, .6);
+    }
+
+    h2 {
+        color: #fff;
+    }
+
+    div.solutions {
+        position: relative;
+        z-index: 4;
+
+        div.column {
+            width: 350px;
+            height: auto;
+            color: #fff;
+            text-align: center;
+            margin-bottom: 60px;
+            padding-right: 30px;
+            padding-left: 30px;
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+
+            h5.title {
+                display: block;
+                font-size: 27px;
+                font-weight: 300;
+                margin-bottom: 20px;
+
+                i {
+                    font-size: 23px;
+                    margin-right: 7px;
+                }
+            }
+
+            span.text {
+                line-height: 1.4;
+                font-weight: 400;
+                font-size: 15px;
+            }
+        }
+    }
+}
+
+// *********************************** Section => consulting
+
+section#consulting {
+    div.consulting {
+        margin-top: 40px;
+
+        div.column {
+            width: 270px;
+            height: auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            margin-bottom: 30px;
+
+            @include box-shadow(0 10px 50px rgba(0, 0, 0, .1));
+            @include transition(all .3s ease);
+
+            &:hover {
+                @include transform(translateY(-8px));
+                @include box-shadow(0 10px 50px rgba(0, 0, 0, .2));
+            }
+
+            span.icon {
+                font-size: 30px;
+                color: $blue;
+                display: block;
+                float: left;
+                width: 50px;
+            }
+
+            span.text {
+                display: block;
+                float: right;
+                font-size: 14px;
+                width: 180px;
+                font-weight: 400;
+                color: #262f38;
+                line-height: 1.5;
+            }
+        }
+
+    }
+
+}
+
+// *********************************** Section => training
+
+section#training {
+    background-color: #f2f2f2;
+    color: #000;
+
+    @media screen and(max-width: 960px) {
+        padding-top: 70px;
+        padding-bottom: 70px;
+    }
+
+    div.intro {
+        color: #262f38;
+    }
+
+    div.text-info {
+        margin-top: 40px;
+        color: #262f38;
+    }
+
+    div.training {
+        div.column {
+            width: 200px;
+            text-align: center;
+            color: #262f38;
+            margin-bottom: 30px;
+
+            span.icon {
+                font-size: 40px;
+                display: block;
+                width: 50px;
+                height: 50px;
+                margin: 0 auto;
+                margin-bottom: 15px;
+            }
+
+            span.title {
+                font-weight: 700;
+                display: block;
+                margin-bottom: 10px;
+                letter-spacing: 1.2px;
+                font-size: 20px;
+            }
+
+            span.text {
+                font-weight: 400;
+                line-height: 1.5;
+                font-size: 14px;
+            }
+        }
+    }
+}
+
+// *********************************** Section => module
+
+section#module {
+    position: relative;
+    height: auto;
+
+    div.infographic {
+        width: 700px;
+        height: 500px;
+        position: absolute;
+        right: 0;
+        top: 8%;
+
+        background: url('/static/images/frontend/infographic.png');
+        background-size: cover;
+
+        @media screen and(max-width: 1500px) {
+            width: 500px;
+            height: 400px;
+            top: 15%;
+        }
+
+        @media screen and(max-width: 1215px) {
+            display: none;
+        }
+    }
+
+    div.elements {
+        width: 740px;
+        float: left;
+        position: relative;
+        z-index: 9;
+
+        @media screen and(max-width: 1215px) {
+            width: 100%;
+            float: none;
+        }
+    }
+
+    nav.module-items {
+        margin-top: 20px;
+
+        ul {
+            @include flexbox();
+
+            li {
+                display: block;
+                margin-bottom: 10px;
+                word-break: break-all;
+                padding: 0px;
+
+                a {
+                    width: 180px;
+                    height: 100px;
+                    padding: 15px;
+                    text-align: center;
+                    display: block;
+                    position: relative;
+                    background-color: #fff;
+                    color: #262f38;
+                    border-radius: 3px;
+                    cursor: default;
+
+                    @include transition(all .5s ease);
+
+                    span.title {
+                        visibility: hidden;
+                        font-size: 12px;
+                        font-weight: 700;
+                        text-transform: uppercase;
+                    }
+
+                    span.text {
+                        visibility: hidden;
+                        font-size: 11px;
+                        font-weight: 400;
+                        display: block;
+                        margin-top: 12px;
+                        letter-spacing: .4px;
+                        line-height: 1.2;
+                    }
+
+                    i {
+                        font-size: 30px;
+                        display: block;
+                        margin: 0 auto;
+                        position: absolute;
+                        top: 50%;
+                        left: 50%;
+
+                        @include transform(translate(-50%, -50%));
+                    }
+
+                    &:hover {
+                        background-color: $blue;
+                        color: #fff;
+
+                        @include box-shadow(0 9px 25px rgba(0,0,0, .05));
+
+                        span {
+                            visibility: visible;
+                        }
+
+                        i {
+                            opacity: .1;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+// *********************************** Section => newsletter
+
+section#newsletter {
+    position: relative;
+    background: bottom fixed url('/static/images/frontend/bg-newsletter.jpg');
+    background-size: cover;
+
+    div.overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+
+        background: rgba(0, 0, 0, 0.5);
+    }
+
+    div.container {
+        position: relative;
+        z-index: 2;
+
+        form {
+            width: 40%;
+            margin: 0 auto;
+            position: relative;
+
+            input[type="email"] {
+                border: none;
+                background-color: $white;
+                padding: 13px;
+                padding-left: 10px;
+                padding-right: 100px;
+                width: 100%;
+                color: #262f38;
+                font-size: 12px;
+                font-weight: 700;
+                border-radius: 2px;
+            }
+
+            input[type="submit"] {
+                padding: 13px;
+                background-color: #262f38;
+                color: #fff;
+                border: 0;
+                font-size: 12px;
+                position: absolute;
+                right: 0;
+                top: 0;
+                cursor: pointer;
+                border-radius: 0 2px 2px 0;
+                text-transform: uppercase;
+
+                &:hover {
+                    opacity: .8;
+                }
+            }
+
+            @media screen and(max-width: 1000px) {
+                width: 80%;
+            }
+        }
+    }
+}
+

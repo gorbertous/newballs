@@ -1,0 +1,332 @@
+@charset "UTF-8";
+
+@import "./../../functions";
+
+// *********************************** General Style
+
+::selection {
+    background-color: #9abccc;
+}
+::-moz-selection {
+    background-color: #9abccc;
+}
+*, *::before, *::after {
+    outline: none;
+
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+@-webkit-keyframes autofill {
+    to {
+        color: #666;
+        background: transparent;
+    }
+}
+input:-webkit-autofill {
+    -webkit-animation-name: autofill;
+    -webkit-animation-fill-mode: both;
+}
+body {
+    background-color: #ecf0f5;
+    font-family: 'Lato', sans-serif, arial, verdana;
+    font-size: 16px;
+    color: #000;
+
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+}
+.clear {
+    clear: both;
+}
+a {
+    text-decoration: none;
+    color: #000;
+}
+a:hover {
+    color: #000;
+}
+.clear-header {
+    height: 100px;
+}
+.margin-height {
+    height: 40px;
+}
+.text-center {
+    text-align: center;
+}
+h1, h2, h3 {
+    font-family: 'Lato', sans-serif, arial, verdana;
+}
+h1 {
+    font-size: 35px;
+}
+h2 {
+    font-size: 30px;
+}
+h3 {
+    font-size: 25px;
+}
+.sep {
+    height: 13px;
+}
+
+$colorGlobal: #3c8dbc;
+
+@import '../components/language-nav';
+
+main#main-content {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+}
+main#main-content:after {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 4px;
+
+    display: block;
+    content: '';
+    z-index: 1;
+
+    background-color: $colorGlobal;
+}
+
+section#login {
+    width: auto;
+    height: auto;
+    margin-top: 50px;
+    position: relative;
+
+    z-index: 9;
+
+    a.logo {
+        width: 110px;
+        height: 110px;
+        display: block;
+        margin: 0 auto;
+        margin-bottom: 20px;
+
+        background-image: url('/static/images/esst-logo-dark.png');
+        background-repeat: no-repeat;
+        background-size: cover;
+
+        @include transition(all .3s ease);
+
+        &:hover {
+            opacity: .7;
+        }
+    }
+
+    h2 {
+        margin-bottom: 30px;
+        color: #111;
+        font-weight: 300;
+        font-size: 20px;
+        text-align: center;
+
+        a {
+            font-weight: bold;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+
+    form.select-form {
+        max-width: 1100px;
+        background-color: #fff;
+        margin: 0 auto;
+        text-align: center;
+        padding: 15px;
+        margin-bottom: 30px;
+        border-radius: 4px;
+
+        @media screen and (max-width: 500px) {
+            width: 96%;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid #f2f2f2;
+            font-weight: 400;
+            font-size: 15px;
+            margin-bottom: 10px;
+            position: relative;
+            border-radius: 5px;
+            padding-left: 40px;
+
+            background-image: url('/static/images/icon-search.png');
+            background-size: 25px;
+            background-position: 10px;
+            background-repeat: no-repeat;
+        }
+
+        ul {
+            li {
+                display: inline-block;
+                margin: 20px;
+
+                a {
+                    display: block;
+                }
+            }
+        }
+
+        .filter-count {
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        button {
+            background-color: transparent;
+            margin: 0;
+            padding: 0;
+            border: 0;
+            cursor: pointer;
+
+            @include transition(all .2s ease);
+
+            &:hover {
+                opacity: .7;
+                @include transform(scale(1.09));
+                @include box-shadow(0 0 30px rgba(0, 0, 0, .1));
+            }
+        }
+
+        .hidden-text {
+            display: none;
+        }
+    }
+
+    form.secondary-form {
+        width: 400px;
+        padding: 20px;
+        background-color: #fff;
+        border-bottom: 5px solid $colorGlobal;
+        margin: 0 auto;
+        margin-bottom: 10px;
+
+        @include box-shadow(0 0 50px rgba(0, 0, 0, .1));
+
+        div.help-block {
+            font-size: 12px;
+            color: #e1655a;
+            margin-top: 2px;
+        }
+
+        span.info-text {
+            font-size: 12px;
+            display: block;
+            margin-top: 10px;
+            color: #111;
+            background-color: #fff;
+            padding: 10px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            color: #111;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        div.field-loginform-recaptcha {
+            margin-top: 15px;
+            margin-bottom: 15px;
+        }
+
+        div.field-loginform-rememberme {
+            width: auto;
+            float: left;
+        }
+
+        span.reset-password {
+            float: right;
+            width: auto;
+
+            a {
+                font-size: 12px;
+                color: #2a6496;
+
+                &:hover {
+                    text-decoration: underline;
+                }
+            }
+        }
+
+        div.alert {
+            padding: 15px;
+            background-color: #f2f2f2;
+            margin-bottom: 20px;
+            font-size: 13px;
+            color: #111;
+            border-radius: 3px;
+        }
+
+        div.pass-wrapper {
+            font-size: 12px;
+            line-height: 1.6;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            background-color: #fff;
+            padding: 12px;
+            width: 100%;
+            border: 1px solid #f2f2f2;
+            margin-bottom: 6px;
+            font-size: 13px;
+            color: #111;
+
+            @include transition(all .4s ease);
+
+            &:focus {
+                border-color: #3c8dbc;
+            }
+        }
+
+        button[type="submit"] {
+            width: 100%;
+            display: block;
+            background-color: $colorGlobal;
+            border: none;
+            padding: 12px 30px 12px 30px;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            cursor: pointer;
+            color: #fff;
+            text-transform: uppercase;
+            font-weight: 700;
+            font-size: 13px;
+            line-height: 1.4;
+
+            @include transition(all .3s ease);
+
+            &:hover {
+                opacity: .7;
+            }
+        }
+
+        @media screen and (max-width: 500px) {
+            width: 90%;
+        }
+    }
+
+    div#settings {
+        width: 400px;
+        margin: 0 auto;
+        margin-bottom: 30px;
+        font-size: 12px;
+
+        @media screen and (max-width: 500px) {
+            width: 90%;
+        }
+    }
+}

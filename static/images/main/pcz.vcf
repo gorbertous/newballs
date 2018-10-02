@@ -1,0 +1,17 @@
+BEGIN:VCARD
+VERSION:3.0
+PRODID:-//Apple Inc.//Mac OS X 10.11.3//EN
+N:Czibula;Peter;;;
+FN:Peter Czibula
+ORG:eSST sàrl;
+TITLE:managing partner
+EMAIL;type=INTERNET;type=pref:Peter.Czibula@format.lu
+TEL;type=WORK;type=FAX;type=pref:+352 46 3683
+TEL;type=WORK;type=VOICE:+352 4 636 841
+TEL;type=CELL;type=VOICE:+352 621 137 441
+ADR;type=WORK;type=pref:;;49\, rue Gabriel Lippmann;Niederanven;;6947;Luxembourg
+item1.URL;type=pref:www.esst.lu
+item1.X-ABLabel:_$!<HomePage>!$_
+CATEGORIES:Contacts
+X-ABUID:25CA8E86-BBAF-440C-B7E4-D67A877BCE5C:ABPerson
+END:VCARD
