@@ -18,7 +18,6 @@ use Yii;
  * @property int $session_id
  * @property int $courts_no
  * @property int $slots_no
- * @property int $is_recurring
  * @property int $recurr_no
  * @property int $created_by
  * @property int $updated_by
@@ -51,8 +50,8 @@ class PlayDates extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['c_id', 'location_id', 'season_id', 'termin_date', 'session_id', 'courts_no', 'slots_no',], 'required'],
-            [['c_id', 'location_id', 'active', 'season_id', 'session_id', 'courts_no', 'slots_no', 'is_recurring', 'recurr_no', 'created_by', 'updated_by', 'created_at', 'updated_at'], 'integer'],
+            [['c_id', 'location_id', 'season_id', 'termin_date', 'session_id', 'courts_no', 'slots_no','recurr_no'], 'required'],
+            [['c_id', 'location_id', 'active', 'season_id', 'session_id', 'courts_no', 'slots_no',  'recurr_no', 'created_by', 'updated_by', 'created_at', 'updated_at'], 'integer'],
             [['termin_date'], 'safe'],
             [['c_id'], 'exist', 'skipOnError' => true, 'targetClass' => Clubs::className(), 'targetAttribute' => ['c_id' => 'c_id']],
             [['location_id'], 'exist', 'skipOnError' => true, 'targetClass' => Location::className(), 'targetAttribute' => ['location_id' => 'location_id']],
@@ -77,7 +76,6 @@ class PlayDates extends \yii\db\ActiveRecord
             'session_id'   => Yii::t('modelattr', 'Duration'),
             'courts_no'    => Yii::t('modelattr', 'Courts No'),
             'slots_no'     => Yii::t('modelattr', 'Slots No'),
-            'is_recurring' => Yii::t('modelattr', 'Is Recurring'),
             'recurr_no'    => Yii::t('modelattr', 'Recurr No'),
                 ]
         );
@@ -115,12 +113,12 @@ class PlayDates extends \yii\db\ActiveRecord
     /**
      * Generate rota for a given date
      */
-    public function generateGamesBoards($termin_id)
+    public function generateGamesBoard($termin_id)
     {
         $playdate = PlayDates::findOne(['termin_id' => $termin_id]);
         $rota = GamesBoard::findOne(['termin_id' => $termin_id]);
 
-        if (empty($rota) & !empty($playdate)) {
+        if (empty($rota) && !empty($playdate)) {
             for ($i = 1; $i <= $playdate->courts_no; $i++) {
                 for ($y = 1; $y <= $playdate->slots_no; $y++) {
                     $newrota = new GamesBoard();
@@ -135,8 +133,43 @@ class PlayDates extends \yii\db\ActiveRecord
                     $newrota->save(false);
                 }
             }
+            if ($playdate->recurr_no > 1) {
+                for ($a = 1; $a <= $playdate->recurr_no; $a++) {
+                    $lastdate = PlayDates::find()->orderBy(['termin_id' => SORT_DESC])->one();
+                    
+                    $date = new \DateTime($lastdate->termin_date); 
+                    $date->add(new \DateInterval('P7D'));
+                    
+                    $recurrdate = new PlayDates();
+                    $recurrdate->c_id = $lastdate->c_id;
+                    $recurrdate->location_id = $lastdate->location_id;
+                    $recurrdate->termin_date = $date->format('Y-m-d H:i:s') ;
+                    $recurrdate->season_id = $lastdate->season_id;
+                    $recurrdate->session_id = $lastdate->session_id;
+                    $recurrdate->courts_no = $lastdate->courts_no;
+                    $recurrdate->slots_no = $lastdate->slots_no;
+                    $recurrdate->save(false);
+                    
+                    for ($i = 1; $i <= $recurrdate->courts_no; $i++) {
+                        for ($y = 1; $y <= $recurrdate->slots_no; $y++) {
+                            $newrecrota = new GamesBoard();
+                            $newrecrota->c_id = $recurrdate->c_id;
+                            $newrecrota->termin_id = $recurrdate->termin_id;
+                            $newrecrota->member_id = 1;
+                            $newrecrota->court_id = $i;
+                            $newrecrota->slot_id = $y;
+                            $newrecrota->status_id = OutcomeStatus::PENDING;
+                            $newrecrota->tokens = 0;
+                            $newrecrota->late = 0;
+                            $newrecrota->save(false);
+                        }
+                    }
+                }
+            }
         }
     }
+
+
 
     /**
      * @return \yii\db\ActiveQuery

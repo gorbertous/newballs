@@ -137,7 +137,7 @@ class PlaydatesController extends Controller
                 $flag = $model->save(false);
 
                 if ($flag) {
-                    $model->generateGamesBoards($model->termin_id);
+                    $model->generateGamesBoard($model->termin_id);
                     $transaction->commit();
                 } else {
                     $transaction->rollBack();

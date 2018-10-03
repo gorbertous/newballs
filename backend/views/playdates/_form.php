@@ -79,10 +79,7 @@ use common\dictionaries\ClubSessions;
                             ]
                     ]);?>
                 </div>
-                <div class="col-xs-2">
-                   <?= $form->hrwCheckboxX($model, 'is_recurring') ?>
-                </div>
-                <div class="col-xs-2">
+                <div class="col-xs-4">
                    <?= $form->hrwTextInputMax($model, 'recurr_no') ?>
                 </div>
             </div>
