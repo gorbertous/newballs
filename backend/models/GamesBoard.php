@@ -1,6 +1,7 @@
 <?php
 
 namespace backend\models;
+use asinfotrack\yii2\audittrail\behaviors\AuditTrailBehavior;
 
 use Yii;
 
@@ -53,22 +54,50 @@ class GamesBoard extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('modelattr', 'ID'),
-            'c_id' => Yii::t('modelattr', 'C ID'),
-            'termin_id' => Yii::t('modelattr', 'Termin ID'),
-            'member_id' => Yii::t('modelattr', 'Member ID'),
-            'court_id' => Yii::t('modelattr', 'Court ID'),
-            'slot_id' => Yii::t('modelattr', 'Slot ID'),
-            'status_id' => Yii::t('modelattr', 'Status ID'),
+            'c_id' => Yii::t('modelattr', 'Club'),
+            'termin_id' => Yii::t('modelattr', 'Date'),
+            'member_id' => Yii::t('modelattr', 'Member'),
+            'court_id' => Yii::t('modelattr', 'Court'),
+            'slot_id' => Yii::t('modelattr', 'Slot'),
+            'status_id' => Yii::t('modelattr', 'Status'),
             'fines' => Yii::t('modelattr', 'Fines'),
             'tokens' => Yii::t('modelattr', 'Tokens'),
             'late' => Yii::t('modelattr', 'Late'),
         ];
     }
+    
+     /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return [
+    	'audittrail'=>[
+    		'class'=>AuditTrailBehavior::className(),
+    		
+    		// some of the optional configurations
+//    		'ignoredAttributes'=>['created_at','updated_at'],
+    		'consoleUserId'=>1, 
+//			'attributeOutput'=>[
+//				'desktop_id'=>function ($value) {
+//					$model = Desktop::findOne($value);
+//					return sprintf('%s %s', $model->manufacturer, $model->device_name);
+//				},
+//				'last_checked'=>'datetime',
+//			],
+    	],
+    ];
+    }
+    
+     public function getTitleSuffix()
+    {
+        return 'Rota';
+    }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getC()
+    public function getClub()
     {
         return $this->hasOne(Clubs::className(), ['c_id' => 'c_id']);
     }

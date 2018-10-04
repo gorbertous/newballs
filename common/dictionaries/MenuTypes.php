@@ -305,11 +305,11 @@ abstract class MenuTypes
 
     /** -- */
 
-    public static function Update_text(): string {
-        return Yii::t('appMenu', 'Update');
+    public static function rotaText(): string {
+        return Yii::t('appMenu', 'Rota');
     }
-    const UPDATE_ICON = 'fa fa-pencil';
-    const UPDATE_ICON_MENU = 'pencil';
+    const ROTA_ICON = 'fa fa-pencil';
+    const ROTA_ICON_MENU = 'pencil';
 
     /** -- */
 

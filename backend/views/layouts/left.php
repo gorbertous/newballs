@@ -80,26 +80,13 @@ if (!Yii::$app->user->isGuest ) { ?>
                                             ],
                                           
                                             [
-                                                'label'   => Menu::translationsText(),
-                                                'icon'    => Menu::TRANSLATIONS_ICON_MENU,
-                                                'url'     => Url::toRoute(['message/index']),
-                                                'active'  => ($route == 'message/index'),
-                                                'visible' => Yii::$app->user->can('team_admin')
-                                            ],
-                                            [
                                                 'label'   => Menu::utilitiesText(),
                                                 'icon'    => Menu::IMPORT_ICON_MENU,
                                                 'url'     => Url::toRoute(['import/index']),
                                                 'active'  => ($route == 'import/index'),
                                                 'visible' => Yii::$app->user->can('team_admin')
                                             ],
-                                            [
-                                                'label'   => Menu::logText(),
-                                                'icon'    => Menu::LOGS_ICON_MENU,
-                                                'url'     => Url::toRoute(['log/index']),
-                                                'active'  => ($route == 'log/index'),
-                                                'visible' => Yii::$app->user->can('team_admin')
-                                            ],
+                                           
                      
                                         ] // items
                                     ],
@@ -113,12 +100,25 @@ if (!Yii::$app->user->isGuest ) { ?>
                                         'visible' => Yii::$app->user->can('team_admin'),
 
                                         'items' => [
-
                                             [
                                                 'label'   => Menu::newsText(),
                                                 'icon'    => Menu::NEWS_ICON_MENU,
                                                 'url'     => Url::toRoute(['news/index']),
                                                 'active'  => ($route == 'news/index' || $route == 'tags/index'),
+                                                'visible' => Yii::$app->user->can('team_admin')
+                                            ],
+                                            [
+                                                'label'   => Menu::playdatesText(),
+                                                'icon'    => Menu::PLAYDATES_ICON_MENU,
+                                                'url'     => Url::toRoute(['playdates/index']),
+//                                                'visible' => $perm->isMenuVisible('texts'),
+                                                'active'  => ($route == 'playdates/index' || $route == 'gamesboard/index')
+                                            ],
+                                            [
+                                                'label'   => Menu::translationsText(),
+                                                'icon'    => Menu::TRANSLATIONS_ICON_MENU,
+                                                'url'     => Url::toRoute(['message/index']),
+                                                'active'  => ($route == 'message/index'),
                                                 'visible' => Yii::$app->user->can('team_admin')
                                             ],
                                             [
@@ -129,14 +129,12 @@ if (!Yii::$app->user->isGuest ) { ?>
                                                 'active'  => ($route == 'texts/index')
                                             ],
                                             [
-                                                'label'   => Menu::playdatesText(),
-                                                'icon'    => Menu::PLAYDATES_ICON_MENU,
-                                                'url'     => Url::toRoute(['playdates/index']),
-//                                                'visible' => $perm->isMenuVisible('texts'),
-                                                'active'  => ($route == 'playdates/index')
+                                                'label'   => Menu::logText(),
+                                                'icon'    => Menu::LOGS_ICON_MENU,
+                                                'url'     => Url::toRoute(['log/index']),
+                                                'active'  => ($route == 'log/index'),
+                                                'visible' => Yii::$app->user->can('team_admin')
                                             ],
-                                            
-                                           
                      
                                         ] // CONTENT
                                     ],

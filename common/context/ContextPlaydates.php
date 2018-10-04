@@ -28,9 +28,9 @@ abstract class ContextPlaydates implements Context
             'ti_icon2' => Menu::PLAYDATES_ICON
         ];
 
-        // Config -> index
+        // Playdates -> index
         $context_array[ContextLetter::PLAYDATES][] = [
-//            'button_title'  => Menu::playdatesText(),
+            'button_title'  => Menu::playdatesText(),
             'new_label'     => Yii::t('appMenu', self::LBL_NEW),
             'mod_label'     => Yii::t('appMenu', self::LBL_MODIFY),
             'view_label'    => Yii::t('appMenu', self::LBL_VIEW),
@@ -40,6 +40,20 @@ abstract class ContextPlaydates implements Context
             'create'        => '/playdates/create',
             'perm_key'      => 'playdates',
             'fa_icon'       => Menu::PLAYDATES_ICON
+        ];
+        
+        // Playdates -> index
+        $context_array[ContextLetter::PLAYDATES][] = [
+            'button_title'  => Menu::rotaText(),
+            'new_label'     => Yii::t('appMenu', self::LBL_NEW),
+            'mod_label'     => Yii::t('appMenu', self::LBL_MODIFY),
+            'view_label'    => Yii::t('appMenu', self::LBL_VIEW),
+            'del_label'     => Yii::t('appMenu', self::LBL_DELETE),
+            'print_label'   => Yii::t('appMenu', self::LBL_PRINT),
+            'link'          => '/gamesboard/index',
+            'create'        => '/gamesboard/create',
+            'perm_key'      => 'gamesboard',
+            'fa_icon'       => Menu::ROTA_ICON
         ];
 
         return $context_array;

@@ -53,6 +53,17 @@ class GamesboardSearch extends GamesBoard
             // $query->where('0=1');
             return $dataProvider;
         }
+        
+        if ($this->tokens != -1) {
+            $query->andFilterWhere([
+                'tokens' => $this->tokens,
+            ]);
+        }
+         if ($this->late != -1) {
+            $query->andFilterWhere([
+                'tokens' => $this->late,
+            ]);
+        }
 
         $query->andFilterWhere([
             'id' => $this->id,
@@ -63,8 +74,6 @@ class GamesboardSearch extends GamesBoard
             'slot_id' => $this->slot_id,
             'status_id' => $this->status_id,
             'fines' => $this->fines,
-            'tokens' => $this->tokens,
-            'late' => $this->late,
         ]);
 
         return $dataProvider;

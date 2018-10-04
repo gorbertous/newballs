@@ -104,7 +104,7 @@ class ClubsController extends Controller
             }
 
             $model->save(false);
-
+            Yii::$app->session->setFlash('success', 'you have successfully published club data!');
             return $this->redirect(Yii::$app->request->referrer);
         } else {
             return $this->renderNormalorAjax('create', [

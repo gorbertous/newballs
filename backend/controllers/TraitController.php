@@ -44,7 +44,7 @@ trait TraitController
      */
     protected function isUserAuthor()
     {
-        return $this->findModel(Yii::$app->request->get('id'))->ID_Contact === $this->getSessionMemberID();
+        return $this->findModel(Yii::$app->request->get('id'))->member_id === $this->getSessionMemberID();
     }
 
     /**
@@ -77,6 +77,9 @@ trait TraitController
         switch ($modelname) {
             case 'Playdates':
                 $modelname = 'PlayDates';
+                break;
+            case 'Gamesboard':
+                $modelname = 'GamesBoard';
                 break;
             case 'Adminusers':
                 $modelname = 'User';
@@ -323,6 +326,10 @@ trait TraitController
             case 'Adminusers':
                 // overwrite with User
                 $contextname = 'Authitem';
+                break;
+            case 'Gamesboard':
+                // overwrite with User
+                $contextname = 'Playdates';
                 break;
         }
 

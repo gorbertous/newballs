@@ -1,77 +1,152 @@
 <?php
 
-use yii\helpers\Html;
-use yiister\gentelella\widgets\Panel;
-use yii\grid\GridView;
+use kartik\grid\GridView;
+use common\helpers\TraitIndex;
+use yii\helpers\ArrayHelper;
+use backend\models\Clubs;
+use common\dictionaries\OutcomeStatus;
 
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\GamesboardSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('modelattr', 'Manage {modelClass}', [
-    'modelClass' => 'Games Boards',
-]);
-$this->params['breadcrumbs'][] = $this->title;
+$this->title = TraitIndex::getTitle($context_array);
+$currentBtn = TraitIndex::getCurrentBtn($context_array);
+
+$redcross = '<i class="text-danger fa fa-times fa-lg" aria-hidden="true"></i>';
+$greencheck = '<i class="text-success fa fa-check fa-lg" aria-hidden="true"></i>';
 ?>
 
-<div class="row">
-    <div class="col-md-12">
+<div class="games-board-index">
 
-        <?php         Panel::begin(
+    <?php $gridColumn = [
+        ['class' => 'yii\grid\SerialColumn'],
+
         [
-        'header' => Html::encode($this->title),
-        'icon' => 'users',
-        ]
-        )
-         ?> 
+            'label'          => 'ID',
+            'attribute'      => 'id',
+            'contentOptions' => ['style' => 'width:20px;'],
+        ],
+        [
+            'attribute'           => 'c_id',
+            'label'               => Yii::t('modelattr', 'Club'),
+            'value'               => 'club.name',
+            'filterType'          => GridView::FILTER_SELECT2,
+            'filter'              => ArrayHelper::map(Clubs::find()
+                ->select(['c_id', 'name'])
+                ->all(), 'c_id', 'name'),
+            'filterWidgetOptions' => [
+                'pluginOptions' => ['allowClear' => true]
+            ],
+            'filterInputOptions'  => ['placeholder' => '', 'id' => 'grid-board-search-ID_Clubs'],
+        ],
+        [
+            'attribute'           => 'termin_id',
+            'label'               => Yii::t('modelattr', 'Date'),
+            'value'               => 'termin.termin_date',
+            'filterType'          => GridView::FILTER_SELECT2,
+            'filter'              => ArrayHelper::map(backend\models\PlayDates::find()
+                ->select(['termin_id', 'termin_date'])
+                ->all(), 'termin_id', 'termin_date'),
+            'filterWidgetOptions' => [
+                'pluginOptions' => ['allowClear' => true]
+            ],
+            'filterInputOptions'  => ['placeholder' => '', 'id' => 'grid-board-search-ID_termin'],
+        ],
+        [
+            'attribute'           => 'member_id',
+            'label'               => Yii::t('modelattr', 'Member'),
+            'value'               => 'member.name',
+            'filterType'          => GridView::FILTER_SELECT2,
+            'filter'              => ArrayHelper::map(backend\models\Members::find()
+                ->select(['member_id', 'firstname', 'lastname'])
+                ->all(), 'member_id', 'name'),
+            'filterWidgetOptions' => [
+                'pluginOptions' => ['allowClear' => true]
+            ],
+            'filterInputOptions'  => ['placeholder' => '', 'id' => 'grid-board-search-ID_member'],
+        ],
+        'court_id',
+        'slot_id',
+        [
+            'attribute'           => 'status_id',
+            'label'               => Yii::t('modelattr', 'Status'),
+            'value' => function($model) {
+                return isset($model->status_id) ? OutcomeStatus::get($model->status_id) : null;
+            },
+            'filterType'          => GridView::FILTER_SELECT2,
+            'filter'              => OutcomeStatus::all(),
+            'filterWidgetOptions' => [
+                'pluginOptions' => ['allowClear' => true]
+            ],
+            'filterInputOptions'  => ['placeholder' => '', 'id' => 'grid-board-search-ID_status'],
+        ],
+//        'fines',
+        [
+            'attribute' => 'tokens',
+            'hAlign'    => GridView::ALIGN_CENTER,
+            'format'    => 'raw',
+            'value'     => function($model)use ($redcross, $greencheck) {
+                if ($model->tokens == 1) {
+                    return $greencheck;
+                } else {
+                    return $redcross;
+                }
+            },
+            'filterType' => GridView::FILTER_SELECT2,
+            'filter'     => [-1 => Yii::t('modelattr', 'All'),
+                0  => Yii::t('modelattr', 'No'),
+                1  => Yii::t('modelattr', 'Yes')],
+            'width'      => '100px;',
+        ],
+        [
+            'attribute' => 'late',
+            'hAlign'    => GridView::ALIGN_CENTER,
+            'format'    => 'raw',
+            'value'     => function($model)use ($redcross, $greencheck) {
+                if ($model->late == 1) {
+                    return $greencheck;
+                } else {
+                    return $redcross;
+                }
+            },
+            'filterType' => GridView::FILTER_SELECT2,
+            'filter'     => [-1 => Yii::t('modelattr', 'All'),
+                0  => Yii::t('modelattr', 'No'),
+                1  => Yii::t('modelattr', 'Yes')],
+            'width'      => '100px;',
+        ],
+        
+        
+    ];
+
+    $gridColumn[] = TraitIndex::getActionColumn(
+        '{view}{update}{delete}',
+        $currentBtn);
 
 
-        <div class="games-board-index">
+    $gridParams = [
+        'dataProvider'        => $dataProvider,
+        'filterModel'         => $searchModel,
+        'columns'             => $gridColumn,
+        // use default panelbefortemplate
+        'panelBeforeTemplate' => null,
+        // your toolbar can include the additional full export menu
+        'toolbar'             => [
+            ['content' =>
+                 TraitIndex::getNewbutton($currentBtn) . ' ' .
+                 TraitIndex::getResetgrida($currentBtn)
+            ],
+        ],
+        'exportdataProvider'  => $dataProvider,
+        'exportcolumns'       => $gridColumn
+    ];
 
+    TraitIndex::echoGridView(
+        $gridParams,
+        $context_array,
+        $currentBtn
+    );
+    ?>
 
-            
-            <div class="container">
-                <div class="box-header with-border">
-                    <div class="pull-left">
-                        <?= Html::a(Yii::t('modelattr', 'Create Games Board'), ['create'], ['class' => 'btn btn-success btn-flat']) ?>
-                    </div>
-                </div>
-            </div>
-
-                            <?= \yiister\gentelella\widgets\grid\GridView::widget([
-                'dataProvider' => $dataProvider,
-                'hover' => true,
-                'filterModel' => $searchModel,
-        'columns' => [
-                //['class' => 'yii\grid\SerialColumn'],
-
-                            'id',
-            'c_id',
-            'termin_id',
-            'member_id',
-            'court_id',
-            // 'slot_id',
-            // 'status_id',
-            // 'fines',
-            // 'tokens',
-            // 'late',
-
-                [
-                'class' => 'yii\grid\ActionColumn',
-                'headerOptions' => ['width' => '70'],
-                'template' => '{view} {update} {delete} {link}',
-                ],
-                ],
-                ]); ?>
-            
-            
-
-        </div>
-
-
-        <?php Panel::end() ?> 
-    </div>
 </div>
-
-
-
