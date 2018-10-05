@@ -19,22 +19,13 @@ $greencheck = '<i class="text-success fa fa-check fa-lg" aria-hidden="true"></i>
     <?php $gridColumn = [
         ['class' => 'yii\grid\SerialColumn'],
 
-//        [
-//            'label'          => Yii::t('modelattr', 'Photo'),
-//            'format'         => 'raw',
-//            'contentOptions' => ['style' => 'width:90px;'],
-//            'value'          => function ($model) {
-//                /* @var $model \backend\models\Mandants */
-//                return $model->getIconPreviewAsHtml('ajaxfileinputPhoto', 60);
-//            }
-//        ],
         [
-            'label'          => Yii::t('modelattr', 'Gravatar'),
+            'label'          => Yii::t('modelattr', 'Photo'),
             'format'         => 'raw',
             'contentOptions' => ['style' => 'width:90px;'],
             'value'          => function ($model) {
                 $gravatar = isset($model->user->email) ? $model->getGravatar($model->user->email) : null;
-                return $gravatar;
+                return !empty($model->photo) ? $model->getIconPreviewAsHtml('ajaxfileinputPhoto', 60) : $gravatar;
             }
         ],
         [

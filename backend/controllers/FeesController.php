@@ -6,25 +6,53 @@ use Yii;
 use backend\models\Fees;
 use backend\models\FeesSearch;
 use yii\web\Controller;
-use yii\web\NotFoundHttpException;
+use yii\filters\AccessControl;
+use common\helpers\Errorhandler as Errorhandler;
 use yii\filters\VerbFilter;
+use common\dictionaries\ContextLetter;
 
 /**
  * FeesController implements the CRUD actions for Fees model.
  */
 class FeesController extends Controller
 {
+    use TraitController;
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function init()
+    {
+        parent::init();
+        $this->setSessionContext(ContextLetter::CLUBS);
+    }
+    
+     /**
+     * {@inheritdoc}
+     */
     public function behaviors()
     {
         return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
+            'access' => [
+                'class' => AccessControl::class,
+                'rules' => [
+                    [
+                        'controllers' => ['fees'],
+                        'actions'     => [],
+                        'allow'       => true,
+                        'roles'       => ['developer'],
+                    ],
+                ],
+            ],
+            'verbs'  => [
+                'class'   => VerbFilter::class,
                 'actions' => [
                     'delete' => ['post'],
                 ],
             ],
         ];
     }
+
 
     /**
      * Lists all Fees models.
@@ -38,6 +66,7 @@ class FeesController extends Controller
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'context_array' => $this->getSpecificContextArray()
         ]);
     }
 
@@ -48,8 +77,8 @@ class FeesController extends Controller
      */
     public function actionView($id)
     {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
+        return $this->renderNormalorAjax('view', [
+                    'model' => $this->findModel($id)
         ]);
     }
 
@@ -58,20 +87,28 @@ class FeesController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
+    
+     public function actionCreate()
     {
         $model = new Fees();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            $this->set_session('success', 'Məlumat əlavə edildi');
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+
+            $valid = $model->validate();
+
+            if (!$valid) {
+                $this->getBaseMsg($model->errors);
+            }
+
+            $model->save(false);
+
+            return $this->redirect(Yii::$app->request->referrer);
         } else {
-            return $this->render('create', [
-                'model' => $model,
+            return $this->renderNormalorAjax('create', [
+                        'model' => $model
             ]);
         }
     }
-
     /**
      * Updates an existing Fees model.
      * If update is successful, the browser will be redirected to the 'view' page.
@@ -80,14 +117,24 @@ class FeesController extends Controller
      */
     public function actionUpdate($id)
     {
+        /** @var $model \backend\models\base\Fees */
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            $this->set_session('info', 'Məlumat uğurla yeniləndi');
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+
+
+            $valid = $model->validate();
+
+            if (!$valid) {
+                $this->getBaseMsg($model->errors);
+            }
+
+            $model->save(false);
+
+            return $this->redirect(Yii::$app->request->referrer);
         } else {
-            return $this->render('update', [
-                'model' => $model,
+            return $this->renderNormalorAjax('update', [
+                        'model' => $model
             ]);
         }
     }
@@ -100,24 +147,16 @@ class FeesController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
-        $this->set_session('error', 'Məlumat silindi');
-        return $this->redirect(['index']);
-    }
+        $model = $this->findModel($id);
 
-    /**
-     * Finds the Fees model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return Fees the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    protected function findModel($id)
-    {
-        if (($model = Fees::findOne($id)) !== null) {
-            return $model;
-        } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
+        $modelbackup = $model;
+
+        try {
+            $model->delete();
+        } catch (\Exception $ex) {
+            \Yii::$app->getSession()->setFlash('error', Errorhandler::getRelatedData($model));
         }
+
+        return $this->redirect(Yii::$app->request->referrer);
     }
 }

@@ -3,6 +3,7 @@
 namespace backend\models;
 
 use Yii;
+use asinfotrack\yii2\audittrail\behaviors\AuditTrailBehavior;
 
 /**
  * This is the model class for table "reserves".
@@ -18,6 +19,7 @@ use Yii;
  */
 class Reserves extends \yii\db\ActiveRecord
 {
+
     /**
      * {@inheritdoc}
      */
@@ -45,17 +47,44 @@ class Reserves extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('modelattr', 'ID'),
-            'member_id' => Yii::t('modelattr', 'Member ID'),
-            'termin_id' => Yii::t('modelattr', 'Termin ID'),
-            'c_id' => Yii::t('modelattr', 'C ID'),
+            'id'        => Yii::t('modelattr', 'ID'),
+            'member_id' => Yii::t('modelattr', 'Member'),
+            'termin_id' => Yii::t('modelattr', 'Date'),
+            'c_id'      => Yii::t('modelattr', 'Club'),
         ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return [
+            'audittrail' => [
+                'class'         => AuditTrailBehavior::className(),
+                // some of the optional configurations
+//    		'ignoredAttributes'=>['created_at','updated_at'],
+                'consoleUserId' => 1,
+//			'attributeOutput'=>[
+//				'desktop_id'=>function ($value) {
+//					$model = Desktop::findOne($value);
+//					return sprintf('%s %s', $model->manufacturer, $model->device_name);
+//				},
+//				'last_checked'=>'datetime',
+//			],
+            ],
+        ];
+    }
+
+    public function getTitleSuffix()
+    {
+        return 'Reserves';
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getC()
+    public function getClub()
     {
         return $this->hasOne(Clubs::className(), ['c_id' => 'c_id']);
     }
@@ -84,4 +113,5 @@ class Reserves extends \yii\db\ActiveRecord
     {
         return new ReservesQuery(get_called_class());
     }
+
 }

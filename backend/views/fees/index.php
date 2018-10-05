@@ -1,71 +1,83 @@
 <?php
 
-use yii\helpers\Html;
-use yiister\gentelella\widgets\Panel;
-use yii\grid\GridView;
+use kartik\grid\GridView;
+use common\helpers\TraitIndex;
+use yii\helpers\ArrayHelper;
+use backend\models\Clubs;
 
 /* @var $this yii\web\View */
-/* @var $searchModel backend\models\FeesSearch */
+/* @var $searchModel backend\models\ReservesSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('modelattr', 'Manage {modelClass}', [
-    'modelClass' => 'Fees',
-]);
-$this->params['breadcrumbs'][] = $this->title;
+$this->title = TraitIndex::getTitle($context_array);
+$currentBtn = TraitIndex::getCurrentBtn($context_array);
 ?>
 
-<div class="row">
-    <div class="col-md-12">
+<div class="fees-index">
 
-        <?php         Panel::begin(
+    <?php $gridColumn = [
+        ['class' => 'yii\grid\SerialColumn'],
+
         [
-        'header' => Html::encode($this->title),
-        'icon' => 'users',
-        ]
-        )
-         ?> 
+            'label'          => 'ID',
+            'attribute'      => 'id',
+            'contentOptions' => ['style' => 'width:20px;'],
+        ],
+        [
+            'attribute'           => 'c_id',
+            'label'               => Yii::t('modelattr', 'Club'),
+            'value'               => 'club.name',
+            'filterType'          => GridView::FILTER_SELECT2,
+            'filter'              => ArrayHelper::map(Clubs::find()
+                ->select(['c_id', 'name'])
+                ->all(), 'c_id', 'name'),
+            'filterWidgetOptions' => [
+                'pluginOptions' => ['allowClear' => true]
+            ],
+            'filterInputOptions'  => ['placeholder' => '', 'id' => 'grid-board-search-ID_Clubs'],
+        ],
+        [
+            'attribute'           => 'mem_type_id',
+            'label'               => Yii::t('modelattr', 'Membership Type'),
+            'value'               => 'memType.nameFB',
+            'filterType'          => GridView::FILTER_SELECT2,
+            'filter'              => ArrayHelper::map(backend\models\MembershipType::find()
+                ->all(), 'mem_type_id', 'nameFB'),
+            'filterWidgetOptions' => [
+                'pluginOptions' => ['allowClear' => true]
+            ],
+            'filterInputOptions'  => ['placeholder' => '', 'id' => 'grid-board-search-ID_termin'],
+        ],
+        'mem_fee'
+    ];
+
+    $gridColumn[] = TraitIndex::getActionColumn(
+        '{view}{update}{delete}',
+        $currentBtn);
 
 
-        <div class="fees-index">
+    $gridParams = [
+        'dataProvider'        => $dataProvider,
+        'filterModel'         => $searchModel,
+        'columns'             => $gridColumn,
+        // use default panelbefortemplate
+        'panelBeforeTemplate' => null,
+        // your toolbar can include the additional full export menu
+        'toolbar'             => [
+            ['content' =>
+                 TraitIndex::getNewbutton($currentBtn) . ' ' .
+                 TraitIndex::getResetgrida($currentBtn)
+            ],
+        ],
+        'exportdataProvider'  => $dataProvider,
+        'exportcolumns'       => $gridColumn
+    ];
 
+    TraitIndex::echoGridView(
+        $gridParams,
+        $context_array,
+        $currentBtn
+    );
+    ?>
 
-            
-            <div class="container">
-                <div class="box-header with-border">
-                    <div class="pull-left">
-                        <?= Html::a(Yii::t('modelattr', 'Create Fees'), ['create'], ['class' => 'btn btn-success btn-flat']) ?>
-                    </div>
-                </div>
-            </div>
-
-                            <?= \yiister\gentelella\widgets\grid\GridView::widget([
-                'dataProvider' => $dataProvider,
-                'hover' => true,
-                'filterModel' => $searchModel,
-        'columns' => [
-                //['class' => 'yii\grid\SerialColumn'],
-
-                            'id',
-            'c_id',
-            'mem_type_id',
-            'mem_fee',
-
-                [
-                'class' => 'yii\grid\ActionColumn',
-                'headerOptions' => ['width' => '70'],
-                'template' => '{view} {update} {delete} {link}',
-                ],
-                ],
-                ]); ?>
-            
-            
-
-        </div>
-
-
-        <?php Panel::end() ?> 
-    </div>
 </div>
-
-
-

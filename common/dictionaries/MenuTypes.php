@@ -193,19 +193,19 @@ abstract class MenuTypes
     
     /** -- */
 
-    public static function SafetyRegister_text(): string {
-        return Yii::t('appMenu', 'Safety Register');
+    public static function memtypeText(): string {
+        return Yii::t('appMenu', 'Membership Types');
     }
-    const SAFETYREGISTER_ICON = 'fa fa-book';
-    const SAFETYREGISTER_ICON_MENU = 'book';
+    const MEMTYPE_ICON = 'fa fa-book';
+    const MEMTYPE_ICON_MENU = 'book';
 
     /** -- */
 
-    public static function TechnicalInstallations_text(): string {
-        return Yii::t('appMenu', 'Technical installations');
+    public static function locationsText(): string {
+        return Yii::t('appMenu', 'Locations');
     }
-    const TECHNICALINSTALLATIONS_ICON = 'fa fa-building';
-    const TECHNICALINSTALLATIONS_ICON_MENU = 'building';
+    const LOCATIONS_ICON = 'fa fa-building';
+    const LOCATIONS_ICON_MENU = 'building';
 
     /** -- */
 
@@ -257,11 +257,11 @@ abstract class MenuTypes
 
     /** -- */
 
-    public static function Ppe_text(): string {
-        return Yii::t('appMenu', 'Ppe');
+    public static function feesText(): string {
+        return Yii::t('appMenu', 'Fees');
     }
-    const PPE_ICON = 'fa fa-shield';
-    const PPE_ICON_MENU = 'shield';
+    const FEES_ICON = 'fa fa-shield';
+    const FEES_ICON_MENU = 'shield';
 
     /** -- */
 
@@ -322,19 +322,19 @@ abstract class MenuTypes
    
     /** -- */
 
-    public static function Actual_text(): string {
-        return Yii::t('appMenu', 'Actual status');
+    public static function reservesText(): string {
+        return Yii::t('appMenu', 'Reserves');
     }
-    const ACTUAL_ICON = 'fa fa-clock-o';
-    const ACTUAL_ICON_MENU = 'clock-o';
+    const RESERVES_ICON = 'fa fa-clock-o';
+    const RESERVES_ICON_MENU = 'clock-o';
 
     /** -- */
 
-    public static function History_text(): string {
-        return Yii::t('appMenu', 'History');
+    public static function scoresText(): string {
+        return Yii::t('appMenu', 'Scores');
     }
-    const HISTORY_ICON = 'fa fa-history';
-    const HISTORY_ICON_MENU = 'history';
+    const SCORES_ICON = 'fa fa-history';
+    const SCORES_ICON_MENU = 'history';
 
     /** -- */
 

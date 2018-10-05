@@ -4,8 +4,6 @@ use backend\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
 use common\helpers\Helpers;
 use backend\models\Clubs;
-use kartik\widgets\DateTimePicker;
-
 use common\dictionaries\OutcomeStatus;
 
 
@@ -98,8 +96,4 @@ use common\dictionaries\OutcomeStatus;
 
     <div class="clearfix"></div>
 </div>
-
-
-
-<?php
 

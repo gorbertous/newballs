@@ -16,8 +16,9 @@ use common\dictionaries\ContextLetter;
  */
 class GamesboardController extends Controller
 {
+
     use TraitController;
-    
+
     /**
      * {@inheritdoc}
      */
@@ -27,8 +28,7 @@ class GamesboardController extends Controller
         $this->setSessionContext(ContextLetter::PLAYDATES);
     }
 
-    
-   /**
+    /**
      * {@inheritdoc}
      */
     public function behaviors()
@@ -66,9 +66,9 @@ class GamesboardController extends Controller
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-            'context_array' => $this->getSpecificContextArray()
+                    'searchModel'   => $searchModel,
+                    'dataProvider'  => $dataProvider,
+                    'context_array' => $this->getSpecificContextArray()
         ]);
     }
 
@@ -77,7 +77,7 @@ class GamesboardController extends Controller
      * @param integer $id
      * @return mixed
      */
-     public function actionView($id)
+    public function actionView($id)
     {
         return $this->renderNormalorAjax('view', [
                     'model' => $this->findModel($id)
@@ -110,17 +110,16 @@ class GamesboardController extends Controller
             ]);
         }
     }
-   
+
     /**
      * Updates an existing GamesBoard model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
      */
-  
     public function actionUpdate($id)
     {
-        /** @var $model \backend\models\base\Clubs */
+        /** @var $model \backend\models\base\GamesBoard */
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post())) {
@@ -148,9 +147,7 @@ class GamesboardController extends Controller
      * @param integer $id
      * @return mixed
      */
-    
-    
-     public function actionDelete($id)
+    public function actionDelete($id)
     {
         $model = $this->findModel($id);
 

@@ -25,11 +25,11 @@ abstract class ContextClubs implements Context
         // CLUBS -> index
         $context_array[ContextLetter::CLUBS][] = [
             'button_title' => Menu::clubsText(),
-            'new_label'     => Yii::t('appMenu', 'New club'),
-            'mod_label'     => Yii::t('appMenu', 'Modify club data'),
-            'view_label'    => Yii::t('appMenu', 'View club data'),
-            'print_label'   => Yii::t('appMenu', 'Print club data'),
-            'del_label'     => Yii::t('appMenu', 'Delete club data'),
+            'new_label'     => Yii::t('appMenu', self::LBL_NEW),
+            'mod_label'     => Yii::t('appMenu', self::LBL_MODIFY),
+            'view_label'    => Yii::t('appMenu', self::LBL_VIEW),
+            'del_label'     => Yii::t('appMenu', self::LBL_DELETE),
+            'print_label'   => Yii::t('appMenu', self::LBL_PRINT),
             'link'          => '/clubs/index',
             'create'        => '/clubs/create',
             'perm_key'      => 'clubs',
@@ -38,17 +38,46 @@ abstract class ContextClubs implements Context
         
          // Lcations -> index
         $context_array[ContextLetter::CLUBS][] = [
-            'button_title'     => Yii::t('appMenu', 'Locations'),
-            'new_label'     => Yii::t('appMenu', 'New location'),
-            'mod_label'     => Yii::t('appMenu', 'Modify location data'),
-            'view_label'    => Yii::t('appMenu', 'View location data'),
-            'print_label'   => Yii::t('appMenu', 'Print location data'),
-            'del_label'     => Yii::t('appMenu', 'Delete location data'),
+            'button_title'     => Menu::locationsText(),
+            'new_label'     => Yii::t('appMenu', self::LBL_NEW),
+            'mod_label'     => Yii::t('appMenu', self::LBL_MODIFY),
+            'view_label'    => Yii::t('appMenu', self::LBL_VIEW),
+            'del_label'     => Yii::t('appMenu', self::LBL_DELETE),
+            'print_label'   => Yii::t('appMenu', self::LBL_PRINT),
             'link'          => '/location/index',
             'create'        => '/location/create',
             'perm_key'      => 'location',
-            'fa_icon'      => 'fa fa-sitemap'
+            'fa_icon'      => Menu::LOCATIONS_ICON
         ];
+        
+         // Fees -> index
+        $context_array[ContextLetter::CLUBS][] = [
+            'button_title'     => Menu::feesText(),
+            'new_label'     => Yii::t('appMenu', self::LBL_NEW),
+            'mod_label'     => Yii::t('appMenu', self::LBL_MODIFY),
+            'view_label'    => Yii::t('appMenu', self::LBL_VIEW),
+            'del_label'     => Yii::t('appMenu', self::LBL_DELETE),
+            'print_label'   => Yii::t('appMenu', self::LBL_PRINT),
+            'link'          => '/fees/index',
+            'create'        => '/fees/create',
+            'perm_key'      => 'fees',
+            'fa_icon'      => Menu::FEES_ICON
+        ];
+        
+         // Membership types -> index
+        $context_array[ContextLetter::CLUBS][] = [
+            'button_title'     => Menu::memtypeText(),
+            'new_label'     => Yii::t('appMenu', self::LBL_NEW),
+            'mod_label'     => Yii::t('appMenu', self::LBL_MODIFY),
+            'view_label'    => Yii::t('appMenu', self::LBL_VIEW),
+            'del_label'     => Yii::t('appMenu', self::LBL_DELETE),
+            'print_label'   => Yii::t('appMenu', self::LBL_PRINT),
+            'link'          => '/membershiptype/index',
+            'create'        => '/membershiptype/create',
+            'perm_key'      => 'membershiptype',
+            'fa_icon'      => Menu::MEMTYPE_ICON
+        ];
+
 
         return $context_array;
     }

@@ -3,21 +3,21 @@
 namespace backend\controllers;
 
 use Yii;
-use backend\models\Scores;
-use backend\models\ScoresSearch;
+use backend\models\MembershipType;
+use backend\models\MembershipTypeSearch;
 use yii\web\Controller;
-use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use common\helpers\Errorhandler as Errorhandler;
+use yii\filters\VerbFilter;
 use common\dictionaries\ContextLetter;
 
 /**
- * ScoresController implements the CRUD actions for Scores model.
+ * MembershiptypeController implements the CRUD actions for MembershipType model.
  */
-class ScoresController extends Controller
+class MembershiptypeController extends Controller
 {
     use TraitController;
-    
+
     /**
      * {@inheritdoc}
      */
@@ -30,14 +30,14 @@ class ScoresController extends Controller
     /**
      * {@inheritdoc}
      */
-   public function behaviors()
+    public function behaviors()
     {
         return [
             'access' => [
                 'class' => AccessControl::class,
                 'rules' => [
                     [
-                        'controllers' => ['scores'],
+                        'controllers' => ['membershiptype'],
                         'actions'     => [],
                         'allow'       => true,
                         'roles'       => ['developer'],
@@ -53,14 +53,13 @@ class ScoresController extends Controller
         ];
     }
 
-
     /**
-     * Lists all Scores models.
+     * Lists all MembershipType models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new ScoresSearch();
+        $searchModel = new MembershipTypeSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -71,7 +70,7 @@ class ScoresController extends Controller
     }
 
     /**
-     * Displays a single Scores model.
+     * Displays a single MembershipType model.
      * @param integer $id
      * @return mixed
      */
@@ -83,13 +82,13 @@ class ScoresController extends Controller
     }
 
     /**
-     * Creates a new Scores model.
+     * Creates a new MembershipType model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Scores();
+        $model = new MembershipType();
 
         if ($model->load(Yii::$app->request->post())) {
 
@@ -110,7 +109,7 @@ class ScoresController extends Controller
     }
 
     /**
-     * Updates an existing Scores model.
+     * Updates an existing MembershipType model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -139,7 +138,7 @@ class ScoresController extends Controller
     }
 
     /**
-     * Deletes an existing Scores model.
+     * Deletes an existing MembershipType model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -158,5 +157,5 @@ class ScoresController extends Controller
 
         return $this->redirect(Yii::$app->request->referrer);
     }
-    
+
 }

@@ -6,15 +6,17 @@ use common\helpers\Helpers;
 use backend\models\Clubs;
 
 /* @var $this yii\web\View */
-/* @var $model backend\models\Fees */
+/* @var $model backend\models\MembershipType */
 /* @var $form backend\widgets\ActiveForm */
+
+$alllang = Yii::$app->contLang->languages;
 ?>
 
-<div class="fees-form">
+<div class="membership-type-form">
 
     <?php
     $form = ActiveForm::begin([
-                'id'      => 'form-fees',
+                'id'      => 'membership-type-form',
                 'options' => [
                     'enctype' => 'multipart/form-data'
                 ]
@@ -22,7 +24,7 @@ use backend\models\Clubs;
     ?>
 
     <ul class="nav nav-pills" id="tabContent">
-        <li class="active"><a href="#fees" data-toggle="tab"><?= Yii::t('modelattr', 'Fees') ?></a></li>
+        <li class="active"><a href="#fees" data-toggle="tab"><?= Yii::t('modelattr', 'Membership Types') ?></a></li>
 
         <!-- Audit tab  -->
         <?= Helpers::getAuditTab() ?>
@@ -49,12 +51,17 @@ use backend\models\Clubs;
                     ])
                     ?>
                 </div>
-            </div>      
-            <div class="row"> 
-                <div class="col-xs-6">
-                   <?= $form->hrwTextInputMax($model, 'mem_fee') ?>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <?php
+                    foreach ($alllang as $iso) {
+                        echo $form->hrwTextInputMax($model, 'name_'.$iso);
+                    }
+                    ?>
                 </div>
             </div>
+            
         </div>
       
         <!-- Audit tab content -->

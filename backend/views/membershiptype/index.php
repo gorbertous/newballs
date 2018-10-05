@@ -3,54 +3,43 @@
 use kartik\grid\GridView;
 use common\helpers\TraitIndex;
 use yii\helpers\ArrayHelper;
+use backend\models\Clubs;
 
 /* @var $this yii\web\View */
-/* @var $searchModel backend\models\ScoresSearch */
+/* @var $searchModel backend\models\MembershipTypesSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = TraitIndex::getTitle($context_array);
 $currentBtn = TraitIndex::getCurrentBtn($context_array);
 ?>
 
-<div class="reserves-index">
+<div class="fees-index">
 
     <?php $gridColumn = [
         ['class' => 'yii\grid\SerialColumn'],
 
         [
             'label'          => 'ID',
-            'attribute'      => 'score_id',
+            'attribute'      => 'mem_type_id',
             'contentOptions' => ['style' => 'width:20px;'],
         ],
         [
-            'attribute'           => 'termin_id',
-            'label'               => Yii::t('modelattr', 'Date'),
-            'value'               => 'termin.termin_date',
+            'attribute'           => 'c_id',
+            'label'               => Yii::t('modelattr', 'Club'),
+            'value'               => 'club.name',
             'filterType'          => GridView::FILTER_SELECT2,
-            'filter'              => ArrayHelper::map(backend\models\PlayDates::find()
-                ->select(['termin_id', 'termin_date'])
-                ->all(), 'termin_id', 'termin_date'),
+            'filter'              => ArrayHelper::map(Clubs::find()
+                ->select(['c_id', 'name'])
+                ->all(), 'c_id', 'name'),
             'filterWidgetOptions' => [
                 'pluginOptions' => ['allowClear' => true]
             ],
-            'filterInputOptions'  => ['placeholder' => '', 'id' => 'grid-board-search-ID_termin'],
+            'filterInputOptions'  => ['placeholder' => '', 'id' => 'grid-board-search-ID_Clubs'],
         ],
-        'court_id',
-        'set_one',
-        'set_two',
-        'set_three',
-        'set_four',
-        'set_five',
-        [
-            'attribute'     => 'createUserName',
-            'enableSorting' => false,
-            'format'        => 'raw'
-        ],
-        [
-            'attribute'     => 'updateUserName',
-            'enableSorting' => false,
-            'format'        => 'raw'
-        ],
+        'name_EN',
+        'name_FR',
+        'name_DE',
+        
     ];
 
     $gridColumn[] = TraitIndex::getActionColumn(

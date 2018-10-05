@@ -6,19 +6,47 @@ use Yii;
 use backend\models\Reserves;
 use backend\models\ReservesSearch;
 use yii\web\Controller;
-use yii\web\NotFoundHttpException;
+use yii\filters\AccessControl;
+use common\helpers\Errorhandler as Errorhandler;
 use yii\filters\VerbFilter;
+use common\dictionaries\ContextLetter;
 
 /**
  * ReservesController implements the CRUD actions for Reserves model.
  */
 class ReservesController extends Controller
 {
+
+    use TraitController;
+
+    /**
+     * {@inheritdoc}
+     */
+    public function init()
+    {
+        parent::init();
+        $this->setSessionContext(ContextLetter::PLAYDATES);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function behaviors()
     {
         return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
+            'access' => [
+                'class' => AccessControl::class,
+                'rules' => [
+                    [
+                        'controllers' => ['reserves'],
+                        'actions'     => [],
+                        'allow'       => true,
+                        'roles'       => ['developer'],
+                    ],
+                ],
+            ],
+            'verbs'  => [
+                'class'   => VerbFilter::class,
                 'actions' => [
                     'delete' => ['post'],
                 ],
@@ -36,8 +64,9 @@ class ReservesController extends Controller
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
+                    'searchModel'   => $searchModel,
+                    'dataProvider'  => $dataProvider,
+                    'context_array' => $this->getSpecificContextArray()
         ]);
     }
 
@@ -48,8 +77,8 @@ class ReservesController extends Controller
      */
     public function actionView($id)
     {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
+        return $this->renderNormalorAjax('view', [
+                    'model' => $this->findModel($id)
         ]);
     }
 
@@ -62,12 +91,20 @@ class ReservesController extends Controller
     {
         $model = new Reserves();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            $this->set_session('success', 'Məlumat əlavə edildi');
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+
+            $valid = $model->validate();
+
+            if (!$valid) {
+                $this->getBaseMsg($model->errors);
+            }
+
+            $model->save(false);
+
+            return $this->redirect(Yii::$app->request->referrer);
         } else {
-            return $this->render('create', [
-                'model' => $model,
+            return $this->renderNormalorAjax('create', [
+                        'model' => $model
             ]);
         }
     }
@@ -80,14 +117,24 @@ class ReservesController extends Controller
      */
     public function actionUpdate($id)
     {
+        /** @var $model \backend\models\base\Reserves */
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            $this->set_session('info', 'Məlumat uğurla yeniləndi');
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+
+
+            $valid = $model->validate();
+
+            if (!$valid) {
+                $this->getBaseMsg($model->errors);
+            }
+
+            $model->save(false);
+
+            return $this->redirect(Yii::$app->request->referrer);
         } else {
-            return $this->render('update', [
-                'model' => $model,
+            return $this->renderNormalorAjax('update', [
+                        'model' => $model
             ]);
         }
     }
@@ -100,24 +147,17 @@ class ReservesController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
-        $this->set_session('error', 'Məlumat silindi');
-        return $this->redirect(['index']);
+        $model = $this->findModel($id);
+
+        $modelbackup = $model;
+
+        try {
+            $model->delete();
+        } catch (\Exception $ex) {
+            \Yii::$app->getSession()->setFlash('error', Errorhandler::getRelatedData($model));
+        }
+
+        return $this->redirect(Yii::$app->request->referrer);
     }
 
-    /**
-     * Finds the Reserves model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return Reserves the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    protected function findModel($id)
-    {
-        if (($model = Reserves::findOne($id)) !== null) {
-            return $model;
-        } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
-        }
-    }
 }

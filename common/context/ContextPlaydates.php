@@ -42,7 +42,7 @@ abstract class ContextPlaydates implements Context
             'fa_icon'       => Menu::PLAYDATES_ICON
         ];
         
-        // Playdates -> index
+        // Rota -> index
         $context_array[ContextLetter::PLAYDATES][] = [
             'button_title'  => Menu::rotaText(),
             'new_label'     => Yii::t('appMenu', self::LBL_NEW),
@@ -54,6 +54,34 @@ abstract class ContextPlaydates implements Context
             'create'        => '/gamesboard/create',
             'perm_key'      => 'gamesboard',
             'fa_icon'       => Menu::ROTA_ICON
+        ];
+        
+        // Reserves -> index
+        $context_array[ContextLetter::PLAYDATES][] = [
+            'button_title'  => Menu::reservesText(),
+            'new_label'     => Yii::t('appMenu', self::LBL_NEW),
+            'mod_label'     => Yii::t('appMenu', self::LBL_MODIFY),
+            'view_label'    => Yii::t('appMenu', self::LBL_VIEW),
+            'del_label'     => Yii::t('appMenu', self::LBL_DELETE),
+            'print_label'   => Yii::t('appMenu', self::LBL_PRINT),
+            'link'          => '/reserves/index',
+            'create'        => '/reserves/create',
+            'perm_key'      => 'reserves',
+            'fa_icon'       => Menu::RESERVES_ICON
+        ];
+        
+         // Scores -> index
+        $context_array[ContextLetter::PLAYDATES][] = [
+            'button_title'  => Menu::scoresText(),
+            'new_label'     => Yii::t('appMenu', self::LBL_NEW),
+            'mod_label'     => Yii::t('appMenu', self::LBL_MODIFY),
+            'view_label'    => Yii::t('appMenu', self::LBL_VIEW),
+            'del_label'     => Yii::t('appMenu', self::LBL_DELETE),
+            'print_label'   => Yii::t('appMenu', self::LBL_PRINT),
+            'link'          => '/scores/index',
+            'create'        => '/scores/create',
+            'perm_key'      => 'scores',
+            'fa_icon'       => Menu::SCORES_ICON
         ];
 
         return $context_array;

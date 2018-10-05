@@ -3,39 +3,39 @@
 namespace common\components;
 
 use Yii;
-use backend\models\Mandants;
-use backend\models\Contacts;
+use backend\models\Clubs;
+use backend\models\Members;
 
 class User extends \yii\web\User
 {
     /**
-     * Returns the Mandant data
-     * depending on which Mandant the user is connected
+     * Returns the Club data
+     * depending on which club the user is connected
      *
-     * { Example: Yii::$app->user->mandant->ID_Mandant; }
+     * { Example: Yii::$app->user->club->club_id; }
      *
-     * @return Mandants|null
+     * @return Clubs|null
      */
-    public function getMandant()
+    public function getClub()
     {
-        if (!Yii::$app->user->isGuest && Yii::$app->session->get('mandant_id') !== null) {
-            return Mandants::findOne(['ID_Mandant' => Yii::$app->session->get('mandant_id')]);
+        if (!Yii::$app->user->isGuest && Yii::$app->session->get('club_id') !== null) {
+            return Clubs::findOne(['club_id' => Yii::$app->session->get('club_id')]);
         }
         return null;
     }
 
     /**
-     * Returns the data from the Contacts table
+     * Returns the data from the Members table
      * based on the current connected user
      *
-     * { Example: Yii::$app->user->contact->Firstname; }
+     * { Example: Yii::$app->user->member->firstname; }
      *
-     * @return Contacts|null
+     * @return Members|null
      */
-    public function getContact()
+    public function getMember()
     {
         if (!Yii::$app->user->isGuest) {
-            return Contacts::findOne(['ID_User' => Yii::$app->user->id]);
+            return Members::findOne(['user_id' => Yii::$app->user->id]);
         }
         return null;
     }

@@ -1,71 +1,97 @@
 <?php
 
-use yii\helpers\Html;
-use yiister\gentelella\widgets\Panel;
-use yii\grid\GridView;
+use kartik\grid\GridView;
+use common\helpers\TraitIndex;
+use yii\helpers\ArrayHelper;
+use backend\models\Clubs;
 
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\ReservesSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('modelattr', 'Manage {modelClass}', [
-    'modelClass' => 'Reserves',
-]);
-$this->params['breadcrumbs'][] = $this->title;
+$this->title = TraitIndex::getTitle($context_array);
+$currentBtn = TraitIndex::getCurrentBtn($context_array);
 ?>
 
-<div class="row">
-    <div class="col-md-12">
+<div class="reserves-index">
 
-        <?php         Panel::begin(
+    <?php $gridColumn = [
+        ['class' => 'yii\grid\SerialColumn'],
+
         [
-        'header' => Html::encode($this->title),
-        'icon' => 'users',
-        ]
-        )
-         ?> 
+            'label'          => 'ID',
+            'attribute'      => 'id',
+            'contentOptions' => ['style' => 'width:20px;'],
+        ],
+        [
+            'attribute'           => 'c_id',
+            'label'               => Yii::t('modelattr', 'Club'),
+            'value'               => 'club.name',
+            'filterType'          => GridView::FILTER_SELECT2,
+            'filter'              => ArrayHelper::map(Clubs::find()
+                ->select(['c_id', 'name'])
+                ->all(), 'c_id', 'name'),
+            'filterWidgetOptions' => [
+                'pluginOptions' => ['allowClear' => true]
+            ],
+            'filterInputOptions'  => ['placeholder' => '', 'id' => 'grid-board-search-ID_Clubs'],
+        ],
+        [
+            'attribute'           => 'termin_id',
+            'label'               => Yii::t('modelattr', 'Date'),
+            'value'               => 'termin.termin_date',
+            'filterType'          => GridView::FILTER_SELECT2,
+            'filter'              => ArrayHelper::map(backend\models\PlayDates::find()
+                ->select(['termin_id', 'termin_date'])
+                ->all(), 'termin_id', 'termin_date'),
+            'filterWidgetOptions' => [
+                'pluginOptions' => ['allowClear' => true]
+            ],
+            'filterInputOptions'  => ['placeholder' => '', 'id' => 'grid-board-search-ID_termin'],
+        ],
+        [
+            'attribute'           => 'member_id',
+            'label'               => Yii::t('modelattr', 'Member'),
+            'value'               => 'member.name',
+            'filterType'          => GridView::FILTER_SELECT2,
+            'filter'              => ArrayHelper::map(backend\models\Members::find()
+                ->select(['member_id', 'firstname', 'lastname'])
+                ->all(), 'member_id', 'name'),
+            'filterWidgetOptions' => [
+                'pluginOptions' => ['allowClear' => true]
+            ],
+            'filterInputOptions'  => ['placeholder' => '', 'id' => 'grid-board-search-ID_member'],
+        ],
+    ];
+
+    $gridColumn[] = TraitIndex::getActionColumn(
+        '{view}{update}{delete}',
+        $currentBtn);
 
 
-        <div class="reserves-index">
+    $gridParams = [
+        'dataProvider'        => $dataProvider,
+        'filterModel'         => $searchModel,
+        'columns'             => $gridColumn,
+        // use default panelbefortemplate
+        'panelBeforeTemplate' => null,
+        // your toolbar can include the additional full export menu
+        'toolbar'             => [
+            ['content' =>
+                 TraitIndex::getNewbutton($currentBtn) . ' ' .
+                 TraitIndex::getResetgrida($currentBtn)
+            ],
+        ],
+        'exportdataProvider'  => $dataProvider,
+        'exportcolumns'       => $gridColumn
+    ];
 
+    TraitIndex::echoGridView(
+        $gridParams,
+        $context_array,
+        $currentBtn
+    );
+    ?>
 
-            
-            <div class="container">
-                <div class="box-header with-border">
-                    <div class="pull-left">
-                        <?= Html::a(Yii::t('modelattr', 'Create Reserves'), ['create'], ['class' => 'btn btn-success btn-flat']) ?>
-                    </div>
-                </div>
-            </div>
-
-                            <?= \yiister\gentelella\widgets\grid\GridView::widget([
-                'dataProvider' => $dataProvider,
-                'hover' => true,
-                'filterModel' => $searchModel,
-        'columns' => [
-                //['class' => 'yii\grid\SerialColumn'],
-
-                            'id',
-            'member_id',
-            'termin_id',
-            'c_id',
-
-                [
-                'class' => 'yii\grid\ActionColumn',
-                'headerOptions' => ['width' => '70'],
-                'template' => '{view} {update} {delete} {link}',
-                ],
-                ],
-                ]); ?>
-            
-            
-
-        </div>
-
-
-        <?php Panel::end() ?> 
-    </div>
 </div>
-
-
 

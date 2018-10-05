@@ -3,6 +3,7 @@
 namespace backend\models;
 
 use Yii;
+use asinfotrack\yii2\audittrail\behaviors\AuditTrailBehavior;
 
 /**
  * This is the model class for table "fees".
@@ -45,16 +46,43 @@ class Fees extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('modelattr', 'ID'),
-            'c_id' => Yii::t('modelattr', 'C ID'),
-            'mem_type_id' => Yii::t('modelattr', 'Mem Type ID'),
-            'mem_fee' => Yii::t('modelattr', 'Mem Fee'),
+            'c_id' => Yii::t('modelattr', 'Club'),
+            'mem_type_id' => Yii::t('modelattr', 'Membership Type'),
+            'mem_fee' => Yii::t('modelattr', 'Fee'),
         ];
+    }
+    
+     /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return [
+            'audittrail' => [
+                'class'         => AuditTrailBehavior::className(),
+                // some of the optional configurations
+//    		'ignoredAttributes'=>['created_at','updated_at'],
+                'consoleUserId' => 1,
+//			'attributeOutput'=>[
+//				'desktop_id'=>function ($value) {
+//					$model = Desktop::findOne($value);
+//					return sprintf('%s %s', $model->manufacturer, $model->device_name);
+//				},
+//				'last_checked'=>'datetime',
+//			],
+            ],
+        ];
+    }
+    
+    public function getTitleSuffix()
+    {
+        return 'Fees';
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getC()
+    public function getClub()
     {
         return $this->hasOne(Clubs::className(), ['c_id' => 'c_id']);
     }

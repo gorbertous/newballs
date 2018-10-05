@@ -155,30 +155,6 @@ class PlaydatesController extends Controller
         }
     }
 
-//    public function actionCreate()
-//    {
-//        $model = new PlayDates();
-//        $model->active = 1;
-//        //$model->season_id = $model->club->season_id;
-//
-//        if ($model->load(Yii::$app->request->post())) {
-//
-//            $valid = $model->validate();
-//
-//            if (!$valid) {
-//                $this->getBaseMsg($model->errors);
-//            }
-//
-//            $model->save(false);
-//            Yii::$app->session->setFlash('success', 'you have successfully added new play date!');
-//            return $this->redirect(Yii::$app->request->referrer);
-//        } else {
-//            return $this->renderNormalorAjax('create', [
-//                        'model' => $model
-//            ]);
-//        }
-//    }
-
     /**
      * Updates an existing PlayDates model.
      * If update is successful, the browser will be redirected to the 'view' page.
@@ -187,7 +163,7 @@ class PlaydatesController extends Controller
      */
     public function actionUpdate($id)
     {
-        /** @var $model \backend\models\base\News */
+        /** @var $model \backend\models\base\PlayDates */
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post())) {

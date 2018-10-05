@@ -81,6 +81,9 @@ trait TraitController
             case 'Gamesboard':
                 $modelname = 'GamesBoard';
                 break;
+            case 'Membershiptype':
+                $modelname = 'MembershipType';
+                break;
             case 'Adminusers':
                 $modelname = 'User';
                 break;
@@ -316,6 +319,8 @@ trait TraitController
                 $contextname = 'News';
                 break;
             case 'Location':
+            case 'Fees':
+            case 'Membershiptype':
                 // overwrite with clubs
                 $contextname = 'Clubs';
                 break;
@@ -328,6 +333,8 @@ trait TraitController
                 $contextname = 'Authitem';
                 break;
             case 'Gamesboard':
+            case 'Reserves':
+            case 'Scores':
                 // overwrite with User
                 $contextname = 'Playdates';
                 break;
