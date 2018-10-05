@@ -111,9 +111,6 @@ class SiteController extends Controller
             $session->set('member_photo', $member->photo);
             $session->set('member_name', $member->name);
            
-            // additional language setup
-            // list of all available languages for this mandant
-            
             $session->set('club_languages', Yii::$app->contLang->defaultClubLanguages);
           
             $this->redirect('/admin/index');

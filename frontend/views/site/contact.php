@@ -6,7 +6,7 @@
 
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
-use Da\User\Widget\ReCaptchaWidget;
+
 
 $this->title = 'Contact';
 $this->params['breadcrumbs'][] = $this->title;
@@ -15,7 +15,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        If you have business inquiries or other questions, please fill out the following form to contact us. Thank you.
+        If you have any questions, please fill out the following form to contact us. Thank you.
     </p>
 
     <div class="row">
@@ -29,8 +29,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?= $form->field($model, 'subject') ?>
 
                 <?= $form->field($model, 'body')->textarea(['rows' => 6]) ?>
-
-                <?= $form->field($model, 'captcha')->widget(ReCaptchaWidget::className(), ['theme' => 'dark']) ?>
+                
+                <?= $form->field($model, 'captcha')->widget(\himiklab\yii2\recaptcha\ReCaptcha::class); ?>
 
                 <div class="form-group">
                     <?= Html::submitButton('Submit', ['class' => 'btn btn-primary', 'name' => 'contact-button']) ?>

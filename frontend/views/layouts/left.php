@@ -8,25 +8,35 @@ use yii\helpers\Html;
 
 $route = $this->context->route;
 
+if (!empty(Yii::$app->session->get('member_photo'))) {
+    $profileThumb90 = '@uploadsURL/profile-thumbs/90x90-' . Yii::$app->session->get('member_photo');
+    $profileThumb25 = '@uploadsURL/profile-thumbs/25x25-' . Yii::$app->session->get('member_photo');
+} else {
+    $profileThumb90 = '/static/images/profile-default90x90.png';
+    $profileThumb25 = '/static/images/profile-default25x25.png';
+}
+
 
 if (!Yii::$app->user->isGuest ) { ?>
      <div class="col-md-3 left_col">
             <div class="left_col scroll-view">
 
                 <div class="navbar nav_title" style="border: 0;">
-                    <a href="/" class="site_title"><i class="fa fa-paw"></i> <span>Balls Tennis</span></a>
+                    <a href="/admin" class="site_title"><i class="fa fa-paw"></i> <span><?= Html::encode(Yii::$app->user->member->club->name); ?></span></a>
+                    
                 </div>
                 <div class="clearfix"></div>
 
                 <!-- menu profile quick info -->
                 <div class="profile">
                     <div class="profile_pic">
-                        <img src="http://placehold.it/128x128" alt="..." class="img-circle profile_img">
+                        <?= Html::img($profileThumb90, ['class' => 'img-circle profile_img', 'alt' => Html::encode(Yii::$app->user->identity->username)]); ?>
+                        
                     </div>
                     <div class="profile_info">
                         <span>Welcome,</span>
                        
-                         <h2><?= StringHelper::truncate(Html::encode(Yii::$app->user->identity->username), 20); ?></h2>
+                         <h2><?= StringHelper::truncate(Html::encode(Yii::$app->user->member->name), 20); ?></h2>
                     </div>
                 </div>
                 <!-- /menu prile quick info -->
@@ -43,17 +53,65 @@ if (!Yii::$app->user->isGuest ) { ?>
                             [
 //                                'encodeLabels' => false,
                                 "items" => [
-                                    ["label" => "Home", "url" => "/admin/index", "icon" => "home"],
+                                    ["label" => "Home", "url" => "/dashboard/index", "icon" => "home"],
                                     
-                                     // MENU => UTILITIES
+                                    
+                                     // MENU => Admin
 
                                     [
-                                        'label'   => Menu::utilitiesText(),
-                                        'icon'    => Menu::UTILITIES_ICON_MENU,
+                                        'label'   =>  Menu::adminText(),
+                                        'icon'    => Menu::ADMIN_ICON_MENU,
                                         'url'     => '#',
-//                                        'visible' => Yii::$app->user->can('admin'),
+                                        'visible' => Yii::$app->user->can('team_admin'),
 
                                         'items' => [
+
+                                            [
+                                                'label'   => Menu::clubsText(),
+                                                'icon'    => Menu::CLUBS_ICON_MENU,
+                                                'url'     => Url::toRoute(['clubs/index']),
+                                                'active'  => ($route == 'clubs/index' || $route == 'location/index' || $route == 'fees/index' || $route == 'membershiptype/index'),
+                                                'visible' => Yii::$app->user->can('team_admin')
+                                            ],
+                                           
+                                            
+                                            [
+                                                'label'   => Menu::membersText(),
+                                                'icon'    => Menu::MEMBERS_ICON_MENU,
+                                                'url'     => Url::toRoute(['members/index']),
+                                                'active'  => ($route == 'members/index'),
+                                                'visible' => Yii::$app->user->can('team_admin')
+                                            ],
+                                          
+                                           
+                     
+                                        ] // items
+                                    ],
+                                    
+                                     // MENU => CONTENT
+
+                                    [
+                                        'label'   =>  Yii::t('appMenu', 'Content'),
+                                        'icon'    => Menu::ADMIN_ICON_MENU,
+                                        'url'     => '#',
+                                        'visible' => Yii::$app->user->can('team_admin'),
+
+                                        'items' => [
+                                            [
+                                                'label'   => Menu::newsText(),
+                                                'icon'    => Menu::NEWS_ICON_MENU,
+                                                'url'     => Url::toRoute(['news/index']),
+                                                'active'  => ($route == 'news/index' || $route == 'tags/index'),
+                                                'visible' => Yii::$app->user->can('team_admin')
+                                            ],
+                                            [
+                                                'label'   => Menu::playdatesText(),
+                                                'icon'    => Menu::PLAYDATES_ICON_MENU,
+                                                'url'     => Url::toRoute(['playdates/index']),
+//                                                'visible' => $perm->isMenuVisible('texts'),
+                                                'active'  => ($route == 'playdates/index' || $route == 'gamesboard/index' || $route == 'reserves/index' || $route == 'scores/index')
+                                            ],
+                                          
                                             [
                                                 'label'   => Menu::textblocksText(),
                                                 'icon'    => Menu::TEXTBLOCKS_ICON_MENU,
@@ -61,82 +119,11 @@ if (!Yii::$app->user->isGuest ) { ?>
 //                                                'visible' => $perm->isMenuVisible('texts'),
                                                 'active'  => ($route == 'texts/index')
                                             ],
-                                            [
-                                                'label'   => Menu::playdatesText(),
-                                                'icon'    => Menu::PLAYDATES_ICON_MENU,
-                                                'url'     => Url::toRoute(['config/index']),
-//                                                'visible' => $perm->isMenuVisible('config'),
-                                                'active'  => ($route == 'config/index')
-                                            ],
-                                           
-                                        ] // items
-                                        
-                                    ],
-                                     // MENU => Admin
-
-                                    [
-                                        'label'   =>  Menu::adminText(),
-                                        'icon'    => Menu::ADMIN_ICON_MENU,
-                                        'url'     => '#',
-//                                        'visible' => Yii::$app->user->can('team_admin'),
-
-                                        'items' => [
-                                            [
-                                                'label'   => 'Mandants',
-                                                'icon'    => Menu::COMPANY_ICON_MENU,
-                                                'url'     => Url::toRoute(['adminmandants/index']),
-                                                'active'  => ($route == 'adminmandants/index'),
-//                                                'visible' => Yii::$app->user->can('team_admin')
-                                            ],
-                                            [
-                                                'label'   => Menu::adminusersText(),
-                                                'icon'    => Menu::ADMINRBAC_ICON_MENU,
-                                                'url'     => Url::toRoute(['adminusers/index']),
-                                                'active'  => ($route == 'authitem/index') || $route == 'adminusers/index' || $route == 'authitem/indexp',
-//                                                'visible' => Yii::$app->user->can('team_admin')
-                                            ],
-                                            [
-                                                'label'   => Menu::translationsText(),
-                                                'icon'    => Menu::TRANSLATIONS_ICON_MENU,
-                                                'url'     => Url::toRoute(['message/index']),
-                                                'active'  => ($route == 'message/index'),
-//                                                'visible' => Yii::$app->user->can('team_admin')
-                                            ],
-//                                            [
-//                                                'label'   => Menu::Import_text(),
-//                                                'icon'    => Menu::IMPORT_ICON_MENU,
-//                                                'url'     => Url::toRoute(['import/index']),
-//                                                'active'  => ($route == 'import/index'),
-////                                                'visible' => Yii::$app->user->can('team_admin')
-//                                            ],
+                                          
                      
-                                        ] // items
+                                        ] // CONTENT
                                     ],
-
-                                    [
-                                        "label" => "Badges",
-                                        "url" => "#",
-                                        "icon" => "table",
-                                        "items" => [
-                                            [
-                                                "label" => "Default",
-                                                "url" => "#",
-                                                "badge" => "123",
-                                            ],
-                                            [
-                                                "label" => "Success",
-                                                "url" => "#",
-                                                "badge" => "new",
-                                                "badgeOptions" => ["class" => "label-success"],
-                                            ],
-                                            [
-                                                "label" => "Danger",
-                                                "url" => "#",
-                                                "badge" => "!",
-                                                "badgeOptions" => ["class" => "label-danger"],
-                                            ],
-                                        ],
-                                    ],
+                                   
                                     
                                 ],
                             ]

@@ -4,17 +4,13 @@ use yii\helpers\Html;
 use yii\helpers\StringHelper;
 use yii\helpers\Url;
 
-//if (!empty(Yii::$app->session->get('contact_photo'))) {
-//    $profileThumb90 = '@uploadsURL/profile-thumbs/90x90-' . Yii::$app->session->get('contact_photo');
-//    $profileThumb25 = '@uploadsURL/profile-thumbs/25x25-' . Yii::$app->session->get('contact_photo');
-//} else {
-//    $profileThumb90 = '/static/images/profile-default90x90.png';
-//    $profileThumb25 = '/static/images/profile-default25x25.png';
-//}
-
-$profileThumb90 = '@web/img/profile-default90x90.png';
-$profileThumb25 = '@web/img/profile-default25x25.png';
-
+if (!empty(Yii::$app->session->get('member_photo'))) {
+    $profileThumb90 = '@uploadsURL/profile-thumbs/90x90-' . Yii::$app->session->get('member_photo');
+    $profileThumb25 = '@uploadsURL/profile-thumbs/25x25-' . Yii::$app->session->get('member_photo');
+} else {
+    $profileThumb90 = '/static/images/profile-default90x90.png';
+    $profileThumb25 = '/static/images/profile-default25x25.png';
+}
 ?>
 
 <!-- top navigation -->
@@ -29,22 +25,30 @@ $profileThumb25 = '@web/img/profile-default25x25.png';
             <ul class="nav navbar-nav navbar-right">
                 <li class="">
                     <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                        <?= Html::img($profileThumb25, ['class' => 'user-image', 'alt' => StringHelper::truncate(Html::encode(Yii::$app->user->identity->username), 2)]); ?>
-                        <span class=" fa fa-angle-down"></span>
+                        <?= Html::img($profileThumb25, ['class' => 'user-image', 'alt' => StringHelper::truncate(Html::encode(Yii::$app->user->identity->username), 2)]) ; ?>
+                        <span class="hidden-xs">
+                            <strong><?= StringHelper::truncate(Html::encode(Yii::$app->user->identity->username), 20); ?></strong>
+                            &nbsp;&nbsp;
+                            <span class="caret" style="border-width: 5px;"></span>
+                        </span>
                     </a>
                     <ul class="dropdown-menu dropdown-usermenu pull-right">
-                        <li><a href="javascript:;">  Profile</a>
+                        <li>
+                            <a href="<?= Url::toRoute(['members/update', 'id' => Yii::$app->user->member->member_id]); ?>">
+                            <span class="badge bg-red pull-right">50%</span>
+                            <?= Yii::t('app', 'Profile'); ?></a>
+                            
                         </li>
                         <li>
-                            <a href="javascript:;">
-                                <span class="badge bg-red pull-right">50%</span>
-                                <span>Settings</span>
-                            </a>
+                            <a href="<?= Url::toRoute(['user/update', 'id' => Yii::$app->user->identity->id]); ?>">
+                           <?= Yii::t('app', 'Account'); ?></a>
+                          
                         </li>
                         <li>
                             <a href="javascript:;">Help</a>
                         </li>
-                        <li><a href="login.html"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
+                        <li>
+                            <a href="<?= Url::toRoute(['site/logout']); ?>"><i class="fa fa-sign-out pull-right"></i> <?= Yii::t('app', 'Logout'); ?></a>
                         </li>
                     </ul>
                 </li>

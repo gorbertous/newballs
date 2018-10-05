@@ -10,8 +10,8 @@ use yii\filters\AccessControl;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use common\models\LoginForm;
-use frontend\models\Contacts;
-use frontend\models\Mandants;
+use backend\models\Members;
+use backend\models\Clubs;
 use frontend\models\AccountActivation;
 use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
@@ -95,10 +95,10 @@ class SiteController extends Controller
             $model = new LoginForm();
 
             if ($model->load(Yii::$app->request->post()) && $model->login()) {
-                return $this->redirect('/frontend/select');
+                return $this->redirect('/select');
             }
             elseif ($model->accountSuspended()) {
-                Yii::$app->session->setFlash('danger', Yii::t('app', 'Your account was suspended due to many login attempts, please enter in contact with us.'));
+                Yii::$app->session->setFlash('danger', Yii::t('app', 'Your account was suspended due to many login attempts, please enter in member with us.'));
             }
             elseif ($model->accountNotActivated()) {
                 Yii::$app->session->setFlash('danger', Yii::t('app', 'You have to activate your account first. Please check your email.'));
@@ -109,7 +109,7 @@ class SiteController extends Controller
             ]);
         }
 
-        return $this->redirect('/frontend/select');
+        return $this->redirect('/select');
     }
     
      /**
@@ -122,69 +122,69 @@ class SiteController extends Controller
         }
 
         // default layout is the public web site
-        $this->layout = 'main-client';
+        $this->layout = 'select-layout';
 
         // get mandants list to which this user has access
         $user_id = Yii::$app->user->id;
 
         if (Yii::$app->user->can('team_member')) {
-            // user is eSST team member, he has access to all the mandants
-            $mandants = Mandants::find()
-                ->orderBy('Mandants.Name')
+            // user is club team member, he has access to all the mandants
+            $clubs = Clubs::find()
+                ->orderBy('name')
                 ->all();
         } else {
 
-            // user is not eSST team member, maybe he is managing multiple
-            // mandants as defined in the jMandantUser table
-            $mandants = Mandants::find()
-                ->innerJoinWith('jMandantUsers')
-                ->where(['ID_User' => $user_id])
-                ->orderBy('Mandants.Name')
+            // user is not club team member, maybe he is managing multiple
+            // clubs as defined in the jClubUsers table
+            $clubs = Clubs::find()
+                ->innerJoinWith('jClubUsers')
+                ->where(['user_id' => $user_id])
+                ->orderBy('clubs.name')
                 ->all();
 
-            if (empty($mandants)) {
+            if (empty($clubs)) {
                 // user is not consultant and is not managing multiple mandants
-                // give him access to the mandant defined in the contacts table
-                $contact = Contacts::find()
-                    ->where(['ID_User' => $user_id])
+                // give him access to the club defined in the members table
+                $member = Members::find()
+                    ->where(['user_id' => $user_id])
                     ->one();
-                if (!empty($contact)) {
-                    $mandants = Mandants::find()
-                        ->where(['ID_Mandant' => $contact->ID_Mandant])
+                if (!empty($member)) {
+                    $clubs = Clubs::find()
+                        ->where(['c_id' => $member->c_id])
                         ->all();
                 }
             }
 
         }
 
-        $mandant_ids = ArrayHelper::getColumn($mandants, 'ID_Mandant');
+        $club_ids = ArrayHelper::getColumn($clubs, 'c_id');
 
-        if (isset($_POST['mandant'])) {
+        if (isset($_POST['club'])) {
 
-            $selected_id = (int)$_POST['mandant'];
+            $selected_id = (int)$_POST['club'];
             // select form has been submitted
-            if ($selected_id == -1 || !in_array($selected_id, $mandant_ids)) {
+            if ($selected_id == -1 || !in_array($selected_id, $club_ids)) {
                 // user pressed the cancel button
                 // render the normal login form
-                $this->redirect('/backend/login');
+                $this->redirect('/login');
             } else {
-                // user selected a particular mandant to work on
+                // user selected a particular club to work on
                 $this->actionSetupSession($selected_id);
             }
 
         } else {
             // select form needs to be drawn
-            if (empty($mandants)) {
-                // something is wrong because we should always have at least one mandant 
+            if (empty($clubs)) {
+                // something is wrong because we should always have at least one club 
                 Yii::$app->user->logout();
-                Yii::$app->session->setFlash('danger', Yii::t('app', 'Your account has not been setup correctly, please contact the site administrator for help'));
+                Yii::$app->session->setFlash('danger', Yii::t('app', 'Your account has not been setup correctly, please member the site administrator for help'));
                 $this->goHome();
             }
 
-            if (count($mandants) == 1) {
-                $this->actionSetupSession($mandants[0]->ID_Mandant);
+            if (count($clubs) == 1) {
+                $this->actionSetupSession($clubs[0]->c_id);
             } else {
-                return $this->render('select', ['model' => $mandants]);
+                return $this->render('select', ['model' => $clubs]);
             }
         }
 
@@ -192,74 +192,40 @@ class SiteController extends Controller
     }
 
     /**
-     * @param int $mandant_id
+     * @param int $c_id
      */
-    public function actionSetupSession($mandant_id)
+    public function actionSetupSession($c_id)
     {
         session_regenerate_id();
-        $mandant = Mandants::findOne($mandant_id);
+        $club = Clubs::findOne($c_id);
 
         // set up some additional session variables to be used in the header avoiding db queries
         // we don't use Yii::$app->user->identity->id
         $user_id = Yii::$app->user->id;
-        $contact = Contacts::find()
-            ->where(['ID_User' => $user_id])
+        $member = Members::find()
+            ->where(['user_id' => $user_id])
             ->one();
         $session = Yii::$app->session;
 
-        if (isset($contact)) {
+        if (isset($member)) {
             $session->set('user_id', $user_id);
             // save often used variables in the session
-            // contact data
-            $session->set('contact_id', $contact->ID_Contact);
-            $session->set('contact_photo', $contact->Photo);
-            $session->set('contact_name', $contact->Name);
-            // mandant data
-            $session->set('mandant_id', $mandant_id);
-            $session->set('mandant_name', $mandant->Name);
-            $session->set('ispublic', $mandant->IsPublic);
-            // multi employer data
-            $session->set('multiemp', $mandant->Multiemployer);
-            // use field permissions
-            $session->set('fieldpermissions', $mandant->Fieldpermissions);
-            // additional language setup
-            // list of all available languages for this mandant
-            if (empty($mandant->ContLanguages)) {
-                // assign default values
-                $session->set('club_languages', Yii::$app->contLang->defaultClubLanguages);
-            } else {
-                $session->set('club_languages', explode('.', $mandant->ContLanguages));
-            }
-            // set our superfilter
-            $session->set('Filter_worker_status', 1);
-
-            //member role case
-            if (!Yii::$app->user->can('writer')) {
-                $session->set('Filter_workers_ids', [$contact->ID_Contact]);
-            } else {
-                $session->set('Filter_workers_ids', []);
-            }
-            $session->set('Filter_workunits_ids', []);
-            $session->set('Filter_locations_ids', []);
-            $session->set('Filter_employers_ids', []);
-            $session->set('Filter_trainings_ids', []);
-            $session->set('Filter_all_workers_ids', []);
-            $session->set('Filter_object_groups_ids', []);
-            $session->set('Filter_object_types_ids', []);
-            $session->set('Filter_count', 1);
-            if ($session->get('fieldpermissions')) {
-                // make sure default permissions are set for at least:
-                // - current userrole
-                // - all $menu$ items as defined in permission config
-                /* @var $perm \common\components\Permissions */
-                $perm = Yii::$app->permissions;
-                $perm->checkAndSetMenuPermissions();
-            }
-            $this->redirect('/backend/dashboard/index');
+            // member data
+            $session->set('member_id', $member->member_id);
+            $session->set('member_photo', $member->photo);
+            $session->set('member_name', $member->name);
+            // club data
+            $session->set('c_id', $c_id);
+            $session->set('club_name', $club->name);
+            
+            
+            $session->set('club_languages', Yii::$app->contLang->defaultClubLanguages);
+           
+            $this->redirect('/gamesboard/index');
         } else {
             //fail user cannot proceed - missing data
             Yii::$app->user->logout();
-            $session->setFlash('danger', Yii::t('app', 'Your account has not been setup correctly, please contact the site administrator for help'));
+            $session->setFlash('danger', Yii::t('app', 'Your account has not been setup correctly, please member the site administrator for help'));
             $this->goHome();
         }
     }
@@ -277,7 +243,7 @@ class SiteController extends Controller
     }
 
     /**
-     * Displays contact page.
+     * Displays member page.
      *
      * @return mixed
      */
@@ -409,7 +375,7 @@ class SiteController extends Controller
                 Yii::t('app', 'for joining us!'));
         } else {
             Yii::$app->session->setFlash('error', Html::encode($user->username) .
-                Yii::t('app', 'your account could not be activated, please contact us!'));
+                Yii::t('app', 'your account could not be activated, please member us!'));
         }
 
         return $this->redirect('login');

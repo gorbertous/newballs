@@ -12,6 +12,7 @@ use backend\models\Clubs;
  */
 class ClubsSearch extends Clubs
 {
+
     public function rules()
     {
         return [
@@ -38,29 +39,30 @@ class ClubsSearch extends Clubs
             return $dataProvider;
         }
 
+
         $query->andFilterWhere([
-            'c_id' => $this->c_id,
-            'sport_id' => $this->sport_id,
-            'type_id' => $this->type_id,
-            'coach_stats' => $this->coach_stats,
-            'token_stats' => $this->token_stats,
-            'play_stats' => $this->play_stats,
-            'scores' => $this->scores,
+            'c_id'              => $this->c_id,
+            'sport_id'          => $this->sport_id,
+            'type_id'           => $this->type_id,
+            'coach_stats'       => $this->coach_stats,
+            'token_stats'       => $this->token_stats,
+            'play_stats'        => $this->play_stats,
+            'scores'            => $this->scores,
             'match_instigation' => $this->match_instigation,
-            'court_booking' => $this->court_booking,
-            'money_stats' => $this->money_stats,
-            'admin_id' => $this->admin_id,
-            'chair_id' => $this->chair_id,
-            'location_id' => $this->location_id,
-            'is_active' => $this->is_active,
-            'payment' => $this->payment,
-            'rota_removal' => $this->rota_removal,
-            'rota_block' => $this->rota_block,
-          
+            'court_booking'     => $this->court_booking,
+            'money_stats'       => $this->money_stats,
+            'admin_id'          => $this->admin_id,
+            'chair_id'          => $this->chair_id,
+            'location_id'       => $this->location_id,
+            'is_active'         => $this->is_active,
+            'payment'           => $this->payment,
+            'rota_removal'      => $this->rota_removal,
+            'rota_block'        => $this->rota_block,
         ]);
 
         $query->andFilterWhere(['like', 'name', $this->name]);
 
         return $dataProvider;
     }
+
 }

@@ -18,7 +18,8 @@
         </div>
     <?php endif; ?>
     <div class="clearfix"></div>
-
+    <?= \common\widgets\Alert::widget(); ?>
     <?= $content ?>
+
 </div>
 <!-- /page content -->

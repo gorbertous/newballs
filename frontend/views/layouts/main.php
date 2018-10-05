@@ -53,8 +53,8 @@ AdmAsset::register($this);
 
         <script>
             var settings = {
-                languages   : ['<?= join(array_diff(Yii::$app->urlManager->languages, ['fr']), '\',\''); ?>'],
-                ajax_path   : '/admin<?= (Yii::$app->language == 'fr' ? '' : '/'.Yii::$app->language); ?>',
+                languages   : ['<?= join(array_diff(Yii::$app->urlManager->languages, ['en']), '\',\''); ?>'],
+                ajax_path   : '/admin<?= (Yii::$app->language == 'en' ? '' : '/'.Yii::$app->language); ?>',
                 environment : '<?= (YII_ENV_DEV ? 'dev' : 'prod'); ?>'
             };
 

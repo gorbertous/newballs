@@ -67,8 +67,8 @@ if (!Yii::$app->user->isGuest ) { ?>
                                         'items' => [
 
                                             [
-                                                'label'   => 'Clubs',
-                                                'icon'    => Menu::COMPANY_ICON_MENU,
+                                                'label'   => Menu::clubsText(),
+                                                'icon'    => Menu::CLUBS_ICON_MENU,
                                                 'url'     => Url::toRoute(['clubs/index']),
                                                 'active'  => ($route == 'clubs/index' || $route == 'location/index' || $route == 'fees/index' || $route == 'membershiptype/index'),
                                                 'visible' => Yii::$app->user->can('team_admin')
@@ -149,7 +149,6 @@ if (!Yii::$app->user->isGuest ) { ?>
                                         ] // CONTENT
                                     ],
                                    
-                                    
                                 ],
                             ]
                         )

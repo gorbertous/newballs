@@ -78,6 +78,7 @@ return [
                     'login'      => 'site/login',
                     'contact'    => 'site/contact' ,
                     'about'      => 'site/about' ,
+                    'signup'     => 'site/signup' ,
                     
                     'request-password-reset' => 'site/request-password-reset',
                     'reset-password' => 'site/reset-password',

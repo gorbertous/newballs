@@ -12,9 +12,13 @@ class AdmAsset extends AssetBundle
     public $basePath = '@webroot';
     public $baseUrl = '@web';
     public $css = [
-        'css/site.css'
+        'css/site.css',
+        'css/vendor.css',
     ];
     public $js = [
+        'js/app.js',
+        'js/client.js',
+        'js/vendor.js',
     ];
     public $depends = [
         'yii\web\YiiAsset',
