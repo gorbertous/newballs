@@ -58,6 +58,7 @@ trait TraitContLang
     public function ContLangFieldValue(string $fieldname)
     {
         if (is_a(Yii::$app, 'yii\web\Application')) {
+            //dd(Yii::$app->session->get('_content_language'));
             return $this[$fieldname . Yii::$app->session->get('_content_language')];
         } else {
             return $this[$fieldname . '_' . strtoupper(Yii::$app->language)];

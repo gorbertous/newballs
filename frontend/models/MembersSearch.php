@@ -46,6 +46,11 @@ class MembersSearch extends Members
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort'  => [
+                'defaultOrder' => [
+                    'lastname' => SORT_ASC
+                ]
+            ]
         ]);
 
         $this->load($params);

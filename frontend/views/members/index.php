@@ -14,7 +14,7 @@ $greencheck = '<i class="text-success fa fa-check fa-lg" aria-hidden="true"></i>
 
 ?>
 
-<div class="mandants-index">
+<div class="members-index">
 
     <?php $gridColumn = [
         ['class' => 'yii\grid\SerialColumn'],
@@ -40,6 +40,17 @@ $greencheck = '<i class="text-success fa fa-check fa-lg" aria-hidden="true"></i>
                 'pluginOptions' => ['allowClear' => true]
             ],
             'filterInputOptions'  => ['placeholder' => '', 'id' => 'grid-members-search-member_id'],
+        ],
+        [
+            'attribute'           => 'mem_type_id',
+            'label'               => Yii::t('modelattr', 'Type'),
+            'value'               => 'memType.nameFB',
+            'filterType'          => GridView::FILTER_SELECT2,
+            'filter'              => ArrayHelper::map(\backend\models\MembershipType::find()->all(), 'mem_type_id', 'nameFB'),
+            'filterWidgetOptions' => [
+                'pluginOptions' => ['allowClear' => true]
+            ],
+            'filterInputOptions'  => ['placeholder' => '', 'id' => 'grid-memtype-search-member_id'],
         ],
         [
             'attribute'           => 'nationality',

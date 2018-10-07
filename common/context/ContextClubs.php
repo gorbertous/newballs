@@ -24,7 +24,7 @@ abstract class ContextClubs implements Context
 
         // CLUBS -> index
         $context_array[ContextLetter::CLUBS][] = [
-            'button_title' => Menu::clubsText(),
+            'button_title' => Menu::clubText(),
             'new_label'     => Yii::t('appMenu', self::LBL_NEW),
             'mod_label'     => Yii::t('appMenu', self::LBL_MODIFY),
             'view_label'    => Yii::t('appMenu', self::LBL_VIEW),
@@ -33,7 +33,7 @@ abstract class ContextClubs implements Context
             'link'          => '/clubs/index',
             'create'        => '/clubs/create',
             'perm_key'      => 'clubs',
-            'fa_icon'      => Menu::CLUBS_ICON
+            'fa_icon'      => Menu::CLUB_ICON
         ];
         
          // Lcations -> index

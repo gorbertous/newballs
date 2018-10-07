@@ -79,6 +79,7 @@ trait TraitController
                 $modelname = 'PlayDates';
                 break;
             case 'Gamesboard':
+            case 'Rota':
                 $modelname = 'GamesBoard';
                 break;
             case 'Membershiptype':
@@ -215,7 +216,7 @@ trait TraitController
     {
         // the user is authentificated, but he has not properly selected the
         // mandant to work on, redirect him to select page and stop this action
-        if ($this->getSessionClubID() === null) {
+        if ($this->getSessionMemberID() === null) {
             $this->redirect('/logout'); return false;
         }
         // Currently displayed language for this mandant

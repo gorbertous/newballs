@@ -3,7 +3,6 @@
 use kartik\grid\GridView;
 use common\helpers\TraitIndex;
 use yii\helpers\ArrayHelper;
-use backend\models\Clubs;
 
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\MembershipTypesSearch */
@@ -23,19 +22,7 @@ $currentBtn = TraitIndex::getCurrentBtn($context_array);
             'attribute'      => 'mem_type_id',
             'contentOptions' => ['style' => 'width:20px;'],
         ],
-        [
-            'attribute'           => 'c_id',
-            'label'               => Yii::t('modelattr', 'Club'),
-            'value'               => 'club.name',
-            'filterType'          => GridView::FILTER_SELECT2,
-            'filter'              => ArrayHelper::map(Clubs::find()
-                ->select(['c_id', 'name'])
-                ->all(), 'c_id', 'name'),
-            'filterWidgetOptions' => [
-                'pluginOptions' => ['allowClear' => true]
-            ],
-            'filterInputOptions'  => ['placeholder' => '', 'id' => 'grid-board-search-ID_Clubs'],
-        ],
+       
         'name_EN',
         'name_FR',
         'name_DE',

@@ -12,11 +12,11 @@ abstract class MenuTypes
 {
     use TraitDictionaries;
 
-    public static function Dashboard_text(): string {
-        return Yii::t('appMenu', 'Dashboard');
+    public static function memrotaText(): string {
+        return Yii::t('appMenu', 'Rota');
     }
-    const DASHBOARD_ICON = 'fa fa-dashboard';
-    const DASHBOARD_ICON_MENU = 'dashboard';
+    const MEMROTA_ICON = 'fa fa-dashboard';
+    const MEMROTA_ICON_MENU = 'dashboard';
 
     /** -- */
 
@@ -109,6 +109,14 @@ abstract class MenuTypes
     }
     const CLUBS_ICON = 'fa fa-industry';
     const CLUBS_ICON_MENU = 'industry';
+
+    /** -- */
+    
+    public static function clubText(): string {
+        return Yii::t('appMenu', 'Club');
+    }
+    const CLUB_ICON = 'fa fa-industry';
+    const CLUB_ICON_MENU = 'industry';
 
     /** -- */
 
@@ -308,8 +316,8 @@ abstract class MenuTypes
     public static function rotaText(): string {
         return Yii::t('appMenu', 'Rota');
     }
-    const ROTA_ICON = 'fa fa-pencil';
-    const ROTA_ICON_MENU = 'pencil';
+    const ROTA_ICON = 'fa fa-dashboard';
+    const ROTA_ICON_MENU = 'dashboard';
 
     /** -- */
 

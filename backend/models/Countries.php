@@ -86,14 +86,6 @@ class Countries extends ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getCompanies()
-    {
-        return $this->hasMany(Company::class, ['Co_Code' => 'code']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
     public function getMembersNat()
     {
         return $this->hasMany(Members::class, ['nationality' => 'code']);

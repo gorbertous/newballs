@@ -54,16 +54,18 @@ class GamesBoard extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id'        => Yii::t('modelattr', 'ID'),
-            'c_id'      => Yii::t('modelattr', 'Club'),
-            'termin_id' => Yii::t('modelattr', 'Date'),
-            'member_id' => Yii::t('modelattr', 'Member'),
-            'court_id'  => Yii::t('modelattr', 'Court'),
-            'slot_id'   => Yii::t('modelattr', 'Slot'),
-            'status_id' => Yii::t('modelattr', 'Status'),
-            'fines'     => Yii::t('modelattr', 'Fines'),
-            'tokens'    => Yii::t('modelattr', 'Tokens'),
-            'late'      => Yii::t('modelattr', 'Late'),
+            'id'           => Yii::t('modelattr', 'ID'),
+            'c_id'         => Yii::t('modelattr', 'Club'),
+            'termin_id'    => Yii::t('modelattr', 'Date'),
+            'member_id'    => Yii::t('modelattr', 'Member'),
+            'court_id'     => Yii::t('modelattr', 'Court'),
+            'slot_id'      => Yii::t('modelattr', 'Slot'),
+            'status_id'    => Yii::t('modelattr', 'Status'),
+            'fines'        => Yii::t('modelattr', 'Fines'),
+            'tokens'       => Yii::t('modelattr', 'Tokens'),
+            'late'         => Yii::t('modelattr', 'Late'),
+            'timefilter'   => Yii::t('modelattr', 'Time Filter'),
+            'seasonfilter' => Yii::t('modelattr', 'Season Filter'),
         ];
     }
 
@@ -74,7 +76,7 @@ class GamesBoard extends \yii\db\ActiveRecord
     {
         return [
             'audittrail' => [
-                'class' => AuditTrailBehavior::className(),
+                'class'         => AuditTrailBehavior::className(),
                 // some of the optional configurations
 //    		'ignoredAttributes'=>['created_at','updated_at'],
                 'consoleUserId' => 1,

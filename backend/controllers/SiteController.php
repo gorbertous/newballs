@@ -112,6 +112,7 @@ class SiteController extends Controller
             $session->set('member_name', $member->name);
            
             $session->set('club_languages', Yii::$app->contLang->defaultClubLanguages);
+            $session->set('_content_language', '_' . strtoupper(Yii::$app->language));
           
             $this->redirect('/admin/index');
         } else {

@@ -61,7 +61,7 @@ class GamesboardSearch extends GamesBoard
         }
          if ($this->late != -1) {
             $query->andFilterWhere([
-                'tokens' => $this->late,
+                'late' => $this->late,
             ]);
         }
 

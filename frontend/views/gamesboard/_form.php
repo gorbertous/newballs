@@ -3,7 +3,6 @@
 use backend\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
 use common\helpers\Helpers;
-use backend\models\Clubs;
 use common\dictionaries\OutcomeStatus;
 
 
@@ -33,15 +32,6 @@ use common\dictionaries\OutcomeStatus;
     <div class="tab-content">
         <div class="tab-pane active well" id="rota">
             <div class="row">
-                <div class="col-xs-6">
-                    <?=
-                    $form->hrwSelect2($model, 'c_id', [
-                        'data'          => ArrayHelper::map(Clubs::find()->all(), 'c_id', 'name'),
-                        'options'       => ['id' => 'c-id'],
-                        'pluginOptions' => ['allowClear' => true]
-                    ])
-                    ?>
-                </div>
                 <div class="col-xs-6">
                     <?=
                     $form->hrwSelect2($model, 'member_id', [

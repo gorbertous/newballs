@@ -1,56 +1,46 @@
 <?php
 
 use yii\helpers\Html;
-use frontend\assets\ClientAsset;
+use frontend\assets\AppAsset;
 
-ClientAsset::register($this);
-
+AppAsset::register($this);
 ?>
 
 <?php $this->beginPage(); ?>
 <!DOCTYPE html>
 <html lang="<?= Yii::$app->language ?>">
-<head>
+    <head>
 
-    <meta charset="<?= Yii::$app->charset ?>" />
+        <meta charset="<?= Yii::$app->charset ?>" />
 
-    <meta name="robots" content="noindex, nofollow" />
+        <meta name="robots" content="noindex, nofollow" />
 
-    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
-    <meta name="description" content="<?= Yii::t('index', 'Club area') ?>" />
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
+        <meta name="description" content="<?= Yii::t('index', 'Club area') ?>" />
 
-    <?= Html::csrfMetaTags(); ?>
+        <?= Html::csrfMetaTags(); ?>
 
-    <title><?= \yii\helpers\HtmlPurifier::process($this->title); ?></title>
+        <title><?= \yii\helpers\HtmlPurifier::process($this->title); ?></title>
 
-    <link rel="shortcut icon" type="image/x-icon"  href="/static/images/favicon.ico" />
+        <link rel="shortcut icon" type="image/x-icon"  href="/static/images/favicon.ico" />
 
-    <?php $this->head(); ?>
+        <?php $this->head(); ?>
 
-</head>
+    </head>
     <body>
-    <?php $this->beginBody(); ?>
+        <?php $this->beginBody(); ?>
 
-    <main id="main-content">
+        <main id="main-content">
 
-        <section id="login">
-            <a class="logo" href="<?= \yii\helpers\Url::to(['site/login']); ?>"></a>
+            <section id="login">
 
-            <?= $content ?>
+                <?= $content ?>
 
-            <?php if (!strpos(Yii::$app->request->url, 'select')) { ?>
-            <div id="settings">
-                <?= frontend\widgets\LanguageChooser::widget(); ?>
-            </div>
-            <?php } ?>
+            </section>
 
-        </section>
+        </main>
 
-    </main>
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
-    <?php $this->endBody(); ?>
+        <?php $this->endBody(); ?>
     </body>
 </html>
 <?php $this->endPage(); ?>

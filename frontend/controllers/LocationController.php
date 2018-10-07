@@ -90,7 +90,7 @@ class LocationController extends Controller
     public function actionCreate()
     {
         $model = new Location();
-
+        $model->c_id = Yii::$app->session->get('c_id');
         if ($model->load(Yii::$app->request->post())) {
 
             $valid = $model->validate();

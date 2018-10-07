@@ -3,7 +3,6 @@
 use backend\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
 use common\helpers\Helpers;
-use backend\models\Clubs;
 
 /* @var $this yii\web\View */
 /* @var $model backend\models\MembershipType */
@@ -32,26 +31,7 @@ $alllang = Yii::$app->contLang->languages;
 
     <div class="tab-content">
         <div class="tab-pane active well" id="fees">
-            <div class="row">
-                <div class="col-xs-6">
-                    <?=
-                    $form->hrwSelect2($model, 'c_id', [
-                        'data'          => ArrayHelper::map(Clubs::find()->all(), 'c_id', 'name'),
-                        'options'       => ['id' => 'c-id'],
-                        'pluginOptions' => ['allowClear' => true]
-                    ])
-                    ?>
-                </div>
-                <div class="col-xs-6">
-                    <?=
-                    $form->hrwSelect2($model, 'mem_type_id', [
-                        'data'          => ArrayHelper::map(\backend\models\MembershipType::find()->all(), 'mem_type_id', 'nameFB'),
-                        'options'       => ['id' => 'mem-type-id'],
-                        'pluginOptions' => ['allowClear' => true]
-                    ])
-                    ?>
-                </div>
-            </div>
+           
             <div class="row">
                 <div class="col-xs-12">
                     <?php

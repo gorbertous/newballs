@@ -105,7 +105,12 @@ class User extends UserIdentity implements IdentityInterface
             [['username', 'email'], 'filter', 'filter' => 'trim'],
             [['username', 'email', 'status'], 'required'],
             ['email', 'email'],
+            ['email', 'string', 'max' => 255],
             ['username', 'string', 'min' => 2, 'max' => 255],
+            ['username', 'match',  'not' => true,
+                // we do not want to allow users to pick one of spam/bad usernames 
+                'pattern' => '/\b('.Yii::$app->params['user.spamNames'].')\b/i',
+                'message' => Yii::t('app', 'It\'s impossible to have that username.')],
             // password field is required on 'create' scenario
             ['password', 'required', 'on' => 'create'],
             // use Kartik presets to determine password strength
@@ -340,15 +345,6 @@ class User extends UserIdentity implements IdentityInterface
         return !empty($this->role->item_name) ? $this->role->item_name : '';
     }
 
-    public static function getUserFirstname()
-    {
-        return Yii::$app->user->identity->first_name;
-    }
-
-    public static function getUserLastname()
-    {
-        return Yii::$app->user->identity->last_name;
-    }
 
     public static function getUserUsername()
     {

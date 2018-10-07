@@ -5,7 +5,6 @@ use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
 use common\helpers\Helpers;
 //use common\helpers\ViewsHelper;
-use backend\models\Clubs;
 use backend\models\Location;
 use kartik\widgets\DateTimePicker;
 use kartik\depdrop\DepDrop;
@@ -51,15 +50,6 @@ use common\dictionaries\ClubSessions;
     <div class="tab-content">
         <div class="tab-pane active well" id="playdate">
             <div class="row">
-                <div class="col-xs-6">
-                    <?=
-                    $form->hrwSelect2($model, 'c_id', [
-                        'data'          => ArrayHelper::map(Clubs::find()->all(), 'c_id', 'name'),
-                        'options'       => ['id' => 'c-id'],
-                        'pluginOptions' => ['allowClear' => true]
-                    ])
-                    ?>
-                </div>
                 <div class="col-xs-6">
                     <?=
                     $form->hrwSelect2($model, 'location_id', [

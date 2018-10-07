@@ -8,7 +8,6 @@ use common\dictionaries\NewsCategories;
 use common\helpers\TraitIndex;
 use backend\models\News;
 use kartik\grid\GridView;
-use backend\models\Clubs;
 use yii\helpers\ArrayHelper;
 
 $this->title = TraitIndex::getTitle($context_array);
@@ -27,19 +26,6 @@ $greencheck = '<i class="text-success fa fa-check fa-lg" aria-hidden="true"></i>
             'attribute' => 'id',
             'label' => 'ID',
             'contentOptions' => ['style' => 'width: 20px;'],
-        ],
-        [
-            'attribute'           => 'c_id',
-            'label'               => Yii::t('modelattr', 'Club'),
-            'value'               => 'club.name',
-            'filterType'          => GridView::FILTER_SELECT2,
-            'filter'              => ArrayHelper::map(Clubs::find()
-                ->select(['c_id', 'name'])
-                ->all(), 'c_id', 'name'),
-            'filterWidgetOptions' => [
-                'pluginOptions' => ['allowClear' => true]
-            ],
-            'filterInputOptions'  => ['placeholder' => '', 'id' => 'grid-users-search-Clubs'],
         ],
         [
             'attribute' => 'category',

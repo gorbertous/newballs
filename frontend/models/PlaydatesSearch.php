@@ -45,6 +45,11 @@ class PlaydatesSearch extends PlayDates
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort'  => [
+                'defaultOrder' => [
+                    'termin_id' => SORT_DESC
+                ]
+            ]
         ]);
 
         $this->load($params);

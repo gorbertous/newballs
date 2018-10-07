@@ -167,6 +167,7 @@ trait TraitIndex
     public static function getCurrentBtn(&$context_array, $overwriteroute = false)
     {
         $route = Yii::$app->controller->route;
+        
 
         if ($overwriteroute) {
             // special case for the library (kartik treeview)

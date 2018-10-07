@@ -44,6 +44,11 @@ class GamesboardSearch extends GamesBoard
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort'  => [
+                'defaultOrder' => [
+                    'id' => SORT_DESC
+                ]
+            ]
         ]);
 
         $this->load($params);
@@ -61,7 +66,7 @@ class GamesboardSearch extends GamesBoard
         }
          if ($this->late != -1) {
             $query->andFilterWhere([
-                'tokens' => $this->late,
+                'late' => $this->late,
             ]);
         }
 

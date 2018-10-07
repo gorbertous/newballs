@@ -24,20 +24,9 @@ $currentBtn = TraitIndex::getCurrentBtn($context_array);
             'attribute'      => 'location_id',
             'contentOptions' => ['style' => 'width:20px;'],
         ],
-        [
-            'attribute'           => 'c_id',
-            'label'               => Yii::t('modelattr', 'Club'),
-            'value'               => 'club.name',
-            'filterType'          => GridView::FILTER_SELECT2,
-            'filter'              => ArrayHelper::map(Clubs::find()
-                ->select(['c_id', 'name'])
-                ->all(), 'c_id', 'name'),
-            'filterWidgetOptions' => [
-                'pluginOptions' => ['allowClear' => true]
-            ],
-            'filterInputOptions'  => ['placeholder' => '', 'id' => 'grid-users-search-ID_Clubs'],
-        ],
+      
        'name',
+       'address'
         
     ];
 

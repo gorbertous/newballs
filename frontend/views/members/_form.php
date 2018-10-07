@@ -6,7 +6,6 @@ use common\helpers\Helpers;
 use common\dictionaries\Grades;
 use common\dictionaries\ContactTitles;
 use common\helpers\ViewsHelper;
-use backend\models\Clubs;
 
 /* @var $this yii\web\View */
 /* @var $model backend\models\Members */
@@ -64,15 +63,6 @@ use backend\models\Clubs;
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-xs-6">
-                            <?=
-                            $form->hrwSelect2($model, 'c_id', [
-                                'data'          => ArrayHelper::map(Clubs::find()->all(), 'c_id', 'name'),
-                                'options'       => ['id' => 'c_id'],
-                                'pluginOptions' => ['allowClear' => true]
-                            ])
-                            ?>
-                        </div>
                         <div class="col-xs-6">
                             <?=
                             $form->hrwSelect2($model, 'grade_id', [

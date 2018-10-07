@@ -41,10 +41,15 @@ class ScoresSearch extends Scores
      */
     public function search($params)
     {
-        $query = Scores::find()->joinWith('termin')->where(['play_dates.c_id' => Yii::$app->session->get('c_id')]);;
+        $query = Scores::find()->joinWith('termin')->where(['play_dates.c_id' => Yii::$app->session->get('c_id')]);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort'  => [
+                'defaultOrder' => [
+                    'score_id' => SORT_DESC
+                ]
+            ]
         ]);
 
         $this->load($params);

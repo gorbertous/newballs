@@ -3,7 +3,6 @@
 use kartik\grid\GridView;
 use common\helpers\TraitIndex;
 use yii\helpers\ArrayHelper;
-use backend\models\Clubs;
 use common\dictionaries\OutcomeStatus;
 
 /* @var $this yii\web\View */
@@ -26,19 +25,6 @@ $greencheck = '<i class="text-success fa fa-check fa-lg" aria-hidden="true"></i>
             'label'          => 'ID',
             'attribute'      => 'id',
             'contentOptions' => ['style' => 'width:20px;'],
-        ],
-        [
-            'attribute'           => 'c_id',
-            'label'               => Yii::t('modelattr', 'Club'),
-            'value'               => 'club.name',
-            'filterType'          => GridView::FILTER_SELECT2,
-            'filter'              => ArrayHelper::map(Clubs::find()
-                ->select(['c_id', 'name'])
-                ->all(), 'c_id', 'name'),
-            'filterWidgetOptions' => [
-                'pluginOptions' => ['allowClear' => true]
-            ],
-            'filterInputOptions'  => ['placeholder' => '', 'id' => 'grid-board-search-ID_Clubs'],
         ],
         [
             'attribute'           => 'termin_id',

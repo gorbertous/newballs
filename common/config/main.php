@@ -97,12 +97,15 @@ return [
         ],
          'formatter' => [
             'class' => yii\i18n\Formatter::class,
-            'dateFormat'        => 'dd/MM/yyyy',
+            'dateFormat' => 'd-M-Y',
+            'datetimeFormat' => 'd-M-Y H:i:s',
+            'timeFormat' => 'H:i:s',
             'nullDisplay' => '-',
             'defaultTimeZone' => 'Europe/Luxembourg',
-            'locale' => 'en-US',
+            'locale' => 'en-GB',
             'thousandSeparator' => ' ',
             'decimalSeparator' => '.',
+            'currencyCode' => 'EUR',
             // must enable php intl extension for \NumberFormatter
             /*'numberFormatterOptions' => [
                 \NumberFormatter::MIN_FRACTION_DIGITS => 0,

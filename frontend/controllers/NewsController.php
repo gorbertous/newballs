@@ -98,7 +98,7 @@ class NewsController extends Controller
     public function actionCreate()
     {
         $model = new News();
-        $model->c_id = 0;
+        $model->c_id = $model->c_id = Yii::$app->session->get('c_id');
         $model->is_public = 1;
         $model->is_valid = 0;
         $model->to_newsletter = 1;

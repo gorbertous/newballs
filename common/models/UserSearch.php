@@ -17,12 +17,12 @@ class UserSearch extends User
     /**
      * @var int
      */
-    public $mandant_id;
+    public $c_id;
 
     /**
      * @var int
      */
-    public $ID_Contact;
+    public $member_id;
 
     /**
      * @inheritdoc
@@ -30,7 +30,7 @@ class UserSearch extends User
     public function rules()
     {
         return [
-            [['username', 'first_name', 'last_name', 'email', 'status', 'item_name', 'ID_Contact'], 'safe'],
+            [['username', 'firstname', 'lastname', 'email', 'status', 'item_name', 'member_id'], 'safe'],
         ];
     }
 
@@ -58,9 +58,9 @@ class UserSearch extends User
         // we make sure that consultant can not see users with developer role
         $query = User::find()
             ->joinWith('role')
-            ->joinWith('contacts')
+            ->joinWith('members')
             ->where(['item_name' => $childroles])
-            ->andWhere(['Contacts.ID_Mandant' => $this->mandant_id,]);
+            ->andWhere(['members.c_id' => $this->c_id,]);
 
         $this->load($params);
         // add conditions that should always apply here
@@ -75,9 +75,9 @@ class UserSearch extends User
             'desc' => ['item_name' => SORT_DESC],
         ];
 
-        $dataProvider->sort->attributes['ID_Contact'] = [
-            'asc'  => ['Contacts.Lastname' => SORT_ASC, 'Contacts.Firstname' => SORT_ASC],
-            'desc' => ['Contacts.Lastname' => SORT_DESC, 'Contacts.Firstname' => SORT_DESC],
+        $dataProvider->sort->attributes['member_id'] = [
+            'asc'  => ['members.Lastname' => SORT_ASC, 'members.Firstname' => SORT_ASC],
+            'desc' => ['members.Lastname' => SORT_DESC, 'members.Firstname' => SORT_DESC],
         ];
 
         if (!($this->validate())) {
@@ -88,8 +88,8 @@ class UserSearch extends User
         $query->andFilterWhere([
             'id'                  => $this->id,
             //'status' => $this->status,
-            'Contacts.ID_Mandant' => $this->mandant_id,
-            'Contacts.ID_contact' => $this->ID_Contact,
+            'members.c_id' => $this->c_id,
+            'members.member_id' => $this->member_id,
             'created_at'          => $this->created_at,
             'updated_at'          => $this->updated_at,
         ]);
@@ -100,9 +100,9 @@ class UserSearch extends User
 
         $query->andFilterWhere(['like', 'username', $this->username])
             ->andFilterWhere(['like', 'user.email', $this->email])
-            ->andFilterWhere(['like', 'user.first_name', $this->first_name])
-            ->andFilterWhere(['like', 'user.last_name', $this->last_name])
-            //->andFilterWhere(['like', 'CONCAT(Contacts.Firstname, Contacts.Lastname)', $this->ID_Contact])
+            ->andFilterWhere(['like', 'members.firstname', $this->firstname])
+            ->andFilterWhere(['like', 'members.lastname', $this->lastname])
+            //->andFilterWhere(['like', 'CONCAT(members.Firstname, members.Lastname)', $this->member_id])
             ->andFilterWhere(['like', 'item_name', $this->item_name]);
 
         return $dataProvider;

@@ -1,22 +1,13 @@
 <?php
 
-/**
- * @copyright Copyright © 2016-2018 eSST Sàrl - HSE compliance tools.
- * @link https://www.esst.lu/
- * @license https://www.esst.lu/backend/licence/
- */
-
-namespace backend\widgets;
+namespace frontend\widgets;
 
 use Yii;
 use yii\helpers\Url;
 
 /**
  * Class LanguageChooser
- *
- * @author Vitor Arantes
- * @since 1.0.0
- * @package backend\widgets
+ * @package frontend\widgets
  */
 class LanguageChooser extends \yii\base\Widget
 {

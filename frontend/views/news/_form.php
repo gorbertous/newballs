@@ -5,7 +5,6 @@ use common\dictionaries\NewsCategories;
 use common\helpers\Helpers;
 use yii\helpers\ArrayHelper;
 use backend\widgets\ActiveForm;
-use backend\models\Clubs;
 use backend\models\Tags;
 
 /* @var $this yii\web\View */
@@ -41,15 +40,6 @@ $alllang = Yii::$app->contLang->languages;
 
         <div class="tab-pane well active" id="description">
             <div class="row">
-                <div class="col-xs-6">
-                    <?=
-                    $form->hrwSelect2($model, 'c_id', [
-                        'data'          => ArrayHelper::map(Clubs::find()->all(), 'c_id', 'name'),
-                        'options'       => ['id' => 'c_id'],
-                        'pluginOptions' => ['allowClear' => true]
-                    ])
-                    ?>
-                </div>
                 <div class="col-xs-6">
                     <?= $form->hrwSelect2($model, 'category', [
                         'data'       => NewsCategories::all(),

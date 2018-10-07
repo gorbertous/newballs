@@ -19,7 +19,7 @@ abstract class ContextLetter
     const NEWS = 'N';
     const CLUBS = 'C';
     const MEMBERS = 'M';
-    const CONTACTS = 'C';
     const PLAYDATES = 'C';
+    const ROTA = 'R';
 
 }

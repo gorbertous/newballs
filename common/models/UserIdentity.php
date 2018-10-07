@@ -22,8 +22,6 @@ use yii\web\IdentityInterface;
  * @property integer $status
  * @property integer $created_at
  * @property integer $updated_at
- * @property string  $first_name [varchar(100)]
- * @property string  $last_name [varchar(100)]
  *
  * @package common\models
  */

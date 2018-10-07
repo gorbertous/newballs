@@ -53,22 +53,42 @@ if (!Yii::$app->user->isGuest ) { ?>
                             [
 //                                'encodeLabels' => false,
                                 "items" => [
-                                    ["label" => "Home", "url" => "/dashboard/index", "icon" => "home"],
+//                                    ["label" => "Home", "url" => "/dashboard/index", "icon" => "home"],
                                     
+                                     // MENU => MEMBERS
+
+                                    [
+                                        'label'   =>  Yii::t('appMenu', 'Members Area'),
+                                        'icon'    => Menu::ADMIN_ICON_MENU,
+                                        'url'     => '#',
+                                        'visible' => Yii::$app->user->can('team_admin'),
+
+                                        'items' => [
+                                            [
+                                                'label'   => Menu::rotaText(),
+                                                'icon'    => Menu::ROTA_ICON_MENU,
+                                                'url'     => Url::toRoute(['rota/index']),
+                                                'active'  => ($route == 'rota/index'),
+                                            ],
+                                           
+                                          
+                     
+                                        ] // MEMBERS
+                                    ],
                                     
                                      // MENU => Admin
 
                                     [
                                         'label'   =>  Menu::adminText(),
-                                        'icon'    => Menu::ADMIN_ICON_MENU,
+                                        'icon'    => Menu::UTILITIES_ICON_MENU,
                                         'url'     => '#',
                                         'visible' => Yii::$app->user->can('team_admin'),
 
                                         'items' => [
 
                                             [
-                                                'label'   => Menu::clubsText(),
-                                                'icon'    => Menu::CLUBS_ICON_MENU,
+                                                'label'   => Menu::clubText(),
+                                                'icon'    => Menu::CLUB_ICON_MENU,
                                                 'url'     => Url::toRoute(['clubs/index']),
                                                 'active'  => ($route == 'clubs/index' || $route == 'location/index' || $route == 'fees/index' || $route == 'membershiptype/index'),
                                                 'visible' => Yii::$app->user->can('team_admin')
@@ -82,28 +102,6 @@ if (!Yii::$app->user->isGuest ) { ?>
                                                 'active'  => ($route == 'members/index'),
                                                 'visible' => Yii::$app->user->can('team_admin')
                                             ],
-                                          
-                                           
-                     
-                                        ] // items
-                                    ],
-                                    
-                                     // MENU => CONTENT
-
-                                    [
-                                        'label'   =>  Yii::t('appMenu', 'Content'),
-                                        'icon'    => Menu::ADMIN_ICON_MENU,
-                                        'url'     => '#',
-                                        'visible' => Yii::$app->user->can('team_admin'),
-
-                                        'items' => [
-                                            [
-                                                'label'   => Menu::newsText(),
-                                                'icon'    => Menu::NEWS_ICON_MENU,
-                                                'url'     => Url::toRoute(['news/index']),
-                                                'active'  => ($route == 'news/index' || $route == 'tags/index'),
-                                                'visible' => Yii::$app->user->can('team_admin')
-                                            ],
                                             [
                                                 'label'   => Menu::playdatesText(),
                                                 'icon'    => Menu::PLAYDATES_ICON_MENU,
@@ -111,18 +109,20 @@ if (!Yii::$app->user->isGuest ) { ?>
 //                                                'visible' => $perm->isMenuVisible('texts'),
                                                 'active'  => ($route == 'playdates/index' || $route == 'gamesboard/index' || $route == 'reserves/index' || $route == 'scores/index')
                                             ],
-                                          
                                             [
-                                                'label'   => Menu::textblocksText(),
-                                                'icon'    => Menu::TEXTBLOCKS_ICON_MENU,
-                                                'url'     => Url::toRoute(['texts/index']),
-//                                                'visible' => $perm->isMenuVisible('texts'),
-                                                'active'  => ($route == 'texts/index')
+                                                'label'   => Menu::newsText(),
+                                                'icon'    => Menu::NEWS_ICON_MENU,
+                                                'url'     => Url::toRoute(['news/index']),
+                                                'active'  => ($route == 'news/index' || $route == 'tags/index'),
+                                                'visible' => Yii::$app->user->can('team_admin')
                                             ],
+                                           
                                           
+                                           
                      
-                                        ] // CONTENT
+                                        ] // items
                                     ],
+                                    
                                    
                                     
                                 ],

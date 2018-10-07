@@ -8,10 +8,8 @@ use yii\web\Controller;
 use yii\web\ForbiddenHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
-use frontend\models\{
-    Members,
-    MembersSearch
-};
+use frontend\models\MembersSearch;
+use backend\models\Members;
 use common\helpers\Helpers;
 use common\helpers\Thumbnails;
 use common\dictionaries\ContextLetter;
@@ -89,12 +87,12 @@ class MembersController extends Controller
      */
     public function actionView($id)
     {
-        /** @var $model \frontend\models\base\Contacts */
+        /** @var $model \backend\models\base\Members */
         $model = $this->findModel($id);
 
-        if ($model->user_id !== Yii::$app->user->identity->id && !Yii::$app->user->can('writer')) {
-            throw new ForbiddenHttpException(Yii::t('app', 'You are not allowed to access this page.'));
-        }
+//        if ($model->user_id !== Yii::$app->user->identity->id && !Yii::$app->user->can('writer')) {
+//            throw new ForbiddenHttpException(Yii::t('app', 'You are not allowed to access this page.'));
+//        }
 
         return $this->renderNormalorAjax('view', [
                     'model' => $this->findModel($id)
@@ -107,9 +105,9 @@ class MembersController extends Controller
     public function actionCreate()
     {
         $model = new Members;
-
+        $model->c_id = Yii::$app->session->get('c_id');
         if ($model->load(Yii::$app->request->post())) {
-
+            
             $model->co_code = (empty($model->co_code)) ? null : $model->co_code;
             $model->nationality = (empty($model->nationality)) ? null : $model->nationality;
 
