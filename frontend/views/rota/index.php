@@ -53,7 +53,7 @@ $greencheck = '<i class="text-success fa fa-check fa-lg" aria-hidden="true"></i>
              'attribute' => 'termin_id',
              
              'value' => function($model){  
-                $dispdate = Yii::$app->formatter->asDate($model->termin->termin_date, 'long');
+                $dispdate = Yii::$app->formatter->asDate($model->termin->termin_date);
                 $disptime = Yii::$app->formatter->asTime($model->termin->termin_date, 'short');
                 return 'Date : '. $dispdate . ' at '. $disptime . '   - Location: '. $model->termin->location->address;                   
              },
@@ -79,11 +79,19 @@ $greencheck = '<i class="text-success fa fa-check fa-lg" aria-hidden="true"></i>
              'value' => function($model){
                 if($model->member_id == 1){
                     $url = Url::toRoute(['rota/update', 'id' => $model->id]);
-                    $link = Html::a($model->member->name, $url, ['title' => Yii::t('app', 'Click the link to put your name on the rota'),'class' => 'text-success']);
+                    $link = Html::a($model->member->name, $url, 
+                        [
+                            'title' => Yii::t('app', 'Click the link to put your name on the rota'),
+                            'class' => 'text-success',
+                            'data' => [
+                                'confirm' => Yii::t('app', 'Warning, clicking on the link you are commiting yourself to play on ' . $model->termin->termin_date),
+                                'method' => 'post',
+                            ],
+                        ]);
                     return $link;
                 } else {
                     $class = $model->tokens ? 'text-danger' : 'text-primary';
-                    $iscoach = $model->member->memType->mem_type_id == 5 ? ' <span class="badge bg-red pull-right">Coach</span>' : '';
+                    $iscoach = isset($model->member->memType) && ($model->member->memType->mem_type_id == 5) ? ' <span class="badge bg-red pull-right">Coach</span>' : '';
                     return Html::tag('span', $model->member->name, ['class' => $class]).$iscoach;
                 }
              },

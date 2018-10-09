@@ -6,6 +6,9 @@
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use kartik\password\PasswordInput;
+use kartik\widgets\Select2;
+use yii\helpers\ArrayHelper;
+use backend\models\Clubs;
 
 $this->title = 'Signup';
 $this->params['breadcrumbs'][] = $this->title;
@@ -18,6 +21,11 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="row">
         <div class="col-lg-5">
             <?php $form = ActiveForm::begin(['id' => 'form-signup']); ?>
+            
+            <?= $form->field($model, 'club')->widget(Select2::classname(), [
+                'data' => ArrayHelper::map(Clubs::find()->all(), 'c_id', 'name'),
+                'options'    => ['placeholder' => 'Select club to join']
+            ]); ?>
 
             <?= $form->field($model, 'username')->textInput(
                     ['placeholder' => Yii::t('app', 'Create your username'), 'autofocus' => true])

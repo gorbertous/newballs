@@ -97,9 +97,9 @@ return [
         ],
          'formatter' => [
             'class' => yii\i18n\Formatter::class,
-            'dateFormat' => 'd-M-Y',
-            'datetimeFormat' => 'd-M-Y H:i:s',
-            'timeFormat' => 'H:i:s',
+            'dateFormat' => 'php:D d M Y',
+            'datetimeFormat' => 'php:d D M Y H:i:s',
+            'timeFormat' => 'php:H:i:s',
             'nullDisplay' => '-',
             'defaultTimeZone' => 'Europe/Luxembourg',
             'locale' => 'en-GB',

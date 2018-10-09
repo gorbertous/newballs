@@ -11,6 +11,7 @@ use yii\data\ActiveDataProvider;
 use backend\models\Countries;
 use backend\models\MembershipType;
 use backend\models\Members;
+use common\rbac\models\Authitem;
 
 /**
  * Class ViewsHelper
@@ -112,6 +113,23 @@ class ViewsHelper
         }
 
         return ArrayHelper::map($types->all(), 'mem_type_id', 'name_EN');
+    }
+    
+     /**
+     * @param null type
+     *
+     * @return array
+     */
+    public static function getAuthitems($type = null)
+    {
+        $authitems = Authitem::find()
+            ->orderBy(['type' => SORT_ASC, 'name' => SORT_ASC]);
+
+        if (!empty($type)) {
+            $authitems->andWhere(['type' => $type]);
+        }
+
+        return ArrayHelper::map($authitems->all(), 'name', 'name');
     }
     
   

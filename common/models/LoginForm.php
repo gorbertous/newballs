@@ -95,6 +95,12 @@ class LoginForm extends Model
     {
         return User::findByUsername($this->username);
     }
+    
+    public function userHasnoclub()
+    {
+        $hasclub = \backend\models\Members::findOne(['user_id' => $this->getUser()]);
+        return empty($hasclub->c_id) ? $hasclub->member_id : null;
+    }
 
     /**
      * Validates the password.

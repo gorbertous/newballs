@@ -73,9 +73,16 @@ class RotaController extends Controller
     public function actionUpdate($id)
     {
         /** @var $model \backend\models\base\GamesBoard */
-        $model = $this->findModel($id);
-        $model->member_id = Yii::$app->user->member->member_id;
-        $model->save(false);
+        // check for existing name on the court
+        $is_on_court = GamesBoard::checkForExisting($id);
+        if($is_on_court){
+            Yii::$app->session->setFlash('warning', 'Your name is already on the rota!');
+        }else{
+            $model = $this->findModel($id);
+            $model->member_id = Yii::$app->user->member->member_id;
+            $model->save(false);
+            Yii::$app->session->setFlash('success', 'You have successfully added your name on the rota!');
+        }
         return $this->redirect(Yii::$app->request->referrer);
     }
 

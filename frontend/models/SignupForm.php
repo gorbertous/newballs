@@ -2,6 +2,7 @@
 namespace frontend\models;
 
 use common\models\User;
+use backend\models\Members;
 use common\rbac\helpers\RbacHelper;
 use kartik\password\StrengthValidator;
 use yii\base\Model;
@@ -16,6 +17,7 @@ class SignupForm extends Model
     public $email;
     public $password;
     public $status;
+    public $club;
 
     /**
      * Returns the validation rules for attributes.
@@ -43,6 +45,8 @@ class SignupForm extends Model
                 'message' => 'This email address has already been taken.'],
 
             ['password', 'required'],
+            [['club'], 'integer'],
+            ['club', 'required'],
             // use passwordStrengthRule() method to determine password strength
             $this->passwordStrengthRule(),
 
@@ -87,6 +91,7 @@ class SignupForm extends Model
             'username' => Yii::t('app', 'Username'),
             'password' => Yii::t('app', 'Password'),
             'email' => Yii::t('app', 'Email'),
+            'club ' => Yii::t('modelattr', 'Clubbbbbbbbbb'),
         ];
     }
 
@@ -106,14 +111,23 @@ class SignupForm extends Model
         $user->setPassword($this->password);
         $user->generateAuthKey();
         $user->status = $this->status;
-
+        
         // if scenario is "rna" ( Registration Needs Activation ) we will generate account activation token
         if ($this->scenario === 'rna') {
             $user->generateAccountActivationToken();
         }
-
-        // if user is saved and role is assigned return user object
-        return $user->save() && RbacHelper::assignRole($user->getId()) ? $user : null;
+        $user->save(false);
+        RbacHelper::assignRole($user->getId());
+        
+        $member = new Members();
+        $member->user_id = $user->getId();
+        $member->c_id = $this->club;
+        $member->save(false);
+        
+        $newmember = Members::findOne(['user_id' => $user->getId()]);
+        
+        // if user is saved, role is assigned and new member record created return user object
+        return !empty($newmember) ? $user : null;
     }
 
     /**

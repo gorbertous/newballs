@@ -18,6 +18,11 @@ $greencheck = '<i class="text-success fa fa-check fa-lg" aria-hidden="true"></i>
 
     <?php $gridColumn = [
         ['class' => 'yii\grid\SerialColumn'],
+        [
+            'label'          => 'ID',
+            'attribute'      => 'member_id',
+            'contentOptions' => ['style' => 'width:20px;'],
+        ],
 
         [
             'label'          => Yii::t('modelattr', 'Photo'),

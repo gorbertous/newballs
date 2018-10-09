@@ -45,9 +45,17 @@ class MembersController extends Controller
                 'rules' => array_merge(self::FileUploadRules(), [
                     [
                         'controllers' => ['members'],
-                        'actions'     => ['create', 'update', 'delete', 'index', 'view'],
+                        'actions'     => ['create', 'delete'],
                         'allow'       => true,
                         'roles'       => ['developer']
+                    ],
+                    [
+                        'controllers' => ['members'],
+                        'actions'     => [
+                            'index', 'view', 'update'
+                        ],
+                        'allow'       => true,
+                        'roles'       => ['reader']
                     ]
                 ])
             ],
@@ -65,8 +73,6 @@ class MembersController extends Controller
      */
     public function actionIndex()
     {
-
-
         $searchModel = new MembersSearch();
         $searchModel->is_active = -1;
         $searchModel->is_admin = -1;
@@ -90,9 +96,9 @@ class MembersController extends Controller
         /** @var $model \backend\models\base\Members */
         $model = $this->findModel($id);
 
-//        if ($model->user_id !== Yii::$app->user->identity->id && !Yii::$app->user->can('writer')) {
-//            throw new ForbiddenHttpException(Yii::t('app', 'You are not allowed to access this page.'));
-//        }
+        if ($model->user_id !== Yii::$app->user->identity->id && !Yii::$app->user->can('writer')) {
+            throw new ForbiddenHttpException(Yii::t('app', 'You are not allowed to access this page.'));
+        }
 
         return $this->renderNormalorAjax('view', [
                     'model' => $this->findModel($id)

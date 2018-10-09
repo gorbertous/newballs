@@ -8,8 +8,8 @@ if (!empty(Yii::$app->session->get('member_photo'))) {
     $profileThumb90 = '@uploadsURL/profile-thumbs/90x90-' . Yii::$app->session->get('member_photo');
     $profileThumb25 = '@uploadsURL/profile-thumbs/25x25-' . Yii::$app->session->get('member_photo');
 } else {
-    $profileThumb90 = '/static/images/profile-default90x90.png';
-    $profileThumb25 = '/static/images/profile-default25x25.png';
+    $profileThumb90 = '/img/profile-default90x90.png';
+    $profileThumb25 = '/img/profile-default25x25.png';
 }
 ?>
 

@@ -85,6 +85,12 @@ return [
                     'select' => 'site/select',
                     'logout' => 'site/logout',
                     
+                    /** Global routes for most controllers */
+                    '<controller:[\w-]+>/<id:\d+>' => '<controller>/view',
+                    '<controller:[\w-]+>/<id:\d+>' => '<controller>/index',
+                    '<controller:[\w-]+>/<action:[\w-]+>/<id:\d+>' => '<controller>/<action>',
+                    '<controller:[\w-]+>/<action:[\w-]+>' => '<controller>/<action>',
+                    
                     /** Other routes */
                     'qr/<hashcode:\w+>' => 'qr/view',
                     'treemanager/node/<action:\w+>' => 'treemanager/node/<action>',
@@ -93,10 +99,10 @@ return [
                   
 
                     /** Global routes for most controllers */
-                    '<controller:[\w-]+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
-                    '<controller:[\w-]+>/<action:\w+>/<id:\d+>/<id2:\d+>' => '<controller>/<action>',
-                    '<controller:[\w-]+>' => '<controller>/index',
-                    '<controller:[\w-]+>/<action:[\w-]+>' => '<controller>/<action>',
+//                    '<controller:[\w-]+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
+//                    '<controller:[\w-]+>/<action:\w+>/<id:\d+>/<id2:\d+>' => '<controller>/<action>',
+//                    '<controller:[\w-]+>' => '<controller>/index',
+//                    '<controller:[\w-]+>/<action:[\w-]+>' => '<controller>/<action>',
                 
                 ],
             ]

@@ -96,6 +96,19 @@ class GamesBoard extends \yii\db\ActiveRecord
         return 'Rota';
     }
 
+    public function checkForExisting($id)
+    {
+        $rotaentry = GamesBoard::findOne(['id' => $id]);
+        $isoncourt = GamesBoard::find()
+                ->where(['member_id' => Yii::$app->user->member->member_id])
+                ->andWhere(['termin_id' => $rotaentry->termin_id])
+                ->one();
+        if (isset($isoncourt)) {
+            return true;
+        }
+        return false;
+    }
+
     /**
      * @return \yii\db\ActiveQuery
      */

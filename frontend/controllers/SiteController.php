@@ -11,6 +11,7 @@ use yii\filters\AccessControl;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use common\models\LoginForm;
+use common\models\User;
 use backend\models\Members;
 use backend\models\Clubs;
 use frontend\models\AccountActivation;
@@ -33,10 +34,10 @@ class SiteController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only'  => ['logout'],
+                'only'  => ['logout', 'signup', 'contact'],
                 'rules' => [
                     [
-                        'actions' => ['signup'],
+                        'actions' => ['signup', 'contact'],
                         'allow'   => true,
                         'roles'   => ['?'],
                     ],
@@ -77,7 +78,7 @@ class SiteController extends Controller
      *
      * @return mixed
      */
-    public function actionIndex()
+    public function actionIndex($c_id = 1)
     {
         if (Yii::$app->user->isGuest) {
             $this->layout = 'main-client';
@@ -100,7 +101,14 @@ class SiteController extends Controller
             $model = new LoginForm();
 
             if ($model->load(Yii::$app->request->post()) && $model->login()) {
-                return $this->redirect('/select');
+
+                if (($model->userHasnoclub()) !== null) {
+//                    dd($model->userHasnoclub());
+                    Yii::$app->session->setFlash('danger', Yii::t('app', 'Your account has not been set up correctly, contact the site administrator'));
+                    return $this->redirect(['/logout']);
+                } else {
+                    return $this->redirect('/select');
+                }
             } elseif ($model->accountSuspended()) {
                 Yii::$app->session->setFlash('danger', Yii::t('app', 'Your account has been suspended due to too many login attempts'));
             } elseif ($model->accountNotActivated()) {
@@ -130,7 +138,7 @@ class SiteController extends Controller
         $user_id = Yii::$app->user->id;
 
         if (Yii::$app->user->can('team_member')) {
-            // user is club team member, he has access to all the mandants
+            // user is super admin, with access to all the clubs
             $clubs = Clubs::find()
                     ->orderBy('name')
                     ->all();
@@ -252,17 +260,24 @@ class SiteController extends Controller
     public function actionContact()
     {
         if (Yii::$app->user->isGuest) {
+
             $this->layout = 'main-client';
+
             $model = new ContactForm();
             if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+                dd($model);
+
                 if ($model->sendEmail(Yii::$app->params['adminEmail'])) {
+
                     Yii::$app->session->setFlash('success', 'Thank you for contacting us. We will respond to you as soon as possible.');
                 } else {
+
                     Yii::$app->session->setFlash('error', 'There was an error sending your message.');
                 }
 
                 return $this->refresh();
             } else {
+
                 return $this->render('contact', [
                             'model' => $model,
                 ]);
@@ -335,7 +350,7 @@ class SiteController extends Controller
         }
         return $this->redirect('/rota');
     }
-    
+
     /**
      * Tries to send account activation email.
      *
@@ -347,17 +362,16 @@ class SiteController extends Controller
         // sending email has failed
         if (!$model->sendAccountActivationEmail($user)) {
             // display error message to user
-            Yii::$app->session->setFlash('error', Yii::t('app', 
-                'We couldn\'t send you account activation email, please contact us.'));
+            Yii::$app->session->setFlash('error', Yii::t('app', 'We couldn\'t send you account activation email, please contact us.'));
 
             // log this error, so we can debug possible problem easier.
-            Yii::error('Signup failed! User '.Html::encode($user->username).' could not sign up. 
+            Yii::error('Signup failed! User ' . Html::encode($user->username) . ' could not sign up. 
                 Possible causes: verification email could not be sent.');
         }
 
         // everything is OK
-        Yii::$app->session->setFlash('success', Yii::t('app', 'Hello').' '.Html::encode($user->username). '. ' .
-            Yii::t('app', 'To be able to log in, you need to confirm your registration. 
+        Yii::$app->session->setFlash('success', Yii::t('app', 'Hello') . ' ' . Html::encode($user->username) . '. ' .
+                Yii::t('app', 'To be able to log in, you need to confirm your registration. 
                 Please check your email, we have sent you a message.'));
     }
 

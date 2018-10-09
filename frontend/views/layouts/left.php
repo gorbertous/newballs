@@ -12,8 +12,8 @@ if (!empty(Yii::$app->session->get('member_photo'))) {
     $profileThumb90 = '@uploadsURL/profile-thumbs/90x90-' . Yii::$app->session->get('member_photo');
     $profileThumb25 = '@uploadsURL/profile-thumbs/25x25-' . Yii::$app->session->get('member_photo');
 } else {
-    $profileThumb90 = '/static/images/profile-default90x90.png';
-    $profileThumb25 = '/static/images/profile-default25x25.png';
+    $profileThumb90 = '/img/profile-default90x90.png';
+    $profileThumb25 = '/img/profile-default25x25.png';
 }
 
 
@@ -61,7 +61,7 @@ if (!Yii::$app->user->isGuest ) { ?>
                                         'label'   =>  Yii::t('appMenu', 'Members Area'),
                                         'icon'    => Menu::ADMIN_ICON_MENU,
                                         'url'     => '#',
-                                        'visible' => Yii::$app->user->can('team_admin'),
+                                        'visible' => Yii::$app->user->can('reader'),
 
                                         'items' => [
                                             [
