@@ -28,12 +28,13 @@ abstract class ContextNews implements Context
 
         // News -> title/header
         $context_array[ContextLetter::NEWS] = [
-            'title1'   => Menu::Company_text(),
+            'title1'   => Menu::clubText(),
             'ti_icon1' => Menu::UTILITIES_ICON,
             'title2'   => Menu::newsText(),
             'ti_icon2' => Menu::NEWS_ICON
         ];
-
+       
+        if(Yii::$app->user->can('writer')){
         // News -> index
         $context_array[ContextLetter::NEWS][] = [
             'button_title'  => Menu::newsText(),
@@ -48,7 +49,7 @@ abstract class ContextNews implements Context
             'fa_icon'       => Menu::NEWS_ICON
         ];
         
-         // LEGISLATION -> index ( third button ) -> Tags
+         // TAGS -> index ( third button ) -> Tags
             $context_array[ContextLetter::NEWS][] = [
                 'button_title'  => Yii::t('appMenu', self::LBL_TG_PLURAL_U),
                 'new_label'     => Yii::t('appMenu', self::LBL_NEW),
@@ -62,6 +63,21 @@ abstract class ContextNews implements Context
                 'perm_key'      => 'tags',
                 'fa_icon'       => 'fa fa-sitemap'
             ];
+        }
+        
+         // News -> news
+        $context_array[ContextLetter::NEWS][] = [
+//            'button_title'  => Menu::newsText(),
+            'new_label'     => Yii::t('appMenu', self::LBL_NEW),
+            'mod_label'     => Yii::t('appMenu', self::LBL_MODIFY),
+            'view_label'    => Yii::t('appMenu', self::LBL_VIEW),
+            'del_label'     => Yii::t('appMenu', self::LBL_DELETE),
+            'print_label'   => Yii::t('appMenu', self::LBL_PRINT),
+            'link'          => '/news/news',
+            'create'        => '/news/create',
+            'perm_key'      => 'newsp',
+            'fa_icon'       => Menu::NEWS_ICON
+        ];
 
         return $context_array;
     }

@@ -27,7 +27,7 @@ trait TraitFileUploads
             'controllers' => [Yii::$app->controller->id],
             'actions'     => ['ajaxupload', 'ajaxdelete'],
             'allow'       => true,
-            'roles'       => ['writer']
+            'roles'       => ['reader']
         ]];
     }
 

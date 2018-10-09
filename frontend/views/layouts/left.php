@@ -69,6 +69,28 @@ if (!Yii::$app->user->isGuest ) { ?>
                                                 'icon'    => Menu::ROTA_ICON_MENU,
                                                 'url'     => Url::toRoute(['rota/index']),
                                                 'active'  => ($route == 'rota/index'),
+                                                'visible' => Yii::$app->user->can('reader')
+                                            ],
+                                            [
+                                                'label'   => Menu::membersText(),
+                                                'icon'    => Menu::MEMBERS_ICON_MENU,
+                                                'url'     => Url::toRoute(['members/membership']),
+                                                'active'  => ($route == 'members/membership'),
+                                                'visible' => Yii::$app->user->can('reader')
+                                            ],
+                                            [
+                                                'label'   => Menu::newsText(),
+                                                'icon'    => Menu::NEWS_ICON_MENU,
+                                                'url'     => Url::toRoute(['news/news']),
+                                                'active'  => ($route == 'news/news' || $route == 'tags/index'),
+                                                'visible' => Yii::$app->user->can('reader')
+                                            ],
+                                            [
+                                                'label'   => Menu::rulesText(),
+                                                'icon'    => Menu::RULES_ICON_MENU,
+                                                'url'     => Url::toRoute(['rules/index']),
+                                                'active'  => ($route == 'riles/index'),
+                                                'visible' => Yii::$app->user->can('reader')
                                             ],
                                            
                                           

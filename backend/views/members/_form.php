@@ -156,6 +156,7 @@ use backend\models\Clubs;
                 </div>
                 <div class="col-md-6">
                     <?= $form->hrwCheckboxX($model, 'coaching') ?>
+                    <?= $form->hrwCheckboxX($model, 'is_organiser') ?>
                 </div>
             </div>
         </div>

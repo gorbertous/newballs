@@ -6,7 +6,7 @@ return [
     'language'   => 'en',
     'timezone'   => 'Europe/Luxembourg',
     'vendorPath' => dirname(dirname(__DIR__)) . '/vendor',
-    'version'    => '1.0.1',
+    'version'    => '1.0.0',
     
     'aliases' => [
         '@bower'      => '@vendor/bower-asset',

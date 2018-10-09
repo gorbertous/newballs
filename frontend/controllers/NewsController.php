@@ -45,11 +45,11 @@ class NewsController extends Controller
                         'controllers' => ['news'],
                         'actions'     => ['create', 'update', 'delete'],
                         'allow'       => true,
-                        'roles'       => ['team_member']
+                        'roles'       => ['writer']
                     ],
                     [
                         'controllers' => ['news'],
-                        'actions'     => ['index', 'view'],
+                        'actions'     => ['index', 'view','news'],
                         'allow'       => true,
                         'roles'       => ['reader']
                     ]
@@ -76,6 +76,24 @@ class NewsController extends Controller
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
+                    'searchModel'   => $searchModel,
+                    'dataProvider'  => $dataProvider,
+                    'context_array' => $this->getSpecificContextArray()
+        ]);
+    }
+    
+     /**
+     * {@inheritdoc}
+     */
+    public function actionNews()
+    {
+        $searchModel = new NewsSearch();
+        $searchModel->is_valid = -1;
+        $searchModel->is_public = -1;
+        $searchModel->to_newsletter = -1;
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('news', [
                     'searchModel'   => $searchModel,
                     'dataProvider'  => $dataProvider,
                     'context_array' => $this->getSpecificContextArray()

@@ -28,11 +28,11 @@ abstract class MenuTypes
 
     /** -- */
 
-    public static function Accidents_text(): string {
-        return Yii::t('appMenu', 'Accidents');
+    public static function rulesText(): string {
+        return Yii::t('appMenu', 'Rules');
     }
-    const ACCIDENTS_ICON = 'fa fa-ambulance';
-    const ACCIDENTS_ICON_MENU = 'ambulance';
+    const RULES_ICON = 'fa fa-balance-scale';
+    const RULES_ICON_MENU = 'balance-scale';
 
     /** -- */
 
@@ -81,7 +81,7 @@ abstract class MenuTypes
     /** -- */
 
     public static function membersText(): string {
-        return Yii::t('appMenu', 'Members');
+        return Yii::t('appMenu', 'Membership');
     }
     const MEMBERS_ICON = 'fa fa-user-plus';
     const MEMBERS_ICON_MENU = 'user-plus';

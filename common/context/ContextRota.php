@@ -26,7 +26,7 @@ abstract class ContextRota implements Context
         
         // Rota -> index
         $context_array[ContextLetter::ROTA][] = [
-            'button_title'  => Menu::rotaText(),
+//            'button_title'  => Menu::rotaText(),
             'new_label'     => Yii::t('appMenu', self::LBL_NEW),
             'mod_label'     => Yii::t('appMenu', self::LBL_MODIFY),
             'view_label'    => Yii::t('appMenu', self::LBL_VIEW),

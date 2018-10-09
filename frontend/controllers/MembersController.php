@@ -52,7 +52,7 @@ class MembersController extends Controller
                     [
                         'controllers' => ['members'],
                         'actions'     => [
-                            'index', 'view', 'update'
+                            'index', 'view', 'update', 'membership'
                         ],
                         'allow'       => true,
                         'roles'       => ['reader']
@@ -82,6 +82,26 @@ class MembersController extends Controller
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->renderNormalorAjax('index', [
+                    'searchModel'   => $searchModel,
+                    'dataProvider'  => $dataProvider,
+                    'context_array' => $this->getSpecificContextArray()
+        ]);
+    }
+    
+     /**
+     * {@inheritdoc}
+     */
+    public function actionMembership()
+    {
+        $searchModel = new MembersSearch();
+        $searchModel->is_active = 1;
+        $searchModel->is_admin = -1;
+        $searchModel->has_paid = -1;
+        $searchModel->is_organiser = -1;
+        $searchModel->is_visible = 1;
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->renderNormalorAjax('membership', [
                     'searchModel'   => $searchModel,
                     'dataProvider'  => $dataProvider,
                     'context_array' => $this->getSpecificContextArray()

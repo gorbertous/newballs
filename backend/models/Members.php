@@ -72,7 +72,7 @@ class Members extends \yii\db\ActiveRecord
     {
         return [
             [['user_id', 'c_id', 'mem_type_id', 'grade_id', 'gender', 'is_admin', 'is_organiser', 'is_active', 'has_paid', 'is_visible', 'ban_scoreupload', 'coaching', 'created_by', 'updated_by', 'created_at', 'updated_at'], 'integer'],
-            [['c_id', 'co_code'], 'required'],
+            [['c_id'], 'required'],
             [['dob'], 'safe'],
             [['title', 'zip'], 'string', 'max' => 20],
             [['firstname', 'lastname', 'email', 'city'], 'string', 'max' => 50],
@@ -120,7 +120,7 @@ class Members extends \yii\db\ActiveRecord
             'has_paid'        => Yii::t('modelattr', 'Has Paid'),
             'is_visible'      => Yii::t('modelattr', 'Is Visible'),
             'ban_scoreupload' => Yii::t('modelattr', 'Ban Score Upload'),
-            'coaching'        => Yii::t('modelattr', 'Coaching'),
+            'coaching'        => Yii::t('modelattr', 'Interested in coaching Lessons'),
             'created_by'      => Yii::t('modelattr', 'Created By'),
             'updated_by'      => Yii::t('modelattr', 'Updated By'),
             'created_at'      => Yii::t('modelattr', 'Created At'),

@@ -1,7 +1,7 @@
 <?php
 
 use backend\widgets\ActiveForm;
-use yii\helpers\ArrayHelper;
+//use yii\helpers\ArrayHelper;
 use common\helpers\Helpers;
 use common\dictionaries\Grades;
 use common\dictionaries\ContactTitles;
@@ -24,8 +24,10 @@ use common\helpers\ViewsHelper;
     ?>
 
     <ul class="nav nav-pills" id="tabContent">
-        <li class="active"><a href="#general" data-toggle="tab"><?= Yii::t('modelattr', 'General') ?></a></li>
-        <li><a href="#settings" data-toggle="tab"><?= Yii::t('modelattr', 'Settings') ?></a></li>
+        <li class="active"><a href="#general" data-toggle="tab"><?= Yii::t('modelattr', 'Profile') ?></a></li>
+        <?php if(Yii::$app->user->can('writer')): ?>
+            <li><a href="#settings" data-toggle="tab"><?= Yii::t('modelattr', 'Settings') ?></a></li>
+        <?php endif; ?>
 
         <!-- Audit tab  -->
         <?= Helpers::getAuditTab() ?>
@@ -118,37 +120,40 @@ use common\helpers\ViewsHelper;
                             ])
                             ?>
                         </div>
+                        <div class="row"> 
+                            <div class="col-md-6">
+                                <?= $form->hrwCheckboxX($model, 'coaching') ?>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        
-        <div class="tab-pane well" id="settings">
-            <div class="row">
-                <div class="col-md-6">
-                    <?= $form->hrwCheckboxX($model, 'is_active') ?>
+        <?php if(Yii::$app->user->can('writer')): ?>
+            <div class="tab-pane well" id="settings">
+                <div class="row">
+                    <div class="col-md-6">
+                        <?= $form->hrwCheckboxX($model, 'is_active') ?>
+                    </div>
+                    <div class="col-md-6">
+                        <?= $form->hrwCheckboxX($model, 'is_admin') ?>
+                    </div>
                 </div>
-                <div class="col-md-6">
-                    <?= $form->hrwCheckboxX($model, 'is_admin') ?>
+                <div class="row">
+                    <div class="col-md-6">
+                        <?= $form->hrwCheckboxX($model, 'has_paid') ?>
+                    </div>
+                    <div class="col-md-6">
+                        <?= $form->hrwCheckboxX($model, 'is_visible') ?>
+                    </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <?= $form->hrwCheckboxX($model, 'has_paid') ?>
-                </div>
-                <div class="col-md-6">
-                    <?= $form->hrwCheckboxX($model, 'is_visible') ?>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <?= $form->hrwCheckboxX($model, 'ban_scoreupload') ?>
-                </div>
-                <div class="col-md-6">
-                    <?= $form->hrwCheckboxX($model, 'coaching') ?>
+                <div class="row">
+                    <div class="col-md-6">
+                        <?= $form->hrwCheckboxX($model, 'ban_scoreupload') ?>
+                    </div>
                 </div>
             </div>
-        </div>
+        <?php endif; ?>
         <!-- Audit tab content -->
         <?php echo Helpers::getAuditTabContent($model) ?>
     </div>

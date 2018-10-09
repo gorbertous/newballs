@@ -50,53 +50,43 @@ $greencheck = '<i class="text-success fa fa-check fa-lg" aria-hidden="true"></i>
                 return $model->titleFB . (!empty($icons) ? '<br>'.$icons :  '') . $model->isnewLabel;
             }
         ],
+        'created_at:datetime',
 //        [
-//            'attribute' => News::ContLangFieldName('content'),
-//            'contentOptions' => ['style' => 'min-width: 260px;'],
-//            'label' => Yii::t('modelattr', 'Content'),
+//            'attribute' => 'is_public',
+//            'visible' => Yii::$app->user->can('team_member'),
+//            'hAlign' => GridView::ALIGN_CENTER,
 //            'format' => 'raw',
-//            'value' => function($model) {
-//                /** @var $model backend\models\News */
-//                return $model->contentFB;
-//            }
+//            'value'     => function($model)use ($redcross, $greencheck) {
+//                if ($model->is_public == true) {
+//                    return $greencheck;
+//                } else {
+//                    return $redcross;
+//                }
+//            },
+//            'filterType' => GridView::FILTER_SELECT2,
+//            'filter' => [ -1 => Yii::t('modelattr', 'All'),
+//                          0 => Yii::t('modelattr', 'No'),
+//                          1 => Yii::t('modelattr', 'Yes')],
+//            'width' => '30px;',
 //        ],
-
-        [
-            'attribute' => 'is_public',
-            'visible' => Yii::$app->user->can('team_member'),
-            'hAlign' => GridView::ALIGN_CENTER,
-            'format' => 'raw',
-            'value'     => function($model)use ($redcross, $greencheck) {
-                if ($model->is_public == true) {
-                    return $greencheck;
-                } else {
-                    return $redcross;
-                }
-            },
-            'filterType' => GridView::FILTER_SELECT2,
-            'filter' => [ -1 => Yii::t('modelattr', 'All'),
-                          0 => Yii::t('modelattr', 'No'),
-                          1 => Yii::t('modelattr', 'Yes')],
-            'width' => '30px;',
-        ],
-        [
-            'attribute' => 'is_valid',
-            'visible' => Yii::$app->user->can('team_member'),
-            'hAlign' => GridView::ALIGN_CENTER,
-            'format' => 'raw',
-            'value'     => function($model)use ($redcross, $greencheck) {
-                if ($model->is_valid == true) {
-                    return $greencheck;
-                } else {
-                    return $redcross;
-                }
-            },
-            'filterType' => GridView::FILTER_SELECT2,
-            'filter' => [ -1 => Yii::t('modelattr', 'All'),
-                          0 => Yii::t('modelattr', 'No'),
-                          1 => Yii::t('modelattr', 'Yes')],
-            'width' => '30px;',
-        ],
+//        [
+//            'attribute' => 'is_valid',
+//            'visible' => Yii::$app->user->can('team_member'),
+//            'hAlign' => GridView::ALIGN_CENTER,
+//            'format' => 'raw',
+//            'value'     => function($model)use ($redcross, $greencheck) {
+//                if ($model->is_valid == true) {
+//                    return $greencheck;
+//                } else {
+//                    return $redcross;
+//                }
+//            },
+//            'filterType' => GridView::FILTER_SELECT2,
+//            'filter' => [ -1 => Yii::t('modelattr', 'All'),
+//                          0 => Yii::t('modelattr', 'No'),
+//                          1 => Yii::t('modelattr', 'Yes')],
+//            'width' => '30px;',
+//        ],
 //        [
 //            'attribute' => 'to_newsletter',
 //            'visible' => Yii::$app->user->can('team_member'),

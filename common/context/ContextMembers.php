@@ -14,7 +14,7 @@ abstract class ContextMembers implements Context
 {
     public static function getContextArray()
     {
-        // CLUBS -> title/header
+        // MEMBERS -> title/header
         $context_array[ContextLetter::MEMBERS] = [
             'title1'    => Menu::membersText(),
             'ti_icon1'  => Menu::MEMBERS_ICON,
@@ -22,7 +22,7 @@ abstract class ContextMembers implements Context
             'ti_icon2'  => Menu::DATA_ICON
         ];
 
-        // CLUBS -> index
+        // MEMBERS -> index
         $context_array[ContextLetter::MEMBERS][] = [
             'new_label'     => Yii::t('appMenu', 'New member'),
             'mod_label'     => Yii::t('appMenu', 'Modify member data'),
