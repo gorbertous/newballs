@@ -33,10 +33,10 @@ use common\dictionaries\ClubSessions;
 
     <?php
     $form = ActiveForm::begin([
-                'id'      => 'form-location',
-                'options' => [
-                    'enctype' => 'multipart/form-data'
-                ]
+        'id'      => 'form-location',
+        'options' => [
+            'enctype' => 'multipart/form-data'
+        ]
     ]);
     ?>
 
@@ -44,7 +44,9 @@ use common\dictionaries\ClubSessions;
         <li class="active"><a href="#playdate" data-toggle="tab"><?= Yii::t('modelattr', 'Play Date') ?></a></li>
 
         <!-- Audit tab  -->
-        <?= Helpers::getAuditTab() ?>
+        <?php if(Yii::$app->user->can('team_memebr')): ?>
+            <?= Helpers::getAuditTab() ?>
+        <?php endif; ?>
     </ul>
 
     <div class="tab-content">

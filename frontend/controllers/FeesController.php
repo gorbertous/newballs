@@ -36,12 +36,14 @@ class FeesController extends Controller
             'access' => [
                 'class' => AccessControl::class,
                 'rules' => [
-                    [
+                   [
                         'controllers' => ['fees'],
-                        'actions'     => [],
+                        'actions'     => [
+                            'index', 'view', 'update', 'create', 'delete'
+                        ],
                         'allow'       => true,
-                        'roles'       => ['developer'],
-                    ],
+                        'roles'       => ['admin']
+                    ]
                 ],
             ],
             'verbs'  => [

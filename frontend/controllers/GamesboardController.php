@@ -41,7 +41,7 @@ class GamesboardController extends Controller
                         'controllers' => ['gamesboard'],
                         'actions'     => [],
                         'allow'       => true,
-                        'roles'       => ['developer'],
+                        'roles'       => ['admin'],
                     ],
                 ],
             ],

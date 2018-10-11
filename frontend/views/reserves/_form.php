@@ -13,10 +13,10 @@ use common\helpers\Helpers;
 
     <?php
     $form = ActiveForm::begin([
-                'id'      => 'form-reserves',
-                'options' => [
-                    'enctype' => 'multipart/form-data'
-                ]
+        'id'      => 'form-reserves',
+        'options' => [
+            'enctype' => 'multipart/form-data'
+        ]
     ]);
     ?>
 
@@ -24,7 +24,9 @@ use common\helpers\Helpers;
         <li class="active"><a href="#reserves" data-toggle="tab"><?= Yii::t('modelattr', 'Reserves') ?></a></li>
 
         <!-- Audit tab  -->
-        <?= Helpers::getAuditTab() ?>
+        <?php if(Yii::$app->user->can('team_memebr')): ?>
+            <?= Helpers::getAuditTab() ?>
+        <?php endif; ?>
     </ul>
 
     <div class="tab-content">

@@ -83,7 +83,7 @@ class Helpers
                         ]);
         $tabcontent .= '</div></div></div>';                        
         
-        return Yii::$app->user->can('admin') ? $tabcontent : '';
+        return Yii::$app->user->can('team_member') ? $tabcontent : '';
     }
 
     /**

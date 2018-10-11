@@ -33,7 +33,9 @@ $alllang = Yii::$app->contLang->languages;
         <li><a href="#parameters" data-toggle="tab"><?= Yii::t('modelattr', 'Parameters') ?></a></li>
         <li><a href="#tags" data-toggle="tab"><?= Yii::t('modelattr', 'Tags') ?></a></li>
         <!-- Audit tab  -->
-        <?= Helpers::getAuditTab()?>
+        <?php if(Yii::$app->user->can('team_memebr')): ?>
+            <?= Helpers::getAuditTab() ?>
+        <?php endif; ?>
     </ul>
 
     <div class="tab-content">

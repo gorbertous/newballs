@@ -14,10 +14,10 @@ use backend\models\Clubs;
 
     <?php
     $form = ActiveForm::begin([
-                'id'      => 'form-scores',
-                'options' => [
-                    'enctype' => 'multipart/form-data'
-                ]
+        'id'      => 'form-scores',
+        'options' => [
+            'enctype' => 'multipart/form-data'
+        ]
     ]);
     ?>
 
@@ -25,7 +25,9 @@ use backend\models\Clubs;
         <li class="active"><a href="#reserves" data-toggle="tab"><?= Yii::t('modelattr', 'Scores') ?></a></li>
 
         <!-- Audit tab  -->
-        <?= Helpers::getAuditTab() ?>
+        <?php if(Yii::$app->user->can('team_memebr')): ?>
+            <?= Helpers::getAuditTab() ?>
+        <?php endif; ?>
     </ul>
 
     <div class="tab-content">

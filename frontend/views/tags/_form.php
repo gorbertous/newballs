@@ -16,9 +16,6 @@ $alllang = Yii::$app->contLang->languages;
             'enctype' => 'multipart/form-data'
         ]
     ]);
-    /* @var $perm \common\components\Permissions */
-    $perm = Yii::$app->permissions;
-    $perm->readFormFieldPermissions($model, 'tags');
     ?>
 
     <div class="well">
@@ -26,7 +23,7 @@ $alllang = Yii::$app->contLang->languages;
             <div class="col-md-12">
                 <?php
                 foreach ($alllang as $iso) {
-                    echo $form->hrwTextInputMax($model, 'Name_'.$iso);
+                    echo $form->hrwTextInputMax($model, 'name_'.$iso);
                 }
                 ?>
             </div>

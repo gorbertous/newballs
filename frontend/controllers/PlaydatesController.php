@@ -42,7 +42,7 @@ class PlaydatesController extends Controller
                         'controllers' => ['playdates'],
                         'actions'     => [],
                         'allow'       => true,
-                        'roles'       => ['developer'],
+                        'roles'       => ['admin'],
                     ],
                 ],
             ],

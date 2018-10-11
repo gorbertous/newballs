@@ -39,10 +39,12 @@ class LocationController extends Controller
                 'rules' => [
                     [
                         'controllers' => ['location'],
-                        'actions'     => [],
+                        'actions'     => [
+                            'index', 'view', 'update', 'create', 'delete'
+                        ],
                         'allow'       => true,
-                        'roles'       => ['developer'],
-                    ],
+                        'roles'       => ['admin']
+                    ]
                 ],
             ],
             'verbs'  => [

@@ -26,7 +26,9 @@ use common\dictionaries\OutcomeStatus;
         <li class="active"><a href="#rota" data-toggle="tab"><?= Yii::t('modelattr', 'Rota') ?></a></li>
 
         <!-- Audit tab  -->
-        <?= Helpers::getAuditTab() ?>
+        <?php if(Yii::$app->user->can('team_memebr')): ?>
+            <?= Helpers::getAuditTab() ?>
+        <?php endif; ?>
     </ul>
 
     <div class="tab-content">

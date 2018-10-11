@@ -24,7 +24,9 @@ use common\helpers\Helpers;
         <li class="active"><a href="#fees" data-toggle="tab"><?= Yii::t('modelattr', 'Fees') ?></a></li>
 
         <!-- Audit tab  -->
-        <?= Helpers::getAuditTab() ?>
+        <?php if(Yii::$app->user->can('team_memebr')): ?>
+            <?= Helpers::getAuditTab() ?>
+        <?php endif; ?>
     </ul>
 
     <div class="tab-content">

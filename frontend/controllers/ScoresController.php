@@ -40,7 +40,7 @@ class ScoresController extends Controller
                         'controllers' => ['scores'],
                         'actions'     => [],
                         'allow'       => true,
-                        'roles'       => ['developer'],
+                        'roles'       => ['member'],
                     ],
                 ],
             ],

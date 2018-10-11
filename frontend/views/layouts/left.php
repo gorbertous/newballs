@@ -47,7 +47,6 @@ if (!Yii::$app->user->isGuest ) { ?>
                 <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
                     <div class="clear"></div>
                     <div class="menu_section">
-                       
                         <?=
                         \yiister\gentelella\widgets\Menu::widget(
                             [
@@ -56,12 +55,11 @@ if (!Yii::$app->user->isGuest ) { ?>
 //                                    ["label" => "Home", "url" => "/dashboard/index", "icon" => "home"],
                                     
                                      // MENU => MEMBERS
-
                                     [
                                         'label'   =>  Yii::t('appMenu', 'Members Area'),
                                         'icon'    => Menu::ADMIN_ICON_MENU,
                                         'url'     => '#',
-                                        'visible' => Yii::$app->user->can('reader'),
+                                        'visible' => (Yii::$app->user->can('reader') && Yii::$app->session->get('member_is_active')),
 
                                         'items' => [
                                             [
@@ -92,9 +90,6 @@ if (!Yii::$app->user->isGuest ) { ?>
                                                 'active'  => ($route == 'riles/index'),
                                                 'visible' => Yii::$app->user->can('reader')
                                             ],
-                                           
-                                          
-                     
                                         ] // MEMBERS
                                     ],
                                     
@@ -104,49 +99,40 @@ if (!Yii::$app->user->isGuest ) { ?>
                                         'label'   =>  Menu::adminText(),
                                         'icon'    => Menu::UTILITIES_ICON_MENU,
                                         'url'     => '#',
-                                        'visible' => Yii::$app->user->can('team_admin'),
+                                        'visible' => (Yii::$app->user->can('writer') && Yii::$app->session->get('member_is_active')),
 
                                         'items' => [
-
                                             [
                                                 'label'   => Menu::clubText(),
                                                 'icon'    => Menu::CLUB_ICON_MENU,
                                                 'url'     => Url::toRoute(['clubs/index']),
                                                 'active'  => ($route == 'clubs/index' || $route == 'location/index' || $route == 'fees/index' || $route == 'membershiptype/index'),
-                                                'visible' => Yii::$app->user->can('team_admin')
+                                                'visible' => Yii::$app->user->can('writer')
                                             ],
-                                           
-                                            
                                             [
                                                 'label'   => Menu::membersText(),
                                                 'icon'    => Menu::MEMBERS_ICON_MENU,
                                                 'url'     => Url::toRoute(['members/index']),
                                                 'active'  => ($route == 'members/index'),
-                                                'visible' => Yii::$app->user->can('team_admin')
+                                                'visible' => Yii::$app->user->can('writer')
                                             ],
                                             [
                                                 'label'   => Menu::playdatesText(),
                                                 'icon'    => Menu::PLAYDATES_ICON_MENU,
                                                 'url'     => Url::toRoute(['playdates/index']),
 //                                                'visible' => $perm->isMenuVisible('texts'),
-                                                'active'  => ($route == 'playdates/index' || $route == 'gamesboard/index' || $route == 'reserves/index' || $route == 'scores/index')
+                                                'active'  => ($route == 'playdates/index' || $route == 'gamesboard/index' || $route == 'reserves/index' || $route == 'scores/index'),
+                                                'visible' => Yii::$app->user->can('writer')
                                             ],
                                             [
                                                 'label'   => Menu::newsText(),
                                                 'icon'    => Menu::NEWS_ICON_MENU,
                                                 'url'     => Url::toRoute(['news/index']),
                                                 'active'  => ($route == 'news/index' || $route == 'tags/index'),
-                                                'visible' => Yii::$app->user->can('team_admin')
+                                                'visible' => Yii::$app->user->can('writer')
                                             ],
-                                           
-                                          
-                                           
-                     
                                         ] // items
                                     ],
-                                    
-                                   
-                                    
                                 ],
                             ]
                         )

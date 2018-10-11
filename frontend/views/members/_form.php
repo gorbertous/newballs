@@ -16,10 +16,10 @@ use common\helpers\ViewsHelper;
 
     <?php
     $form = ActiveForm::begin([
-                'id'      => 'form-members',
-                'options' => [
-                    'enctype' => 'multipart/form-data'
-                ]
+        'id'      => 'form-members',
+        'options' => [
+            'enctype' => 'multipart/form-data'
+        ]
     ]);
     ?>
 
@@ -30,7 +30,9 @@ use common\helpers\ViewsHelper;
         <?php endif; ?>
 
         <!-- Audit tab  -->
-        <?= Helpers::getAuditTab() ?>
+        <?php if(Yii::$app->user->can('team_memebr')): ?>
+            <?= Helpers::getAuditTab() ?>
+        <?php endif; ?>
     </ul>
 
     <div class="tab-content">
@@ -136,22 +138,24 @@ use common\helpers\ViewsHelper;
                         <?= $form->hrwCheckboxX($model, 'is_active') ?>
                     </div>
                     <div class="col-md-6">
-                        <?= $form->hrwCheckboxX($model, 'is_admin') ?>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
                         <?= $form->hrwCheckboxX($model, 'has_paid') ?>
                     </div>
-                    <div class="col-md-6">
-                        <?= $form->hrwCheckboxX($model, 'is_visible') ?>
-                    </div>
                 </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <?= $form->hrwCheckboxX($model, 'ban_scoreupload') ?>
+                <?php if(Yii::$app->user->can('team_member')): ?>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <?= $form->hrwCheckboxX($model, 'is_admin') ?>
+                        </div>
+                        <div class="col-md-6">
+                            <?= $form->hrwCheckboxX($model, 'is_visible') ?>
+                        </div>
                     </div>
-                </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <?= $form->hrwCheckboxX($model, 'ban_scoreupload') ?>
+                        </div>
+                    </div>
+                <?php endif; ?>
             </div>
         <?php endif; ?>
         <!-- Audit tab content -->

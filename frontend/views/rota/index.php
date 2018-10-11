@@ -22,13 +22,27 @@ $this->registerJs($search);
 
 $redcross = '<i class="text-danger fa fa-times fa-lg" aria-hidden="true"></i>';
 $greencheck = '<i class="text-success fa fa-check fa-lg" aria-hidden="true"></i>';
+if(!Yii::$app->session->get('member_has_paid')){
+    echo Yii::$app->session->setFlash('danger', 'Unfortunatelly the club has not yet received your membership payment, currently you cannot book the games, please settle this or contact the club chairman!');
+}
+
 ?>
 <div class="rota-index">
-    <p>
-        <?= Html::a(Yii::t('app', 'Advanced Search'), '#', ['class' => 'btn btn-info search-button']) ?>
-    </p>
-    <div class="search-form" style="display:none">
-        <?=  $this->render('_search', ['model' => $searchModel]); ?>
+    <div class="panel-group" id="accordion">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h4 class="panel-title">
+              <a data-toggle="collapse" data-parent="#accordion" href="#collapse1"><?= Yii::t('app', 'Rota Search')?>&nbsp;&nbsp;<span class="caret" style="border-width: 5px;"></span></a>
+            </h4>
+          </div>
+          <div id="collapse1" class="panel-collapse collapse">
+              <div class="panel-body">
+                    <div class="search-form">
+                        <?=  $this->render('_search', ['model' => $searchModel]); ?>
+                    </div>
+              </div>
+          </div>
+        </div>
     </div>
     <?php 
     $gridColumn = [
@@ -51,11 +65,11 @@ $greencheck = '<i class="text-success fa fa-check fa-lg" aria-hidden="true"></i>
         
         [
              'attribute' => 'termin_id',
-             
+             'format' => 'raw',
              'value' => function($model){  
                 $dispdate = Yii::$app->formatter->asDate($model->termin->termin_date);
                 $disptime = Yii::$app->formatter->asTime($model->termin->termin_date, 'short');
-                return 'Date : '. $dispdate . ' at '. $disptime . '   - Location: '. $model->termin->location->address;                   
+                return '<h3>Date : '. $dispdate . ' at '. $disptime . '   - Location: '. $model->termin->location->address.'</h3>';                   
              },
              'group' => true,
              'groupedRow' => true,
@@ -65,12 +79,15 @@ $greencheck = '<i class="text-success fa fa-check fa-lg" aria-hidden="true"></i>
          [
              'attribute' => 'court_id',
              'value' => function($model){                   
-                 return 'Court No : '. $model->court_id;                   
+                 return  '<h4>Court No : '. $model->court_id . '</h4>';                   
              },
+             'format' => 'raw',
+             //'label' => Yii::t('app', 'Court No'),
              'group' => true,
+             'subGroupOf'=>1,
              'groupedRow' => true,
-             'groupOddCssClass' => 'kv-grouped-row',
-             'groupEvenCssClass' => 'kv-grouped-row'
+//             'groupOddCssClass' => 'kv-grouped-row',
+//             'groupEvenCssClass' => 'kv-grouped-row'
          ],
          [
              'attribute' => 'member_id',
@@ -88,7 +105,7 @@ $greencheck = '<i class="text-success fa fa-check fa-lg" aria-hidden="true"></i>
                                 'method' => 'post',
                             ],
                         ]);
-                    return $link;
+                    return Yii::$app->session->get('member_has_paid') ? $link : $model->member->name;
                 } else {
                     $class = $model->tokens ? 'text-danger' : 'text-primary';
                     $iscoach = isset($model->member->memType) && ($model->member->memType->mem_type_id == 5) ? ' <span class="badge bg-red pull-right">Coach</span>' : '';
@@ -110,6 +127,7 @@ $greencheck = '<i class="text-success fa fa-check fa-lg" aria-hidden="true"></i>
             'attribute' => 'slot_id',
             'label' => Yii::t('app', 'Slot No'),
             'enableSorting' => false,
+            'width'      => '100px;',
         ],
         [
             'attribute' => 'tokens',

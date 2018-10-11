@@ -8,7 +8,7 @@ use common\dictionaries\NewsCategories;
 use common\helpers\TraitIndex;
 use backend\models\News;
 use kartik\grid\GridView;
-use yii\helpers\ArrayHelper;
+//use yii\helpers\ArrayHelper;
 
 $this->title = TraitIndex::getTitle($context_array);
 $currentBtn = TraitIndex::getCurrentBtn($context_array);
@@ -51,60 +51,7 @@ $greencheck = '<i class="text-success fa fa-check fa-lg" aria-hidden="true"></i>
             }
         ],
         'created_at:datetime',
-//        [
-//            'attribute' => 'is_public',
-//            'visible' => Yii::$app->user->can('team_member'),
-//            'hAlign' => GridView::ALIGN_CENTER,
-//            'format' => 'raw',
-//            'value'     => function($model)use ($redcross, $greencheck) {
-//                if ($model->is_public == true) {
-//                    return $greencheck;
-//                } else {
-//                    return $redcross;
-//                }
-//            },
-//            'filterType' => GridView::FILTER_SELECT2,
-//            'filter' => [ -1 => Yii::t('modelattr', 'All'),
-//                          0 => Yii::t('modelattr', 'No'),
-//                          1 => Yii::t('modelattr', 'Yes')],
-//            'width' => '30px;',
-//        ],
-//        [
-//            'attribute' => 'is_valid',
-//            'visible' => Yii::$app->user->can('team_member'),
-//            'hAlign' => GridView::ALIGN_CENTER,
-//            'format' => 'raw',
-//            'value'     => function($model)use ($redcross, $greencheck) {
-//                if ($model->is_valid == true) {
-//                    return $greencheck;
-//                } else {
-//                    return $redcross;
-//                }
-//            },
-//            'filterType' => GridView::FILTER_SELECT2,
-//            'filter' => [ -1 => Yii::t('modelattr', 'All'),
-//                          0 => Yii::t('modelattr', 'No'),
-//                          1 => Yii::t('modelattr', 'Yes')],
-//            'width' => '30px;',
-//        ],
-//        [
-//            'attribute' => 'to_newsletter',
-//            'visible' => Yii::$app->user->can('team_member'),
-//            'hAlign' => GridView::ALIGN_CENTER,
-//            'format' => 'raw',
-//            'value'     => function($model)use ($redcross, $greencheck) {
-//                if ($model->to_newsletter == true) {
-//                    return $greencheck;
-//                } else {
-//                    return $redcross;
-//                }
-//            },
-//            'filterType' => GridView::FILTER_SELECT2,
-//            'filter' => [ -1 => Yii::t('modelattr', 'All'),
-//                          0 => Yii::t('modelattr', 'No'),
-//                          1 => Yii::t('modelattr', 'Yes')],
-//            'width' => '30px;',
-//        ]
+
     ];
 
     $gridColumn[] = Yii::$app->user->can('team_member') ? TraitIndex::getActionColumn(
@@ -119,13 +66,14 @@ $greencheck = '<i class="text-success fa fa-check fa-lg" aria-hidden="true"></i>
         'panelBeforeTemplate' => null,
         // your toolbar can include the additional full export menu
         'toolbar' => [
-            Yii::$app->user->can('team_member') ? ['content' =>
-                                                       TraitIndex::getNewbutton($currentBtn) . ' ' .
-                                                       TraitIndex::getResetgrida($currentBtn)
+            Yii::$app->user->can('writer') ? 
+            ['content' =>
+                TraitIndex::getNewbutton($currentBtn) . ' ' .
+                TraitIndex::getResetgrida($currentBtn)
             ] :
-                ['content' =>
-                     TraitIndex::getResetgrida($currentBtn)
-                ]
+            ['content' =>
+                TraitIndex::getResetgrida($currentBtn)
+            ]
         ],
         'exportdataProvider' => $dataProvider,
         'exportcolumns' => $gridColumn

@@ -17,7 +17,6 @@ class AdmAsset extends AssetBundle
     ];
     public $js = [
         'js/app.js',
-        'js/client.js',
         'js/vendor.js',
     ];
     public $depends = [

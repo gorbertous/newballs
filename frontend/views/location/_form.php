@@ -25,7 +25,9 @@ use common\helpers\ViewsHelper;
         <li class="active"><a href="#location" data-toggle="tab"><?= Yii::t('modelattr', 'Location') ?></a></li>
 
         <!-- Audit tab  -->
-        <?= Helpers::getAuditTab() ?>
+        <?php if(Yii::$app->user->can('team_memebr')): ?>
+            <?= Helpers::getAuditTab() ?>
+        <?php endif; ?>
     </ul>
 
     <div class="tab-content">

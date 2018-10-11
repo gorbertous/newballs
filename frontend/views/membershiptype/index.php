@@ -30,7 +30,7 @@ $currentBtn = TraitIndex::getCurrentBtn($context_array);
     ];
 
     $gridColumn[] = TraitIndex::getActionColumn(
-        '{view}{update}{delete}',
+        '{update}{delete}',
         $currentBtn);
 
 

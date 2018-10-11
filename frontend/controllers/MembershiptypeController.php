@@ -38,9 +38,11 @@ class MembershiptypeController extends Controller
                 'rules' => [
                     [
                         'controllers' => ['membershiptype'],
-                        'actions'     => [],
+                        'actions'     => [
+                            'index', 'view', 'update', 'create', 'delete'
+                        ],
                         'allow'       => true,
-                        'roles'       => ['developer'],
+                        'roles'       => ['admin']
                     ],
                 ],
             ],

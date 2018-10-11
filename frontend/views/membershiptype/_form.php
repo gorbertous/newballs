@@ -15,10 +15,10 @@ $alllang = Yii::$app->contLang->languages;
 
     <?php
     $form = ActiveForm::begin([
-                'id'      => 'membership-type-form',
-                'options' => [
-                    'enctype' => 'multipart/form-data'
-                ]
+        'id'      => 'membership-type-form',
+        'options' => [
+            'enctype' => 'multipart/form-data'
+        ]
     ]);
     ?>
 
@@ -26,7 +26,9 @@ $alllang = Yii::$app->contLang->languages;
         <li class="active"><a href="#fees" data-toggle="tab"><?= Yii::t('modelattr', 'Membership Types') ?></a></li>
 
         <!-- Audit tab  -->
-        <?= Helpers::getAuditTab() ?>
+        <?php if(Yii::$app->user->can('team_memebr')): ?>
+            <?= Helpers::getAuditTab() ?>
+        <?php endif; ?>
     </ul>
 
     <div class="tab-content">

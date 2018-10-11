@@ -8,6 +8,7 @@ use frontend\models\RotaSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 use common\dictionaries\ContextLetter;
 
 /**
@@ -15,7 +16,9 @@ use common\dictionaries\ContextLetter;
  */
 class RotaController extends Controller
 {
-     use TraitController;
+
+    use TraitController;
+
     /**
      * {@inheritdoc}
      */
@@ -24,29 +27,27 @@ class RotaController extends Controller
         parent::init();
         $this->setSessionContext(ContextLetter::ROTA);
     }
-    
+
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::class,
+                'rules' => [
+                    [
+                        'controllers' => ['rota'],
+                        'actions'     => [],
+                        'allow'       => true,
+                        'roles'       => ['member'],
+                    ],
+                ],
+            ],
             'verbs'  => [
-                'class'   => VerbFilter::className(),
+                'class'   => VerbFilter::class,
                 'actions' => [
                     'delete' => ['post'],
                 ],
             ],
-            'access' => [
-                'class' => \yii\filters\AccessControl::className(),
-                'rules' => [
-                    [
-                        'allow'   => true,
-                        'actions' => ['index', 'view', 'create', 'update', 'delete', 'pdf'],
-                        'roles'   => ['@']
-                    ],
-                    [
-                        'allow' => false
-                    ]
-                ]
-            ]
         ];
     }
 
@@ -56,6 +57,10 @@ class RotaController extends Controller
      */
     public function actionIndex()
     {
+        if (!Yii::$app->session->get('member_is_active')) {
+            Yii::$app->session->setFlash('danger', Yii::t('app', 'Your account has been temporarily suspended, contact the site administrator'));
+            return $this->redirect(['/clubs/stats']);
+        }
         $searchModel = new RotaSearch();
         $searchModel->timefilter = 1;
         $searchModel->tokens = -1;
@@ -64,8 +69,8 @@ class RotaController extends Controller
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
-                    'searchModel'  => $searchModel,
-                    'dataProvider' => $dataProvider,
+                    'searchModel'   => $searchModel,
+                    'dataProvider'  => $dataProvider,
                     'context_array' => $this->getSpecificContextArray()
         ]);
     }
@@ -75,9 +80,9 @@ class RotaController extends Controller
         /** @var $model \backend\models\base\GamesBoard */
         // check for existing name on the court
         $is_on_court = GamesBoard::checkForExisting($id);
-        if($is_on_court){
+        if ($is_on_court) {
             Yii::$app->session->setFlash('warning', 'Your name is already on the rota!');
-        }else{
+        } else {
             $model = $this->findModel($id);
             $model->member_id = Yii::$app->user->member->member_id;
             $model->save(false);
@@ -133,5 +138,4 @@ class RotaController extends Controller
 //            throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
 //        }
 //    }
-
 }

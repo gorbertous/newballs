@@ -5,19 +5,29 @@ use common\helpers\TraitIndex;
 use yii\helpers\ArrayHelper;
 use backend\models\Members;
 
+
 $this->title = TraitIndex::getTitle($context_array);
 $currentBtn = TraitIndex::getCurrentBtn($context_array);
 
-//dd($context_array);
-
-
 $redcross = '<i class="text-danger fa fa-times fa-lg" aria-hidden="true"></i>';
 $greencheck = '<i class="text-success fa fa-check fa-lg" aria-hidden="true"></i>';
-
+$club = \backend\models\Clubs::findOne(Yii::$app->session->get('c_id'));
 ?>
-
+ 
 <div class="membership-index">
-
+    <div class="panel-group" id="accordion">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h4 class="panel-title">
+              <a data-toggle="collapse" data-parent="#accordion" href="#collapse1"><?= Yii::t('modelattr', 'Membership Payment Details')?>&nbsp;&nbsp;<span class="caret" style="border-width: 5px;"></span></a>
+            </h4>
+          </div>
+          <div id="collapse1" class="panel-collapse collapse">
+            <div class="panel-body"><?= $club->subscription_page?></div>
+          </div>
+        </div>
+    </div>
+    
     <?php $gridColumn = [
         ['class' => 'yii\grid\SerialColumn'],
 
@@ -116,6 +126,20 @@ $greencheck = '<i class="text-success fa fa-check fa-lg" aria-hidden="true"></i>
                 1  => Yii::t('modelattr', 'Yes')],
             'width'      => '100px;',
         ],
+        [
+            'attribute' => 'grade_id',
+            'label'          => Yii::t('modelattr', 'Level'),
+            'format'         => 'raw',
+            'value'          => function ($model) {
+                return isset($model->grade_id) ? common\dictionaries\Grades::get($model->grade_id) : null;
+            },
+            'filterType'          => GridView::FILTER_SELECT2,
+            'filter'              => common\dictionaries\Grades::all(),
+            'filterWidgetOptions' => [
+                'pluginOptions' => ['allowClear' => true]
+            ],
+            'filterInputOptions'  => ['placeholder' => '', 'id' => 'grid-nat-search-grades'],
+        ],
       
         [
             'attribute' => 'coaching',
@@ -145,11 +169,11 @@ $greencheck = '<i class="text-success fa fa-check fa-lg" aria-hidden="true"></i>
         // use default panelbefortemplate
         'panelBeforeTemplate' => null,
         // your toolbar can include the additional full export menu
-        'toolbar'             => [
-            ['content' =>
-                 TraitIndex::getNewbutton($currentBtn) 
-            ],
-        ],
+//        'toolbar'             => [
+//            ['content' =>
+//                 TraitIndex::getNewbutton($currentBtn) 
+//            ],
+//        ],
         'exportdataProvider'  => $dataProvider,
         'exportcolumns'       => $gridColumn
     ];

@@ -8,7 +8,6 @@ use backend\models\Members;
 $this->title = TraitIndex::getTitle($context_array);
 $currentBtn = TraitIndex::getCurrentBtn($context_array);
 
-
 $redcross = '<i class="text-danger fa fa-times fa-lg" aria-hidden="true"></i>';
 $greencheck = '<i class="text-success fa fa-check fa-lg" aria-hidden="true"></i>';
 
@@ -70,14 +69,21 @@ $greencheck = '<i class="text-success fa fa-check fa-lg" aria-hidden="true"></i>
         ],
         [
             'attribute' => 'is_active',
-            'hAlign'    => GridView::ALIGN_CENTER,
-            'format'    => 'raw',
-            'value'     => function($model)use ($redcross, $greencheck) {
-                if ($model->is_active == 1) {
-                    return $greencheck;
-                } else {
-                    return $redcross;
-                }
+            'class' => 'kartik\grid\EditableColumn',
+            'editableOptions' => function($model) {
+                return [
+                    'inputType' => \kartik\editable\Editable::INPUT_SELECT2,
+                    'asPopover' => true,
+                    'options' => [
+                        'data' => [
+                            0  => Yii::t('modelattr', 'No'),
+                            1  => Yii::t('modelattr', 'Yes')],
+                        'pluginOptions' => []
+                    ]
+                ];
+            },
+            'value'     => function($model) {
+                return $model->is_active ? Yii::t('modelattr', 'Yes') : Yii::t('modelattr', 'No');
             },
             'filterType' => GridView::FILTER_SELECT2,
             'filter'     => [-1 => Yii::t('modelattr', 'All'),
@@ -96,6 +102,7 @@ $greencheck = '<i class="text-success fa fa-check fa-lg" aria-hidden="true"></i>
                     return $redcross;
                 }
             },
+            'visible' => Yii::$app->user->can('team_member'),
             'filterType' => GridView::FILTER_SELECT2,
             'filter'     => [-1 => Yii::t('modelattr', 'All'),
                 0  => Yii::t('modelattr', 'No'),
@@ -104,14 +111,30 @@ $greencheck = '<i class="text-success fa fa-check fa-lg" aria-hidden="true"></i>
         ],
         [
             'attribute' => 'has_paid',
-            'hAlign'    => GridView::ALIGN_CENTER,
-            'format'    => 'raw',
-            'value'     => function($model)use ($redcross, $greencheck) {
-                if ($model->has_paid == 1) {
-                    return $greencheck;
-                } else {
-                    return $redcross;
-                }
+//            'hAlign'    => GridView::ALIGN_CENTER,
+//            'format'    => 'raw',
+//            'value'     => function($model)use ($redcross, $greencheck) {
+//                if ($model->has_paid == 1) {
+//                    return $greencheck;
+//                } else {
+//                    return $redcross;
+//                }
+//            },
+            'class' => 'kartik\grid\EditableColumn',
+            'editableOptions' => function($model) {
+                return [
+                    'inputType' => \kartik\editable\Editable::INPUT_SELECT2,
+                    'asPopover' => true,
+                    'options' => [
+                        'data' => [
+                            0  => Yii::t('modelattr', 'No'),
+                            1  => Yii::t('modelattr', 'Yes')],
+                        'pluginOptions' => []
+                    ]
+                ];
+            },
+            'value'     => function($model) {
+                return $model->has_paid ? Yii::t('modelattr', 'Yes') : Yii::t('modelattr', 'No');
             },
             'filterType' => GridView::FILTER_SELECT2,
             'filter'     => [-1 => Yii::t('modelattr', 'All'),
@@ -130,6 +153,7 @@ $greencheck = '<i class="text-success fa fa-check fa-lg" aria-hidden="true"></i>
                     return $redcross;
                 }
             },
+            'visible' => Yii::$app->user->can('team_member'),
             'filterType' => GridView::FILTER_SELECT2,
             'filter'     => [-1 => Yii::t('modelattr', 'All'),
                 0  => Yii::t('modelattr', 'No'),
@@ -147,6 +171,7 @@ $greencheck = '<i class="text-success fa fa-check fa-lg" aria-hidden="true"></i>
                     return $redcross;
                 }
             },
+            'visible' => Yii::$app->user->can('team_member'),
             'filterType' => GridView::FILTER_SELECT2,
             'filter'     => [-1 => Yii::t('modelattr', 'All'),
                 0  => Yii::t('modelattr', 'No'),
@@ -156,10 +181,11 @@ $greencheck = '<i class="text-success fa fa-check fa-lg" aria-hidden="true"></i>
         
     ];
 
-    $gridColumn[] = TraitIndex::getActionColumn(
-        '{view}{update}{delete}',
-        $currentBtn);
-
+    
+    $gridColumn[] = Yii::$app->user->can('team_member') ? 
+        TraitIndex::getActionColumn(
+        '{view}{update}{delete}', $currentBtn) :
+        TraitIndex::getActionColumn('{view}',  $currentBtn);
 
     $gridParams = [
         'dataProvider'        => $dataProvider,
@@ -170,7 +196,7 @@ $greencheck = '<i class="text-success fa fa-check fa-lg" aria-hidden="true"></i>
         // your toolbar can include the additional full export menu
         'toolbar'             => [
             ['content' =>
-                 TraitIndex::getNewbutton($currentBtn) . ' ' .
+//                 TraitIndex::getNewbutton($currentBtn) . ' ' .
                  TraitIndex::getResetgrida($currentBtn)
             ],
         ],

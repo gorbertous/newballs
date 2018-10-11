@@ -39,10 +39,22 @@ class ClubsController extends Controller
                 'rules' => array_merge(self::FileUploadRules(), [
                     [
                         'controllers' => ['clubs'],
-                        'actions'     => ['create', 'update', 'delete', 'index', 'view'],
+                        'actions'     => ['create','delete'],
                         'allow'       => true,
                         'roles'       => ['developer']
-                    ]
+                    ],
+                    [
+                        'controllers' => ['clubs'],
+                        'actions'     => [ 'index', 'update', 'view'],
+                        'allow'       => true,
+                        'roles'       => ['admin']
+                    ],
+                    [
+                        'controllers' => ['clubs'],
+                        'actions'     => [ 'stats'],
+                        'allow'       => true,
+                        'roles'       => ['member']
+                    ],
                 ])
             ],
             'verbs'  => [
@@ -67,6 +79,15 @@ class ClubsController extends Controller
                     'searchModel'   => $searchModel,
                     'dataProvider'  => $dataProvider,
                     'context_array' => $this->getSpecificContextArray()
+        ]);
+    }
+    
+    public function actionStats()
+    {
+       $model = $this->findModel(Yii::$app->session->get('c_id'));
+
+        return $this->renderNormalorAjax('index', [
+                    'model'   => $model
         ]);
     }
 

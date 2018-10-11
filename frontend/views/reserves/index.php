@@ -22,6 +22,7 @@ $currentBtn = TraitIndex::getCurrentBtn($context_array);
             'label'          => 'ID',
             'attribute'      => 'id',
             'contentOptions' => ['style' => 'width:20px;'],
+            'visible' => Yii::$app->user->can('team_member'),
         ],
         [
             'attribute'           => 'termin_id',
@@ -52,7 +53,7 @@ $currentBtn = TraitIndex::getCurrentBtn($context_array);
     ];
 
     $gridColumn[] = TraitIndex::getActionColumn(
-        '{view}{update}{delete}',
+        '{update}{delete}',
         $currentBtn);
 
 

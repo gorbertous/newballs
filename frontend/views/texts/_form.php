@@ -21,7 +21,6 @@ use backend\widgets\ActiveForm;
             <div class="col-md-12">
                 <?= $form->hrwTextInputMax($model, 'code') ?>
                 <?php 
-                
                     foreach (Yii::$app->contLang->languages as $iso) {
                         echo $form->hrwTinyMce($model, 'text_'.$iso);
                     }

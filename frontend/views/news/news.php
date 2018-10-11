@@ -8,7 +8,7 @@ use common\dictionaries\NewsCategories;
 use common\helpers\TraitIndex;
 use backend\models\News;
 use kartik\grid\GridView;
-use yii\helpers\ArrayHelper;
+//use yii\helpers\ArrayHelper;
 
 $this->title = TraitIndex::getTitle($context_array);
 $currentBtn = TraitIndex::getCurrentBtn($context_array);

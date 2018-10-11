@@ -25,6 +25,7 @@ $greencheck = '<i class="text-success fa fa-check fa-lg" aria-hidden="true"></i>
             'label'          => 'ID',
             'attribute'      => 'id',
             'contentOptions' => ['style' => 'width:20px;'],
+            'visible' => Yii::$app->user->can('team_member'),
         ],
         [
             'attribute'           => 'termin_id',
@@ -107,7 +108,7 @@ $greencheck = '<i class="text-success fa fa-check fa-lg" aria-hidden="true"></i>
     ];
 
     $gridColumn[] = TraitIndex::getActionColumn(
-        '{view}{update}{delete}',
+        '{update}{delete}',
         $currentBtn);
 
 

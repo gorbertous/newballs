@@ -1,97 +1,139 @@
 <?php
 
-use yii\helpers\Html;
 use yii\widgets\DetailView;
-use yiister\gentelella\widgets\Panel;
+use common\helpers\Helpers;
 
 /* @var $this yii\web\View */
 /* @var $model backend\models\Members */
 
-$this->title = Yii::t('modelattr', 'View {modelClass}', [
-    'modelClass' => 'Members',
-]) . ' #' . $model->title;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('modelattr', 'Members'), 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+
+$redcross = '<i class="text-danger fa fa-times fa-lg" aria-hidden="true"></i>';
+$greencheck = '<i class="text-success fa fa-check fa-lg" aria-hidden="true"></i>';
 ?>
-
-
 
 <div class="row">
     <div class="col-md-12">
-        
-        <?php         Panel::begin(
-        [
-        'header' => Html::encode($this->title),
-        'icon' => 'users',
-        ]
-        )
-         ?> 
 
         <div class="members-view">
-            
-            <?= \cebe\gravatar\Gravatar::widget([
-                'email' => 'gorbertous@gmail.com',
-                'options' => [
-                    'alt' => 'gorbertous'
+
+            <?=
+            DetailView::widget([
+                'model'      => $model,
+                'attributes' => [
+                    [
+                        'label' => Yii::t('modelattr', 'Club'),
+                        'value' => function ($model) {
+                            return isset($model->club) ? $model->club->name : null;
+                        },
+                    ],
+                    [
+                        'label' => Yii::t('modelattr', 'Name'),
+                        'value' => function ($model) {
+                            return isset($model->name) ? $model->name : null;
+                        },
+                    ],
+                    [
+                        'label'  => Yii::t('modelattr', 'Photo'),
+                        'format' => 'raw',
+                        'value'  => function ($model) {
+                            $gravatar = isset($model->user->email) ? $model->getGravatar($model->user->email) : null;
+                            return !empty($model->photo) ? $model->getIconPreviewAsHtml('ajaxfileinputPhoto', 60) : $gravatar;
+                        }
+                    ],
+                    'email:email',
+                    [
+                        'label' => Yii::t('modelattr', 'Membership'),
+                        'value' => function ($model) {
+                            return isset($model->memType) ? $model->memType->nameFB : null;
+                        },
+                    ],
+                    [
+                        'label'  => Yii::t('modelattr', 'Level'),
+                        'format' => 'raw',
+                        'value'  => function ($model) {
+                            return isset($model->grade_id) ? common\dictionaries\Grades::get($model->grade_id) : null;
+                        }
+                    ],
+                    'phone',
+                    'phone_mobile',
+                    [
+                        'label'  => Yii::t('modelattr', 'Address'),
+                        'format' => 'raw',
+                        'value'  => function ($model) {
+                            $address = !empty($model->address) ? $model->fullAddress : null;
+                            return $address;
+                        }
+                    ],
+                    [
+                        'label' => Yii::t('modelattr', 'Nationality'),
+                        'value' => function($model) {
+                            return $model->nationalitytranslated;
+                        },
+                    ],
+                    [
+                        'label'  => Yii::t('modelattr', 'Is Committee'),
+                        'format' => 'raw',
+                        'value'  => function($model)use ($redcross, $greencheck) {
+                            return $model->is_admin ? $greencheck : $redcross;
+                        },
+                    ],
+                    [
+                        'label'  => Yii::t('modelattr', 'Is Chairman'),
+                        'format' => 'raw',
+                        'value'  => function($model)use ($redcross, $greencheck) {
+                            return $model->is_organiser ? $greencheck : $redcross;
+                        },
+                    ],
+                    [
+                        'label'  => Yii::t('modelattr', 'Is Active'),
+                        'format' => 'raw',
+                        'value'  => function($model)use ($redcross, $greencheck) {
+                            return $model->is_active ? $greencheck : $redcross;
+                        },
+                    ],
+                    [
+                        'label'  => Yii::t('modelattr', 'Has Payed'),
+                        'format' => 'raw',
+                        'value'  => function($model)use ($redcross, $greencheck) {
+                            return $model->has_paid ? $greencheck : $redcross;
+                        },
+                    ],
+                    [
+                        'label'  => Yii::t('modelattr', 'Visible'),
+                        'format' => 'raw',
+                        'value'  => function($model)use ($redcross, $greencheck) {
+                            return $model->is_visible ? $greencheck : $redcross;
+                        },
+                    ],
+                    [
+                        'label'  => Yii::t('modelattr', 'Coaching Lessons'),
+                        'format' => 'raw',
+                        'value'  => function($model)use ($redcross, $greencheck) {
+                            return $model->coaching ? $greencheck : $redcross;
+                        },
+                    ],
+                    [
+                        'label'  => Yii::t('modelattr', 'Scores upload ban'),
+                        'format' => 'raw',
+                        'value'  => function($model)use ($redcross, $greencheck) {
+                            return $model->ban_scoreupload ? $greencheck : $redcross;
+                        },
+                        'visible' => Yii::$app->user->can('team_member'),
+                    ],
                 ],
-                'size' => 32
-            ]) ?>
-
-
-            <?= Html::a(Yii::t('modelattr', 'Manage'), ['index'], ['class' => 'btn btn-warning btn-flat']) ?>
-            <?= Html::a(Yii::t('modelattr', 'Create'), ['create'], ['class' => 'btn btn-success btn-flat']) ?>
-            <?= Html::a(Yii::t('modelattr', 'Update'), ['update', 'id' => $model->member_id], ['class' => 'btn btn-primary btn-flat']) ?>
-            <?= Html::a(Yii::t('modelattr', 'Delete'), ['delete', 'id' => $model->member_id], [
-            'class' => 'btn btn-danger btn-flat',
-            'data' => [
-            'confirm' => Yii::t('modelattr', 'Are you sure you want to delete this item?'),
-            'method' => 'post',
-            ],
-            ]) ?>
-            
-            
-            
-            <?= DetailView::widget([
-            'model' => $model,
-            'attributes' => [
-                        'member_id',
-            'user_id',
-            'c_id',
-            'mem_type_id',
-            'grade_id',
-            'title',
-            'firstname',
-            'lastname',
-            'gender',
-            'email:email',
-            'photo',
-            'orig_photo',
-            'phone',
-            'phone_office',
-            'phone_mobile',
-            'address',
-            'zip',
-            'city',
-            'co_code',
-            'country_id',
-            'nationality',
-            'dob',
-            'is_admin',
-            'is_organiser',
-            'is_active',
-            'has_paid',
-            'is_visible',
-            'ban_scoreupload',
-            'coaching',
-            'created_by',
-            'updated_by',
-            'created_at',
-            'updated_at',
-            ],
-            ]) ?>
+            ])
+            ?>
         </div>
+        <?php if (Yii::$app->controller->action->id == 'view') { ?>
+            <div class="clearfix"></div> <br />
+            <?php
+            echo Helpers::getModalFooter($model, $model->member_id, 'view', [
+                'buttons' => ['cancel']
+            ]);
+            ?>
+        <?php } ?>
 
-        <?php Panel::end() ?> 
+
     </div>
 </div>
 

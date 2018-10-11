@@ -221,6 +221,8 @@ class SiteController extends Controller
             $session->set('member_id', $member->member_id);
             $session->set('member_photo', $member->photo);
             $session->set('member_name', $member->name);
+            $session->set('member_has_paid', $member->has_paid);
+            $session->set('member_is_active', $member->is_active);
             // club data
             $session->set('c_id', $c_id);
             $session->set('club_name', $club->name);

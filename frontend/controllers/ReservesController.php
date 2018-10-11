@@ -41,7 +41,7 @@ class ReservesController extends Controller
                         'controllers' => ['reserves'],
                         'actions'     => [],
                         'allow'       => true,
-                        'roles'       => ['developer'],
+                        'roles'       => ['member'],
                     ],
                 ],
             ],

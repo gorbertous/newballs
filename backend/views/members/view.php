@@ -9,9 +9,13 @@ use yiister\gentelella\widgets\Panel;
 
 $this->title = Yii::t('modelattr', 'View {modelClass}', [
     'modelClass' => 'Members',
-]) . ' #' . $model->title;
+]) . ' #' . $model->name;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('modelattr', 'Members'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
+
+$redcross = '<i class="text-danger fa fa-times fa-lg" aria-hidden="true"></i>';
+$greencheck = '<i class="text-success fa fa-check fa-lg" aria-hidden="true"></i>';
+
 ?>
 
 
@@ -19,7 +23,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="row">
     <div class="col-md-12">
         
-        <?php         Panel::begin(
+        <?php Panel::begin(
         [
         'header' => Html::encode($this->title),
         'icon' => 'users',
@@ -28,54 +32,53 @@ $this->params['breadcrumbs'][] = $this->title;
          ?> 
 
         <div class="members-view">
-            
-            <?= \cebe\gravatar\Gravatar::widget([
-                'email' => 'gorbertous@gmail.com',
-                'options' => [
-                    'alt' => 'gorbertous'
-                ],
-                'size' => 32
-            ]) ?>
-
-
-            <?= Html::a(Yii::t('modelattr', 'Manage'), ['index'], ['class' => 'btn btn-warning btn-flat']) ?>
-            <?= Html::a(Yii::t('modelattr', 'Create'), ['create'], ['class' => 'btn btn-success btn-flat']) ?>
-            <?= Html::a(Yii::t('modelattr', 'Update'), ['update', 'id' => $model->member_id], ['class' => 'btn btn-primary btn-flat']) ?>
-            <?= Html::a(Yii::t('modelattr', 'Delete'), ['delete', 'id' => $model->member_id], [
-            'class' => 'btn btn-danger btn-flat',
-            'data' => [
-            'confirm' => Yii::t('modelattr', 'Are you sure you want to delete this item?'),
-            'method' => 'post',
-            ],
-            ]) ?>
-            
-            
-            
+          
             <?= DetailView::widget([
             'model' => $model,
             'attributes' => [
-                        'member_id',
-            'user_id',
-            'c_id',
-            'mem_type_id',
+            'club.name',
+            
             'grade_id',
-            'title',
-            'firstname',
-            'lastname',
-            'gender',
+             [
+                'label'          => Yii::t('modelattr', 'Name'),
+                'value'          => Yii::t('modelattr', 'Name'),
+            ],
+            
             'email:email',
-            'photo',
-            'orig_photo',
+            [
+                'label'          => Yii::t('modelattr', 'Photo'),
+                'format'         => 'raw',
+                'value'          => function ($model) {
+                    $gravatar = isset($model->user->email) ? $model->getGravatar($model->user->email) : null;
+                    return !empty($model->photo) ? $model->getIconPreviewAsHtml('ajaxfileinputPhoto', 60) : $gravatar;
+                }
+            ],
+            [
+                'label'          => Yii::t('modelattr', 'Membership'),
+                'value'          => 'memType.nameFB',
+            ],
+            [
+                'label'          => Yii::t('modelattr', 'Level'),
+                'format'         => 'raw',
+                'value'          => function ($model) {
+                    return isset($model->grade_id) ? common\dictionaries\Grades::get($model->grade_id) : null;
+                }
+            ],
+           
             'phone',
-            'phone_office',
             'phone_mobile',
-            'address',
-            'zip',
-            'city',
-            'co_code',
-            'country_id',
+            [
+                'label'          => Yii::t('modelattr', 'Address'),
+                'format'         => 'raw',
+                'value'          => function ($model) {
+                    $address = !empty($model->address) ? $model->user->fullAddress : null;
+                    return $address;
+                }
+            ],
+           'fullAddress',
+            
             'nationality',
-            'dob',
+           
             'is_admin',
             'is_organiser',
             'is_active',
@@ -83,10 +86,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'is_visible',
             'ban_scoreupload',
             'coaching',
-            'created_by',
-            'updated_by',
-            'created_at',
-            'updated_at',
+            
             ],
             ]) ?>
         </div>

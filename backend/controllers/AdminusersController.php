@@ -170,18 +170,18 @@ class AdminusersController extends Controller
             }
 
             // if consultant is activating user manually we want to remove account activation token
-            if ($user->status == User::STATUS_ACTIVE && $user->account_activation_token != null) {
-                $user->removeAccountActivationToken();
-            }
+//            if ($user->status == User::STATUS_ACTIVE && $user->account_activation_token != null) {
+//                $user->removeAccountActivationToken();
+//            }
 
             // update email in contact table if it has changed in the user table
-            if (!empty($user->email)) {
-                $member = Members::find()->where(['user_id' => $user->id])->one();
-                if (isset($member)) {
-                    $member->email = $user->email;
-                    $member->save(false);
-                }
-            }
+//            if (!empty($user->email)) {
+//                $member = Members::find()->where(['user_id' => $user->id])->one();
+//                if (isset($member)) {
+//                    $member->email = $user->email;
+//                    $member->save(false);
+//                }
+//            }
 
             $user->save(false);
             $role->save(false);

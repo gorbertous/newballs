@@ -279,7 +279,7 @@ trait TraitIndex
         // INFO BUTTON
         // display info button with text from texts table
         $infobtn = Texts::infoPopoverLg(
-            'i_' . Yii::$app->controller->id, Yii::t('modelattr', 'Legal context')
+            'i_' . Yii::$app->controller->id, Yii::t('modelattr', 'Help text')
         );
 
         // PANEL HEADER + FILTERS

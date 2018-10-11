@@ -57,7 +57,7 @@ if (Yii::$app->user->can('writer')) {
             </div>
         </div>
 
-        <?php if (Yii::$app->user->can('writer')) : ?>
+        <?php if (Yii::$app->user->can('team_member')) : ?>
             <div class="row">
                 <div class="col-md-6">
                     <?= $form->field($user, 'status')->widget(Select2::class, [

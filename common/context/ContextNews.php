@@ -35,21 +35,21 @@ abstract class ContextNews implements Context
         ];
        
         if(Yii::$app->user->can('writer')){
-        // News -> index
-        $context_array[ContextLetter::NEWS][] = [
-            'button_title'  => Menu::newsText(),
-            'new_label'     => Yii::t('appMenu', self::LBL_NEW),
-            'mod_label'     => Yii::t('appMenu', self::LBL_MODIFY),
-            'view_label'    => Yii::t('appMenu', self::LBL_VIEW),
-            'del_label'     => Yii::t('appMenu', self::LBL_DELETE),
-            'print_label'   => Yii::t('appMenu', self::LBL_PRINT),
-            'link'          => '/news/index',
-            'create'        => '/news/create',
-            'perm_key'      => 'news',
-            'fa_icon'       => Menu::NEWS_ICON
-        ];
+            // News -> index
+            $context_array[ContextLetter::NEWS][] = [
+                'button_title'  => Menu::newsText(),
+                'new_label'     => Yii::t('appMenu', self::LBL_NEW),
+                'mod_label'     => Yii::t('appMenu', self::LBL_MODIFY),
+                'view_label'    => Yii::t('appMenu', self::LBL_VIEW),
+                'del_label'     => Yii::t('appMenu', self::LBL_DELETE),
+                'print_label'   => Yii::t('appMenu', self::LBL_PRINT),
+                'link'          => '/news/index',
+                'create'        => '/news/create',
+                'perm_key'      => 'news',
+                'fa_icon'       => Menu::NEWS_ICON
+            ];
         
-         // TAGS -> index ( third button ) -> Tags
+            // TAGS -> index ( third button ) -> Tags
             $context_array[ContextLetter::NEWS][] = [
                 'button_title'  => Yii::t('appMenu', self::LBL_TG_PLURAL_U),
                 'new_label'     => Yii::t('appMenu', self::LBL_NEW),

@@ -21,18 +21,43 @@ abstract class ContextMembers implements Context
             'title2'    => 'Members ' . Menu::dataText(),
             'ti_icon2'  => Menu::DATA_ICON
         ];
-
-        // MEMBERS -> index
+        if(Yii::$app->user->can('team_admin')){
+           
+             // MEMBERS ADMIN -> index
+            $context_array[ContextLetter::MEMBERS][] = [
+                'new_label'     => Yii::t('appMenu', self::LBL_NEW),
+                'mod_label'     => Yii::t('appMenu', self::LBL_MODIFY),
+                'view_label'    => Yii::t('appMenu', self::LBL_VIEW),
+                'del_label'     => Yii::t('appMenu', self::LBL_DELETE),
+                'print_label'   => Yii::t('appMenu', self::LBL_PRINT),
+                'link'          =>  '/members/index',
+                'create'        => '/members/create',
+                'perm_key'      => 'members',
+                ];
+        }else{
+            // MEMBERS -> index
+            $context_array[ContextLetter::MEMBERS][] = [
+                'new_label'     => Yii::t('appMenu', self::LBL_NEW),
+                'mod_label'     => Yii::t('appMenu', self::LBL_MODIFY),
+                'view_label'    => Yii::t('appMenu', self::LBL_VIEW),
+                'del_label'     => Yii::t('appMenu', self::LBL_DELETE),
+                'print_label'   => Yii::t('appMenu', self::LBL_PRINT),
+                'link'          =>  '/members/index',
+    //            'create'        => '/members/create',
+                'perm_key'      => 'members',
+            ];
+        }
+        // MEMBERS public -> index
         $context_array[ContextLetter::MEMBERS][] = [
-            'new_label'     => Yii::t('appMenu', 'New member'),
-            'mod_label'     => Yii::t('appMenu', 'Modify member data'),
-            'view_label'    => Yii::t('appMenu', 'View member data'),
-            'print_label'   => Yii::t('appMenu', 'Print member data'),
-            'del_label'     => Yii::t('appMenu', 'Delete member data'),
-            'link'          => '/members/index',
-            'create'        => '/members/create',
+            'new_label'     => Yii::t('appMenu', self::LBL_NEW),
+            'mod_label'     => Yii::t('appMenu', self::LBL_MODIFY),
+            'view_label'    => Yii::t('appMenu', self::LBL_VIEW),
+            'del_label'     => Yii::t('appMenu', self::LBL_DELETE),
+            'print_label'   => Yii::t('appMenu', self::LBL_PRINT),
+            'link'          => '/membership/index',
             'perm_key'      => 'members',
         ];
+      
 
         return $context_array;
     }

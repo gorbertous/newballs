@@ -93,7 +93,7 @@ class AdminusersSearch extends User
             $query->andFilterWhere(['status' => $this->status]);
         }
 
-        $query->andFilterWhere(['like', 'username', $this->username])
+        $query->andFilterWhere(['like', 'user.username', $this->username])
                 ->andFilterWhere(['like', 'user.email', $this->email])
                 ->andFilterWhere(['like', 'item_name', $this->item_name]);
 

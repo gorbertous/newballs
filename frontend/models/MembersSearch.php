@@ -88,6 +88,11 @@ class MembersSearch extends Members
                 'is_visible' => $this->is_visible,
             ]);
         }
+        if ($this->coaching != -1) {
+            $query->andFilterWhere([
+                'coaching' => $this->coaching,
+            ]);
+        }
 
         $query->andFilterWhere([
             'member_id'       => $this->member_id,
@@ -97,7 +102,6 @@ class MembersSearch extends Members
             'grade_id'        => $this->grade_id,
             'dob'             => $this->dob,
             'ban_scoreupload' => $this->ban_scoreupload,
-            'coaching'        => $this->coaching,
             'gender'          => $this->gender,
         ]);
 

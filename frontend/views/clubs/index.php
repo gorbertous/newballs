@@ -37,7 +37,7 @@ $greencheck = '<i class="text-success fa fa-check fa-lg" aria-hidden="true"></i>
     ];
 
     $gridColumn[] = TraitIndex::getActionColumn(
-        '{view}{update}{delete}',
+        '{view}{update}',
         $currentBtn);
 
 
@@ -50,7 +50,7 @@ $greencheck = '<i class="text-success fa fa-check fa-lg" aria-hidden="true"></i>
         // your toolbar can include the additional full export menu
         'toolbar'             => [
             ['content' =>
-                 TraitIndex::getNewbutton($currentBtn) . ' ' .
+//                 TraitIndex::getNewbutton($currentBtn) . ' ' .
                  TraitIndex::getResetgrida($currentBtn)
             ],
         ],
