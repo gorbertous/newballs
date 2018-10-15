@@ -34,7 +34,6 @@ use asinfotrack\yii2\audittrail\behaviors\AuditTrailBehavior;
  * @property int $match_instigation
  * @property int $court_booking
  * @property int $money_stats
- * @property int $admin_id
  * @property int $chair_id
  * @property int $location_id
  * @property int $is_active
@@ -82,7 +81,7 @@ class Clubs extends ActiveRecord
     public function rules()
     {
         return [
-            [['css_id', 'sport_id', 'season_id', 'session_id', 'type_id', 'coach_stats', 'token_stats', 'play_stats', 'scores', 'match_instigation', 'court_booking', 'money_stats', 'admin_id', 'chair_id', 'location_id', 'is_active', 'payment', 'rota_removal', 'rota_block', 'created_by', 'updated_by', 'created_at', 'updated_at'], 'integer'],
+            [['css_id', 'sport_id', 'season_id', 'session_id', 'type_id', 'coach_stats', 'token_stats', 'play_stats', 'scores', 'match_instigation', 'court_booking', 'money_stats', 'chair_id', 'location_id', 'is_active', 'payment', 'rota_removal', 'rota_block', 'created_by', 'updated_by', 'created_at', 'updated_at'], 'integer'],
             [['home_page', 'rules_page', 'members_page', 'rota_page', 'tournament_page', 'subscription_page', 'school_page'], 'string'],
             [['admin_ids'], 'safe'],
             [['name', 'logo', 'logo_orig'], 'string', 'max' => 150],

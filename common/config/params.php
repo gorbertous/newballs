@@ -52,4 +52,6 @@ return [
      * You will send emails to users from this address.
      */
     'supportEmail' => 'gorbertous@gmail.com',
+    // kartik gridview global bootstrap verison
+    'bsVersion' => '3.3.7',
 ];

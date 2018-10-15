@@ -2,12 +2,12 @@
 
 namespace common\helpers;
 
-use backend\widgets\GridView;
+
 use Yii;
 use yii\db\ActiveRecord;
 use yii\helpers\Html;
 use yii\helpers\Url;
-use yii\widgets\Pjax;
+
 use backend\models\Texts;
 
 /**
@@ -16,7 +16,7 @@ use backend\models\Texts;
  * @author gorbertous
  * @package common\helpers
  */
-trait GridviewHelper
+class GridviewHelper
 {
     
     /**
@@ -329,118 +329,5 @@ trait GridviewHelper
         return $panelBeforeTemplate;
     }
 
-    /**
-     * @param $params
-     * @param $context_array
-     * @param $currentBtn
-     * @param array $gridfilter
-     * @throws \Exception
-     */
-    public static function echoGridView(&$params, &$context_array, &$currentBtn, $gridfilter = [])
-    {
-        // extract $dashboardfilter and $gridfilter
-        /* @var $dataProvider ActiveRecord */
-        /* @var $filterModel ActiveRecord */
-        /* @var $columns array */
-        /* @var $panelBeforeTemplate string */
-        /* @var $toolbar array */
-        /* @var $exportdataProvider ActiveRecord */
-        /* @var $exportcolumns array */
-        extract($params);
-
-        if (empty($header)) {
-            $header = self::getHeader($context_array);
-        }
-
-        if (!empty($gridfilter)) {
-            $header .= '<h4>';
-            foreach ($gridfilter as $element) {
-                $header .= '<span class="label label-default small ' . $element['box-color'] . '">' .
-                    '<i class="fa fa-filter" aria-hidden="true"></i> ' .
-                    $element['filtertitle'] . '</span>&nbsp;';
-            }
-            $header .= '</h4>';
-        }
-
-        // PANELBEFORETEMPLATE
-        if (empty($panelBeforeTemplate)) {
-            $panelBeforeTemplate = '{lefttoolbar}' .
-
-                '<div class="pull-right btn-toolbar kv-grid-toolbar" role="toolbar">' .
-                '{toolbar}' .
-                '</div>' .
-
-                '{before}' .
-
-                '<div class="clearfix"></div>';
-        }
-
-        $lefttoolbar = self::getLefttoolbar($context_array, $currentBtn);
-
-        // RIGHT TOOLBAR
-        $toolbar[] = '{export}';
-        $toolbar[] = '{toggleData}';
-
-        Pjax::begin(['id' => 'pjax-gridview-container', 'enablePushState' => true]);
-
-        echo GridView::widget([
-                'dataProvider'   => $dataProvider,
-                'columns'        => $columns,
-                'responsiveWrap' => true,
-
-                'id' => 'gridview-costum-id',
-
-                'panel' => [
-                    'type'    => Gridview::TYPE_DEFAULT,
-                    'heading' => $header,
-                ],
-
-                'exportConfig' => [
-                    Gridview::EXCEL => [],
-                    Gridview::PDF => [
-                        'config' => [
-                            'methods' => [
-                                'SetHeader' => [
-                                    ['odd' => '', 'even' => '']
-                                ],
-                                'SetFooter' => [
-                                    ['odd' => '', 'even' => '']
-                                ],
-                            ],
-                        ]
-                    ],
-                    Gridview::CSV   => [],
-                    Gridview::HTML  => []
-                ],
-
-                'export' => [
-                    'label' => Yii::t('yii', 'Export'),
-                    'fontAwesome' => true,
-                    'showConfirmAlert' => false,
-                    //'exportcolumns'      => $exportcolumns,
-                ],
-
-                'responsive'          => true,
-                'panelBeforeTemplate' => $panelBeforeTemplate,
-                'toolbar'             => $toolbar,
-                'itemLabelSingle'     => Yii::t('modelattr', 'record'),
-                'itemLabelPlural'     => Yii::t('modelattr', 'records'),
-
-                'replaceTags' => [
-                    '{lefttoolbar}' => join(' ', $lefttoolbar)
-//                    '{lefttoolbar}' => ''
-                ]
-            ] + (!empty($filterModel) ? ['filterModel' => $filterModel] : [])
-        );
-
-        Pjax::end();
-    }
-
-    /**
-     * @return int|mixed
-     */
-    public static function getMandantidOrLibrary0()
-    {
-        return (Yii::$app->controller->action->id == 'library') ? 0 : Yii::$app->session->get('mandant_id');
-    }
+   
 }

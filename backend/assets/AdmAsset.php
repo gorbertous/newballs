@@ -13,15 +13,15 @@ class AdmAsset extends AssetBundle
     public $baseUrl = '@web';
     public $css = [
         'css/site.css',
-        'css/vendor.css',
+        'css/iziModal.css',
     ];
     public $js = [
         'js/app.js',
-        'js/vendor.js',
+        'js/client.js',
+        'js/iziModal.js',
     ];
     public $depends = [
         'yii\web\YiiAsset',
         'yii\bootstrap\BootstrapAsset',
-        'yiister\gentelella\assets\Asset',
     ];
 }

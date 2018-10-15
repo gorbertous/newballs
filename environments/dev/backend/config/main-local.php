@@ -40,7 +40,7 @@ if (!YII_ENV_TEST) {
             'crud' => [
                 'class' => 'yii\gii\generators\crud\Generator',
                 'templates' => [ // setting materializecss templates
-                    'custom' => '@vendor/ceyhunism/yii2-gentellela-crud-template',
+                    'custom' => '@vendor/macgyer/yii2-materializecss/src/gii-templates/generators/crud/materializecss',
                 ],
             ],
             'kartikgii-crud' => ['class' => 'warrence\kartikgii\crud\Generator'],

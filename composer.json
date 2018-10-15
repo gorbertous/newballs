@@ -36,6 +36,8 @@
         "kartik-v/yii2-editable": "@dev",
         "kartik-v/yii2-password": "@dev",
         "kartik-v/yii2-mpdf": "dev-master",
+        "kartik-v/yii2-widget-datetimepicker": "dev-master",
+        "kartik-v/yii2-widget-depdrop": "dev-master",
         "voskobovich/yii2-linker-behavior": "^4.0",
         "himiklab/yii2-recaptcha-widget": "^1.2",
         "codemix/yii2-localeurls": "^1.5",
@@ -43,14 +45,11 @@
         "2amigos/yii2-usuario": "~1.0",
         "ignatenkovnikita/yii2-queuemanager": "dev-master",
         "cebe/yii2-gravatar": "^1.0",
-        "yiister/yii2-gentelella": "~1.0",
         "asinfotrack/yii2-audittrail": "dev-master",
         "yii2tech/ar-linkmany": "*",
-        "ceyhunism/yii2-gentellela-crud-template": "dev-master",
-        "warrence/yii2-kartikgii": "dev-master",
         "brussens/yii2-maintenance-mode": "*",
-        "kartik-v/yii2-widget-datetimepicker": "dev-master",
-        "kartik-v/yii2-widget-depdrop": "dev-master"
+        "dmstr/yii2-adminlte-asset": "^2.1",
+        "bower-asset/ekko-lightbox": "*"
         
     },
     "require-dev": {
@@ -63,6 +62,7 @@
         "yiisoft/yii2-coding-standards": "*",
         "symfony/var-dumper": "^3.3",
         "mootensai/yii2-enhanced-gii": "dev-master",
+        "warrence/yii2-kartikgii": "dev-master",
         "phpunit/php-invoker": "^1.1",
         "insolita/yii2-migration-generator": "~2.3"
     },

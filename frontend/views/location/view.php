@@ -2,7 +2,6 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
-use yiister\gentelella\widgets\Panel;
 
 /* @var $this yii\web\View */
 /* @var $model backend\models\Location */
@@ -19,14 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="row">
     <div class="col-md-12">
 
-        <?php         Panel::begin(
-        [
-        'header' => Html::encode($this->title),
-        'icon' => 'users',
-        ]
-        )
-         ?> 
-
+     
         <div class="location-view">
 
 

@@ -1,20 +1,23 @@
 <?php
 
 use kartik\grid\GridView;
-use common\helpers\TraitIndex;
 use yii\helpers\ArrayHelper;
+use yii\widgets\Pjax;
+use common\helpers\GridviewHelper;
 
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\FeesSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = TraitIndex::getTitle($context_array);
-$currentBtn = TraitIndex::getCurrentBtn($context_array);
+$this->title = GridviewHelper::getTitle($context_array);
+$currentBtn = GridviewHelper::getCurrentBtn($context_array);
 ?>
 
 <div class="fees-index">
 
-    <?php $gridColumn = [
+<?php 
+    Pjax::begin(['id' => 'pjax-gridview-container', 'enablePushState' => true]);
+    $gridColumn = [
         ['class' => 'yii\grid\SerialColumn'],
 
         [
@@ -36,34 +39,45 @@ $currentBtn = TraitIndex::getCurrentBtn($context_array);
         ],
         'mem_fee'
     ];
-
-    $gridColumn[] = TraitIndex::getActionColumn(
+    
+    $header = GridviewHelper::getHeader($context_array);
+    $gridColumn[] = GridviewHelper::getActionColumn(
         '{update}{delete}',
         $currentBtn);
 
 
-    $gridParams = [
-        'dataProvider'        => $dataProvider,
-        'filterModel'         => $searchModel,
-        'columns'             => $gridColumn,
-        // use default panelbefortemplate
-        'panelBeforeTemplate' => null,
-        // your toolbar can include the additional full export menu
-        'toolbar'             => [
-            ['content' =>
-                 TraitIndex::getNewbutton($currentBtn) . ' ' .
-                 TraitIndex::getResetgrida($currentBtn)
-            ],
-        ],
-        'exportdataProvider'  => $dataProvider,
-        'exportcolumns'       => $gridColumn
+    $lefttoolbar = GridviewHelper::getLefttoolbar($context_array, $currentBtn);
+    
+    // right toolbar + custom buttons
+    $toolbar[] = [
+    'content' =>
+         GridviewHelper::getNewbutton($currentBtn) . ' ' .
+         GridviewHelper::getResetgrida($currentBtn)
     ];
-
-    TraitIndex::echoGridView(
-        $gridParams,
-        $context_array,
-        $currentBtn
-    );
-    ?>
-
+    $toolbar[] = '{export}';
+    $toolbar[] = '{toggleData}';
+    
+    echo GridView::widget([
+                'dataProvider'   => $dataProvider,
+                'columns'        => $gridColumn,
+                'id' => 'gridview-club-id',
+                'responsive'          => true,
+                'responsiveWrap' => true,
+                'condensed' => true,
+                'panelBeforeTemplate' => GridviewHelper::getPanelBefore(),
+                'panel' => [
+                    'type'    => Gridview::TYPE_DEFAULT,
+                    'heading' => $header,
+                ],
+                'toolbar'             => $toolbar,
+                'itemLabelSingle'     => Yii::t('modelattr', 'record'),
+                'itemLabelPlural'     => Yii::t('modelattr', 'records'),
+                'replaceTags' => [
+                    '{lefttoolbar}' => join(' ', $lefttoolbar)
+                ],
+            ]
+        );
+    Pjax::end();
+ ?>
+    
 </div>

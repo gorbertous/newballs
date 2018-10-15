@@ -21,5 +21,6 @@ abstract class ContextLetter
     const MEMBERS = 'M';
     const PLAYDATES = 'C';
     const ROTA = 'R';
+    const LOGS = 'R';
 
 }

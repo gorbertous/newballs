@@ -2,7 +2,6 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
-use yiister\gentelella\widgets\Panel;
 
 /* @var $this yii\web\View */
 /* @var $model backend\models\Members */
@@ -22,15 +21,7 @@ $greencheck = '<i class="text-success fa fa-check fa-lg" aria-hidden="true"></i>
 
 <div class="row">
     <div class="col-md-12">
-        
-        <?php Panel::begin(
-        [
-        'header' => Html::encode($this->title),
-        'icon' => 'users',
-        ]
-        )
-         ?> 
-
+       
         <div class="members-view">
           
             <?= DetailView::widget([

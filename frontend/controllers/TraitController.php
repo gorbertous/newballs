@@ -220,7 +220,7 @@ trait TraitController
             $this->redirect('/logout'); return false;
         }
         // Currently displayed language for this mandant
-        // this is set in common\helpers\TraitIndex every time a index page is displayed
+        // this is set in common\helpers\GridviewHelper every time a index page is displayed
         // after a test if UI language is available for this mandant
         // (because the UI language might be changed with the codemix component)
     

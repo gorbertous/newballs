@@ -13,122 +13,82 @@ if (!empty(Yii::$app->session->get('member_photo'))) {
 }
 ?>
 
-<!-- top navigation -->
-<div class="top_nav">
+<header class="main-header">
 
-    <div class="nav_menu">
-        <nav class="" role="navigation">
-            <div class="nav toggle">
-                <a id="menu_toggle"><i class="fa fa-bars"></i></a>
-            </div>
+    <?= Html::a('<span class="logo-mini">APP</span><span class="logo-lg">' . Yii::$app->name . '</span>', Yii::$app->homeUrl, ['class' => 'logo']) ?>
 
-            <ul class="nav navbar-nav navbar-right">
-                <li class="">
-                    <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                        <?= Html::img($profileThumb25, ['class' => 'user-image', 'alt' => StringHelper::truncate(Html::encode(Yii::$app->user->identity->username), 2)]) ; ?>
-                        <span class="hidden-xs">
-                            <strong><?= StringHelper::truncate(Html::encode(Yii::$app->user->identity->username), 20); ?></strong>
-                            &nbsp;&nbsp;
-                            <span class="caret" style="border-width: 5px;"></span>
-                        </span>
-                    </a>
-                    <ul class="dropdown-menu dropdown-usermenu pull-right">
-                        <li>
-                            <a href="<?= Url::toRoute(['members/update', 'id' => Yii::$app->user->member->member_id]); ?>">
-                            <span class="badge bg-red pull-right">50%</span>
-                            <?= Yii::t('app', 'Profile'); ?></a>
+    <?php if (!Yii::$app->user->isGuest) { ?>
+
+        <nav class="navbar navbar-static-top" id="main-header-navbar">
+
+            <div class="navbar-custom-menu" style="width: 100%;">
+                <ul class="nav navbar-nav pull-left">
+                    <li>
+                        <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+                            <span class="sr-only">Open</span>
+                        </a>
+                    </li>
+                </ul>
+
+                <ul class="nav navbar-nav pull-right">
+
+
+                    <li class="dropdown user user-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false" title="<?= Yii::t('app', 'Open profile menu'); ?>">
+                            <?= Html::img($profileThumb25, ['class' => 'user-image', 'alt' => StringHelper::truncate(Html::encode(Yii::$app->user->identity->username), 2)]); ?>
+                            <span class="hidden-xs">
+                                <strong><?= StringHelper::truncate(Html::encode(Yii::$app->user->identity->username), 20); ?></strong> 
+                                &nbsp;&nbsp;
+                                <span class="caret" style="border-width: 5px;"></span>
+                            </span>
+                        </a>
+
+                        <ul class="dropdown-menu">
+                            <!-- User image -->
+                            <li class="user-header">
+                               
+                                <?= Html::img($profileThumb90, ['class' => 'img-circle', 'alt' => StringHelper::truncate(Html::encode(Yii::$app->user->identity->username), 2)]); ?>
+
+                                <p>
+                                     <?= Yii::$app->session->get('member_name')?>
+                                    <small>Member since <?= Yii::$app->session->get('member_since')?></small>
+                                </p>
+                            </li>
                             
-                        </li>
-                        <li>
-                            <a href="<?= Url::toRoute(['user/update', 'id' => Yii::$app->user->identity->id]); ?>">
-                           <?= Yii::t('app', 'Account'); ?></a>
-                          
-                        </li>
-                        <li>
-                            <a href="javascript:;">Help</a>
-                        </li>
-                        <li>
-                            <a href="<?= Url::toRoute(['site/logout']); ?>"><i class="fa fa-sign-out pull-right"></i> <?= Yii::t('app', 'Logout'); ?></a>
-                        </li>
-                    </ul>
-                </li>
+                            <li class="user-body">
+                                <div class="row">
+                                    <div class="col-xs-4 text-center">
+                                        <a data-toggle="tooltip" title="Light theme" href="#" data-change-theme-color="skin-blue-light"><span style="width: 100%; height: 30px; border: 1px solid #ccc; background-color: #f9fafc; display: block;"></span></a>
+                                    </div>
 
-                <li role="presentation" class="dropdown">
-                    <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
-                        <i class="fa fa-envelope-o"></i>
-                        <span class="badge bg-green">6</span>
-                    </a>
-                    <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
-                        <li>
-                            <a>
-                                <span class="image">
-                                    <?= Html::img($profileThumb25, ['class' => 'img-circle', 'alt' => Html::encode(Yii::$app->user->identity->username)]); ?>
-                                </span>
-                                <span>
-                                    <span>John Smith</span>
-                                    <span class="time">3 mins ago</span>
-                                </span>
-                                <span class="message">
-                                    Film festivals used to be do-or-die moments for movie makers. They were where...
-                                </span>
-                            </a>
-                        </li>
-                        <li>
-                            <a>
-                                <span class="image">
-                                    <img src="http://placehold.it/128x128" alt="Profile Image" />
-                                </span>
-                                <span>
-                                    <span>John Smith</span>
-                                    <span class="time">3 mins ago</span>
-                                </span>
-                                <span class="message">
-                                    Film festivals used to be do-or-die moments for movie makers. They were where...
-                                </span>
-                            </a>
-                        </li>
-                        <li>
-                            <a>
-                                <span class="image">
-                                    <img src="http://placehold.it/128x128" alt="Profile Image" />
-                                </span>
-                                <span>
-                                    <span>John Smith</span>
-                                    <span class="time">3 mins ago</span>
-                                </span>
-                                <span class="message">
-                                    Film festivals used to be do-or-die moments for movie makers. They were where...
-                                </span>
-                            </a>
-                        </li>
-                        <li>
-                            <a>
-                                <span class="image">
-                                    <img src="http://placehold.it/128x128" alt="Profile Image" />
-                                </span>
-                                <span>
-                                    <span>John Smith</span>
-                                    <span class="time">3 mins ago</span>
-                                </span>
-                                <span class="message">
-                                    Film festivals used to be do-or-die moments for movie makers. They were where...
-                                </span>
-                            </a>
-                        </li>
-                        <li>
-                            <div class="text-center">
-                                <a href="/">
-                                    <strong>See All Alerts</strong>
-                                    <i class="fa fa-angle-right"></i>
-                                </a>
-                            </div>
-                        </li>
-                    </ul>
-                </li>
+                                    <div class="col-xs-4 text-center">
+                                        <a data-toggle="tooltip" title="Dark theme" href="#" data-change-theme-color="skin-blue"><span style="width: 100%; height: 30px; border: 1px solid #222d32; background-color: #222d32; display: block;"></span></a>
+                                    </div>
+                                </div>
+                                
+                            </li>
 
-            </ul>
+                            <li class="user-footer">
+                                <div class="pull-left">
+                                    <button title="<?= Yii::t('app', 'Update'); ?>" value="<?= Url::toRoute(['user/update', 'id' => Yii::$app->user->identity->id]); ?>" class="btn btn-default btn-flat showModalButton">
+                                        <?= Yii::t('app', 'Account'); ?>
+                                    </button>
+                                    <button title="<?= Yii::t('app', 'Profile'); ?>" value="<?= Url::toRoute(['members/update', 'id' => Yii::$app->user->member->member_id]); ?>" class="btn btn-default btn-flat showModalButton">
+                                        <?= Yii::t('app', 'Profile'); ?>
+                                    </button>
+                                </div>
+
+                                <div class="pull-right">
+                                    <a href="<?= Url::toRoute(['site/logout']); ?>" class="btn btn-default btn-flat"><i class="fa fa-sign-out-alt"></i> <?= Yii::t('app', 'Logout'); ?></a>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                  
+                </ul>
+
+            </div>
         </nav>
-    </div>
+    <?php } ?>
+</header>
 
-</div>
-<!-- /top navigation -->

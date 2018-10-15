@@ -185,7 +185,7 @@ class SiteController extends Controller
             if (empty($clubs)) {
                 // something is wrong because we should always have at least one club 
                 Yii::$app->user->logout();
-                Yii::$app->session->setFlash('danger', Yii::t('app', 'Your account has not been setup correctly, please member the site administrator for help'));
+                Yii::$app->session->setFlash('danger', Yii::t('app', 'Your account has not been setup correctly, please contact the site administrator for help'));
                 $this->goHome();
             }
 
@@ -223,6 +223,7 @@ class SiteController extends Controller
             $session->set('member_name', $member->name);
             $session->set('member_has_paid', $member->has_paid);
             $session->set('member_is_active', $member->is_active);
+            $session->set('member_since', $member->memberSince);
             // club data
             $session->set('c_id', $c_id);
             $session->set('club_name', $club->name);

@@ -8,7 +8,6 @@ use asinfotrack\yii2\audittrail\behaviors\AuditTrailBehavior;
 use common\models\User;
 use backend\models\Countries;
 
-
 /**
  * This is the model class for table "members".
  *
@@ -192,6 +191,21 @@ class Members extends \yii\db\ActiveRecord
     }
 
     /**
+     * Getter for member since
+     *
+     * @return string
+     */
+    public function getMemberSince()
+    {
+        if (!empty($this->created_at)) {
+            $converttimestamp = date('M Y', $this->created_at);
+            return $converttimestamp;
+        } else {
+            return '';
+        }
+    }
+
+    /**
      * Getter for formatted full name
      *
      * @return string
@@ -258,14 +272,15 @@ class Members extends \yii\db\ActiveRecord
                 $this->getCountrytranslated() .
                 '</address>';
     }
-    
-    public function getGravatar( $email, $s = 80, $d = 'mp', $r = 'g', $img = true, $atts = array() ) {
+
+    public function getGravatar($email, $s = 80, $d = 'mp', $r = 'g', $img = true, $atts = array())
+    {
         $url = 'https://www.gravatar.com/avatar/';
-        $url .= md5( strtolower( trim( $email ) ) );
+        $url .= md5(strtolower(trim($email)));
         $url .= "?s=$s&d=$d&r=$r";
-        if ( $img ) {
+        if ($img) {
             $url = '<img src="' . $url . '"';
-            foreach ( $atts as $key => $val )
+            foreach ($atts as $key => $val)
                 $url .= ' ' . $key . '="' . $val . '"';
             $url .= ' />';
         }
@@ -290,7 +305,7 @@ class Members extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Countries::class, ['code' => 'co_code']);
     }
-    
+
     /**
      * @return \yii\db\ActiveQuery
      */

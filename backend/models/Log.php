@@ -57,4 +57,10 @@ class Log extends \yii\db\ActiveRecord
             'message' => 'Message',
         ];
     }
+    
+    public function getTitleSuffix()
+    {
+        return 'Log';
+    }
+
 }

@@ -61,6 +61,8 @@ return [
                 'database' => 0,
             ]*/
         ],
+        
+    
        
         'authManager' => [
             'class' => yii\rbac\DbManager::class,

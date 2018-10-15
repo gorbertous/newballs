@@ -22,16 +22,16 @@ if (!YII_ENV_TEST) {
     $config['bootstrap'][] = 'gii';
 //    $config['modules']['gii'] = ['class' => 'yii\gii\Module', 'allowedIPs' => ['127.0.0.1', '::1', '192.168.*']];
 
-    $config['modules']['gii'] = [
-        'class' => 'yii\gii\Module',      
-        'allowedIPs' => ['127.0.0.1', '::1', '192.168.*'],  
+    $config['modules']['gii'] = ['class' => 'yii\gii\Module', 'allowedIPs' => ['127.0.0.1', '::1', '192.168.*'],  
         'generators' => [ //here
             'crud' => [
                 'class' => 'yii\gii\generators\crud\Generator',
                 'templates' => [ // setting materializecss templates
-                    'materializecss' => '@vendor/macgyer/yii2-materializecss/src/gii-templates/generators/crud/materializecss',
-                ]
-            ]
+                    'custom' => '@vendor/macgyer/yii2-materializecss/src/gii-templates/generators/crud/materializecss',
+                ],
+            ],
+            'kartikgii-crud' => ['class' => 'warrence\kartikgii\crud\Generator'],
+            
         ],
     ];
 }
