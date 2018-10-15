@@ -82,7 +82,7 @@ $greencheck = '<i class="text-success fa fa-check fa-lg" aria-hidden="true"></i>
             ]) ?>
         </div>
 
-        <?php Panel::end() ?> 
+         
     </div>
 </div>
 

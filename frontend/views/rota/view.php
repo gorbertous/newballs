@@ -89,7 +89,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'rota_page',
         'tournament_page',
         'subscription_page',
-        'school_page',
+        'summary_page',
         'coach_stats',
         'token_stats',
         'play_stats',

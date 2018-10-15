@@ -74,30 +74,38 @@ use backend\models\Clubstyles;
                 </div>
                 <div class="row">
                     <div class="col-md-12">
+                        <?= $form->hrwTinyMce($model, 'summary_page') ?>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
                         <?= $form->hrwTinyMce($model, 'rules_page') ?>
                     </div>
                 </div>
-                 <div class="row">
-                    <div class="col-md-12">
-                        <?= $form->hrwTinyMce($model, 'rota_page') ?>
-                    </div>
-                </div>
+                
             </div>
             
             <div class="tab-pane well" id="pagesoth">
-                <div class="row">
-                    <div class="col-md-12">
-                        <?= $form->hrwTinyMce($model, 'tournament_page') ?>
-                    </div>
-                </div>
+                
                 <div class="row">
                     <div class="col-md-12">
                         <?= $form->hrwTinyMce($model, 'subscription_page') ?>
                     </div>
                 </div>
+                 
                  <div class="row">
                     <div class="col-md-12">
-                        <?= $form->hrwTinyMce($model, 'school_page') ?>
+                        <?= $form->hrwTinyMce($model, 'members_page') ?>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <?= $form->hrwTinyMce($model, 'rota_page') ?>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <?= $form->hrwTinyMce($model, 'tournament_page') ?>
                     </div>
                 </div>
             </div>

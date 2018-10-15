@@ -17,7 +17,7 @@ class ClubsSearch extends Clubs
     {
         return [
             [['c_id', 'css_id', 'sport_id', 'season_id', 'session_id', 'type_id', 'coach_stats', 'token_stats', 'play_stats', 'scores', 'match_instigation', 'court_booking', 'money_stats',  'chair_id', 'location_id', 'is_active', 'payment', 'rota_removal', 'rota_block', 'created_by', 'updated_by', 'created_at', 'updated_at'], 'integer'],
-            [['name', 'logo', 'logo_orig', 'home_page', 'rules_page', 'members_page', 'rota_page', 'tournament_page', 'subscription_page', 'school_page', 'photo_one', 'photo_two', 'photo_three', 'photo_four'], 'safe'],
+            [['name', 'logo', 'logo_orig', 'home_page', 'rules_page', 'members_page', 'rota_page', 'tournament_page', 'subscription_page', 'summary_page', 'photo_one', 'photo_two', 'photo_three', 'photo_four'], 'safe'],
         ];
     }
 

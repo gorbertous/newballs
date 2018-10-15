@@ -106,11 +106,22 @@ class Location extends \yii\db\ActiveRecord
     {
         return $this->name;
     }
+    
+     /**
+     * @return mixed
+     */
+    public function getCountrytranslated(): string
+    {
+        if (isset($this->country)) {
+            return $this->country->textFB;
+        }
+        return '';
+    }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getCoCode()
+    public function getCountry()
     {
         return $this->hasOne(Countries::className(), ['code' => 'co_code']);
     }

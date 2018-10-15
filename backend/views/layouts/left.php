@@ -110,7 +110,7 @@ if (!Yii::$app->user->isGuest) {
                                         'label'  => MenuTypes::textblocksText(),
                                         'icon'   => MenuTypes::TEXTBLOCKS_ICON_MENU,
                                         'url'    => Url::toRoute(['texts/index']),
-//                                                'visible' => $perm->isMenuTypesVisible('texts'),
+                                        'visible' => Yii::$app->user->can('team_admin'),
                                         'active' => ($route == 'texts/index')
                                     ],
                                     [

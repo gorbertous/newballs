@@ -60,6 +60,7 @@ $greencheck = '<i class="text-success fa fa-check fa-lg" aria-hidden="true"></i>
             'attribute'           => 'member_id',
             'label'               => Yii::t('modelattr', 'Member'),
             'value'               => 'member.name',
+            'contentOptions' => ['style' => 'width:150px;'],
             'filterType'          => GridView::FILTER_SELECT2,
             'filter'              => ArrayHelper::map(backend\models\Members::find()
                 ->select(['member_id', 'firstname', 'lastname'])
@@ -140,7 +141,8 @@ $greencheck = '<i class="text-success fa fa-check fa-lg" aria-hidden="true"></i>
     $toolbar[] = '{toggleData}';
     
     echo GridView::widget([
-                'dataProvider'   => $dataProvider,
+                'dataProvider' => $dataProvider,
+        'filterModel' => $searchModel,
                 'columns'        => $gridColumn,
                 'id' => 'gridview-club-id',
                 'responsive'          => true,

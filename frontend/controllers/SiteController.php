@@ -19,6 +19,7 @@ use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
+//use yii\web\Cookie;
 
 /**
  * Site controller
@@ -74,15 +75,83 @@ class SiteController extends Controller
     }
 
     /**
-     * Displays homepage.
+     * default public page
      *
      * @return mixed
      */
-    public function actionIndex($c_id = 1)
+    public function actionIndex($id = null)
     {
         if (Yii::$app->user->isGuest) {
             $this->layout = 'main-client';
-            return $this->render('index');
+
+            $session = Yii::$app->session;
+            if (!empty($id)) {
+                $session->set('c_id_public', $id);
+            } elseif ($session->get('c_id_public') !== null && empty($id)) {
+                $id = $session->get('c_id_public');
+            }else{
+                $id = 1;
+            }
+//            $cookies = Yii::$app->response->cookies;
+            //check if cookie exists
+//            if (empty($id)) {
+//                //read value form client cookie
+//                $cookie_club_value = $cookies->getValue('club_identifier_cookie');
+//                dd($cookie_club_value);
+//                if (isset($cookie_club_value) && $cookie_club_value > 1) {
+//                    $id = (int) $cookie_club_value;
+//                }
+////            } elseif (empty($id) && !$cookies->has('club_identifier_cookie')) {
+////                //set default id balls-tennis
+////                $id = 1;
+//            } elseif (!empty($id) && $id > 1) {
+//                if ($cookies->has('club_identifier_cookie')) {
+//                    //remove old cookie
+//                    $cookies->remove('club_identifier_cookie');
+//                    unset($cookies['club_identifier_cookie']);
+//                    $cookie_club_id = new Cookie([
+//                        'name'   => 'club_identifier_cookie',
+//                        'value'  => (string) $id,
+//                        'domain' => '.balls.test',
+//                        //                'domain' => '.balls-tennis.com',
+//                        'expire' => time() + 86400 * 365,
+//                    ]);
+//                    $cookies->add($cookie_club_id);
+//                    $id = (int) $cookies->getValue('club_identifier_cookie');
+//                }
+//            }else{
+//                $id = 1;
+//            }
+            //dd($id);
+            $model = Clubs::findOne($id);
+
+            return $this->render('index', [
+                        'model' => $model
+            ]);
+        }
+        return $this->redirect('/rota');
+    }
+
+    /**
+     * Displays about page.
+     *
+     * @return mixed
+     */
+    public function actionAbout()
+    {
+        if (Yii::$app->user->isGuest) {
+            $this->layout = 'main-client';
+            $session = Yii::$app->session;
+            if ($session->get('c_id_public') !== null) {
+                $id = $session->get('c_id_public');
+            } else {
+                $id = 1;
+            }
+            $model = Clubs::findOne($id);
+
+            return $this->render('about', [
+                        'model' => $model
+            ]);
         }
         return $this->redirect('/rota');
     }
@@ -101,7 +170,6 @@ class SiteController extends Controller
             $model = new LoginForm();
 
             if ($model->load(Yii::$app->request->post()) && $model->login()) {
-
                 if (($model->userHasnoclub()) !== null) {
 //                    dd($model->userHasnoclub());
                     Yii::$app->session->setFlash('danger', Yii::t('app', 'Your account has not been set up correctly, contact the site administrator'));
@@ -285,20 +353,6 @@ class SiteController extends Controller
                             'model' => $model,
                 ]);
             }
-        }
-        return $this->redirect('/rota');
-    }
-
-    /**
-     * Displays about page.
-     *
-     * @return mixed
-     */
-    public function actionAbout()
-    {
-        if (Yii::$app->user->isGuest) {
-            $this->layout = 'main-client';
-            return $this->render('about');
         }
         return $this->redirect('/rota');
     }

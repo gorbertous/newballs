@@ -47,7 +47,7 @@ use yii\widgets\ActiveForm;
 
     <?php // echo $form->field($model, 'subscription_page') ?>
 
-    <?php // echo $form->field($model, 'school_page') ?>
+    <?php // echo $form->field($model, 'summary_page') ?>
 
     <?php // echo $form->field($model, 'email_header') ?>
 

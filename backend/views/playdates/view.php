@@ -41,7 +41,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ]) ?>
         </div>
 
-        <?php Panel::end() ?> 
+         
     </div>
 </div>
 

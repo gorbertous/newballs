@@ -26,7 +26,7 @@ use asinfotrack\yii2\audittrail\behaviors\AuditTrailBehavior;
  * @property string $rota_page
  * @property string $tournament_page
  * @property string $subscription_page
- * @property string $school_page
+ * @property string $summary_page
  * @property int $coach_stats
  * @property int $token_stats
  * @property int $play_stats
@@ -51,6 +51,7 @@ use asinfotrack\yii2\audittrail\behaviors\AuditTrailBehavior;
  *
  * @property ClubStyles $css
  * @property Members $chair
+ * @property Location $location
  * @property Fees[] $fees
  * @property GamesBoard[] $gamesBoards
  * @property JClubCourts[] $jClubCourts
@@ -82,7 +83,7 @@ class Clubs extends ActiveRecord
     {
         return [
             [['css_id', 'sport_id', 'season_id', 'session_id', 'type_id', 'coach_stats', 'token_stats', 'play_stats', 'scores', 'match_instigation', 'court_booking', 'money_stats', 'chair_id', 'location_id', 'is_active', 'payment', 'rota_removal', 'rota_block', 'created_by', 'updated_by', 'created_at', 'updated_at'], 'integer'],
-            [['home_page', 'rules_page', 'members_page', 'rota_page', 'tournament_page', 'subscription_page', 'school_page'], 'string'],
+            [['home_page', 'rules_page', 'members_page', 'rota_page', 'tournament_page', 'subscription_page', 'summary_page'], 'string'],
             [['admin_ids'], 'safe'],
             [['name', 'logo', 'logo_orig'], 'string', 'max' => 150],
             [['photo_one', 'photo_two', 'photo_three', 'photo_four'], 'string', 'max' => 100],
@@ -112,7 +113,7 @@ class Clubs extends ActiveRecord
             'rota_page'         => Yii::t('modelattr', 'Rota Page'),
             'tournament_page'   => Yii::t('modelattr', 'Tournament Page'),
             'subscription_page' => Yii::t('modelattr', 'Subscription Page'),
-            'school_page'       => Yii::t('modelattr', 'School Page'),
+            'summary_page'       => Yii::t('modelattr', 'Club Summary'),
             'coach_stats'       => Yii::t('modelattr', 'Record Coaching Sessions'),
             'token_stats'       => Yii::t('modelattr', 'Balls/Tokens Responsibility count'),
             'play_stats'        => Yii::t('modelattr', 'Record Player Games'),
@@ -185,6 +186,21 @@ class Clubs extends ActiveRecord
     {
         return $this->name;
     }
+    
+    public function getFullAddress()
+    {
+        return '<address>' .
+            ($this->location->address ?? '') . '<br>' .
+            ($this->location->zip ?? '') . ' ' . ($this->location->city ?? '') . '<br>' .
+            $this->location->getCountrytranslated() .
+            '</address>';
+    }
+    
+    public function getShortAddress()
+    {
+        return $this->location->address . '<br>' .
+               $this->location->zip . ' ' . $this->location->city;
+    }
 
     /**
      * @return \yii\db\ActiveQuery
@@ -200,6 +216,14 @@ class Clubs extends ActiveRecord
     public function getChair()
     {
         return $this->hasOne(Members::className(), ['member_id' => 'chair_id']);
+    }
+    
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getLocation()
+    {
+        return $this->hasOne(Location::className(), ['location_id' => 'location_id']);
     }
 
     /**

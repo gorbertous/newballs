@@ -86,7 +86,7 @@ class ClubsController extends Controller
     {
        $model = $this->findModel(Yii::$app->session->get('c_id'));
 
-        return $this->renderNormalorAjax('index', [
+        return $this->renderNormalorAjax('stats', [
                     'model'   => $model
         ]);
     }

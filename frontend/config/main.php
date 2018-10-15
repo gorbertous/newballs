@@ -92,6 +92,7 @@ return [
                     
                     /** Global routes for most controllers */
                     '<controller:[\w-]+>/<id:\d+>' => '<controller>/view',
+                    '<controller:[\w-]+>/<id:\d+>' => 'site/index',
                     '<controller:[\w-]+>/<action:[\w-]+>/<id:\d+>' => '<controller>/<action>',
                     '<controller:[\w-]+>/<action:\w+>/<id:\d+>/<id2:\d+>' => '<controller>/<action>',
                     '<controller:[\w-]+>/<action:[\w-]+>' => '<controller>/<action>',

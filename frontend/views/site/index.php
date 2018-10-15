@@ -8,6 +8,7 @@ use yii\helpers\Html;
 //    })
 //JS;
 //$this->registerJs($script, yii\web\View::POS_END);
+/* @var $model backend\models\Clubs */
 ?>
 
 <!-- Heading Row -->
@@ -17,9 +18,9 @@ use yii\helpers\Html;
     </div>
     <!-- /.col-md-8 -->
     <div class="col-md-4">
-        <h1>Business Name or Tagline</h1>
-        <p>This is a template that is great for small businesses. It doesn't have too much fancy flare to it, but it makes a great use of the standard Bootstrap core components. Feel free to use this template for any project you want!</p>
-        <a class="btn btn-primary btn-lg" href="#">Call to Action!</a>
+        <h1><?= $model->name ?></h1>
+        <p><?= $model->summary_page ?></p>
+<!--        <a class="btn btn-primary btn-lg" href="#">Call to Action!</a>-->
     </div>
     <!-- /.col-md-4 -->
 </div>
@@ -68,7 +69,7 @@ use yii\helpers\Html;
 <div class="row">
     <div class="col-lg-12">
         <div class="well text-center">
-            This is a well that is a great spot for a business tagline or phone number for easy access!
+            <?= $model->members_page ?>
         </div>
     </div>
     <!-- /.col-lg-12 -->
@@ -78,21 +79,21 @@ use yii\helpers\Html;
 <!-- Content Row -->
 <div class="row">
     <div class="col-md-4">
-        <h2>Heading 1</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe rem nisi accusamus error velit animi non ipsa placeat. Recusandae, suscipit, soluta quibusdam accusamus a veniam quaerat eveniet eligendi dolor consectetur.</p>
-        <a class="btn btn-default" href="#">More Info</a>
+        <h2>Where do we play</h2>
+        <p><?= $model->shortAddress ?></p>
+        <a class="btn btn-default" href="/about">More Info</a>
     </div>
     <!-- /.col-md-4 -->
     <div class="col-md-4">
-        <h2>Heading 2</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe rem nisi accusamus error velit animi non ipsa placeat. Recusandae, suscipit, soluta quibusdam accusamus a veniam quaerat eveniet eligendi dolor consectetur.</p>
-        <a class="btn btn-default" href="#">More Info</a>
+        <h2>Commitment</h2>
+        <p>The club is set up to ensure that regular commitment, while preferred, is not essential. We generally play doubles tennis. Each week the pairings will be mixed up to promote balanced and fun matches. Depending on interest, limited coaching by a Professional (on a rotated membership basis) may be provided on one of our reserved courts.</p>
+        <a class="btn btn-default" href="/about">More Info</a>
     </div>
     <!-- /.col-md-4 -->
     <div class="col-md-4">
-        <h2>Heading 3</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe rem nisi accusamus error velit animi non ipsa placeat. Recusandae, suscipit, soluta quibusdam accusamus a veniam quaerat eveniet eligendi dolor consectetur.</p>
-        <a class="btn btn-default" href="#">More Info</a>
+        <h2>Booking</h2>
+        <p>The games are managed in the members only area of this site. In case you are not yet member, you can sign up following the button bellow!</p>
+        <a class="btn btn-default" href="/about">More Info</a>
     </div>
     <!-- /.col-md-4 -->
 </div>

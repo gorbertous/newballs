@@ -44,7 +44,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'rota_page:ntext',
             'tournament_page:ntext',
             'subscription_page:ntext',
-            'school_page:ntext',
+            'summary_page:ntext',
             'email_header:email',
             'site_url:url',
             'site_currency',

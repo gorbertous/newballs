@@ -21,15 +21,15 @@ $greencheck = '<i class="text-success fa fa-check fa-lg" aria-hidden="true"></i>
     $gridColumn = [
         ['class' => 'yii\grid\SerialColumn'],
 
-        [
-            'label'          => Yii::t('modelattr', 'Logo'),
-            'format'         => 'raw',
-            'contentOptions' => ['style' => 'width:100px;'],
-            'value'          => function ($model) {
-                /* @var $model \backend\models\Mandants */
-                return $model->getIconPreviewAsHtml('ajaxfileinputLogo', 90);
-            }
-        ],
+//        [
+//            'label'          => Yii::t('modelattr', 'Logo'),
+//            'format'         => 'raw',
+//            'contentOptions' => ['style' => 'width:100px;'],
+//            'value'          => function ($model) {
+//                /* @var $model \backend\models\Clubs */
+//                return $model->getIconPreviewAsHtml('ajaxfileinputLogo', 90);
+//            }
+//        ],
         [
             'label'          => 'ID',
             'attribute'      => 'c_id',
@@ -56,7 +56,8 @@ $greencheck = '<i class="text-success fa fa-check fa-lg" aria-hidden="true"></i>
     $toolbar[] = '{toggleData}';
     
     echo GridView::widget([
-                'dataProvider'   => $dataProvider,
+                'dataProvider' => $dataProvider,
+                'filterModel' => $searchModel,
                 'columns'        => $gridColumn,
                 'id' => 'gridview-club-id',
                 'responsive'          => true,

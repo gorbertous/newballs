@@ -177,7 +177,8 @@ $club = \backend\models\Clubs::findOne(Yii::$app->session->get('c_id'));
     $toolbar[] = '{toggleData}';
     
     echo GridView::widget([
-                'dataProvider'   => $dataProvider,
+                'dataProvider' => $dataProvider,
+        'filterModel' => $searchModel,
                 'columns'        => $gridColumn,
                 'id' => 'gridview-club-id',
                 'responsive'          => true,

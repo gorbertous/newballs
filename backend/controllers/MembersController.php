@@ -67,8 +67,6 @@ class MembersController extends Controller
      */
     public function actionIndex()
     {
-
-
         $searchModel = new MembersSearch();
         $searchModel->is_active = -1;
         $searchModel->is_admin = -1;

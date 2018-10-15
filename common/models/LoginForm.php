@@ -32,7 +32,7 @@ class LoginForm extends Model
     /**
      * @var string
      */
-    public $reCaptcha;
+//    public $reCaptcha;
 
     /**
      * @var bool
@@ -48,7 +48,7 @@ class LoginForm extends Model
             [['username', 'password'], 'required'],
             ['password', 'validatePassword'],
             ['rememberMe', 'boolean'],
-            [['reCaptcha', ReCaptchaValidator::class], 'safe']
+//            [['reCaptcha', ReCaptchaValidator::class], 'safe']
         ];
     }
 
@@ -66,9 +66,9 @@ class LoginForm extends Model
                     return $this->updateAttributes(['status' => User::STATUS_SUSPENDED], $identity->id);
                 },
 
-                'verifyRobotAttribute'           => 'reCaptcha',
-                'verifyRobotRule'                => ['required'],
-                'verifyRobotFailedLoginSequence' => 2
+//                'verifyRobotAttribute'           => 'reCaptcha',
+//                'verifyRobotRule'                => ['required'],
+//                'verifyRobotFailedLoginSequence' => 2
             ]
         ];
     }
@@ -126,7 +126,7 @@ class LoginForm extends Model
      * @return bool Whether the user is logged in successfully.
      */
     public function login()
-    {
+    { 
         if ($this->validate()) {
             return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600 * 24 * 30 : 0);
         } else {

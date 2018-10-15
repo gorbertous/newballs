@@ -151,7 +151,8 @@ $this->registerJs($script);
     $toolbar[] = '{toggleData}';
     
     echo GridView::widget([
-                'dataProvider'   => $dataProvider,
+                'dataProvider' => $dataProvider,
+        'filterModel' => $searchModel,
                 'columns'        => $gridColumn,
                 'id' => 'gridview-club-id',
                 'responsive'          => true,

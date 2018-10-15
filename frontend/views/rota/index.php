@@ -202,7 +202,8 @@ if(!Yii::$app->session->get('member_has_paid')){
     $toolbar[] = '{toggleData}';
     
     echo GridView::widget([
-                'dataProvider'   => $dataProvider,
+                'dataProvider' => $dataProvider,
+        'filterModel' => $searchModel,
                 'columns'        => $gridColumn,
                 'id' => 'gridview-club-id',
                 'responsive'          => true,

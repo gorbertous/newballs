@@ -384,7 +384,8 @@ trait GridviewHelper
         Pjax::begin(['id' => 'pjax-gridview-container', 'enablePushState' => true]);
 
         echo GridView::widget([
-                'dataProvider'   => $dataProvider,
+                'dataProvider' => $dataProvider,
+        'filterModel' => $searchModel,
                 'columns'        => $columns,
                 'responsiveWrap' => true,
 
