@@ -117,6 +117,32 @@ class Location extends \yii\db\ActiveRecord
         }
         return '';
     }
+    
+     /**
+     * Getter for full address
+     *
+     * @return string
+     */
+    public function getFullAddress()
+    {
+        return '<address>' .
+                ($this->address ?? '') . '<br>' .
+                ($this->zip ?? '') . ' ' . ($this->city ?? '') . '<br>' .
+                $this->getCountrytranslated() .
+                '</address>';
+    }
+    
+     /**
+     * Getter for formatted full address
+     *
+     * @return string
+     */
+    public function getShortAddress()
+    {
+        return $this->address . '<br>' .
+                $this->co_code . '-' . $this->zip . ' ' . $this->city;
+    }
+
 
     /**
      * @return \yii\db\ActiveQuery

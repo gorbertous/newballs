@@ -92,37 +92,6 @@ class SiteController extends Controller
             }else{
                 $id = 1;
             }
-//            $cookies = Yii::$app->response->cookies;
-            //check if cookie exists
-//            if (empty($id)) {
-//                //read value form client cookie
-//                $cookie_club_value = $cookies->getValue('club_identifier_cookie');
-//                dd($cookie_club_value);
-//                if (isset($cookie_club_value) && $cookie_club_value > 1) {
-//                    $id = (int) $cookie_club_value;
-//                }
-////            } elseif (empty($id) && !$cookies->has('club_identifier_cookie')) {
-////                //set default id balls-tennis
-////                $id = 1;
-//            } elseif (!empty($id) && $id > 1) {
-//                if ($cookies->has('club_identifier_cookie')) {
-//                    //remove old cookie
-//                    $cookies->remove('club_identifier_cookie');
-//                    unset($cookies['club_identifier_cookie']);
-//                    $cookie_club_id = new Cookie([
-//                        'name'   => 'club_identifier_cookie',
-//                        'value'  => (string) $id,
-//                        'domain' => '.balls.test',
-//                        //                'domain' => '.balls-tennis.com',
-//                        'expire' => time() + 86400 * 365,
-//                    ]);
-//                    $cookies->add($cookie_club_id);
-//                    $id = (int) $cookies->getValue('club_identifier_cookie');
-//                }
-//            }else{
-//                $id = 1;
-//            }
-            //dd($id);
             $model = Clubs::findOne($id);
 
             return $this->render('index', [
@@ -211,17 +180,16 @@ class SiteController extends Controller
                     ->orderBy('name')
                     ->all();
         } else {
-
-            // user is not club team member, maybe he is managing multiple
-            // clubs as defined in the jClubUsers table
-            $clubs = Clubs::find()
-                    ->innerJoinWith('jClubUsers')
+            // user is a member of multiple clubs
+            $clubs = Members::find()
+                    ->joinWith('user')
+                    ->joinWith('club')
                     ->where(['user_id' => $user_id])
                     ->orderBy('clubs.name')
                     ->all();
 
-            if (empty($clubs)) {
-                // user is not consultant and is not managing multiple mandants
+            if (count($clubs) == 1) {
+                // member of single club
                 // give him access to the club defined in the members table
                 $member = Members::find()
                         ->where(['user_id' => $user_id])
@@ -292,6 +260,7 @@ class SiteController extends Controller
             $session->set('member_has_paid', $member->has_paid);
             $session->set('member_is_active', $member->is_active);
             $session->set('member_since', $member->memberSince);
+            $session->set('member_profile_complete', $member->profileCompletion);
             // club data
             $session->set('c_id', $c_id);
             $session->set('club_name', $club->name);
@@ -371,6 +340,12 @@ class SiteController extends Controller
 
             // if 'rna' value is 'true', we instantiate SignupForm in 'rna' scenario
             $model = $rna ? new SignupForm(['scenario' => 'rna']) : new SignupForm();
+            
+            if (Yii::$app->session->get('c_id_public') !== null) {
+                $model->club = Yii::$app->session->get('c_id_public');
+            } else {
+                $model->club = 1;
+            }
 
             // if validation didn't pass, reload the form to show errors
             if (!$model->load(Yii::$app->request->post()) || !$model->validate()) {

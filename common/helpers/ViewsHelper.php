@@ -32,7 +32,7 @@ class ViewsHelper
     {
         $members = Members::find()
             ->select(['members.member_id', 'members.firstname', 'members.lastname'])
-            ->where(['members.c_id' => $c_id ?? Yii::$app->session->get('c_id')])
+            ->where(['or',['members.c_id' => $c_id ?? Yii::$app->session->get('c_id')],['members.member_id' => 1]])
             ->orderBy(['lastname' => SORT_ASC, 'firstname' => SORT_ASC]);
 
         if (!empty($innerjoin)) {

@@ -31,6 +31,7 @@ $currentBtn = GridviewHelper::getCurrentBtn($context_array);
             'attribute'           => 'location_id',
             'label'               => Yii::t('modelattr', 'Location'),
             'value'               => 'location.name',
+            'contentOptions' => ['style' => 'width:150px;'],
             'filterType'          => GridView::FILTER_SELECT2,
             'filter'              => ArrayHelper::map(\backend\models\Location::find()
                 ->select(['location_id', 'name'])
@@ -44,6 +45,7 @@ $currentBtn = GridviewHelper::getCurrentBtn($context_array);
         'termin_date',
         [
             'attribute' => 'session_id',
+            'contentOptions' => ['style' => 'width:100px;'],
             'value' => function($model) {
                 return isset($model->session_id) ? ClubSessions::get($model->session_id) : null;
             },
@@ -56,6 +58,7 @@ $currentBtn = GridviewHelper::getCurrentBtn($context_array);
         ],
         'courts_no',
         'slots_no',
+        'season_id'
         
     ];
 

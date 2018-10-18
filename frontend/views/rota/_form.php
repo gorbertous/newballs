@@ -3,26 +3,28 @@
 use backend\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
 use common\helpers\Helpers;
+use common\dictionaries\OutcomeStatus;
 use common\helpers\ViewsHelper;
 
+
 /* @var $this yii\web\View */
-/* @var $model backend\models\Reserves */
+/* @var $model backend\models\GamesBoard */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="reserves-form">
+<div class="games-board-form">
 
     <?php
     $form = ActiveForm::begin([
-        'id'      => 'form-reserves',
-        'options' => [
-            'enctype' => 'multipart/form-data'
-        ]
+                'id'      => 'form-location',
+                'options' => [
+                    'enctype' => 'multipart/form-data'
+                ]
     ]);
     ?>
 
     <ul class="nav nav-pills" id="tabContent">
-        <li class="active"><a href="#reserves" data-toggle="tab"><?= Yii::t('modelattr', 'Reserves') ?></a></li>
+        <li class="active"><a href="#rota" data-toggle="tab"><?= Yii::t('modelattr', 'Rota') ?></a></li>
 
         <!-- Audit tab  -->
         <?php if(Yii::$app->user->can('team_memebr')): ?>
@@ -31,7 +33,7 @@ use common\helpers\ViewsHelper;
     </ul>
 
     <div class="tab-content">
-        <div class="tab-pane active well" id="reserves">
+        <div class="tab-pane active well" id="rota">
             <div class="row">
                 <div class="col-xs-6">
                     <?=
@@ -42,8 +44,6 @@ use common\helpers\ViewsHelper;
                     ])
                     ?>
                 </div>
-            </div>      
-            <div class="row"> 
                 <div class="col-xs-6">
                     <?=
                     $form->hrwSelect2($model, 'termin_id', [
@@ -56,6 +56,27 @@ use common\helpers\ViewsHelper;
                         'pluginOptions' => ['allowClear' => true]
                     ])
                     ?>
+                </div>
+            </div>      
+            <div class="row"> 
+                <div class="col-xs-6">
+                   <?= $form->hrwTextInputMax($model, 'court_id') ?>
+                </div>
+                <div class="col-xs-6">
+                   <?= $form->hrwTextInputMax($model, 'court_id') ?>
+                </div>
+            </div>
+             <div class="row">     
+                <div class="col-xs-6">
+                   <?= $form->hrwSelect2($model, 'status_id', [
+                            'data' => OutcomeStatus::all(),
+                            'hideSearch' => true,
+                            'options' => ['placeholder' => '']
+                        ]) ?>
+                </div>
+                 <div class="col-xs-6">
+                     <?= $form->hrwCheckboxX($model, 'tokens') ?>
+                     <?= $form->hrwCheckboxX($model, 'late') ?>
                 </div>
             </div>
         </div>
@@ -74,3 +95,4 @@ use common\helpers\ViewsHelper;
 
     <div class="clearfix"></div>
 </div>
+

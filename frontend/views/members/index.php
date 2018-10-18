@@ -3,8 +3,9 @@
 use kartik\grid\GridView;
 use common\helpers\GridviewHelper;
 use yii\helpers\ArrayHelper;
-use backend\models\Members;
+//use backend\models\Members;
 use yii\widgets\Pjax;
+use common\helpers\ViewsHelper;
 
 $this->title = GridviewHelper::getTitle($context_array);
 $currentBtn = GridviewHelper::getCurrentBtn($context_array);
@@ -35,9 +36,7 @@ $greencheck = '<i class="text-success fa fa-check fa-lg" aria-hidden="true"></i>
             'label'               => Yii::t('modelattr', 'Name'),
             'value'               => 'fullName',
             'filterType'          => GridView::FILTER_SELECT2,
-            'filter'              => ArrayHelper::map(Members::find()
-                ->select(['member_id', 'firstname', 'lastname'])
-                ->all(), 'member_id', 'name'),
+            'filter'              => ViewsHelper::getMembersList(),
             'filterWidgetOptions' => [
                 'pluginOptions' => ['allowClear' => true]
             ],
@@ -73,20 +72,44 @@ $greencheck = '<i class="text-success fa fa-check fa-lg" aria-hidden="true"></i>
         [
             'attribute' => 'is_active',
             'class' => 'kartik\grid\EditableColumn',
-            'editableOptions' => function($model) {
-                return [
-                    'inputType' => \kartik\editable\Editable::INPUT_SELECT2,
-                    'asPopover' => true,
-                    'options' => [
-                        'data' => [
-                            0  => Yii::t('modelattr', 'No'),
-                            1  => Yii::t('modelattr', 'Yes')],
-                        'pluginOptions' => []
-                    ]
-                ];
-            },
+            'editableOptions'=>[
+                'header'=>'Is Active',
+                'formOptions'=>['action' => ['/members/editmember']], // point to the new action        
+                'inputType'=>\kartik\editable\Editable::INPUT_SELECT2,
+                'asPopover' => true,
+                'options' => [
+                    'data' => [
+                        0  => Yii::t('modelattr', 'No'),
+                        1  => Yii::t('modelattr', 'Yes')],
+                    'pluginOptions' => []
+                ]
+            ],
             'value'     => function($model) {
                 return $model->is_active ? Yii::t('modelattr', 'Yes') : Yii::t('modelattr', 'No');
+            },
+            'filterType' => GridView::FILTER_SELECT2,
+            'filter'     => [-1 => Yii::t('modelattr', 'All'),
+                0  => Yii::t('modelattr', 'No'),
+                1  => Yii::t('modelattr', 'Yes')],
+            'width'      => '100px;',
+        ],
+        [
+            'attribute' => 'has_paid',
+            'class' => 'kartik\grid\EditableColumn',
+            'editableOptions'=>[
+                'header'=>'Has Paid',
+                'formOptions'=>['action' => ['/members/editmember']], // point to the new action        
+                'inputType'=>\kartik\editable\Editable::INPUT_SELECT2,
+                'asPopover' => true,
+                'options' => [
+                    'data' => [
+                        0  => Yii::t('modelattr', 'No'),
+                        1  => Yii::t('modelattr', 'Yes')],
+                    'pluginOptions' => []
+                ]
+            ],
+            'value'     => function($model) {
+                return $model->has_paid ? Yii::t('modelattr', 'Yes') : Yii::t('modelattr', 'No');
             },
             'filterType' => GridView::FILTER_SELECT2,
             'filter'     => [-1 => Yii::t('modelattr', 'All'),
@@ -106,39 +129,6 @@ $greencheck = '<i class="text-success fa fa-check fa-lg" aria-hidden="true"></i>
                 }
             },
             'visible' => Yii::$app->user->can('team_member'),
-            'filterType' => GridView::FILTER_SELECT2,
-            'filter'     => [-1 => Yii::t('modelattr', 'All'),
-                0  => Yii::t('modelattr', 'No'),
-                1  => Yii::t('modelattr', 'Yes')],
-            'width'      => '100px;',
-        ],
-        [
-            'attribute' => 'has_paid',
-//            'hAlign'    => GridView::ALIGN_CENTER,
-//            'format'    => 'raw',
-//            'value'     => function($model)use ($redcross, $greencheck) {
-//                if ($model->has_paid == 1) {
-//                    return $greencheck;
-//                } else {
-//                    return $redcross;
-//                }
-//            },
-            'class' => 'kartik\grid\EditableColumn',
-            'editableOptions' => function($model) {
-                return [
-                    'inputType' => \kartik\editable\Editable::INPUT_SELECT2,
-                    'asPopover' => true,
-                    'options' => [
-                        'data' => [
-                            0  => Yii::t('modelattr', 'No'),
-                            1  => Yii::t('modelattr', 'Yes')],
-                        'pluginOptions' => []
-                    ]
-                ];
-            },
-            'value'     => function($model) {
-                return $model->has_paid ? Yii::t('modelattr', 'Yes') : Yii::t('modelattr', 'No');
-            },
             'filterType' => GridView::FILTER_SELECT2,
             'filter'     => [-1 => Yii::t('modelattr', 'All'),
                 0  => Yii::t('modelattr', 'No'),

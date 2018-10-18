@@ -4,7 +4,7 @@ namespace frontend\controllers;
 
 use Yii;
 use backend\models\GamesBoard;
-use frontend\models\GamesboardSearch;
+use frontend\models\RotaSearch;
 use yii\web\Controller;
 use yii\filters\AccessControl;
 use common\helpers\Errorhandler as Errorhandler;
@@ -60,9 +60,11 @@ class GamesboardController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new GamesboardSearch();
+        $searchModel = new RotaSearch();
+        $searchModel->timefilter = 1;
         $searchModel->tokens = -1;
         $searchModel->late = -1;
+        $searchModel->seasonfilter = Yii::$app->session->get('club_season');
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [

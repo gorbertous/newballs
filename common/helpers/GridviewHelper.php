@@ -4,7 +4,7 @@ namespace common\helpers;
 
 
 use Yii;
-use yii\db\ActiveRecord;
+//use yii\db\ActiveRecord;
 use yii\helpers\Html;
 use yii\helpers\Url;
 

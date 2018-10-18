@@ -26,7 +26,13 @@ $greencheck = '<i class="text-success fa fa-check fa-lg" aria-hidden="true"></i>
 if(!Yii::$app->session->get('member_has_paid')){
     echo Yii::$app->session->setFlash('danger', 'Unfortunatelly the club has not yet received your membership payment, currently you cannot book the games, please settle this or contact the club chairman!');
 }
-
+if ($searchModel->timefilter == 1) {
+    $rotatitle = '<h3>' . Yii::t('modelattr', 'Future Games');
+} elseif ($searchModel->timefilter == 2) {
+    $rotatitle = '<h3>' . Yii::t('modelattr', 'Past Games');
+} else {
+    $rotatitle = '<h3>' . Yii::t('modelattr', 'Entire Rota');
+}
 ?>
 <div class="rota-index">
     <div class="panel-group" id="accordion">
@@ -45,34 +51,21 @@ if(!Yii::$app->session->get('member_has_paid')){
           </div>
         </div>
     </div>
-    <div class="table-responsive">
+   
     <?php
     Pjax::begin(['id' => 'pjax-gridview-container', 'enablePushState' => true]);
     $gridColumn = [
         ['class' => 'yii\grid\SerialColumn', 
             'contentOptions' => ['style' => 'width:20px;'],
         ],
-//      [
-//            'class' => 'kartik\grid\ExpandRowColumn',
-//            'width' => '50px',
-//            'value' => function ($model, $key, $index, $column) {
-//                return GridView::ROW_COLLAPSED;
-//            },
-//            'detail' => function ($model, $key, $index, $column) {
-//                return Yii::$app->controller->renderPartial('_expand', ['model' => $model]);
-//            },
-//            'headerOptions' => ['class' => 'kartik-sheet-style'],
-//            'expandOneOnly' => true
-//        ],
-//        ['attribute' => 'id', 'visible' => false],
-        
+
         [
              'attribute' => 'termin_id',
              'format' => 'raw',
              'value' => function($model){  
                 $dispdate = Yii::$app->formatter->asDate($model->termin->termin_date);
                 $disptime = Yii::$app->formatter->asTime($model->termin->termin_date, 'short');
-                return '<h3>Date : '. $dispdate . ' at '. $disptime . '   - Location: '. $model->termin->location->address.'</h3>';                   
+                return '<h4>Date : '. $dispdate . ' at '. $disptime . '   - Location: '. $model->termin->location->address.'</h4>';                   
              },
              'group' => true,
              'groupedRow' => true,
@@ -89,8 +82,8 @@ if(!Yii::$app->session->get('member_has_paid')){
              'group' => true,
              'subGroupOf'=>1,
              'groupedRow' => true,
-//             'groupOddCssClass' => 'kv-grouped-row',
-//             'groupEvenCssClass' => 'kv-grouped-row'
+             'groupOddCssClass' => 'kv-group-even',
+             'groupEvenCssClass' => 'kv-group-even'
          ],
          [
              'attribute' => 'member_id',
@@ -98,7 +91,7 @@ if(!Yii::$app->session->get('member_has_paid')){
              'format' => 'raw',
              'value' => function($model){
                 if($model->member_id == 1){
-                    $url = Url::toRoute(['rota/update', 'id' => $model->id]);
+                    $url = Url::toRoute(['rota/insert', 'id' => $model->id]);
                     $link = Html::a($model->member->name, $url, 
                         [
                             'title' => Yii::t('app', 'Click the link to put your name on the rota'),
@@ -186,11 +179,14 @@ if(!Yii::$app->session->get('member_has_paid')){
     ]; 
 
     $header = GridviewHelper::getHeader($context_array);
-//    $gridColumn[] = GridviewHelper::getActionColumn(
-//        '{view}{update}',
-//        $currentBtn);
+    if(Yii::$app->user->can('writer')){
+        $gridColumn[] = GridviewHelper::getActionColumn(
+            '{update}',
+            $currentBtn);
+    }
     
-    $lefttoolbar = GridviewHelper::getLefttoolbar($context_array, $currentBtn);
+//special case for rota - to replace buttons
+    $lefttoolbar = [$rotatitle];
     
     // right toolbar + custom buttons
     $toolbar[] = [
@@ -203,7 +199,7 @@ if(!Yii::$app->session->get('member_has_paid')){
     
     echo GridView::widget([
                 'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
+                'filterModel' => $searchModel,
                 'columns'        => $gridColumn,
                 'id' => 'gridview-club-id',
                 'responsive'          => true,

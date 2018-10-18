@@ -198,7 +198,7 @@ class Texts extends ActiveRecord
                 'placement'    => PopoverX::ALIGN_BOTTOM,
                 'content'      => $content,
                 'toggleButton' => ['label' => '<i class="fa fa-info i info"></i>',
-                                   'class' => 'btn-info-i'],
+                                   'class' => 'btn-danger'],
             ]);
         } else {
             if (empty($content)) {
@@ -211,7 +211,7 @@ class Texts extends ActiveRecord
                     'placement'    => PopoverX::ALIGN_BOTTOM,
                     'content'      => $content,
                     'toggleButton' => ['label' => '<i class="fa fa-info i info"></i>',
-                                       'class' => 'btn-info-i'],
+                                       'class' => 'btn-info'],
                 ]);
             }
         }

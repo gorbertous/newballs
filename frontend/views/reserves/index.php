@@ -4,6 +4,7 @@ use kartik\grid\GridView;
 use common\helpers\GridviewHelper;
 use yii\helpers\ArrayHelper;
 use yii\widgets\Pjax;
+use common\helpers\ViewsHelper;
 
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\ReservesSearch */
@@ -33,6 +34,8 @@ $currentBtn = GridviewHelper::getCurrentBtn($context_array);
             'filterType'          => GridView::FILTER_SELECT2,
             'filter'              => ArrayHelper::map(backend\models\PlayDates::find()
                 ->select(['termin_id', 'termin_date'])
+                ->where(['c_id' => Yii::$app->session->get('c_id')])
+                ->orderBy(['termin_id' => SORT_DESC])
                 ->all(), 'termin_id', 'termin_date'),
             'filterWidgetOptions' => [
                 'pluginOptions' => ['allowClear' => true]
@@ -44,9 +47,7 @@ $currentBtn = GridviewHelper::getCurrentBtn($context_array);
             'label'               => Yii::t('modelattr', 'Member'),
             'value'               => 'member.name',
             'filterType'          => GridView::FILTER_SELECT2,
-            'filter'              => ArrayHelper::map(backend\models\Members::find()
-                ->select(['member_id', 'firstname', 'lastname'])
-                ->all(), 'member_id', 'name'),
+            'filter'              => ViewsHelper::getMembersList(),
             'filterWidgetOptions' => [
                 'pluginOptions' => ['allowClear' => true]
             ],

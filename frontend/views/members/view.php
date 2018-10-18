@@ -124,16 +124,13 @@ $greencheck = '<i class="text-success fa fa-check fa-lg" aria-hidden="true"></i>
             ])
             ?>
         </div>
-        <?php if (Yii::$app->controller->action->id == 'view') { ?>
-            <div class="clearfix"></div> <br />
-            <?php
-            echo Helpers::getModalFooter($model, $model->member_id, 'view', [
-                'buttons' => ['cancel']
-            ]);
-            ?>
-        <?php } ?>
-
-
+       
+        <div class="clearfix"></div> <br />
+        <?php
+        echo Helpers::getModalFooter($model, $model->member_id, 'view', [
+            'buttons' => ['cancel']
+        ]);
+        ?>
     </div>
 </div>
 

@@ -1,6 +1,6 @@
 <?php
 
-use yii\helpers\Html;
+//use yii\helpers\Html;
 use common\helpers\Helpers;
 use common\dictionaries\NewsCategories;
 
@@ -42,7 +42,7 @@ use common\dictionaries\NewsCategories;
             <?php if (Yii::$app->controller->action->id == 'view') { ?>
                 <div class="clearfix"></div>
                 <?php echo Helpers::getModalFooter($model, $model->id, 'view', [
-                    'buttons' => ['print', 'cancel']
+                    'buttons' => ['cancel']
                 ]); ?>
             <?php } ?>
         </div>

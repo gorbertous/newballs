@@ -45,13 +45,13 @@ return [
      * Email used in contact form.
      * Users will send you emails to this address.
      */
-    'adminEmail' => 'gorbertous@gmail.com', 
+    'adminEmail' => 'admin@balls-tennis.com', 
 
     /**
      * Email used in sign up form, when we are sending email with account activation link.
      * You will send emails to users from this address.
      */
-    'supportEmail' => 'gorbertous@gmail.com',
+    'supportEmail' => 'admin@balls-tennis.com',
     
     // kartik gridview global bootstrap verison
     'bsVersion' => '3.3.7',

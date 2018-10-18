@@ -64,8 +64,10 @@ return [
         
         'maintenanceMode' => [
             'class' => brussens\maintenance\MaintenanceMode::class,
+            'title' => 'This site is under maintenance',
+            'message' => 'We should be back shortly!',
             'enabled' => false,
-            'urls' => ['site/index', 'login'],
+            'urls' => ['site/index', 'login','request-password-reset'],
             'roles' => ['developer'],
         ],
         

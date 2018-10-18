@@ -75,7 +75,7 @@ class RotaController extends Controller
         ]);
     }
 
-    public function actionUpdate($id)
+    public function actionInsert($id)
     {
         /** @var $model \backend\models\base\GamesBoard */
         // check for existing name on the court
@@ -86,9 +86,44 @@ class RotaController extends Controller
             $model = $this->findModel($id);
             $model->member_id = Yii::$app->user->member->member_id;
             $model->save(false);
+            if ($model->sendRotaConfirmationEmail($model)) {
+                Yii::$app->session->setFlash('success', 'Confirmation email has been sent out to you, check your mail box.');
+            }
             Yii::$app->session->setFlash('success', 'You have successfully added your name on the rota!');
         }
         return $this->redirect(Yii::$app->request->referrer);
+    }
+    
+     /**
+     * Updates an existing GamesBoard model.
+     * If update is successful, the browser will be redirected to the 'view' page.
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionUpdate($id)
+    {
+        /** @var $model \backend\models\base\GamesBoard */
+        $model = $this->findModel($id);
+
+        if ($model->load(Yii::$app->request->post())) {
+            
+            $valid = $model->validate();
+
+            if (!$valid) {
+                $this->getBaseMsg($model->errors);
+            }
+            $model->updatedByname = Yii::$app->user->member->name;
+            $model->save(false);
+            if ($model->sendRotaConfirmationEmail($model)) {
+                Yii::$app->session->setFlash('success', 'Confirmation email has been sent out');
+            }
+            Yii::$app->session->setFlash('success', 'Rota has been updated!');
+            return $this->redirect(Yii::$app->request->referrer);
+        } else {
+            return $this->renderNormalorAjax('update', [
+                        'model' => $model
+            ]);
+        }
     }
 
     /**

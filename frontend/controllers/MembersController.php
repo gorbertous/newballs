@@ -8,13 +8,14 @@ use yii\web\Controller;
 use yii\web\ForbiddenHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
-use yii\helpers\Json;
 use frontend\models\MembersSearch;
 use backend\models\Members;
 use common\helpers\Helpers;
 use common\helpers\Thumbnails;
 use common\dictionaries\ContextLetter;
 use common\models\User;
+use kartik\grid\EditableColumnAction;
+use yii\helpers\ArrayHelper;
 
 /**
  * Class WorkersController
@@ -53,7 +54,7 @@ class MembersController extends Controller
                     [
                         'controllers' => ['members'],
                         'actions'     => [
-                            'index', 'view', 'update', 'membership'
+                            'index', 'view', 'update', 'membership', 'editmember'
                         ],
                         'allow'       => true,
                         'roles'       => ['member']
@@ -68,82 +69,58 @@ class MembersController extends Controller
             ]
         ];
     }
-    
-     public function actionIndex()
+    /**
+     * editable columns processing
+     */
+    public function actions()
     {
-        // validate if there is a editable input saved via AJAX
-        if (Yii::$app->request->post('hasEditable')) {
-            // instantiate empcontract model for saving
-            $mem_id = Yii::$app->request->post('editableKey');
-            $model = Members::findOne($mem_id);
-            // store a default json response as desired by editable
-            $out = Json::encode(['output' => '', 'message' => '']);
-            //$out2 = Json::encode(['output' => '', 'message' => '']);
-            // fetch the first entry in posted data (there should only be one entry 
-            // anyway in this array for an editable submission)
-            // - $posted is the posted data for Members without any indexes
-            // - $post is the converted array for single model validation
-            $posted = current($_POST['Members']);
-            $post = ['Members' => $posted];
-
-            // load model like any single model validation
-            if ($model->load($post)) {
-                // can save model or do something before saving model
-                $model->save();
-                $output = '';
-                if (!empty($posted['has_paid'])) {
-                    $output = $posted['has_paid'] > 0  ? Yii::t('modelattr', 'Yes') : Yii::t('modelattr', 'No');
-                }
-                if (!empty($posted['is_active'])) {
-                    $output = $posted['is_active']  ? Yii::t('modelattr', 'Yes') : Yii::t('modelattr', 'No');
-                }
-              
-                //$modelwu = Workunits::findOne($model->ID_Workunit);
-                //$Workplace = Contacts::findOne($model->ID_Workplace);
-                $out = Json::encode(['output' => $output, 'message' => '']);
-               
-            }
-            // return ajax json encoded response and exit
-            return $out;
-        } else {
-           $searchModel = new MembersSearch();
-            $searchModel->is_active = 1;
-            $searchModel->is_admin = -1;
-            $searchModel->has_paid = -1;
-            $searchModel->is_organiser = -1;
-            $searchModel->is_visible = 1;
-            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
-            return $this->renderNormalorAjax('index', [
-                        'searchModel'   => $searchModel,
-                        'dataProvider'  => $dataProvider,
-                        'context_array' => $this->getSpecificContextArray()
-            ]);
-        }
+        return ArrayHelper::merge(parent::actions(), [
+            'editmember' => [// identifier for your editable action
+                'class'       => EditableColumnAction::className(), // action class name
+                'modelClass'  => Members::className(), // the update model class
+                'outputValue' => function ($model, $attribute, $key, $index) {                 
+                    $value = $model->$attribute;                 // your attribute value
+                    if ($value) {           // selective validation by attribute
+                        return Yii::t('modelattr', 'Yes');       // return formatted value if desired
+                    } else {   // selective validation by attribute
+                        return Yii::t('modelattr', 'No'); // return formatted value if desired
+                    }
+                    return '';                                   // empty is same as $value
+                },
+                'outputMessage' => function($model, $attribute, $key, $index) {
+                    return '';                                  // any custom error after model save
+                },
+            // 'showModelErrors' => true,                     // show model errors after save
+            // 'errorOptions' => ['header' => '']             // error summary HTML options
+            // 'postOnly' => true,
+            // 'ajaxOnly' => true,
+            // 'findModel' => function($id, $action) {},
+            // 'checkAccess' => function($action, $model) {}
+            ]
+        ]);
     }
-
 
     /**
      * {@inheritdoc}
      */
-//    public function actionIndex()
-//    {
-//        $searchModel = new MembersSearch();
-//        $searchModel->is_active = 1;
-//        $searchModel->is_admin = -1;
-//        $searchModel->has_paid = -1;
-//        $searchModel->is_organiser = -1;
-//        $searchModel->is_visible = 1;
-//        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-//
-//        return $this->renderNormalorAjax('index', [
-//                    'searchModel'   => $searchModel,
-//                    'dataProvider'  => $dataProvider,
-//                    'context_array' => $this->getSpecificContextArray()
-//        ]);
-//    }
-    
-     /**
+    public function actionIndex()
+    {
+        $searchModel = new MembersSearch();
+        $searchModel->is_active = 1;
+        $searchModel->is_admin = -1;
+        $searchModel->has_paid = -1;
+        $searchModel->is_organiser = -1;
+        $searchModel->is_visible = 1;
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->renderNormalorAjax('index', [
+                    'searchModel'   => $searchModel,
+                    'dataProvider'  => $dataProvider,
+                    'context_array' => $this->getSpecificContextArray()
+        ]);
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function actionMembership()
@@ -188,7 +165,7 @@ class MembersController extends Controller
         $model = new Members;
         $model->c_id = Yii::$app->session->get('c_id');
         if ($model->load(Yii::$app->request->post())) {
-            
+
             $model->co_code = (empty($model->co_code)) ? null : $model->co_code;
             $model->nationality = (empty($model->nationality)) ? null : $model->nationality;
 
@@ -274,6 +251,7 @@ class MembersController extends Controller
                     // special case copy thumbs (25, 90, 160 into profile-thumbs folder
                     $thumbspath = $model->uploadsFolder . 'profile-thumbs/';
                     Yii::$app->session->set('member_has_paid', $model->has_paid);
+                    Yii::$app->session->set('member_profile_complete', $model->profileCompletion);
                     Helpers::createPath($thumbspath);
                     if (!empty($model->photo)) {
                         $filepath = $model->uniqueFolder . $model->photo;

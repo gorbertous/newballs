@@ -100,7 +100,7 @@ class Clubs extends ActiveRecord
             self::BTLabels(), [
             'c_id'              => Yii::t('modelattr', 'ID'),
             'season_id'         => Yii::t('modelattr', 'Season'),
-            'session_id'        => Yii::t('modelattr', 'Your games average duration'),
+            'session_id'        => Yii::t('modelattr', 'Games Average Duration'),
             'css_id'            => Yii::t('modelattr', 'Site CSS Style'),
             'type_id'           => Yii::t('modelattr', 'Is non-profit'),
             'sport_id'          => Yii::t('modelattr', 'What Sport'),

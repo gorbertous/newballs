@@ -3,7 +3,7 @@ return [
     'components' => [
         'db' => [
             'class' => 'yii\db\Connection',
-            'dsn' => 'mysql:host=localhost;dbname=ball-tennis-test',
+            'dsn' => 'mysql:host=localhost;dbname=balls-tennis',
             'username' => 'root',
             'password' => 'root',
             'charset' => 'utf8',
@@ -15,9 +15,9 @@ return [
 
             'transport' => [
                 'class'    => 'Swift_SmtpTransport',
-                'host'     => 'smtp.gmail.com',
-                'username' => 'gorbertous',
-                'password' => 'gb111111',
+                'host'     => 'smtp.zoho.eu',
+                'username' => 'admin@balls-tennis.com',
+                'password' => 'Lublana2bulana',
                 'port' => '587',
                 'encryption' => 'tls',
                 'streamOptions' => [

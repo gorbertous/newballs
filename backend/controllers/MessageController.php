@@ -30,11 +30,11 @@ class MessageController extends Controller
     use TraitController;
 
     // which folders should be scanned
-    private $scanroot = '@_protected' . DIRECTORY_SEPARATOR;
+    private $scanroot = '@backend' . DIRECTORY_SEPARATOR;
     // list of the php function for translating messages.
     private $phpTranslators = ['::t'];
     // list of the js function for translating messages.
-    private $jsTranslators = ['lajax.t'];
+//    private $jsTranslators = ['lajax.t'];
     // list of file extensions that contain language elements.
     private $phpPatterns = ['*.php'];
     // these categories won't be included in the language database.

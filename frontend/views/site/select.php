@@ -29,16 +29,17 @@ Yii::$app->view->registerCss($css);
     ]
 ]); ?>
 
-    <?php if (Yii::$app->user->can('team_member')) { ?>
+    
+    <?php if(Yii::$app->user->can('team_member')) : ?>
         <input type="text" class="text-input" id="filter" autocomplete="off" placeholder="<?= Yii::t('app', 'Search for a club name');?>..." />
 
         <span class="filter-count"></span>
-    <?php } ?>
-
-    <nav>
+        
+        <nav>
         <ul>
         <?php foreach ($model as $m) { ?>
             <li>
+                <h4><?= $m->name ?></h4>
                 <?= Html::submitButton('<img src="'. $m->getThumbnailUrl($m->logo, [100, 100]) .
                     '" alt="'. $m->name .'" class="img-thumbnail center-block" style="padding: 5px 5px 5px 5px;">',
                     ['class' => '',
@@ -51,6 +52,26 @@ Yii::$app->view->registerCss($css);
         <?php } ?>
         </ul>
     </nav>
+        
+    <?php else : ?>
+        <nav>
+            <ul>
+            <?php foreach ($model as $m) { ?>
+                <li>
+                    <h4><?= $m->club->name ?></h4>
+                    <?= Html::submitButton('<img src="'. $m->club->getThumbnailUrl($m->club->logo, [100, 100]) .
+                        '" alt="'. $m->name .'" class="img-thumbnail center-block" style="padding: 5px 5px 5px 5px;">',
+                        ['class' => '',
+                        'name' => 'club',
+                        'value' => $m->c_id,
+                        'id' => 'select-'.$m->c_id]) ?>
+
+                    <span class="hidden-text"><?= $m->name; ?></span>
+                </li>
+            <?php } ?>
+            </ul>
+        </nav>
+    <?php endif; ?>
 
 <?php ActiveForm::end(); ?>
 

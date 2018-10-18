@@ -36,7 +36,11 @@ use backend\models\Clubs;
                 <div class="col-xs-6">
                     <?=
                     $form->hrwSelect2($model, 'termin_id', [
-                        'data'          => ArrayHelper::map(\backend\models\PlayDates::find()->all(), 'termin_id', 'termin_date'),
+                        'data'          => ArrayHelper::map(\backend\models\PlayDates::find()
+                                ->select(['termin_id', 'termin_date'])
+                                ->where(['c_id' => Yii::$app->session->get('c_id')])
+                                ->orderBy(['termin_id' => SORT_DESC])
+                                ->all(), 'termin_id', 'termin_date'),
                         'options'       => ['id' => 'ter-id'],
                         'pluginOptions' => ['allowClear' => true]
                     ])

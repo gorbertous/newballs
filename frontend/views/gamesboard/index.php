@@ -5,6 +5,7 @@ use yii\widgets\Pjax;
 use common\helpers\GridviewHelper;
 use yii\helpers\ArrayHelper;
 use common\dictionaries\OutcomeStatus;
+use common\helpers\ViewsHelper;
 
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\GamesboardSearch */
@@ -15,9 +16,40 @@ $currentBtn = GridviewHelper::getCurrentBtn($context_array);
 
 $redcross = '<i class="text-danger fa fa-times fa-lg" aria-hidden="true"></i>';
 $greencheck = '<i class="text-success fa fa-check fa-lg" aria-hidden="true"></i>';
+
+$this->params['breadcrumbs'][] = $this->title;
+$search = "$('.search-button').click(function(){
+	$('.search-form').toggle(1000);
+	return false;
+});";
+$this->registerJs($search);
+
+if ($searchModel->timefilter == 1) {
+    $rotatitle = '<h3>' . Yii::t('modelattr', 'Future Games');
+} elseif ($searchModel->timefilter == 2) {
+    $rotatitle = '<h3>' . Yii::t('modelattr', 'Past Games');
+} else {
+    $rotatitle = '<h3>' . Yii::t('modelattr', 'Entire Rota');
+}
 ?>
 
 <div class="games-board-index">
+     <div class="panel-group" id="accordion">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h4 class="panel-title">
+              <a data-toggle="collapse" data-parent="#accordion" href="#collapse1"><?= Yii::t('app', 'Rota Search')?>&nbsp;&nbsp;<span class="caret" style="border-width: 5px;"></span></a>
+            </h4>
+          </div>
+          <div id="collapse1" class="panel-collapse">
+              <div class="panel-body">
+                    <div class="search-form">
+                        <?=  $this->render('_search', ['model' => $searchModel]); ?>
+                    </div>
+              </div>
+          </div>
+        </div>
+    </div>
 
     <?php 
     Pjax::begin(['id' => 'pjax-gridview-container', 'enablePushState' => true]);
@@ -33,10 +65,12 @@ $greencheck = '<i class="text-success fa fa-check fa-lg" aria-hidden="true"></i>
         [
             'attribute'           => 'termin_id',
             'label'               => Yii::t('modelattr', 'Date'),
+            'contentOptions' => ['style' => 'width:150px;'],
             'value'               => 'termin.termin_date',
             'filterType'          => GridView::FILTER_SELECT2,
             'filter'              => ArrayHelper::map(backend\models\PlayDates::find()
                 ->select(['termin_id', 'termin_date'])
+                ->where(['c_id' => Yii::$app->session->get('c_id')])
                 ->all(), 'termin_id', 'termin_date'),
             'filterWidgetOptions' => [
                 'pluginOptions' => ['allowClear' => true]
@@ -49,9 +83,7 @@ $greencheck = '<i class="text-success fa fa-check fa-lg" aria-hidden="true"></i>
             'value'               => 'member.name',
             'contentOptions' => ['style' => 'width:150px;'],
             'filterType'          => GridView::FILTER_SELECT2,
-            'filter'              => ArrayHelper::map(backend\models\Members::find()
-                ->select(['member_id', 'firstname', 'lastname'])
-                ->all(), 'member_id', 'name'),
+            'filter'              => ViewsHelper::getMembersList(),
             'filterWidgetOptions' => [
                 'pluginOptions' => ['allowClear' => true]
             ],
@@ -62,6 +94,7 @@ $greencheck = '<i class="text-success fa fa-check fa-lg" aria-hidden="true"></i>
         [
             'attribute'           => 'status_id',
             'label'               => Yii::t('modelattr', 'Status'),
+            'contentOptions' => ['style' => 'width:100px;'],
             'value' => function($model) {
                 return isset($model->status_id) ? OutcomeStatus::get($model->status_id) : null;
             },
@@ -129,7 +162,7 @@ $greencheck = '<i class="text-success fa fa-check fa-lg" aria-hidden="true"></i>
     
     echo GridView::widget([
                 'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
+                'filterModel' => $searchModel,
                 'columns'        => $gridColumn,
                 'id' => 'gridview-club-id',
                 'responsive'          => true,

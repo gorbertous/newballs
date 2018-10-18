@@ -3,7 +3,7 @@
 use kartik\grid\GridView;
 use common\helpers\GridviewHelper;
 use yii\helpers\ArrayHelper;
-use backend\models\Members;
+use common\helpers\ViewsHelper;
 use yii\widgets\Pjax;
 
 
@@ -61,8 +61,7 @@ $club = \backend\models\Clubs::findOne(Yii::$app->session->get('c_id'));
 //                        ? 'red' : 'blue')];
 //            },
             'filterType'          => GridView::FILTER_SELECT2,
-            'filter'              => ArrayHelper::map(Members::find()
-                ->all(), 'member_id', 'name'),
+            'filter'              => ViewsHelper::getMembersList(),
             'filterWidgetOptions' => [
                 'pluginOptions' => ['allowClear' => true]
             ],

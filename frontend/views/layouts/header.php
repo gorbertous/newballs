@@ -15,7 +15,7 @@ if (!empty(Yii::$app->session->get('member_photo'))) {
 
 <header class="main-header">
 
-    <?= Html::a('<span class="logo-mini">APP</span><span class="logo-lg">' . Yii::$app->name . '</span>', Yii::$app->homeUrl, ['class' => 'logo']) ?>
+    <?= Html::a('<span class="logo-mini">APP</span><span class="logo-lg">' . Yii::$app->session->get('club_name') . '</span>', Yii::$app->homeUrl, ['class' => 'logo']) ?>
 
     <?php if (!Yii::$app->user->isGuest) { ?>
 

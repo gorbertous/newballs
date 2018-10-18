@@ -189,6 +189,20 @@ class Members extends \yii\db\ActiveRecord
     {
         return $this->firstname . ' ' . $this->lastname;
     }
+    
+    /**
+     * Getter for short name
+     *
+     * @return string
+     */
+    public function getProfileCompletion()
+    {
+        $fname = empty($this->firstname) ? 30 : 0;
+        $lname = empty($this->lastname) ? 30 : 0;
+        $grade = empty($this->grade_id) ? 20 : 0;
+        $memtype = empty($this->mem_type_id) ? 20 : 0;
+        return 100 - $fname - $lname - $grade - $memtype;
+    }
 
     /**
      * Getter for member since
