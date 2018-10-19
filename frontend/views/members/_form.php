@@ -134,20 +134,20 @@ use common\helpers\ViewsHelper;
         <?php if(Yii::$app->user->can('writer')): ?>
             <div class="tab-pane well" id="settings">
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <?= $form->hrwCheckboxX($model, 'is_active') ?>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <?= $form->hrwCheckboxX($model, 'has_paid') ?>
+                    </div>
+                     <div class="col-md-4">
+                        <?= $form->hrwCheckboxX($model, 'is_visible') ?>
                     </div>
                 </div>
                 <?php if(Yii::$app->user->can('team_member')): ?>
                     <div class="row">
                         <div class="col-md-6">
                             <?= $form->hrwCheckboxX($model, 'is_admin') ?>
-                        </div>
-                        <div class="col-md-6">
-                            <?= $form->hrwCheckboxX($model, 'is_visible') ?>
                         </div>
                     </div>
                     <div class="row">

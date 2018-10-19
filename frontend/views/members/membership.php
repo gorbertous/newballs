@@ -160,8 +160,13 @@ $club = \backend\models\Clubs::findOne(Yii::$app->session->get('c_id'));
                 1  => Yii::t('modelattr', 'Yes')],
             'width'      => '100px;',
         ],
-        'created_at:datetime'
-       
+        [
+            'attribute' => 'created_at',
+            'label'     => Yii::t('app', 'Member Since'),
+            'value'     => function($model){
+                 return Yii::$app->formatter->asDate($model->created_at);
+            }
+        ], 
     ];
 
     $header = GridviewHelper::getHeader($context_array);

@@ -17,7 +17,7 @@ return [
                 'class'    => 'Swift_SmtpTransport',
                 'host'     => 'smtp.zoho.eu',
                 'username' => 'admin@balls-tennis.com',
-                'password' => 'Lublana2bulana',
+                'password' => 'Lublana3bulana@',
                 'port' => '587',
                 'encryption' => 'tls',
                 'streamOptions' => [

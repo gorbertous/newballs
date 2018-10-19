@@ -97,7 +97,7 @@ class Clubs extends ActiveRecord
     public function attributeLabels()
     {
         return array_merge(
-            self::BTLabels(), [
+                self::BTLabels(), [
             'c_id'              => Yii::t('modelattr', 'ID'),
             'season_id'         => Yii::t('modelattr', 'Season'),
             'session_id'        => Yii::t('modelattr', 'Games Average Duration'),
@@ -113,7 +113,7 @@ class Clubs extends ActiveRecord
             'rota_page'         => Yii::t('modelattr', 'Rota Page'),
             'tournament_page'   => Yii::t('modelattr', 'Tournament Page'),
             'subscription_page' => Yii::t('modelattr', 'Subscription Page'),
-            'summary_page'       => Yii::t('modelattr', 'Club Summary'),
+            'summary_page'      => Yii::t('modelattr', 'Club Summary'),
             'coach_stats'       => Yii::t('modelattr', 'Record Coaching Sessions'),
             'token_stats'       => Yii::t('modelattr', 'Balls/Tokens Responsibility count'),
             'play_stats'        => Yii::t('modelattr', 'Record Player Games'),
@@ -131,7 +131,7 @@ class Clubs extends ActiveRecord
             'photo_two'         => Yii::t('modelattr', 'Photo Two'),
             'photo_three'       => Yii::t('modelattr', 'Photo Three'),
             'photo_four'        => Yii::t('modelattr', 'Photo Four'),
-            ]
+                ]
         );
     }
 
@@ -186,20 +186,46 @@ class Clubs extends ActiveRecord
     {
         return $this->name;
     }
-    
+
     public function getFullAddress()
     {
         return '<address>' .
-            ($this->location->address ?? '') . '<br>' .
-            ($this->location->zip ?? '') . ' ' . ($this->location->city ?? '') . '<br>' .
-            $this->location->getCountrytranslated() .
-            '</address>';
+                ($this->location->address ?? '') . '<br>' .
+                ($this->location->zip ?? '') . ' ' . ($this->location->city ?? '') . '<br>' .
+                $this->location->getCountrytranslated() .
+                '</address>';
     }
-    
+
     public function getShortAddress()
     {
         return $this->location->address . '<br>' .
-               $this->location->zip . ' ' . $this->location->city;
+                $this->location->zip . ' ' . $this->location->city;
+    }
+
+    public function getMembership(array $andWhere = [])
+    {
+        $membership = Members::find()
+                ->where(['c_id' => $this->c_id]);
+       
+        if (!empty($andWhere)) {
+            $membership->andWhere($andWhere);
+        }
+        return $membership;
+    }
+    
+    public function getGamesStats(array $andWhere = [], string $innerjoin = '')
+    {
+        $games = GamesBoard::find()
+                ->where(['games_board.c_id' => $this->c_id]);
+        
+        if (!empty($innerjoin)) {
+            $games->innerJoinWith($innerjoin);
+        }
+        
+        if (!empty($andWhere)) {
+            $games->andWhere($andWhere);
+        }
+        return $games;
     }
 
     /**
@@ -217,7 +243,7 @@ class Clubs extends ActiveRecord
     {
         return $this->hasOne(Members::className(), ['member_id' => 'chair_id']);
     }
-    
+
     /**
      * @return \yii\db\ActiveQuery
      */

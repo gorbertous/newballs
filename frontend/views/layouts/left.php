@@ -57,6 +57,12 @@ if (!Yii::$app->user->isGuest) {
                                 'visible' => Yii::$app->user->can('reader')
                             ],
                             [
+                                'label'   => MenuTypes::clubText() . ' Stats',
+                                'icon'    => MenuTypes::CLUB_ICON_MENU,
+                                'url'     => Url::toRoute(['clubs/stats']),
+                                'active'  => ($route == 'clubs/stats')
+                            ],
+                            [
                                 'label'   => MenuTypes::membersText(),
                                 'icon'    => MenuTypes::MEMBERS_ICON_MENU,
                                 'url'     => Url::toRoute(['members/membership']),

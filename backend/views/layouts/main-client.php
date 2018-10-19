@@ -22,7 +22,7 @@ use yii\helpers\Html;
 
     <title><?= \yii\helpers\HtmlPurifier::process($this->title); ?></title>
 
-    <link rel="shortcut icon" type="image/x-icon"  href="/static/images/favicon.ico" />
+    <link rel="shortcut icon" type="image/x-icon"  href="/img/favicon.ico" />
 
     <?php $this->head(); ?>
 

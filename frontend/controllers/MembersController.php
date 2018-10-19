@@ -13,7 +13,7 @@ use backend\models\Members;
 use common\helpers\Helpers;
 use common\helpers\Thumbnails;
 use common\dictionaries\ContextLetter;
-use common\models\User;
+//use common\models\User;
 use kartik\grid\EditableColumnAction;
 use yii\helpers\ArrayHelper;
 
@@ -47,7 +47,7 @@ class MembersController extends Controller
                 'rules' => array_merge(self::FileUploadRules(), [
                     [
                         'controllers' => ['members'],
-                        'actions'     => ['create', 'delete'],
+                        'actions'     => ['create','delete'],
                         'allow'       => true,
                         'roles'       => ['developer']
                     ],
@@ -110,7 +110,7 @@ class MembersController extends Controller
         $searchModel->is_admin = -1;
         $searchModel->has_paid = -1;
         $searchModel->is_organiser = -1;
-        $searchModel->is_visible = 1;
+        $searchModel->is_visible = -1;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->renderNormalorAjax('index', [
@@ -221,7 +221,7 @@ class MembersController extends Controller
         /** @var $model \frontend\models\base\Members */
         $model = $this->findModel($id);
 
-        if ($model->user_id !== Yii::$app->user->identity->id && !Yii::$app->user->can('team_member')) {
+        if ($model->user_id !== Yii::$app->user->identity->id && !Yii::$app->user->can('writer')) {
             throw new ForbiddenHttpException(Yii::t('app', 'You are not allowed to access this page.'));
         }
 
@@ -251,7 +251,9 @@ class MembersController extends Controller
                     // special case copy thumbs (25, 90, 160 into profile-thumbs folder
                     $thumbspath = $model->uploadsFolder . 'profile-thumbs/';
                     Yii::$app->session->set('member_has_paid', $model->has_paid);
-                    Yii::$app->session->set('member_profile_complete', $model->profileCompletion);
+                    if ($model->user_id === Yii::$app->user->identity->id) {
+                        Yii::$app->session->set('member_profile_complete', $model->profileCompletion);
+                    }
                     Helpers::createPath($thumbspath);
                     if (!empty($model->photo)) {
                         $filepath = $model->uniqueFolder . $model->photo;
@@ -290,11 +292,11 @@ class MembersController extends Controller
         try {
             $model->delete();
             //deleting member, we delete user account
-            if (isset($user_id)) {
-                $user = User::findOne($modelbackup->user_id);
-                //$user = User::find()->where(['id' => $ID_User])->one();
-                $user->delete();
-            }
+//            if (isset($user_id)) {
+//                $user = User::findOne($modelbackup->user_id);
+//                //$user = User::find()->where(['id' => $ID_User])->one();
+//                $user->delete();
+//            }
         } catch (\Exception $ex) {
             Yii::$app->getSession()->setFlash('error', \common\helpers\Errorhandler::getRelatedData($model));
             return $this->redirect(Yii::$app->request->referrer);

@@ -51,7 +51,13 @@ $greencheck = '<i class="text-success fa fa-check fa-lg" aria-hidden="true"></i>
                 return $model->titleFB . (!empty($icons) ? '<br>'.$icons :  '') . $model->isnewLabel;
             }
         ],
-        'created_at:datetime',
+        [
+            'attribute' => 'created_at',
+            'label'     => Yii::t('app', 'Published on'),
+            'value'     => function($model){
+                 return Yii::$app->formatter->asDatetime($model->created_at);
+            }
+        ], 
 
     ];
 

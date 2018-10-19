@@ -140,7 +140,6 @@ class SiteController extends Controller
 
             if ($model->load(Yii::$app->request->post()) && $model->login()) {
                 if (($model->userHasnoclub()) !== null) {
-//                    dd($model->userHasnoclub());
                     Yii::$app->session->setFlash('danger', Yii::t('app', 'Your account has not been set up correctly, contact the site administrator'));
                     return $this->redirect(['/logout']);
                 } else {

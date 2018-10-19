@@ -37,6 +37,9 @@ Thumbs.db
 /environments/prod/common/config/main-local.php
 /frontend/web
 /backend/web
+/common/config/main-local-orig.php
+/common/config/main-local.php
+/common/config/params-local.php
 
 # vagrant runtime
 /.vagrant

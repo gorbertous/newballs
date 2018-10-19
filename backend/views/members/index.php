@@ -170,7 +170,13 @@ $greencheck = '<i class="text-success fa fa-check fa-lg" aria-hidden="true"></i>
                 1  => Yii::t('modelattr', 'Yes')],
             'width'      => '100px;',
         ],
-        'created_at:datetime'
+        [
+            'attribute' => 'created_at',
+            'label'     => Yii::t('app', 'Member Since'),
+            'value'     => function($model){
+                 return Yii::$app->formatter->asDate($model->created_at);
+            }
+        ], 
         
     ];
 

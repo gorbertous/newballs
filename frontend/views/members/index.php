@@ -118,6 +118,47 @@ $greencheck = '<i class="text-success fa fa-check fa-lg" aria-hidden="true"></i>
             'width'      => '100px;',
         ],
         [
+            'attribute' => 'is_visible',
+            'class' => 'kartik\grid\EditableColumn',
+            'editableOptions'=>[
+                'header'=>'Is Visible',
+                'formOptions'=>['action' => ['/members/editmember']], // point to the new action        
+                'inputType'=>\kartik\editable\Editable::INPUT_SELECT2,
+                'asPopover' => true,
+                'options' => [
+                    'data' => [
+                        0  => Yii::t('modelattr', 'No'),
+                        1  => Yii::t('modelattr', 'Yes')],
+                    'pluginOptions' => []
+                ]
+            ],
+            'value'     => function($model) {
+                return $model->is_visible ? Yii::t('modelattr', 'Yes') : Yii::t('modelattr', 'No');
+            },
+            'filterType' => GridView::FILTER_SELECT2,
+            'filter'     => [-1 => Yii::t('modelattr', 'All'),
+                0  => Yii::t('modelattr', 'No'),
+                1  => Yii::t('modelattr', 'Yes')],
+            'width'      => '100px;',
+        ],
+//        [
+//            'attribute' => 'is_visible',
+//            'hAlign'    => GridView::ALIGN_CENTER,
+//            'format'    => 'raw',
+//            'value'     => function($model)use ($redcross, $greencheck) {
+//                if ($model->is_visible == 1) {
+//                    return $greencheck;
+//                } else {
+//                    return $redcross;
+//                }
+//            },
+//            'filterType' => GridView::FILTER_SELECT2,
+//            'filter'     => [-1 => Yii::t('modelattr', 'All'),
+//                0  => Yii::t('modelattr', 'No'),
+//                1  => Yii::t('modelattr', 'Yes')],
+//            'width'      => '100px;',
+//        ],
+        [
             'attribute' => 'is_admin',
             'hAlign'    => GridView::ALIGN_CENTER,
             'format'    => 'raw',
@@ -153,25 +194,14 @@ $greencheck = '<i class="text-success fa fa-check fa-lg" aria-hidden="true"></i>
                 1  => Yii::t('modelattr', 'Yes')],
             'width'      => '100px;',
         ],
+        
         [
-            'attribute' => 'is_visible',
-            'hAlign'    => GridView::ALIGN_CENTER,
-            'format'    => 'raw',
-            'value'     => function($model)use ($redcross, $greencheck) {
-                if ($model->is_visible == 1) {
-                    return $greencheck;
-                } else {
-                    return $redcross;
-                }
-            },
-            'visible' => Yii::$app->user->can('team_member'),
-            'filterType' => GridView::FILTER_SELECT2,
-            'filter'     => [-1 => Yii::t('modelattr', 'All'),
-                0  => Yii::t('modelattr', 'No'),
-                1  => Yii::t('modelattr', 'Yes')],
-            'width'      => '100px;',
-        ],
-        'created_at:datetime'
+            'attribute' => 'created_at',
+            'label'     => Yii::t('app', 'Member Since'),
+            'value'     => function($model){
+                 return Yii::$app->formatter->asDate($model->created_at);
+            }
+        ], 
         
     ];
 
@@ -179,7 +209,7 @@ $greencheck = '<i class="text-success fa fa-check fa-lg" aria-hidden="true"></i>
     $gridColumn[] = Yii::$app->user->can('team_member') ? 
         GridviewHelper::getActionColumn(
         '{view}{update}{delete}', $currentBtn) :
-        GridviewHelper::getActionColumn('{view}',  $currentBtn);
+        GridviewHelper::getActionColumn('{view}{update}',  $currentBtn);
 
     $lefttoolbar = GridviewHelper::getLefttoolbar($context_array, $currentBtn);
     

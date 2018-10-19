@@ -39,19 +39,19 @@ class ClubsController extends Controller
                 'rules' => array_merge(self::FileUploadRules(), [
                     [
                         'controllers' => ['clubs'],
-                        'actions'     => ['create','delete'],
+                        'actions'     => ['create', 'delete'],
                         'allow'       => true,
                         'roles'       => ['developer']
                     ],
                     [
                         'controllers' => ['clubs'],
-                        'actions'     => [ 'index', 'update', 'view'],
+                        'actions'     => ['index', 'update', 'view'],
                         'allow'       => true,
                         'roles'       => ['admin']
                     ],
                     [
                         'controllers' => ['clubs'],
-                        'actions'     => [ 'stats'],
+                        'actions'     => ['stats'],
                         'allow'       => true,
                         'roles'       => ['member']
                     ],
@@ -81,13 +81,13 @@ class ClubsController extends Controller
                     'context_array' => $this->getSpecificContextArray()
         ]);
     }
-    
+
     public function actionStats()
     {
-       $model = $this->findModel(Yii::$app->session->get('c_id'));
+        $model = $this->findModel(Yii::$app->session->get('c_id'));
 
         return $this->renderNormalorAjax('stats', [
-                    'model'   => $model
+                    'model' => $model
         ]);
     }
 
@@ -101,7 +101,7 @@ class ClubsController extends Controller
         $model = $this->findModel($id);
 
         return $this->renderNormalorAjax('view', [
-            'model' => $model
+                    'model' => $model
         ]);
     }
 
