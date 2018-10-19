@@ -34,6 +34,7 @@ class Reserves extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['member_id', 'termin_id', 'c_id'], 'required'],
             [['member_id', 'termin_id', 'c_id'], 'integer'],
             [['c_id'], 'exist', 'skipOnError' => true, 'targetClass' => Clubs::className(), 'targetAttribute' => ['c_id' => 'c_id']],
             [['member_id'], 'exist', 'skipOnError' => true, 'targetClass' => Members::className(), 'targetAttribute' => ['member_id' => 'member_id']],

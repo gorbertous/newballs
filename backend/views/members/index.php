@@ -31,15 +31,6 @@ $greencheck = '<i class="text-success fa fa-check fa-lg" aria-hidden="true"></i>
             'attribute'      => 'user_id',
             'contentOptions' => ['style' => 'width:20px;'],
         ],
-//        [
-//            'label'          => Yii::t('modelattr', 'Photo'),
-//            'format'         => 'raw',
-//            'contentOptions' => ['style' => 'width:90px;'],
-//            'value'          => function ($model) {
-//                $gravatar = isset($model->user->email) ? $model->getGravatar($model->user->email) : null;
-//                return !empty($model->photo) ? $model->getIconPreviewAsHtml('ajaxfileinputPhoto', 60) : $gravatar;
-//            }
-//        ],
         [
             'attribute'           => 'member_id',
             'label'               => Yii::t('modelattr', 'Name'),
@@ -179,6 +170,7 @@ $greencheck = '<i class="text-success fa fa-check fa-lg" aria-hidden="true"></i>
                 1  => Yii::t('modelattr', 'Yes')],
             'width'      => '100px;',
         ],
+        'created_at:datetime'
         
     ];
 

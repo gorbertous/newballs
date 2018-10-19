@@ -43,6 +43,7 @@ class Location extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['c_id', 'name', 'address'], 'required'],
             [['c_id', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
             [['google_par_one', 'google_par_two'], 'number'],
             [['name'], 'string', 'max' => 100],

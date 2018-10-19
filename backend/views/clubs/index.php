@@ -17,25 +17,16 @@ $greencheck = '<i class="text-success fa fa-check fa-lg" aria-hidden="true"></i>
 <div class="clubs-index">
 
     <?php 
-     Pjax::begin(['id' => 'pjax-gridview-container', 'enablePushState' => true]);
+    Pjax::begin(['id' => 'pjax-gridview-container', 'enablePushState' => true]);
     $gridColumn = [
         ['class' => 'yii\grid\SerialColumn'],
-
-//        [
-//            'label'          => Yii::t('modelattr', 'Logo'),
-//            'format'         => 'raw',
-//            'contentOptions' => ['style' => 'width:100px;'],
-//            'value'          => function ($model) {
-//                /* @var $model \backend\models\Clubs */
-//                return $model->getIconPreviewAsHtml('ajaxfileinputLogo', 90);
-//            }
-//        ],
         [
             'label'          => 'ID',
             'attribute'      => 'c_id',
-            'contentOptions' => ['style' => 'width:20px;'],
+            'contentOptions' => ['style' => 'width:20px;']
         ],
        'name',
+       'created_at:datetime'
         
     ];
 

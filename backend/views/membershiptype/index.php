@@ -30,6 +30,7 @@ $currentBtn = GridviewHelper::getCurrentBtn($context_array);
             'attribute'           => 'c_id',
             'label'               => Yii::t('modelattr', 'Club'),
             'value'               => 'club.name',
+            'contentOptions' => ['style' => 'width:100px;'],
             'filterType'          => GridView::FILTER_SELECT2,
             'filter'              => ArrayHelper::map(Clubs::find()
                 ->select(['c_id', 'name'])

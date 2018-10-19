@@ -32,6 +32,7 @@ class Fees extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['c_id', 'mem_type_id','mem_fee'], 'required'],
             [['c_id', 'mem_type_id'], 'integer'],
             [['mem_fee'], 'number'],
             [['c_id'], 'exist', 'skipOnError' => true, 'targetClass' => Clubs::className(), 'targetAttribute' => ['c_id' => 'c_id']],

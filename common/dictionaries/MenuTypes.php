@@ -322,7 +322,7 @@ abstract class MenuTypes
     /** -- */
 
     public static function playdatesText(): string {
-        return Yii::t('modelattr', 'Play Dates');
+        return Yii::t('modelattr', 'Publish Rota');
     }
     const PLAYDATES_ICON = 'fa fa-cogs';
     const PLAYDATES_ICON_MENU = 'cogs';

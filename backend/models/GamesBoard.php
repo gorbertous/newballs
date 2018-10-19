@@ -43,7 +43,7 @@ class GamesBoard extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['c_id', 'termin_id'], 'required'],
+            [['c_id', 'termin_id','member_id', 'court_id', 'slot_id',], 'required'],
             [['c_id', 'termin_id', 'member_id', 'court_id', 'slot_id', 'status_id', 'fines', 'tokens', 'late'], 'integer'],
             [['c_id'], 'exist', 'skipOnError' => true, 'targetClass' => Clubs::className(), 'targetAttribute' => ['c_id' => 'c_id']],
             [['termin_id'], 'exist', 'skipOnError' => true, 'targetClass' => PlayDates::className(), 'targetAttribute' => ['termin_id' => 'termin_id']],

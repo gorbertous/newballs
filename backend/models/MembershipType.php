@@ -36,6 +36,7 @@ class MembershipType extends \yii\db\ActiveRecord
     public function rules()
     {
         return self::ContLangRules([
+                    [['name_EN'], 'required'],
                     [['c_id', 'fee'], 'integer'],
                     [['name'], 'string', 'max' => 100]
         ]);

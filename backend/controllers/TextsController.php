@@ -17,8 +17,8 @@ use common\dictionaries\ContextLetter;
  */
 class TextsController extends Controller
 {
+
     use TraitController;
-    
 
     /**
      * {@inheritdoc}
@@ -37,8 +37,7 @@ class TextsController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::class,
-
-                'rules' =>  [
+                'rules' => [
                     [
                         'controllers' => ['texts'],
                         'actions'     => ['create', 'update', 'delete'],
@@ -72,9 +71,9 @@ class TextsController extends Controller
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->renderNormalorAjax('index', [
-            'searchModel'   => $searchModel,
-            'dataProvider'  => $dataProvider,
-            'context_array' => $this->getSpecificContextArray()
+                    'searchModel'   => $searchModel,
+                    'dataProvider'  => $dataProvider,
+                    'context_array' => $this->getSpecificContextArray()
         ]);
     }
 
@@ -84,7 +83,7 @@ class TextsController extends Controller
     public function actionView($id)
     {
         return $this->renderNormalorAjax('view', [
-            'model' => $this->findModel($id)
+                    'model' => $this->findModel($id)
         ]);
     }
 
@@ -106,9 +105,9 @@ class TextsController extends Controller
 
             return $this->redirect(Yii::$app->request->referrer);
         } else {
-           
+
             return $this->renderNormalorAjax('create', [
-                'model' => $model
+                        'model' => $model
             ]);
         }
     }
@@ -134,7 +133,7 @@ class TextsController extends Controller
             return $this->redirect(Yii::$app->request->referrer);
         } else {
             return $this->renderNormalorAjax('update', [
-                'model' => $model
+                        'model' => $model
             ]);
         }
     }
@@ -155,10 +154,7 @@ class TextsController extends Controller
             Yii::$app->getSession()->setFlash('error', Errorhandler::getRelatedData($model));
             return $this->redirect(Yii::$app->request->referrer);
         }
-
-        // unlink all the children
-        $modelbackup->removelinkFromSource();
-
         return $this->redirect(Yii::$app->request->referrer);
     }
+
 }

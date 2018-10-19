@@ -37,6 +37,7 @@ $greencheck = '<i class="text-success fa fa-check fa-lg" aria-hidden="true"></i>
             'contentOptions' => ['style' => 'width:20px;'],
         ],
        'name',
+       'created_at:datetime'
         
     ];
     

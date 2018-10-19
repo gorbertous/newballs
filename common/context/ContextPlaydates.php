@@ -12,10 +12,10 @@ use common\dictionaries\MenuTypes as Menu;
  */
 abstract class ContextPlaydates implements Context
 {
-    const LBL_SINGULAR_U = 'Play Date';
-    const LBL_PLURARL_U  = 'Play Dates';
-    const LBL_SINGULAR_L = 'play date';
-    const LBL_PLURARL_L  = 'play dates';
+    const LBL_SINGULAR_U = 'Publish Rota';
+    const LBL_PLURARL_U  = 'Publish Rota';
+    const LBL_SINGULAR_L = 'publish rota';
+    const LBL_PLURARL_L  = 'publish rota';
 
     public static function getContextArray()
     {

@@ -15,11 +15,11 @@ $currentBtn = GridviewHelper::getCurrentBtn($context_array);
     $gridColumn = [
        ['class' => 'yii\grid\SerialColumn'],
 
-    	 'id',
+    	'id',
         'level',
         'category',
-        'log_time',
         'prefix:ntext',
+        'log_time:datetime'
     ];
    
     $header = GridviewHelper::getHeader($context_array);
