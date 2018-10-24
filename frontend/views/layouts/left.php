@@ -121,6 +121,20 @@ if (!Yii::$app->user->isGuest) {
                                 'active'  => ($route == 'news/index' || $route == 'tags/index'),
                                 'visible' => Yii::$app->user->can('writer')
                             ],
+                            [
+                                'label'  => MenuTypes::textblocksText(),
+                                'icon'   => MenuTypes::TEXTBLOCKS_ICON_MENU,
+                                'url'    => Url::toRoute(['texts/index']),
+                                'visible' => Yii::$app->user->can('team_admin'),
+                                'active' => ($route == 'texts/index')
+                            ],
+                            [
+                                'label'   => MenuTypes::logText(),
+                                'icon'    => MenuTypes::LOGS_ICON_MENU,
+                                'url'     => Url::toRoute(['log/index']),
+                                'active'  => ($route == 'log/index' || $route == 'log/users'),
+                                'visible' => Yii::$app->user->can('team_admin')
+                            ],
                         ] // items
                     ],
                 ],

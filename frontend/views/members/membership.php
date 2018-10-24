@@ -183,7 +183,7 @@ $club = \backend\models\Clubs::findOne(Yii::$app->session->get('c_id'));
     
     echo GridView::widget([
                 'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
+                'filterModel' => $searchModel,
                 'columns'        => $gridColumn,
                 'id' => 'gridview-club-id',
                 'responsive'          => true,

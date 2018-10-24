@@ -372,100 +372,79 @@ $header .= '<span class="fa fa-pencil"></span> ' . Yii::t('appMenu', 'Utilities'
 
         <?php if (Yii::$app->user->can('team_member')) { ?>
             <div class="row">
-
-                <div class="col-md-9">
-                    <!-- Last connected users -->
-                    <div class="box box-solid">
-                        <div class="box-header with-border">
-                            <h3 class="box-title"><span
-                                        class="fa fa-users"></span> <?= Yii::t('appMenu', 'Login history') ?>
-                            </h3>
-                        </div>
-
-                        <div class="box-body">
-                            <div class="table-responsive">
-                                <?php
-                                Pjax::begin();
-                                echo $lastConnectedUsers;
-                                Pjax::end();
-                                ?>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
                 <!-- / start new column / -->
 
-                <div class="col-md-3">
-                    <!-- Flush cache box -->
-                    <div class="box box-solid">
-                        <div class="box-header with-border">
-                            <h3 class="box-title"><span
-                                        class="fa fa-trash"></span> <?= Yii::t('appMenu', 'Flush cache') ?></h3>
-                        </div>
-
-                        <div class="box-body">
-                            <p><?= Html::submitButton('<span class="fa fa-database"></span>&nbsp; ' .
-                                    (Yii::t('app', 'Database cache')), ['name' => 'SubmitButton', 'value' => 'FlushCache', 'class' => 'btn btn-success btn-block']); ?></p>
-
-                            <p><?= Html::submitButton('<span class="fa fa-files-o"></span>&nbsp; ' .
-                                    (Yii::t('app', 'Assets cache')), ['name' => 'SubmitButton', 'value' => 'FlushAssetsCache', 'class' => 'btn btn-success btn-block']); ?></p>
-                        </div>
-                    </div>
-
-                    <!-- Cleanup local files box -->
-                    <div class="box box-solid">
-                        <div class="box-header with-border">
-                            <h3 class="box-title"><span
-                                        class="fa fa-file"></span> <?= Yii::t('appMenu', 'Cleanup Local Files') ?>
-                            </h3>
-                        </div>
-
-                        <div class="box-body">
-                            <p><?= (Yii::$app->user->can('team_member')) ? $form->field($model, 'dryrun')->widget(CheckboxX::class, ['pluginOptions' => ['threeState' => false], 'autoLabel' => true])->label(false) : '<br>' ?></p>
-
-                            <p><?=
-                                Html::submitButton('<span class="fa fa-trash"></span>&nbsp;' .
-                                    (Yii::t('app', 'Cleanup local')), ['name' => 'SubmitButton', 'value' => 'CleanupFiles', 'class' => 'btn btn-default btn-block'])
-                                ?></p>
-                        </div>
-                    </div>
-
-                    <?php if (!Lx::IsMaster()) { ?>
-                        <!-- Sync translations box -->
+                <div class="col-md-6">
+                        <!-- Flush cache box -->
                         <div class="box box-solid">
                             <div class="box-header with-border">
                                 <h3 class="box-title"><span
-                                            class="fa fa-globe"></span> <?= Yii::t('appMenu', 'Sync translations') ?>
+                                            class="fa fa-trash"></span> <?= Yii::t('appMenu', 'Flush cache') ?></h3>
+                            </div>
+
+                            <div class="box-body">
+                                <p><?= Html::submitButton('<span class="fa fa-database"></span>&nbsp; ' .
+                                        (Yii::t('app', 'Database cache')), ['name' => 'SubmitButton', 'value' => 'FlushCache', 'class' => 'btn btn-success btn-block']); ?></p>
+
+                                <p><?= Html::submitButton('<span class="fa fa-files-o"></span>&nbsp; ' .
+                                        (Yii::t('app', 'Assets cache')), ['name' => 'SubmitButton', 'value' => 'FlushAssetsCache', 'class' => 'btn btn-success btn-block']); ?></p>
+                            </div>
+                        </div>
+
+                        <!-- Cleanup local files box -->
+                        <div class="box box-solid">
+                            <div class="box-header with-border">
+                                <h3 class="box-title"><span
+                                            class="fa fa-file"></span> <?= Yii::t('appMenu', 'Cleanup Local Files') ?>
                                 </h3>
                             </div>
 
-                            <div class="box-body text-center">
-                                <p><?= ('<strong>' . $pendinguploads . '</strong> messages pending.'); ?></p>
+                            <div class="box-body">
+                                <p><?= (Yii::$app->user->can('team_member')) ? $form->field($model, 'dryrun')->widget(CheckboxX::class, ['pluginOptions' => ['threeState' => false], 'autoLabel' => true])->label(false) : '<br>' ?></p>
 
-                                <p><?= Html::submitButton('<span class="fa fa-refresh"></span>&nbsp;' .
-                                        (Yii::t('app', 'Sync translations')), ['name' => 'SubmitButton', 'value' => 'SyncTranslations', 'class' => 'btn btn-default btn-block']); ?></p>
+                                <p><?=
+                                    Html::submitButton('<span class="fa fa-trash"></span>&nbsp;' .
+                                        (Yii::t('app', 'Cleanup local')), ['name' => 'SubmitButton', 'value' => 'CleanupFiles', 'class' => 'btn btn-default btn-block'])
+                                    ?></p>
                             </div>
                         </div>
-                    <?php } ?>
-
-                    <!-- Maintenance mode box -->
-                    <div class="box box-solid">
-                        <div class="box-header with-border">
-                            <h3 class="box-title"><span
-                                        class="fa fa-exclamation-triangle"></span> <?= Yii::t('appMenu', 'Maintenance mode') ?>
-                            </h3>
-                        </div>
-
-                        <div class="box-body">
-                            <?= $form->field($model, 'maintenancemode')->radioList(
-                                [0 => Yii::t('app', 'No'), 1 => Yii::t('app', 'Yes')],
-                                ['inline' => true])->label(false); ?>
-
-                            <?= Html::submitButton('<span class="fa fa-wrench"></span>&nbsp; ' .
-                                (Yii::t('app', 'Set mode')), ['name' => 'SubmitButton', 'value' => 'Maintenancemode', 'class' => 'btn btn-success btn-block']); ?>
-                        </div>
                     </div>
+                    <div class="col-md-6">
+                        <?php if (!Lx::IsMaster()) { ?>
+                            <!-- Sync translations box -->
+                            <div class="box box-solid">
+                                <div class="box-header with-border">
+                                    <h3 class="box-title"><span
+                                                class="fa fa-globe"></span> <?= Yii::t('appMenu', 'Sync translations') ?>
+                                    </h3>
+                                </div>
+
+                                <div class="box-body text-center">
+                                    <p><?= ('<strong>' . $pendinguploads . '</strong> messages pending.'); ?></p>
+
+                                    <p><?= Html::submitButton('<span class="fa fa-refresh"></span>&nbsp;' .
+                                            (Yii::t('app', 'Sync translations')), ['name' => 'SubmitButton', 'value' => 'SyncTranslations', 'class' => 'btn btn-default btn-block']); ?></p>
+                                </div>
+                            </div>
+                        <?php } ?>
+
+                        <!-- Maintenance mode box -->
+                        <div class="box box-solid">
+                            <div class="box-header with-border">
+                                <h3 class="box-title"><span
+                                            class="fa fa-exclamation-triangle"></span> <?= Yii::t('appMenu', 'Maintenance mode') ?>
+                                </h3>
+                            </div>
+
+                            <div class="box-body">
+                                <?= $form->field($model, 'maintenancemode')->radioList(
+                                    [0 => Yii::t('app', 'No'), 1 => Yii::t('app', 'Yes')],
+                                    ['inline' => true])->label(false); ?>
+
+                                <?= Html::submitButton('<span class="fa fa-wrench"></span>&nbsp; ' .
+                                    (Yii::t('app', 'Set mode')), ['name' => 'SubmitButton', 'value' => 'Maintenancemode', 'class' => 'btn btn-success btn-block']); ?>
+                            </div>
+                        </div>
                 </div>
 
             </div> <!-- // end .row -->

@@ -5,6 +5,7 @@ namespace frontend\controllers;
 use Yii;
 use backend\models\Clubs;
 use frontend\models\ClubsSearch;
+use frontend\models\MembersSearch;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
@@ -85,9 +86,19 @@ class ClubsController extends Controller
     public function actionStats()
     {
         $model = $this->findModel(Yii::$app->session->get('c_id'));
-
+        
+        $searchModel = new MembersSearch();
+        $searchModel->is_active = 1;
+        $searchModel->is_admin = -1;
+        $searchModel->has_paid = 1;
+        $searchModel->is_organiser = -1;
+        $searchModel->is_visible = -1;
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        
         return $this->renderNormalorAjax('stats', [
-                    'model' => $model
+                    'model' => $model,
+                    'searchModel'   => $searchModel,
+                    'dataProvider'  => $dataProvider,
         ]);
     }
 

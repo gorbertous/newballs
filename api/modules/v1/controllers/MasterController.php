@@ -28,8 +28,8 @@ class MasterController extends Controller {
     public function actionGetfileslist()
     {
         // get the uploads folder path
-        $uploadsPath = yii::getAlias('@uploads') . DIRECTORY_SEPARATOR;
-        $uploadsUrl = yii::getAlias('@uploadsURL') . DIRECTORY_SEPARATOR;
+        $uploadsPath = yii::getAlias('@backups') . DIRECTORY_SEPARATOR;
+        $uploadsUrl = yii::getAlias('@backupsURL') . DIRECTORY_SEPARATOR;
         
         $files = FileHelper::findFiles($uploadsPath, [
             'except' => ['thumbs/',

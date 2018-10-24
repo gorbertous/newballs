@@ -3,7 +3,7 @@
 namespace common\helpers;
 
 use yii\helpers\Url;
-use yii\helpers\StringHelper;
+//use yii\helpers\StringHelper;
 use backend\models\Sourcemessage;
 use yii;
 
@@ -18,7 +18,7 @@ class Language
 
 //    private static $_template = '<span class="language-item" data-category="{category}" data-hash="{hash}" data-language_id="{language_id}" data-params="{params}">{message}</span>';
     private static $_labeltemplate = '<span class="language-item" data-link="{url}">{message}</span>';
-    private static $_master = 'esst.lu';
+    private static $_master = 'balls-tennis.com';
 
     public static function MasterName()
     {

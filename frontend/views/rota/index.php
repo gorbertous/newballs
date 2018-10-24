@@ -24,7 +24,7 @@ $this->registerJs($search);
 $redcross = '<i class="text-danger fa fa-times fa-lg" aria-hidden="true"></i>';
 $greencheck = '<i class="text-success fa fa-check fa-lg" aria-hidden="true"></i>';
 if(!Yii::$app->session->get('member_has_paid')){
-    echo Yii::$app->session->setFlash('danger', 'Unfortunatelly the club has not yet received your membership payment, currently you cannot book the games, please settle this or contact the club chairman!');
+    echo Yii::$app->session->setFlash('danger', Yii::t('app', 'Unfortunatelly the club has not yet received your membership payment, currently you cannot book the games, please settle this or contact the club chairman!') );
 }
 if ($searchModel->timefilter == 1) {
     $rotatitle = '<h3>' . Yii::t('modelattr', 'Future Games');
@@ -58,14 +58,39 @@ if ($searchModel->timefilter == 1) {
         ['class' => 'yii\grid\SerialColumn', 
             'contentOptions' => ['style' => 'width:20px;'],
         ],
-
         [
              'attribute' => 'termin_id',
              'format' => 'raw',
              'value' => function($model){  
                 $dispdate = Yii::$app->formatter->asDate($model->termin->termin_date);
                 $disptime = Yii::$app->formatter->asTime($model->termin->termin_date, 'short');
-                return '<h4>Date : '. $dispdate . ' at '. $disptime . '   - Location: '. $model->termin->location->address.'</h4>';                   
+                
+                $url = Url::toRoute(['reserves/insert', 'id' => $model->termin_id]);
+                $link = Html::a('click here to put your name on the reserves list!', $url, 
+                [
+                    'title' => Yii::t('app', 'add your name on the reserves list'),
+                    'class' => 'text-success',
+                    'data' => [
+                        'confirm' => Yii::t('app', 'Warning, the reserve list operates on the first comes first served basis, in case a slot becomes available, the club admin will put your name on the rota '),
+                        'method' => 'post',
+                    ],
+                ]);
+                if(isset($model->termin->reserves)){
+                    $list = [];
+                    foreach ($model->termin->reserves as $reserves) {
+                        $name = $reserves->member->name;
+                        if (!in_array($name, $list)) {
+                            array_push($list, $name);
+                        }
+                    }
+                    $reserves_list = join('<br>', $list);
+                }else{
+                    $reserves_list = '';
+                }
+                $final_list = !empty($reserves_list) ? 'Current Reserves List:<br>'. $reserves_list: '';
+                
+                $slots_notification = $model->getSlotsLeft($model->termin_id) == 0 ? 'All the slots are taken - '.$link : '<small>'.$model->getSlotsLeft($model->termin_id).' Slots Left <small>';
+                return $slots_notification.'<h4>'. $dispdate . ' at '. $disptime . '   - Location: '. $model->termin->location->address. '</h4>'.$final_list;                   
              },
              'group' => true,
              'groupedRow' => true,
@@ -101,11 +126,11 @@ if ($searchModel->timefilter == 1) {
                                 'method' => 'post',
                             ],
                         ]);
-                    return Yii::$app->session->get('member_has_paid') ? $link : $model->member->name;
+                    return Yii::$app->session->get('member_has_paid') ? '<strong>'. $link . '</strong>': '<strong>'.$model->member->name . '</strong>';
                 } else {
                     $class = $model->tokens ? 'text-danger' : 'text-primary';
                     $iscoach = isset($model->member->memType) && ($model->member->memType->mem_type_id == 5) ? ' <span class="badge bg-red pull-right">Coach</span>' : '';
-                    return Html::tag('span', $model->member->name, ['class' => $class]).$iscoach;
+                    return Html::tag('strong', $model->member->name, ['class' => $class]).$iscoach;
                 }
              },
              'filterType' => GridView::FILTER_SELECT2,
@@ -122,6 +147,12 @@ if ($searchModel->timefilter == 1) {
         [
             'attribute' => 'slot_id',
             'label' => Yii::t('app', 'Slot No'),
+            'format'    => 'raw',
+            'value'     => function($model) {
+               
+                    return '<strong>'. $model->slot_id . '</strong>';
+                
+            },
             'enableSorting' => false,
             'width'      => '100px;',
         ],

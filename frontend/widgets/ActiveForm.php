@@ -1,6 +1,6 @@
 <?php
 
-namespace backend\widgets;
+namespace frontend\widgets;
 
 use Yii;
 use kartik\widgets\Select2;

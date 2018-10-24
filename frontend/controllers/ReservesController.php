@@ -91,7 +91,7 @@ class ReservesController extends Controller
     {
         $model = new Reserves();
         $model->c_id = Yii::$app->session->get('c_id');
-        
+
         if ($model->load(Yii::$app->request->post())) {
 
             $valid = $model->validate();
@@ -108,6 +108,20 @@ class ReservesController extends Controller
                         'model' => $model
             ]);
         }
+    }
+
+    /**
+     * Add current user to reserves list
+     * @return mixed
+     */
+    public function actionInsert($id)
+    {
+        $model = new Reserves();
+        $model->c_id = Yii::$app->session->get('c_id');
+        $model->termin_id = $id;
+        $model->member_id = Yii::$app->session->get('member_id');
+        $model->save(false);
+        return $this->redirect(Yii::$app->request->referrer);
     }
 
     /**

@@ -17,8 +17,8 @@ use common\dictionaries\ContextLetter;
  */
 class TextsController extends Controller
 {
+
     use TraitController;
-    
 
     /**
      * {@inheritdoc}
@@ -37,8 +37,7 @@ class TextsController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::class,
-
-                'rules' =>  [
+                'rules' => [
                     [
                         'controllers' => ['texts'],
                         'actions'     => ['create', 'update', 'delete'],
@@ -54,11 +53,11 @@ class TextsController extends Controller
                 ]
             ],
             'verbs'  => [
-                'class'   => VerbFilter::class,
+                'class'   => VerbFilter::className(),
                 'actions' => [
-                    'delete' => ['post']
-                ]
-            ]
+                    'delete' => ['POST'],
+                ],
+            ],
         ];
     }
 
@@ -72,9 +71,9 @@ class TextsController extends Controller
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->renderNormalorAjax('index', [
-            'searchModel'   => $searchModel,
-            'dataProvider'  => $dataProvider,
-            'context_array' => $this->getSpecificContextArray()
+                    'searchModel'   => $searchModel,
+                    'dataProvider'  => $dataProvider,
+                    'context_array' => $this->getSpecificContextArray()
         ]);
     }
 
@@ -84,59 +83,37 @@ class TextsController extends Controller
     public function actionView($id)
     {
         return $this->renderNormalorAjax('view', [
-            'model' => $this->findModel($id)
+                    'model' => $this->findModel($id)
         ]);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function actionCreate($id = null)
+    public function actionCreate()
     {
         $model = new Texts();
 
-        if ($model->load(Yii::$app->request->post())) {
-            $valid = $model->validate();
-
-            if (!$valid) {
-                $this->getBaseMsg($model->errors);
-            }
-
-            $model->save(false);
-
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(Yii::$app->request->referrer);
-        } else {
-           
-            return $this->renderNormalorAjax('create', [
-                'model' => $model
-            ]);
         }
+
+        return $this->renderNormalorAjax('create', [
+                    'model' => $model,
+        ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function actionUpdate($id)
     {
-        /** @var $model \backend\models\base\Texts */
         $model = $this->findModel($id);
 
-        if ($model->load($model)) {
-
-            $valid = $model->validate();
-
-            if (!$valid) {
-                $this->getBaseMsg($model->errors);
-            }
-
-            $model->save(false);
-
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(Yii::$app->request->referrer);
-        } else {
-            return $this->renderNormalorAjax('update', [
-                'model' => $model
-            ]);
         }
+
+        return $this->renderNormalorAjax('update', [
+                    'model' => $model,
+        ]);
     }
 
     /**
@@ -156,9 +133,7 @@ class TextsController extends Controller
             return $this->redirect(Yii::$app->request->referrer);
         }
 
-        // unlink all the children
-        $modelbackup->removelinkFromSource();
-
         return $this->redirect(Yii::$app->request->referrer);
     }
+
 }

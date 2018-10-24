@@ -94,12 +94,16 @@ class GamesBoard extends \yii\db\ActiveRecord
             ],
         ];
     }
-
+    
     public function getTitleSuffix()
     {
         return 'Rota';
     }
-
+    /**
+     * Check whether the player is already on the court
+     *
+     * @return bool - on the court or no
+     */
     public function checkForExisting($id)
     {
         $rotaentry = GamesBoard::findOne(['id' => $id]);
@@ -112,7 +116,20 @@ class GamesBoard extends \yii\db\ActiveRecord
         }
         return false;
     }
-
+    /**
+     * get No of slots left
+     *
+     * @return String - number.
+     */
+    public function getSlotsLeft($termin_id)
+    {
+        $slots_left = GamesBoard::find()
+                ->where(['termin_id' => $termin_id])
+                ->andWhere(['member_id' => 1])//free slot id = 1
+                ->count();
+        return $slots_left;
+    }
+   
     /**
      * Sends rota confirmation email
      *

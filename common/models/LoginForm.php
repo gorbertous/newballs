@@ -38,6 +38,8 @@ class LoginForm extends Model
      * @var bool
      */
     private $user = false;
+    
+    public $verifyCode;
 
     /**
      * @inheritdoc
@@ -48,6 +50,7 @@ class LoginForm extends Model
             [['username', 'password'], 'required'],
             ['password', 'validatePassword'],
             ['rememberMe', 'boolean'],
+            ['verifyCode', 'safe'],
 //            [['reCaptcha', ReCaptchaValidator::class], 'safe']
         ];
     }
@@ -61,7 +64,7 @@ class LoginForm extends Model
             'authLog' => [
                 'class'        => AuthLogLoginFormBehavior::class,
                 'findIdentity' => 'findIdentity',
-
+                'verifyRobotAttribute' => 'verifyCode',
                 'deactivateIdentity' => function ($identity) {
                     return $this->updateAttributes(['status' => User::STATUS_SUSPENDED], $identity->id);
                 },

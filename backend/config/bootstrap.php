@@ -12,3 +12,5 @@ if (!file_exists($root . '/backend/web/img/uploads/temp')) {
 }
 Yii::setAlias('temp', $root . '/backend/web/img/uploads/temp');
 
+
+

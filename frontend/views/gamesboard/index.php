@@ -71,6 +71,7 @@ if ($searchModel->timefilter == 1) {
             'filter'              => ArrayHelper::map(backend\models\PlayDates::find()
                 ->select(['termin_id', 'termin_date'])
                 ->where(['c_id' => Yii::$app->session->get('c_id')])
+                ->orderBy(['termin_id' => SORT_DESC])
                 ->all(), 'termin_id', 'termin_date'),
             'filterWidgetOptions' => [
                 'pluginOptions' => ['allowClear' => true]

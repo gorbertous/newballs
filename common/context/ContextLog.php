@@ -28,14 +28,27 @@ abstract class ContextLog implements Context
             'ti_icon2' => Menu::LOGS_ICON
         ];
 
-        // LOGS first button -> Texts
+        // LOGS first button -> logs
         $context_array[ContextLetter::LOGS][] = [
+            'button_title' => Menu::logText(),
             'new_label'     => Yii::t('appMenu', self::LBL_NEW),
             'mod_label'     => Yii::t('appMenu', self::LBL_MODIFY),
             'view_label'    => Yii::t('appMenu', self::LBL_VIEW),
             'del_label'     => Yii::t('appMenu', self::LBL_DELETE),
             'print_label'   => Yii::t('appMenu', self::LBL_PRINT),
             'link'          => '/log/index',
+            'create'       => '/log/create',
+            'fa_icon'       => Menu::LOGS_ICON
+        ];
+        // LOGS first button -> logs
+        $context_array[ContextLetter::LOGS][] = [
+            'button_title' => Menu::userLogText(),
+            'new_label'     => Yii::t('appMenu', self::LBL_NEW),
+            'mod_label'     => Yii::t('appMenu', self::LBL_MODIFY),
+            'view_label'    => Yii::t('appMenu', self::LBL_VIEW),
+            'del_label'     => Yii::t('appMenu', self::LBL_DELETE),
+            'print_label'   => Yii::t('appMenu', self::LBL_PRINT),
+            'link'          => '/log/users',
             'create'       => '/log/create',
             'fa_icon'       => Menu::LOGS_ICON
         ];

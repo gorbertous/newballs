@@ -4,7 +4,6 @@ namespace backend\controllers;
 
 use Yii;
 use yii\base\DynamicModel;
-use yii\grid\GridView;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
@@ -45,7 +44,7 @@ class ImportController extends Controller
                         'controllers' => ['import'],
                         'actions'     => [],
                         'allow'       => true,
-                        'roles'       => ['@']
+                        'roles'       => ['developer']
                     ]
                 ]
             ],
@@ -60,7 +59,7 @@ class ImportController extends Controller
 
     public function actionUpload()
     {
-        $uploadsPath = yii::getAlias('@uploads') . DIRECTORY_SEPARATOR . 'import' . DIRECTORY_SEPARATOR;
+        $uploadsPath = yii::getAlias('@backups') . DIRECTORY_SEPARATOR . 'import' . DIRECTORY_SEPARATOR;
 
         if (!file_exists($uploadsPath)) {
             Helpers::createPath($uploadsPath);
@@ -219,7 +218,6 @@ class ImportController extends Controller
                         'zipUrl'               => $zipUrl,
                         'zipPath'              => $zipPath,
                         'title'                => $SubmitButton,
-                        'lastConnectedUsers'   => $this->getLastConnectedUsers(),
                         'ilog'                 => null]);
         } else {
 
@@ -271,8 +269,8 @@ class ImportController extends Controller
                 $ilog = Impex::CleanupFiles($FormData['dryrun']);
             } elseif ($SubmitButton == 'ExportDB') {
 
-                $zipPath = yii::getAlias('@uploads') . '/ExportDB.zip';
-                $zipUrl = yii::getAlias('@uploadsURL') . '/ExportDB.zip';
+                $zipPath = yii::getAlias('@backups') . '/ExportDB.zip';
+                $zipUrl = yii::getAlias('@backupsURL') . '/ExportDB.zip';
                 $ilog = Impex::ExportDB();
             } elseif ($SubmitButton == 'ImportDB') {
 
@@ -378,64 +376,7 @@ class ImportController extends Controller
         }
     }
 
-    /**
-     * @return string
-     *
-     * @throws \Exception
-     */
-    protected function getLastConnectedUsers()
-    {
-        $sql = "SELECT user.id, members.lastname, members.firstname, user.status,
-                       UserAuthLog.userId, UserAuthLog.userAgent, UserAuthLog.date, UserAuthLog.cookieBased,
-                       members.c_id, members.user_id, clubs.name
-                FROM UserAuthLog
-                LEFT JOIN user ON UserAuthLog.userId = user.id
-                LEFT JOIN members ON user.id = members.user_id
-                LEFT JOIN clubs ON members.c_id = clubs.c_id
-                ORDER BY date DESC";
-
-        $lastConnectedUsers = new \yii\data\SqlDataProvider([
-            'sql'        => $sql,
-            'pagination' => ['pageSize' => 10]
-        ]);
-
-        return GridView::widget([
-                    'dataProvider' => $lastConnectedUsers,
-                    'columns'      => [
-                        [
-                            'attribute' => 'date',
-                            'format'    => 'raw',
-                            'value'     => function ($model) {
-                                return Yii::$app->formatter->format($model['date'], 'datetime') . '<br />' .
-                                        '<strong>' . Yii::$app->formatter->asRelativeTime($model['date']) . '</strong>';
-                            }
-                        ],
-                        'userId',
-                        'lastname',
-                        'firstname',
-                        'name',
-                        [
-                            'attribute' => 'name',
-                            'label' => Yii::t('appMenu', 'Club')
-                        ],
-                        [
-                            'attribute' => 'userAgent',
-                            'format'    => 'raw',
-                            'value'     => function ($model) {
-                                return "<span data-toggle='tooltip' title='" . $model['userAgent'] . "'>" . substr($model['userAgent'], 0, 20) . "...</span>";
-                            }
-                        ],
-                        [
-                            'attribute' => 'cookieBased',
-                            'value'     => function ($model) {
-                                return Yii::$app->formatter->asBoolean($model['cookieBased']);
-                            }
-                        ]
-                    ]
-        ]);
-    }
-
-    
+  
     /**
      * @param string $filepath
      *

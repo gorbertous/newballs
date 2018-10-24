@@ -1,6 +1,6 @@
 <?php
 
-namespace backend\controllers;
+namespace frontend\controllers;
 
 use Yii;
 use backend\models\Log;
@@ -66,7 +66,7 @@ class LogController extends Controller
         ]);
     }
     
-      /**
+     /**
      * Lists all User Logs
      * @return mixed
      */

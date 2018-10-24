@@ -15,6 +15,7 @@ AdminLtePluginAsset::register($this);
 
         <meta charset="<?= Yii::$app->charset ?>" />
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport" />
+        <meta name="google-site-verification" content="JI6gDOmLIr7vV1xvbXNDzOysLEz6iQy3iDqHrQbRA2E" />
 
         <?= Html::csrfMetaTags() ?>
 

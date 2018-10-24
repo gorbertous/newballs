@@ -6,6 +6,7 @@ use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use yii\web\NotFoundHttpException;
+use backend\models\Texts;
 
 /**
  * TextsSearch represents the model behind the search form about `backend\models\Texts`.

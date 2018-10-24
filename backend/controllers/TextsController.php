@@ -90,52 +90,30 @@ class TextsController extends Controller
     /**
      * {@inheritdoc}
      */
-    public function actionCreate($id = null)
+    public function actionCreate()
     {
         $model = new Texts();
 
-        if ($model->load(Yii::$app->request->post())) {
-            $valid = $model->validate();
-
-            if (!$valid) {
-                $this->getBaseMsg($model->errors);
-            }
-
-            $model->save(false);
-
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(Yii::$app->request->referrer);
-        } else {
-
-            return $this->renderNormalorAjax('create', [
-                        'model' => $model
-            ]);
         }
+
+        return $this->renderNormalorAjax('create', [
+                    'model' => $model,
+        ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function actionUpdate($id)
     {
-        /** @var $model \backend\models\base\Texts */
         $model = $this->findModel($id);
 
-        if ($model->load($model)) {
-
-            $valid = $model->validate();
-
-            if (!$valid) {
-                $this->getBaseMsg($model->errors);
-            }
-
-            $model->save(false);
-
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(Yii::$app->request->referrer);
-        } else {
-            return $this->renderNormalorAjax('update', [
-                        'model' => $model
-            ]);
         }
+
+        return $this->renderNormalorAjax('update', [
+                    'model' => $model,
+        ]);
     }
 
     /**

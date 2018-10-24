@@ -56,6 +56,12 @@ class Members extends \yii\db\ActiveRecord
     use \backend\models\base\TraitFileUploads;
     use \backend\models\base\TraitBlameableTimestamp;
 
+    public $token_stats;
+    public $player_stats_scheduled;
+    public $player_stats_played;
+    public $coaching_stats;
+    public $status_stats;
+
     /**
      * {@inheritdoc}
      */
@@ -91,39 +97,44 @@ class Members extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'member_id'       => Yii::t('modelattr', 'Member ID'),
-            'user_id'         => Yii::t('modelattr', 'User ID'),
-            'c_id'            => Yii::t('modelattr', 'Club'),
-            'mem_type_id'     => Yii::t('modelattr', 'Membership Type'),
-            'grade_id'        => Yii::t('modelattr', 'Grade'),
-            'title'           => Yii::t('app', 'Title'),
-            'firstname'       => Yii::t('modelattr', 'Firstname'),
-            'lastname'        => Yii::t('modelattr', 'Lastname'),
-            'name'            => Yii::t('modelattr', 'Name'),
-            'gender'          => Yii::t('modelattr', 'Gender'),
-            'email'           => Yii::t('modelattr', 'Email'),
-            'photo'           => Yii::t('modelattr', 'Photo'),
-            'orig_photo'      => Yii::t('modelattr', 'Orig Photo'),
-            'phone'           => Yii::t('modelattr', 'Phone'),
-            'phone_office'    => Yii::t('modelattr', 'Phone Office'),
-            'phone_mobile'    => Yii::t('modelattr', 'Phone Mobile'),
-            'address'         => Yii::t('modelattr', 'Address'),
-            'zip'             => Yii::t('modelattr', 'Zip'),
-            'city'            => Yii::t('modelattr', 'City'),
-            'co_code'         => Yii::t('modelattr', 'Country'),
-            'nationality'     => Yii::t('modelattr', 'Nationality'),
-            'dob'             => Yii::t('modelattr', 'Dob'),
-            'is_admin'        => Yii::t('modelattr', 'Is Admin'),
-            'is_organiser'    => Yii::t('modelattr', 'Is Organiser'),
-            'is_active'       => Yii::t('modelattr', 'Is Active'),
-            'has_paid'        => Yii::t('modelattr', 'Has Paid'),
-            'is_visible'      => Yii::t('modelattr', 'Is Visible'),
-            'ban_scoreupload' => Yii::t('modelattr', 'Ban Score Upload'),
-            'coaching'        => Yii::t('modelattr', 'Interested in coaching Lessons'),
-            'created_by'      => Yii::t('modelattr', 'Created By'),
-            'updated_by'      => Yii::t('modelattr', 'Updated By'),
-            'created_at'      => Yii::t('modelattr', 'Created At'),
-            'updated_at'      => Yii::t('modelattr', 'Updated At'),
+            'member_id'              => Yii::t('modelattr', 'Member ID'),
+            'user_id'                => Yii::t('modelattr', 'User ID'),
+            'c_id'                   => Yii::t('modelattr', 'Club'),
+            'mem_type_id'            => Yii::t('modelattr', 'Membership Type'),
+            'grade_id'               => Yii::t('modelattr', 'Grade'),
+            'title'                  => Yii::t('app', 'Title'),
+            'firstname'              => Yii::t('modelattr', 'Firstname'),
+            'lastname'               => Yii::t('modelattr', 'Lastname'),
+            'name'                   => Yii::t('modelattr', 'Name'),
+            'gender'                 => Yii::t('modelattr', 'Gender'),
+            'email'                  => Yii::t('modelattr', 'Email'),
+            'photo'                  => Yii::t('modelattr', 'Photo'),
+            'orig_photo'             => Yii::t('modelattr', 'Orig Photo'),
+            'phone'                  => Yii::t('modelattr', 'Phone'),
+            'phone_office'           => Yii::t('modelattr', 'Phone Office'),
+            'phone_mobile'           => Yii::t('modelattr', 'Phone Mobile'),
+            'address'                => Yii::t('modelattr', 'Address'),
+            'zip'                    => Yii::t('modelattr', 'Zip'),
+            'city'                   => Yii::t('modelattr', 'City'),
+            'co_code'                => Yii::t('modelattr', 'Country'),
+            'nationality'            => Yii::t('modelattr', 'Nationality'),
+            'dob'                    => Yii::t('modelattr', 'Dob'),
+            'is_admin'               => Yii::t('modelattr', 'Is Admin'),
+            'is_organiser'           => Yii::t('modelattr', 'Is Organiser'),
+            'is_active'              => Yii::t('modelattr', 'Is Active'),
+            'has_paid'               => Yii::t('modelattr', 'Has Paid'),
+            'is_visible'             => Yii::t('modelattr', 'Is Visible'),
+            'ban_scoreupload'        => Yii::t('modelattr', 'Ban Score Upload'),
+            'coaching'               => Yii::t('modelattr', 'Interested in coaching Lessons'),
+            'token_stats'            => Yii::t('modelattr', 'Tokens / Balls Count'),
+            'player_stats_scheduled' => Yii::t('modelattr', 'Scheduled'),
+            'player_stats_played'    => Yii::t('modelattr', 'Played'),
+            'coaching_stats'         => Yii::t('modelattr', 'Coaching'),
+            'status_stats'           => Yii::t('modelattr', 'No Show / Non Scheduled Play'),
+            'created_by'             => Yii::t('modelattr', 'Created By'),
+            'updated_by'             => Yii::t('modelattr', 'Updated By'),
+            'created_at'             => Yii::t('modelattr', 'Created At'),
+            'updated_at'             => Yii::t('modelattr', 'Updated At'),
         ];
     }
 
@@ -189,7 +200,7 @@ class Members extends \yii\db\ActiveRecord
     {
         return $this->firstname . ' ' . $this->lastname;
     }
-    
+
     /**
      * Getter for short name
      *
@@ -217,6 +228,61 @@ class Members extends \yii\db\ActiveRecord
         } else {
             return '';
         }
+    }
+
+    /**
+     * Getter for games/tokens stats
+     *
+     * @return string
+     */
+    public function getMemberStats(array $andWhere = [])
+    {
+        $stats_count = GamesBoard::find()
+                ->joinWith('termin')
+                ->where(['season_id' => $this->club->season_id])
+                ->andWhere(['games_board.member_id' => $this->member_id]);
+
+
+        if (!empty($andWhere)) {
+            $stats_count->andWhere($andWhere);
+        }
+        return $stats_count->count();
+    }
+
+//    public function getCoachingCourts()
+//    {
+//        $courts_with_coach = GamesBoard::find()
+//                ->joinWith('termin')
+//                ->joinWith('member')
+//                ->where(['season_id' => 12])//$this->club->season_id
+//                ->andWhere(['members.mem_type_id' => 5])
+//                ->all();
+//
+////        dd($courts_with_coach->count());
+//        return $courts_with_coach;
+//    }
+
+    public function getCoachingStats($status_id = 1)
+    {
+        //get all the coaching games
+        $subQuery = GamesBoard::find()
+                ->joinWith('termin')
+                ->joinWith('member')
+                ->where(['season_id' => $this->club->season_id])//$this->club->season_id
+                ->andWhere(['members.mem_type_id' => 5])
+                ->all();
+
+        //extract the list of courts and date ids
+        $courts_list = \yii\helpers\ArrayHelper::getColumn($subQuery, 'court_id');
+        $termins_list = \yii\helpers\ArrayHelper::getColumn($subQuery, 'termin_id');
+       
+        $coaching_stats = GamesBoard::find()
+                ->where(['in', 'termin_id', $termins_list])
+                ->andWhere(['member_id' => $this->member_id])
+                ->andWhere(['status_id' => $status_id])
+                ->andWhere(['in', 'court_id', $courts_list]);
+
+        return $coaching_stats->count();
     }
 
     /**
@@ -334,6 +400,17 @@ class Members extends \yii\db\ActiveRecord
     public function getGamesBoards()
     {
         return $this->hasMany(GamesBoard::className(), ['member_id' => 'member_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCoaching()
+    {
+        return $this->hasMany(GamesBoard::className(), ['member_id' => 'member_id'])
+                        ->where(['season_id' => 12])//$this->club->season_id
+                        ->andWhere(['members.mem_type_id' => 5])
+                        ->orderBy('id');
     }
 
     /**

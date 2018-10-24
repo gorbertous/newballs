@@ -1,6 +1,6 @@
 <?php
 
-use yii\helpers\Html;
+use common\helpers\Helpers;
 use backend\widgets\ActiveForm;
 
 ?>
@@ -21,7 +21,6 @@ use backend\widgets\ActiveForm;
             <div class="col-md-12">
                 <?= $form->hrwTextInputMax($model, 'code') ?>
                 <?php 
-                
                     foreach (Yii::$app->contLang->languages as $iso) {
                         echo $form->hrwTinyMce($model, 'text_'.$iso);
                     }
@@ -30,19 +29,11 @@ use backend\widgets\ActiveForm;
         </div>
     </div>
 
-    <div class="row">
-
-        <div class="col-md-6">
-        <div class="form-group pull-right">
-            <?= Html::submitButton('<span class="fa fa-check"></span>&nbsp;' .
-                            ($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update')), ['class' => $model->isNewRecord ?
-                                'btn btn-success' : 'btn btn-success']) ?>
-
-            <?= Html::Button('<span class="fa fa-times"></span>&nbsp;' .
-                    Yii::t('app', 'Cancel'), ['class' => 'btn btn-danger', 'data-dismiss' => 'modal']) ?>
-        </div>
-        <div class="clearfix"></div>
-    </div>
+    <?php
+    echo Helpers::getModalFooter($model, null, null, [
+        'buttons' => ['create_update', 'cancel']
+    ]);
+    ?>
 
     <?php ActiveForm::end(); ?>
 

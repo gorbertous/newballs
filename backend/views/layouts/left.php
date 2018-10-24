@@ -117,7 +117,7 @@ if (!Yii::$app->user->isGuest) {
                                         'label'   => MenuTypes::logText(),
                                         'icon'    => MenuTypes::LOGS_ICON_MENU,
                                         'url'     => Url::toRoute(['log/index']),
-                                        'active'  => ($route == 'log/index'),
+                                         'active'  => ($route == 'log/index' || $route == 'log/users'),
                                         'visible' => Yii::$app->user->can('team_admin')
                                     ],
                                 ] // CONTENT

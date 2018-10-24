@@ -7,6 +7,7 @@
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
+
 $this->title = 'Login';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -23,10 +24,18 @@ $this->params['breadcrumbs'][] = $this->title;
 
                 <?= $form->field($model, 'password')->passwordInput() ?>
 
-                <?= $form->field($model, 'rememberMe')->checkbox() ?>
+                <?php if (Yii::$app->user->enableAutoLogin) : ?>
+                    <?= $form->field($model, 'rememberMe')->checkbox() ?>
+                <?php endif; ?>
+            
+                <?php if ($model->isVerifyRobotRequired) : ?>
+                    <?= $form->field($model, 'verifyCode')->widget(\yii\captcha\Captcha::className(), [
+                        'template' => '{image}{input}',
+                    ]) ?>
+                <?php endif; ?>
 
                 <div style="color:#999;margin:1em 0">
-                    If you forgot your password you can <?= Html::a('reset it', ['site/request-password-reset']) ?>.
+                    In case you have forgotten your password you can <?= Html::a('reset it', ['site/request-password-reset']) ?>.
                 </div>
 
                 <div class="form-group">

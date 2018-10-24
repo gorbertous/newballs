@@ -72,11 +72,11 @@ abstract class MenuTypes
 
     /** -- */
 
-    public static function HSEcontacts_text(): string {
-        return Yii::t('appMenu', 'HSE contacts');
+    public static function userLogText(): string {
+        return Yii::t('appMenu', 'User Log');
     }
-    const HSE_CONTACTS_ICON = 'fa fa-user';
-    const HSE_CONTACTS_ICON_MENU = 'user';
+    const USER_LOG_ICON = 'fa fa-user';
+    const USER_LOG_ICON_MENU = 'user';
 
     /** -- */
 

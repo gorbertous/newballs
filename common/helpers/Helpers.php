@@ -59,7 +59,7 @@ class Helpers
     public static function getAuditTab()
     {
         $tab = '<li><a href="#audit" data-toggle="tab">' .Yii::t('appMenu', 'Audit') . '</a></li>';
-        return Yii::$app->user->can('admin') ? $tab : '';
+        return Yii::$app->user->can('team_member') ? $tab : '';
     }
     
     /**
