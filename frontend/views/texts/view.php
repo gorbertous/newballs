@@ -1,7 +1,7 @@
 <?php
 
 use common\helpers\Helpers;
-use yii\helpers\Html;
+//use yii\helpers\Html;
 use yii\widgets\DetailView;
 use common\helpers\Language as Lx;
 ?>
@@ -13,28 +13,23 @@ use common\helpers\Language as Lx;
             <?php
                 $gridColumn = [
                     [
-                        'label'  => Lx::t('appMenu', 'Company'),
-                        'format' => 'html',
-                        'value'  => Html::a($model->mandant->Name, Yii::$app->urlManager->baseUrl . '/mandants/'. $model->ID_Mandant, ['title' => 'Go']),
-                    ],
-                    [
                             'label' => Lx::t('app', 'Code'),
-                            'value' => $model->Code,
+                            'value' => $model->code,
                     ],
                     [
-                            'label' => Lx::t('app', 'Text'),
+                            'label' => Lx::t('app', 'Text EN'),
                             'format'=>'raw',
-                            'value' => $model->Text_EN,
+                            'value' => $model->text_EN,
                     ],
                     [
-                            'label' => Lx::t('app', 'Text'),
+                            'label' => Lx::t('app', 'Text FR'),
                             'format'=>'raw',
-                            'value' => $model->Text_FR,
+                            'value' => $model->text_FR,
                     ],
                     [
-                            'label' => Lx::t('app', 'Text'),
+                            'label' => Lx::t('app', 'Text DE'),
                             'format'=>'raw',
-                            'value' => $model->Text_DE,
+                            'value' => $model->text_DE,
                     ]
                 ];
 

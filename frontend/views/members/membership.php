@@ -49,11 +49,12 @@ $club = \backend\models\Clubs::findOne(Yii::$app->session->get('c_id'));
             'format'         => 'raw',
             'value'               => function($model) {
                 $mobile = empty($model->phone_mobile) ? $model->phone : $model->phone_mobile;
+                $email = isset($model->user) ? $model->user->email : '';
                 $ischair = $model->is_organiser ? ' <span class="badge bg-red pull-right">Club Chairman</span>' : '';
                 $iswebmaster = $model->user_id == 1 ? ' <span class="badge bg-orange pull-right">Webmaster</span>' : '';
                 $iscommemb = $model->is_admin? ' <span class="badge bg-green pull-right">Committee Member</span>' : '';
                 $iscoach = isset($model->memType) && ($model->memType->mem_type_id == 5) ? ' <span class="badge bg-blue pull-right">Coach</span>' : '';
-                return $model->name.'<br>'.$model->user->email.'<br>'.$mobile . $ischair . $iswebmaster . $iscommemb . $iscoach;
+                return $model->name .'<br>'. $email .'<br>'.$mobile . $ischair . $iswebmaster . $iscommemb . $iscoach;
             },
 //            'contentOptions' => function ($model, $key, $index, $column) {
 //                return ['style' => 'background-color:' 

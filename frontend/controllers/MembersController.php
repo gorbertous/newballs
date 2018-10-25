@@ -250,8 +250,9 @@ class MembersController extends Controller
                     $transaction->commit();
                     // special case copy thumbs (25, 90, 160 into profile-thumbs folder
                     $thumbspath = $model->uploadsFolder . 'profile-thumbs/';
-                    Yii::$app->session->set('member_has_paid', $model->has_paid);
+                    
                     if ($model->user_id == Yii::$app->user->identity->id) {
+                        Yii::$app->session->set('member_has_paid', $model->has_paid);
                         Yii::$app->session->set('member_profile_complete', $model->profileCompletion);
                     }
                     Helpers::createPath($thumbspath);

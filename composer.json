@@ -49,7 +49,8 @@
         "yii2tech/ar-linkmany": "*",
         "brussens/yii2-maintenance-mode": "*",
         "dmstr/yii2-adminlte-asset": "^2.1",
-        "bower-asset/ekko-lightbox": "*"
+        "bower-asset/ekko-lightbox": "*",
+        "skeeks/yii2-assets-auto-compress": "*"
         
     },
     "require-dev": {

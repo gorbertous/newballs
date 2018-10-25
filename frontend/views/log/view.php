@@ -1,8 +1,7 @@
 <?php
 
-use yii\helpers\Html;
 use kartik\detail\DetailView;
-use kartik\datecontrol\DateControl;
+use common\helpers\Helpers;
 
 /**
  * @var yii\web\View $this
@@ -37,4 +36,9 @@ $this->params['breadcrumbs'][] = $this->title;
         'enableEditMode' => false,
     ]) ?>
 
+ <?php echo Helpers::getModalFooter($model,  null, null, [
+        'buttons' => ['cancel']
+    ]); ?>
+
+    <div class="clearfix"></div>
 </div>

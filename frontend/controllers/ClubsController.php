@@ -101,6 +101,21 @@ class ClubsController extends Controller
                     'dataProvider'  => $dataProvider,
         ]);
     }
+    
+    public function actionUploadImages()
+    {
+        $model = new \yii\base\DynamicModel([
+        'images'
+        ]);
+        $model->images = [];
+        $model->addRule(['images'], 'required');
+
+        if($model->load(Yii::$app->request->post())){
+            // do somenthing with model
+            return $this->redirect(Yii::$app->request->referrer);
+        }
+        return $this->render('uploads', ['model'=>$model]);
+    }
 
     /**
      * Displays a single Clubs model.
