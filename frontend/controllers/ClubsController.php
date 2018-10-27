@@ -9,6 +9,8 @@ use frontend\models\MembersSearch;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+use frontend\models\UploadForm;
+use yii\web\UploadedFile;
 use common\dictionaries\ContextLetter;
 
 /**
@@ -46,13 +48,13 @@ class ClubsController extends Controller
                     ],
                     [
                         'controllers' => ['clubs'],
-                        'actions'     => ['index', 'update', 'view'],
+                        'actions'     => ['index', 'update', 'view', 'upload'],
                         'allow'       => true,
                         'roles'       => ['admin']
                     ],
                     [
                         'controllers' => ['clubs'],
-                        'actions'     => ['stats'],
+                        'actions'     => ['stats','photos'],
                         'allow'       => true,
                         'roles'       => ['member']
                     ],
@@ -86,7 +88,7 @@ class ClubsController extends Controller
     public function actionStats()
     {
         $model = $this->findModel(Yii::$app->session->get('c_id'));
-        
+
         $searchModel = new MembersSearch();
         $searchModel->is_active = 1;
         $searchModel->is_admin = -1;
@@ -94,27 +96,45 @@ class ClubsController extends Controller
         $searchModel->is_organiser = -1;
         $searchModel->is_visible = -1;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        
+
         return $this->renderNormalorAjax('stats', [
-                    'model' => $model,
-                    'searchModel'   => $searchModel,
-                    'dataProvider'  => $dataProvider,
+                    'model'        => $model,
+                    'searchModel'  => $searchModel,
+                    'dataProvider' => $dataProvider,
         ]);
     }
-    
-    public function actionUploadImages()
-    {
-        $model = new \yii\base\DynamicModel([
-        'images'
-        ]);
-        $model->images = [];
-        $model->addRule(['images'], 'required');
 
-        if($model->load(Yii::$app->request->post())){
-            // do somenthing with model
-            return $this->redirect(Yii::$app->request->referrer);
+    public function actionUpload()
+    {
+        $model = new UploadForm();
+        $model->albumyear = date('Y');
+
+        if (Yii::$app->request->isPost) {
+
+            $album_year = $_POST['UploadForm']['albumyear'];
+
+            $model->imageFiles = UploadedFile::getInstances($model, 'imageFiles');
+            if ($model->upload($album_year)) {
+                // file is uploaded successfully
+                Yii::$app->getSession()->setFlash('success', 'Pictures uploaded successfully!');
+                return $this->redirect(Yii::$app->request->referrer);
+            }
         }
-        return $this->render('uploads', ['model'=>$model]);
+
+        $viewGallery = $this->renderPartial('_gallery');
+
+        return $this->render('upload', ['model' => $model, 'gallery' => $viewGallery]);
+    }
+
+    /**
+     * Lists all Clubs models.
+     * @return mixed
+     */
+    public function actionPhotos()
+    {
+        $viewGallery = $this->renderPartial('_gallery');
+        return $this->render('photos', ['gallery' => $viewGallery]);
+
     }
 
     /**

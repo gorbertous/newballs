@@ -50,7 +50,8 @@
         "brussens/yii2-maintenance-mode": "*",
         "dmstr/yii2-adminlte-asset": "^2.1",
         "bower-asset/ekko-lightbox": "*",
-        "skeeks/yii2-assets-auto-compress": "*"
+        "skeeks/yii2-assets-auto-compress": "*",
+        "2amigos/yii2-gallery-widget": "~1.0"
         
     },
     "require-dev": {

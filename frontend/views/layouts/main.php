@@ -23,7 +23,6 @@ AdminLtePluginAsset::register($this);
 
         <link rel="icon" type="image/x-icon" href="/img/favicon.ico" />
 
-        <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic" rel="stylesheet" />
 
         <?php $this->head() ?>
 

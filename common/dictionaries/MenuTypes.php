@@ -217,11 +217,11 @@ abstract class MenuTypes
 
     /** -- */
 
-    public static function WorkEquipment_text(): string {
-        return Yii::t('appMenu', 'Work equipment');
+    public static function photosText(): string {
+        return Yii::t('appMenu', 'Club Photos');
     }
-    const WORK_EQUIPMENT_ICON = 'fa fa-cog';
-    const WORK_EQUIPMENT_ICON_MENU = 'cog';
+    const PHOTOS_ICON = 'fa-file-image-o';
+    const PHOTOS_ICON_MENU = 'file-image-o';
 
     /** -- */
 

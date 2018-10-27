@@ -4,7 +4,6 @@ namespace common\helpers;
 
 use Yii;
 use yii\helpers\Html;
-use backend\models\Config;
 
 /**
  * Class Helpers
@@ -12,6 +11,7 @@ use backend\models\Config;
  */
 class Helpers
 {
+
     /**
      * checks if a path exists, if not creates it recursively
      *
@@ -50,7 +50,7 @@ class Helpers
     {
         return (intval($value) > 0);
     }
-    
+
     /**
      * Audit tab
      *
@@ -58,10 +58,10 @@ class Helpers
      */
     public static function getAuditTab()
     {
-        $tab = '<li><a href="#audit" data-toggle="tab">' .Yii::t('appMenu', 'Audit') . '</a></li>';
+        $tab = '<li><a href="#audit" data-toggle="tab">' . Yii::t('appMenu', 'Audit') . '</a></li>';
         return Yii::$app->user->can('team_member') ? $tab : '';
     }
-    
+
     /**
      * Audit tab content
      * @param object $model
@@ -70,19 +70,19 @@ class Helpers
     public static function getAuditTabContent($model)
     {
         $tabcontent = '<div class="tab-pane well" id="audit"><div class="row"><div class="col-md-12">';
-        $tabcontent .=  \asinfotrack\yii2\audittrail\widgets\AuditTrail::widget([
-                                'model' => $model,
-                                // some of the optional configurations
-                                'userIdCallback' => function ($userId, $model) {
-                                        return empty($userId) ? '' : \common\models\User::findOne($userId)->fullname;
-                                },
-                                'changeTypeCallback'=>function ($type, $model) {
-                                        return Html::tag('span', strtoupper($type), ['class'=>'label label-info']);
-                                },
-                                'dataTableOptions'=>['class'=>'table table-condensed table-bordered'],
-                        ]);
-        $tabcontent .= '</div></div></div>';                        
-        
+        $tabcontent .= \asinfotrack\yii2\audittrail\widgets\AuditTrail::widget([
+                    'model'          => $model,
+                    // some of the optional configurations
+                    'userIdCallback' => function ($userId, $model) {
+                        return empty($userId) ? '' : \common\models\User::findOne($userId)->fullname;
+                    },
+                    'changeTypeCallback' => function ($type, $model) {
+                        return Html::tag('span', strtoupper($type), ['class' => 'label label-info']);
+                    },
+                    'dataTableOptions' => ['class' => 'table table-condensed table-bordered'],
+        ]);
+        $tabcontent .= '</div></div></div>';
+
         return Yii::$app->user->can('team_member') ? $tabcontent : '';
     }
 
@@ -105,39 +105,39 @@ class Helpers
             switch ($btnValue) {
                 case 'create_update':
                     $html .= Html::submitButton('<span class="fa fa-check"></span>&nbsp;' . ($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update')), [
-                        'class' => 'btn btn-success'
+                                'class' => 'btn btn-success'
                     ]);
                     break;
 
                 case 'save':
                     $html .= '&nbsp;' . Html::a('<span class="fa fa-floppy-o"></span>&nbsp;' . Yii::t('app', 'Save'), [
-                            'print',
-                            'id'   => $id,
-                            'mode' => 'save',
-                            'view' => $printType
-                        ], [
-                            'class'  => 'btn btn-info',
-                            'target' => '_blank'
-                        ]);
+                                'print',
+                                'id'   => $id,
+                                'mode' => 'save',
+                                'view' => $printType
+                                    ], [
+                                'class'  => 'btn btn-info',
+                                'target' => '_blank'
+                    ]);
                     break;
 
                 case 'print':
                     $html .= '&nbsp;' . Html::a('<span class="fa fa-print"></span>&nbsp;' . Yii::t('app', 'Print'), [
-                            'print',
-                            'id'   => $id,
-                            'mode' => 'print',
-                            'view' => $printType
-                        ], [
-                            'class'  => 'btn btn-primary',
-                            'target' => '_blank'
-                        ]);
+                                'print',
+                                'id'   => $id,
+                                'mode' => 'print',
+                                'view' => $printType
+                                    ], [
+                                'class'  => 'btn btn-primary',
+                                'target' => '_blank'
+                    ]);
                     break;
 
                 case 'cancel':
                     $html .= '&nbsp;' . Html::Button('<span class="fa fa-times"></span>&nbsp;' . Yii::t('app', 'Cancel'), [
-                            'class'        => 'btn btn-danger',
-                            'data-dismiss' => 'modal'
-                        ]);
+                                'class'        => 'btn btn-danger',
+                                'data-dismiss' => 'modal'
+                    ]);
                     break;
 
                 default:
@@ -146,102 +146,12 @@ class Helpers
         }
 
         $html .= '</div>' .
-                 '<div class="clear"></div>';
+                '<div class="clear"></div>';
 
         if (Yii::$app->request->get('mode') !== 'print') {
             return $html;
         }
         return '';
-    }
-
-    /**
-     * @param $key1
-     * @param $key2
-     * @param int|null $mandant_id
-     * @param int|null $user_id
-     * @return mixed|null
-     */
-    public static function getConfig($key1, $key2, int $mandant_id = null, int $user_id = null)
-    {
-        if ($mandant_id === null) {
-            $mandant_id = Yii::$app->session->get('mandant_id');
-        }
-
-        if ($user_id === null) {
-            $config = Config::findOne([
-                'ID_Mandant' => $mandant_id,
-                'Key1'       => $key1,
-                'Key2'       => $key2
-            ]);
-
-            // fallback to our library mandant
-            if (empty($config)) {
-                $config = Config::findOne([
-                    'ID_Mandant' => 0,
-                    'Key1'       => $key1,
-                    'Key2'       => $key2
-                ]);
-            }
-        } else {
-            $config = Config::findOne([
-                'ID_Mandant' => $mandant_id,
-                'ID_User'    => $user_id,
-                'Key1'       => $key1,
-                'Key2'       => $key2
-            ]);
-
-            // fallback to our library mandant
-            if (empty($config)) {
-                $config = Config::findOne([
-                    'ID_Mandant' => 0,
-                    'ID_User'    => $user_id,
-                    'Key1'       => $key1,
-                    'Key2'       => $key2
-                ]);
-            }
-        }
-
-        if ($config !== null) {
-            return !empty($config->Value) ? $config->Value : null;
-        }
-
-        return null;
-    }
-
-    /**
-     * @param $key1
-     * @param $key2
-     * @param int|null $mandant_id
-     * @param $value
-     * 
-     * @return bool
-     */
-    public static function setConfig($key1, $key2, int $mandant_id = null, $value): bool
-    {
-        if ($mandant_id === null) {
-            $mandant_id = Yii::$app->session->get('mandant_id');
-        }
-
-        $config = Config::find()
-            ->where(['ID_Mandant' => $mandant_id,
-                     'Key1'       => $key1,
-                     'Key2'       => $key2
-            ])
-            ->one();
-
-        // doesn't exist create new
-        if (empty($config)) {
-            $config = new Config();
-            $config->ID_Mandant = $mandant_id;
-            $config->Key1 = $key1;
-            $config->Key2 = $key2;
-            $config->Value = $value;
-        } else {
-            //update the value only
-            $config->Value = $value;
-        }
-
-        return $config->save(false);
     }
 
     /**
@@ -342,10 +252,10 @@ class Helpers
             'statusbar'     => false,
             'paste_as_text' => true,
             'toolbar'       => "undo redo pastetext | bold italic underline | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | table pagebreak"
-            // 'table_default_border' => 1,
-            // 'table_default_cellspacing' => 0,
-            // 'table_default_cellpadding' => 0,
-            // 'readonly' => true
+                // 'table_default_border' => 1,
+                // 'table_default_cellspacing' => 0,
+                // 'table_default_cellpadding' => 0,
+                // 'readonly' => true
         ];
 
         if ($max_height > 0) {
@@ -369,10 +279,10 @@ class Helpers
             'statusbar'     => false,
             'paste_as_text' => true,
             'toolbar'       => "undo redo pastetext | bold italic underline | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | table pagebreak | code"
-            // 'table_default_border' => 1,
-            // 'table_default_cellspacing' => 0,
-            // 'table_default_cellpadding' => 0,
-            // 'readonly' => true
+                // 'table_default_border' => 1,
+                // 'table_default_cellspacing' => 0,
+                // 'table_default_cellpadding' => 0,
+                // 'readonly' => true
         ];
 
         if ($max_height > 0) {
@@ -448,7 +358,7 @@ class Helpers
      * 
      * @return array
      */
-    public static function reindex($post) :array
+    public static function reindex($post): array
     {
         $index = 0;
         $ret = [];
@@ -464,4 +374,15 @@ class Helpers
 
         return $ret;
     }
+
+    /**
+     * usage : $myarray = array_push_assoc($myarray, 'h', 'hello');
+     * @return array
+     */
+    public static function array_push_assoc($array, $key, $value)
+    {
+        $array[$key] = $value;
+        return $array;
+    }
+
 }

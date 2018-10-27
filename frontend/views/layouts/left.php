@@ -70,6 +70,14 @@ if (!Yii::$app->user->isGuest) {
                                 'visible' => Yii::$app->user->can('reader')
                             ],
                             [
+                                'label'   => MenuTypes::photosText(),
+                                'icon'    => MenuTypes::PHOTOS_ICON_MENU,
+                                'url'     => Url::toRoute(['clubs/photos']),
+//                                                'visible' => $perm->isMenuVisible('texts'),
+                                'active'  => ($route == 'clubs/photos'),
+                                'visible' => Yii::$app->user->can('writer')
+                            ],
+                            [
                                 'label'   => MenuTypes::newsText(),
                                 'icon'    => MenuTypes::NEWS_ICON_MENU,
                                 'url'     => Url::toRoute(['news/news']),
@@ -112,6 +120,14 @@ if (!Yii::$app->user->isGuest) {
                                 'url'     => Url::toRoute(['playdates/index']),
 //                                                'visible' => $perm->isMenuVisible('texts'),
                                 'active'  => ($route == 'playdates/index' || $route == 'gamesboard/index' || $route == 'reserves/index' || $route == 'scores/index'),
+                                'visible' => Yii::$app->user->can('writer')
+                            ],
+                            [
+                                'label'   => MenuTypes::photosText(),
+                                'icon'    => MenuTypes::PHOTOS_ICON_MENU,
+                                'url'     => Url::toRoute(['clubs/upload']),
+//                                                'visible' => $perm->isMenuVisible('texts'),
+                                'active'  => ($route == 'clubs/upload'),
                                 'visible' => Yii::$app->user->can('writer')
                             ],
                             [
