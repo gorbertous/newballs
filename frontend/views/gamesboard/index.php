@@ -52,21 +52,31 @@ if ($searchModel->timefilter == 1) {
           </div>
         </div>
     </div>
-    <?=Html::beginForm(['gamesboard/bulk'],'post');?>
-    <div class="row">     
-        <div class="col-xs-6">
-            <?= Select2::widget([
-                'name' => 'status_id',
-                'data' => OutcomeStatus::all(),
-                'options' => [
-                    'placeholder' => '',
-                ],
-            ])?>
+    <?php if ($searchModel->timefilter == 2): ?>
+        <?=Html::beginForm(['gamesboard/bulk'],'post');?>
+        <div class="row">     
+            <div class="col-xs-6">
+                <?= Select2::widget([
+                    'name' => 'status_id',
+                    'data' => OutcomeStatus::all(),
+                    'options' => [
+                        'placeholder' => '',
+                    ],
+                ])?>
+            </div>
+             <div class="col-xs-6">
+                <?=Html::submitButton('Status Updates', ['class' => 'btn btn-info',]);?>
+            </div>
         </div>
-         <div class="col-xs-6">
-            <?=Html::submitButton('Status Updates', ['class' => 'btn btn-info',]);?>
+    <?php elseif ($searchModel->timefilter == 1): ?>
+        <?=Html::beginForm(['gamesboard/sendemailreminder'],'post');?>
+        <div class="row">     
+            <div class="col-xs-6">
+                <?= Html::hiddenInput('sendemail', true)?>
+                <?= Html::submitButton('Send Email Reminder', ['class' => 'btn btn-info',]);?>
+            </div>
         </div>
-    </div>
+    <?php endif ?>
     
     <?php 
     Pjax::begin(['id' => 'pjax-gridview-container', 'enablePushState' => true]);
@@ -202,6 +212,8 @@ if ($searchModel->timefilter == 1) {
         );
     Pjax::end();
  ?>
- <?= Html::endForm();?> 
+ <?php if ($searchModel->timefilter > 0): ?>
+    <?= Html::endForm();?> 
+ <?php endif ?>
     
 </div>

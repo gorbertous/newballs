@@ -50,8 +50,8 @@ class PlayDates extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['c_id', 'location_id', 'season_id', 'termin_date', 'session_id', 'courts_no', 'slots_no','recurr_no'], 'required'],
-            [['c_id', 'location_id', 'active', 'season_id', 'session_id', 'courts_no', 'slots_no',  'recurr_no', 'created_by', 'updated_by', 'created_at', 'updated_at'], 'integer'],
+            [['c_id', 'location_id', 'season_id', 'termin_date', 'session_id', 'courts_no', 'slots_no', 'recurr_no'], 'required'],
+            [['c_id', 'location_id', 'active', 'season_id', 'session_id', 'courts_no', 'slots_no', 'recurr_no', 'created_by', 'updated_by', 'created_at', 'updated_at'], 'integer'],
             [['termin_date'], 'safe'],
             [['c_id'], 'exist', 'skipOnError' => true, 'targetClass' => Clubs::className(), 'targetAttribute' => ['c_id' => 'c_id']],
             [['location_id'], 'exist', 'skipOnError' => true, 'targetClass' => Location::className(), 'targetAttribute' => ['location_id' => 'location_id']],
@@ -67,16 +67,16 @@ class PlayDates extends \yii\db\ActiveRecord
 
         return array_merge(
                 self::BTLabels(), [
-            'termin_id'    => Yii::t('modelattr', 'ID'),
-            'c_id'         => Yii::t('modelattr', 'Club'),
-            'location_id'  => Yii::t('modelattr', 'Location'),
-            'termin_date'  => Yii::t('modelattr', 'Date'),
-            'active'       => Yii::t('modelattr', 'Active'),
-            'season_id'    => Yii::t('modelattr', 'Season'),
-            'session_id'   => Yii::t('modelattr', 'Duration'),
-            'courts_no'    => Yii::t('modelattr', 'Courts No'),
-            'slots_no'     => Yii::t('modelattr', 'Slots No'),
-            'recurr_no'    => Yii::t('modelattr', 'Recurr No'),
+            'termin_id'   => Yii::t('modelattr', 'ID'),
+            'c_id'        => Yii::t('modelattr', 'Club'),
+            'location_id' => Yii::t('modelattr', 'Location'),
+            'termin_date' => Yii::t('modelattr', 'Date'),
+            'active'      => Yii::t('modelattr', 'Active'),
+            'season_id'   => Yii::t('modelattr', 'Season'),
+            'session_id'  => Yii::t('modelattr', 'Duration'),
+            'courts_no'   => Yii::t('modelattr', 'Courts No'),
+            'slots_no'    => Yii::t('modelattr', 'Slots No'),
+            'recurr_no'   => Yii::t('modelattr', 'Recurr No'),
                 ]
         );
     }
@@ -136,20 +136,20 @@ class PlayDates extends \yii\db\ActiveRecord
             if ($playdate->recurr_no > 1) {
                 for ($a = 1; $a <= $playdate->recurr_no; $a++) {
                     $lastdate = PlayDates::find()->orderBy(['termin_id' => SORT_DESC])->one();
-                    
-                    $date = new \DateTime($lastdate->termin_date); 
+
+                    $date = new \DateTime($lastdate->termin_date);
                     $date->add(new \DateInterval('P7D'));
-                    
+
                     $recurrdate = new PlayDates();
                     $recurrdate->c_id = $lastdate->c_id;
                     $recurrdate->location_id = $lastdate->location_id;
-                    $recurrdate->termin_date = $date->format('Y-m-d H:i:s') ;
+                    $recurrdate->termin_date = $date->format('Y-m-d H:i:s');
                     $recurrdate->season_id = $lastdate->season_id;
                     $recurrdate->session_id = $lastdate->session_id;
                     $recurrdate->courts_no = $lastdate->courts_no;
                     $recurrdate->slots_no = $lastdate->slots_no;
                     $recurrdate->save(false);
-                    
+
                     for ($i = 1; $i <= $recurrdate->courts_no; $i++) {
                         for ($y = 1; $y <= $recurrdate->slots_no; $y++) {
                             $newrecrota = new GamesBoard();
@@ -168,6 +168,7 @@ class PlayDates extends \yii\db\ActiveRecord
             }
         }
     }
+
 
     /**
      * @return \yii\db\ActiveQuery

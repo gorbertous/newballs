@@ -89,6 +89,19 @@ class GamesboardController extends Controller
         return $this->redirect(Yii::$app->request->referrer);
     }
 
+    public function actionSendemailreminder()
+    {
+        if (!empty(Yii::$app->request->post('sendemail'))) {
+
+            if (GamesBoard::sendMailReminders()) {
+                Yii::$app->session->setFlash('success', 'Email reminders were sent out!');
+            }
+        } else {
+            Yii::$app->session->setFlash('danger', 'Error something went wrong here!');
+        }
+        return $this->redirect(Yii::$app->request->referrer);
+    }
+
     /**
      * Displays a single GamesBoard model.
      * @param integer $id

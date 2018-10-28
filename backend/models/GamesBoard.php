@@ -129,7 +129,94 @@ class GamesBoard extends \yii\db\ActiveRecord
                 ->count();
         return $slots_left;
     }
+    
+     /**
+     * get members who are already on the rota
+     *
+     * @return Array - number.
+     */
+    public function getPlayersOnRota($termin_id)
+    {
+        
+        $mem_ids = GamesBoard::find()
+                ->where(['termin_id' => $termin_id])
+                ->andWhere(['>', 'member_id', 1])//free slot id = 1
+                ->all();
+        return $mem_ids;
+    }
+    
+     /**
+     * Get next play date
+     *
+     * @return PlayDates
+     */
    
+    public function getNextGameDate($c_id = null)
+    {
+        $nextdate = PlayDates::find()
+                ->where(['>', 'termin_date', new \yii\db\Expression('NOW()')])
+                ->andWhere(['c_id' => $c_id ?? Yii::$app->session->get('c_id')])
+                ->orderBy(['termin_date' => SORT_ASC])
+                ->one();
+        return $nextdate;
+    }
+     
+    /**
+     * send mail reminders
+     *
+     * @return boolean
+     */
+    public static function sendMailReminders()
+    {
+        $nextdate = self::getNextGameDate();
+        
+        if (isset($nextdate)) {
+            
+            $slots_count = self::getSlotsLeft($nextdate->termin_id);
+            
+            $player_ids = \yii\helpers\ArrayHelper::getColumn(self::getPlayersOnRota($nextdate->termin_id), 'member_id');
+          
+            if (isset($player_ids)) {
+                $mailinglist = Members::find()
+//                ->joinWith('user')
+                ->where(['c_id' => Yii::$app->session->get('c_id')])
+                ->andWhere(['is_active' => true])
+                ->andWhere(['has_paid' => true])
+                ->andWhere(['in', 'mem_type_id', [1,2]])
+                ->andWhere(['not in', 'member_id', $player_ids])
+                ->all();
+       
+                //loop the list and send mails out
+                foreach ($mailinglist as $member) {
+//                    dump($member->user->email);
+                    self::sendRotaReminderEmail($member, $slots_count);
+                }
+                return true;
+            }
+             return false;
+        }
+        return false;
+    }
+    
+     /**
+     * Sends rota confirmation email
+     *
+     * @param  object $model model
+     * @return bool - Whether the message has been sent successfully.
+     */
+    public function sendRotaReminderEmail($model, $count)
+    {
+        if (isset($model->member->user->email)) {
+            return Yii::$app->mailer->compose('rotaReminderEmail', ['model' => $model, 'count' => $count])
+                            ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name . ' robot'])
+                            ->setTo($model->member->user->email)
+                            ->setSubject(Yii::$app->name . Yii::t('app', ' - Rota Reminder Email'))
+                            ->send();
+        } else {
+            return false;
+        }
+    }
+
     /**
      * Sends rota confirmation email
      *
@@ -148,6 +235,7 @@ class GamesBoard extends \yii\db\ActiveRecord
             return false;
         }
     }
+    
 
     /**
      * @return \yii\db\ActiveQuery
