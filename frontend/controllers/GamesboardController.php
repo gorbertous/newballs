@@ -10,6 +10,7 @@ use yii\filters\AccessControl;
 use common\helpers\Errorhandler as Errorhandler;
 use yii\filters\VerbFilter;
 use common\dictionaries\ContextLetter;
+use common\dictionaries\OutcomeStatus;
 
 /**
  * GamesboardController implements the CRUD actions for GamesBoard model.
@@ -74,6 +75,20 @@ class GamesboardController extends Controller
         ]);
     }
 
+    public function actionBulk()
+    {
+        $action = Yii::$app->request->post('status_id');
+        $selection = (array) Yii::$app->request->post('selection'); //typecasting
+        foreach ($selection as $id) {
+            $games = GamesBoard::findOne((int) $id); //make a typecasting
+            //do your stuff
+            $games->status_id = $action;
+            $games->save();
+        }
+        Yii::$app->session->setFlash('success', 'Game statuses updated to ' . OutcomeStatus::get($action));
+        return $this->redirect(Yii::$app->request->referrer);
+    }
+
     /**
      * Displays a single GamesBoard model.
      * @param integer $id
@@ -95,7 +110,7 @@ class GamesboardController extends Controller
     {
         $model = new GamesBoard();
         $model->c_id = Yii::$app->session->get('c_id');
-        
+
         if ($model->load(Yii::$app->request->post())) {
 
             $valid = $model->validate();

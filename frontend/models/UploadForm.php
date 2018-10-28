@@ -53,7 +53,7 @@ class UploadForm extends Model
                 $file_thumb = $thumbs_dir . $file_name;
                 $file->saveAs($file_to_save);
                 //resize images
-                Image::thumbnail($file_to_save, 500, 300)->resize(new Box(800,600))->save($file_to_save, ['quality' => 90]);
+                Image::thumbnail($file_to_save, 800, 600)->resize(new Box(800,600))->save($file_to_save, ['quality' => 90]);
                 Image::thumbnail($file_to_save, 100, 60)->resize(new Box(100,60))->save($file_thumb, ['quality' => 90]);
 //                unlink('../files/upload/' . $this->pictureFile->baseName . '.'  . $this->pictureFile->extension);
             }

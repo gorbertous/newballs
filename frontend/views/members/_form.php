@@ -99,7 +99,7 @@ use common\helpers\ViewsHelper;
                 <div class="col-md-6">
                     <div class="row">
                         <div class="col-xs-12">
-                            <label class="control-label"><?= Yii::t('modelattr', 'Photo') ?></label>
+                            <label class="control-label"><?= Yii::t('modelattr', 'Photo') ?><?= Yii::t('modelattr', ' - Max file size 8MB') ?></label>
                             <?= /** @noinspection PhpUnhandledExceptionInspection */
                                 $form->hrwFileInput($model, 'ajaxfileinputPhoto')
                             ?>

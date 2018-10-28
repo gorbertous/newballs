@@ -1,11 +1,13 @@
 <?php
 
 use kartik\grid\GridView;
+use kartik\widgets\Select2;
 use yii\widgets\Pjax;
 use common\helpers\GridviewHelper;
 use yii\helpers\ArrayHelper;
 use common\dictionaries\OutcomeStatus;
 use common\helpers\ViewsHelper;
+use yii\helpers\Html;
 
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\GamesboardSearch */
@@ -34,7 +36,7 @@ if ($searchModel->timefilter == 1) {
 ?>
 
 <div class="games-board-index">
-     <div class="panel-group" id="accordion">
+    <div class="panel-group" id="accordion">
         <div class="panel panel-default">
           <div class="panel-heading">
             <h4 class="panel-title">
@@ -50,10 +52,26 @@ if ($searchModel->timefilter == 1) {
           </div>
         </div>
     </div>
-
+    <?=Html::beginForm(['gamesboard/bulk'],'post');?>
+    <div class="row">     
+        <div class="col-xs-6">
+            <?= Select2::widget([
+                'name' => 'status_id',
+                'data' => OutcomeStatus::all(),
+                'options' => [
+                    'placeholder' => '',
+                ],
+            ])?>
+        </div>
+         <div class="col-xs-6">
+            <?=Html::submitButton('Status Updates', ['class' => 'btn btn-info',]);?>
+        </div>
+    </div>
+    
     <?php 
     Pjax::begin(['id' => 'pjax-gridview-container', 'enablePushState' => true]);
     $gridColumn = [
+        ['class' => 'yii\grid\CheckboxColumn'],
         ['class' => 'yii\grid\SerialColumn'],
 
         [
@@ -184,5 +202,6 @@ if ($searchModel->timefilter == 1) {
         );
     Pjax::end();
  ?>
+ <?= Html::endForm();?> 
     
 </div>

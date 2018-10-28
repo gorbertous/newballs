@@ -19,6 +19,7 @@ use kartik\select2\Select2;
         <div class="clearfix"></div>
     </div>
     <div class="panel-body">
+        <h4><?= Yii::t('modelattr', 'Max file size 8MB, to upload multiple files at the same time, select the files and drag & drop them directly from your file explorer window!') ?></h4>
         <?php
         $form = ActiveForm::begin([
                     'id'      => 'form-upload',
