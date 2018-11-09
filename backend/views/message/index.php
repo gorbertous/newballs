@@ -6,7 +6,7 @@ use yii\helpers\ArrayHelper;
 use kartik\grid\GridView;
 use backend\models\Sourcemessage;
 use common\helpers\GridviewHelper;
-use yii\widgets\Pjax;
+//use yii\widgets\Pjax;
 
 $this->title = GridviewHelper::getTitle($context_array);
 $currentBtn = GridviewHelper::getCurrentBtn($context_array);
@@ -16,7 +16,7 @@ $currentBtn = GridviewHelper::getCurrentBtn($context_array);
 <div class="message-index">
 
     <?php
-    Pjax::begin(['id' => 'pjax-gridview-container', 'enablePushState' => true]);
+    //    Pjax::begin(['id' => 'pjax-gridview-container', 'enablePushState' => true]);
     $gridColumn = [
         ['class' => 'yii\grid\SerialColumn'],
 
@@ -159,7 +159,7 @@ $header = GridviewHelper::getHeader($context_array);
                 ],
             ]
         );
-    Pjax::end();
+    //    Pjax::end();
  ?>
     
 </div>

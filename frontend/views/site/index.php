@@ -78,22 +78,31 @@ use yii\helpers\Html;
 
 <!-- Content Row -->
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-8">
         <h2>Where do we play</h2>
+        
+        <?= yii2mod\google\maps\markers\GoogleMaps::widget([
+            'userLocations' => [
+                [
+                    'location' => [
+                        'address' => $model->shortAddress,
+                        'country' => $model->location->co_code,
+                    ],
+                    'htmlContent' => '<h1>'.$model->name.'</h1>',
+                ],
+
+            ],
+        ]);?>
         <p><?= $model->shortAddress ?></p>
-        <a class="btn btn-default" href="/about">More Info</a>
     </div>
+   
     <!-- /.col-md-4 -->
     <div class="col-md-4">
         <h2>Commitment</h2>
         <p>The club is set up to ensure that regular commitment, while preferred, is not essential. We generally play doubles tennis. Each week the pairings will be mixed up to promote balanced and fun matches. Depending on interest, limited coaching by a Professional (on a rotated membership basis) may be provided on one of our reserved courts.</p>
-        <a class="btn btn-default" href="/about">More Info</a>
-    </div>
-    <!-- /.col-md-4 -->
-    <div class="col-md-4">
         <h2>Booking</h2>
         <p>The games are managed in the members only area of this site. In case you are not yet member, you can sign up following the button bellow!</p>
-        <a class="btn btn-default" href="/about">More Info</a>
+        <a class="btn btn-default" href="/signup">Sign up</a>
     </div>
     <!-- /.col-md-4 -->
 </div>

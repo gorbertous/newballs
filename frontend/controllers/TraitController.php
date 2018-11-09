@@ -80,6 +80,7 @@ trait TraitController
                 break;
             case 'Gamesboard':
             case 'Rota':
+            case 'Yourgames':
                 $modelname = 'GamesBoard';
                 break;
             case 'Membershiptype':

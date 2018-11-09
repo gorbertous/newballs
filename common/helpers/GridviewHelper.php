@@ -65,13 +65,13 @@ class GridviewHelper
 
                 case '{update}':
                     $buttons['update'] = function ($url, $model) use ($currentBtn) {
-                        if (Yii::$app->user->can('writer')) {
+//                        if (Yii::$app->user->can('writer')) {
                             return Html::button('<i class="fa fa-pencil-square-o"></i>', [
                                 'value' => Url::to($url),
                                 'class' => 'btn btn-default btn-style showModalButton',
                                 'title' => $currentBtn['mod_label'] . ' ' . $model->titleSuffix
                             ]);
-                        }
+//                        }
                         return '';
                     };
                     break;
@@ -80,14 +80,14 @@ class GridviewHelper
 
                 case '{delete}':
                     $buttons['delete'] = function ($url, $model) use ($currentBtn) {
-                        if (Yii::$app->user->can('writer')) {
+//                        if (Yii::$app->user->can('writer')) {
                             return Html::a('<i class="fa fa-trash"></i>', Url::to($url), [
                                 'class'        => 'btn btn-default btn-style',
                                 'title'        => $currentBtn['del_label'] . ' ' . $model->titleSuffix,
                                 'data-confirm' => Yii::t('yii', 'Are you sure to delete this item?'),
                                 'data-method'  => 'post'
                             ]);
-                        }
+//                        }
                         return '';
                     };
                     break;

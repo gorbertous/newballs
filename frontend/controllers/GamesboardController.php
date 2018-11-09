@@ -74,7 +74,7 @@ class GamesboardController extends Controller
                     'context_array' => $this->getSpecificContextArray()
         ]);
     }
-
+  
     public function actionBulk()
     {
         $action = Yii::$app->request->post('status_id');

@@ -2,7 +2,7 @@
 
 use kartik\grid\GridView;
 use kartik\widgets\Select2;
-use yii\widgets\Pjax;
+//use yii\widgets\Pjax;
 use common\helpers\GridviewHelper;
 use yii\helpers\ArrayHelper;
 use common\dictionaries\OutcomeStatus;
@@ -76,10 +76,11 @@ if ($searchModel->timefilter == 1) {
                 <?= Html::submitButton('Send Email Reminder', ['class' => 'btn btn-info',]);?>
             </div>
         </div>
+        <?= Html::endForm();?> 
     <?php endif ?>
     
     <?php 
-    Pjax::begin(['id' => 'pjax-gridview-container', 'enablePushState' => true]);
+    //    Pjax::begin(['id' => 'pjax-gridview-container', 'enablePushState' => true]);
     $gridColumn = [
         ['class' => 'yii\grid\CheckboxColumn'],
         ['class' => 'yii\grid\SerialColumn'],
@@ -118,8 +119,44 @@ if ($searchModel->timefilter == 1) {
             ],
             'filterInputOptions'  => ['placeholder' => '', 'id' => 'grid-board-search-ID_member'],
         ],
-        'court_id',
-        'slot_id',
+//        'court_id',
+        [
+            'attribute' => 'court_id',
+            'label' => Yii::t('app', 'Court No'),
+            'encodeLabel' => false,
+            'headerOptions' => ['style'=>'text-align:center'],
+           
+            'contentOptions' => function ($model, $key, $index, $column) {
+                return ['style' => 'background-color:' 
+                    . (($model->court_id % 2) == 0
+                        ? '#B3C7DC' : '#FFC2BB')];
+            },
+        ],
+        [
+            'attribute' => 'slot_id',
+            'label' => Yii::t('app', 'Slot No'),
+            'encodeLabel' => false,
+            'headerOptions' => ['style'=>'text-align:center'],
+            'contentOptions' => function ($model, $key, $index, $column) {
+                switch($model->slot_id) {
+                    case 1:
+                        $bg_color = '#B3C7DC';
+                        break;
+                    case 2:
+                        $bg_color = '#668EB9';
+                        break;
+                    case 3:
+                        $bg_color = '#FFC2BB';
+                        break;
+                    case 4:
+                        $bg_color = '#FF8883';
+                        break;
+                }
+                return ['style' => 'background-color:' 
+                    . $bg_color];
+            },
+        ],
+//        'slot_id',
         [
             'attribute'           => 'status_id',
             'label'               => Yii::t('modelattr', 'Status'),
@@ -210,9 +247,9 @@ if ($searchModel->timefilter == 1) {
                 ],
             ]
         );
-    Pjax::end();
+    //    Pjax::end();
  ?>
- <?php if ($searchModel->timefilter > 0): ?>
+ <?php if ($searchModel->timefilter  == 2): ?>
     <?= Html::endForm();?> 
  <?php endif ?>
     

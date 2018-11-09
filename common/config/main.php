@@ -96,8 +96,8 @@ return [
         'reCaptcha' => [
             'name'    => 'reCaptcha',
             'class'   => himiklab\yii2\recaptcha\ReCaptcha::class,
-            'siteKey' => '6LfIBm8UAAAAAOcVqtuRVW-vqwHF05IIAtHXhjei',
-            'secret'  => '6LfIBm8UAAAAADnwoKAd6u3hHoJxYxbKeh9SjW9i',
+            'siteKey' => '6Lf9Bm8UAAAAAHFpfEi-gpRzsNSYsWwE9pY_F7bE',
+            'secret'  => '6Lf9Bm8UAAAAAPODEso7tnwJBiT2kLCF822um5Is',
         ],
          'formatter' => [
             'class' => yii\i18n\Formatter::class,

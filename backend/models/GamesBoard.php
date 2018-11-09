@@ -43,7 +43,7 @@ class GamesBoard extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['c_id', 'termin_id','member_id', 'court_id', 'slot_id',], 'required'],
+            [['c_id', 'termin_id', 'member_id', 'court_id', 'slot_id',], 'required'],
             [['c_id', 'termin_id', 'member_id', 'court_id', 'slot_id', 'status_id', 'fines', 'tokens', 'late'], 'integer'],
             [['c_id'], 'exist', 'skipOnError' => true, 'targetClass' => Clubs::className(), 'targetAttribute' => ['c_id' => 'c_id']],
             [['termin_id'], 'exist', 'skipOnError' => true, 'targetClass' => PlayDates::className(), 'targetAttribute' => ['termin_id' => 'termin_id']],
@@ -94,11 +94,12 @@ class GamesBoard extends \yii\db\ActiveRecord
             ],
         ];
     }
-    
+
     public function getTitleSuffix()
     {
         return 'Rota';
     }
+
     /**
      * Check whether the player is already on the court
      *
@@ -116,6 +117,7 @@ class GamesBoard extends \yii\db\ActiveRecord
         }
         return false;
     }
+
     /**
      * get No of slots left
      *
@@ -129,28 +131,41 @@ class GamesBoard extends \yii\db\ActiveRecord
                 ->count();
         return $slots_left;
     }
-    
-     /**
+
+    /**
+     * is the court booked
+     *
+     * @return String - number.
+     */
+    public function isCourtBooked($termin_id, $court_id)
+    {
+        $is_booked = JCourtBooked::find()
+                ->where(['termin_id' => $termin_id])
+                ->andWhere(['court_id' => $court_id])
+                ->one();
+        return $is_booked;
+    }
+
+    /**
      * get members who are already on the rota
      *
      * @return Array - number.
      */
     public function getPlayersOnRota($termin_id)
     {
-        
+
         $mem_ids = GamesBoard::find()
                 ->where(['termin_id' => $termin_id])
                 ->andWhere(['>', 'member_id', 1])//free slot id = 1
                 ->all();
         return $mem_ids;
     }
-    
-     /**
+
+    /**
      * Get next play date
      *
      * @return PlayDates
      */
-   
     public function getNextGameDate($c_id = null)
     {
         $nextdate = PlayDates::find()
@@ -160,7 +175,25 @@ class GamesBoard extends \yii\db\ActiveRecord
                 ->one();
         return $nextdate;
     }
-     
+
+    /**
+     * Get date difference
+     *
+     * @return number of days
+     */
+    public function getDaystonextgame($some_date = null)
+    {
+        $next_date = self::getNextGameDate();
+        if(isset($some_date)){
+            $date_to_compare = new \DateTime($some_date);
+        }else{
+            $date_to_compare = new \DateTime($next_date->termin_date);
+        }
+        $today = new \DateTime();
+        $diff = $date_to_compare->diff($today);
+        return $diff->d;
+    }
+
     /**
      * send mail reminders
      *
@@ -169,47 +202,47 @@ class GamesBoard extends \yii\db\ActiveRecord
     public static function sendMailReminders()
     {
         $nextdate = self::getNextGameDate();
-        
+
         if (isset($nextdate)) {
-            
+
             $slots_count = self::getSlotsLeft($nextdate->termin_id);
-            
+
             $player_ids = \yii\helpers\ArrayHelper::getColumn(self::getPlayersOnRota($nextdate->termin_id), 'member_id');
-          
+
             if (isset($player_ids)) {
                 $mailinglist = Members::find()
 //                ->joinWith('user')
-                ->where(['c_id' => Yii::$app->session->get('c_id')])
-                ->andWhere(['is_active' => true])
-                ->andWhere(['has_paid' => true])
-                ->andWhere(['in', 'mem_type_id', [1,2]])
-                ->andWhere(['not in', 'member_id', $player_ids])
-                ->all();
-       
+                        ->where(['c_id' => Yii::$app->session->get('c_id')])
+                        ->andWhere(['is_active' => true])
+                        ->andWhere(['has_paid' => true])
+                        ->andWhere(['in', 'mem_type_id', [1, 2]])
+                        ->andWhere(['not in', 'member_id', $player_ids])
+                        ->all();
+
                 //loop the list and send mails out
                 foreach ($mailinglist as $member) {
 //                    dump($member->user->email);
-                    self::sendRotaReminderEmail($member, $slots_count);
+                    self::sendRotaReminderEmail($member, $slots_count, $nextdate);
                 }
                 return true;
             }
-             return false;
+            return false;
         }
         return false;
     }
-    
-     /**
+
+    /**
      * Sends rota confirmation email
      *
      * @param  object $model model
      * @return bool - Whether the message has been sent successfully.
      */
-    public function sendRotaReminderEmail($model, $count)
+    public function sendRotaReminderEmail($model, $count, $date)
     {
-        if (isset($model->member->user->email)) {
-            return Yii::$app->mailer->compose('rotaReminderEmail', ['model' => $model, 'count' => $count])
+        if (isset($model->user->email)) {
+            return Yii::$app->mailer->compose('rotaReminderEmail', ['model' => $model, 'count' => $count, 'date' => $date])
                             ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name . ' robot'])
-                            ->setTo($model->member->user->email)
+                            ->setTo($model->user->email)
                             ->setSubject(Yii::$app->name . Yii::t('app', ' - Rota Reminder Email'))
                             ->send();
         } else {
@@ -235,7 +268,6 @@ class GamesBoard extends \yii\db\ActiveRecord
             return false;
         }
     }
-    
 
     /**
      * @return \yii\db\ActiveQuery

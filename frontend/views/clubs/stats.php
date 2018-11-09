@@ -5,7 +5,7 @@ use kartik\grid\GridView;
 use common\helpers\GridviewHelper;
 use yii\helpers\ArrayHelper;
 use common\helpers\ViewsHelper;
-use yii\widgets\Pjax;
+//use yii\widgets\Pjax;
 
 $historic_memebrship = $model->getMembership()->count();
 $active_memebrship = $model->getMembership(['is_active' => true])->count();
@@ -80,7 +80,7 @@ $future_slots = $model->getGamesStats(['>', 'termin_date', new Expression('NOW()
 
         <?php
         $lefttoolbar = ['Player Stats - Current Season'];
-        Pjax::begin(['id' => 'pjax-gridview-container', 'enablePushState' => true]);
+        //    Pjax::begin(['id' => 'pjax-gridview-container', 'enablePushState' => true]);
         $gridColumn = [
             ['class' => 'yii\grid\SerialColumn'],
             [
@@ -149,6 +149,6 @@ $future_slots = $model->getGamesStats(['>', 'termin_date', new Expression('NOW()
             ],
         ]
         );
-        Pjax::end();
+        //    Pjax::end();
         ?>
     </div>

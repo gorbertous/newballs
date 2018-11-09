@@ -79,11 +79,12 @@ class LogController extends Controller
                 INNER JOIN user u ON ua.userId = u.id
                 INNER JOIN members m ON u.id = m.user_id
                 INNER JOIN clubs c ON m.c_id = c.c_id
-               
+                WHERE m.c_id=:club_id
                 ORDER BY date DESC";
 
         $lastConnectedUsers = new \yii\data\SqlDataProvider([
             'sql'        => $sql,
+            'params' => [':club_id' => Yii::$app->session->get('c_id')],
             'pagination' => ['pageSize' => 20]
         ]);
 

@@ -96,7 +96,7 @@ class SiteController extends Controller
      */
     public function actionSetupSession()
     {
-        session_regenerate_id();
+//        session_regenerate_id();
       
         // set up some additional session variables to be used in the header avoiding db queries
         // we don't use Yii::$app->user->identity->id

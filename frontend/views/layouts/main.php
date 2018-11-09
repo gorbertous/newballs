@@ -21,7 +21,7 @@ AdminLtePluginAsset::register($this);
 
         <title><?= Html::encode(strip_tags($this->title)) ?></title>
 
-        <link rel="icon" type="image/x-icon" href="/img/favicon.ico" />
+        <link rel="icon" type="image/x-icon" href="/favicon.ico?v=2" />
 
 
         <?php $this->head() ?>

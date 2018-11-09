@@ -32,12 +32,11 @@
         "kartik-v/dependent-dropdown": "@dev",
         "kartik-v/yii2-checkbox-x": "@dev",
         "kartik-v/yii2-detail-view": "@dev",
-        "kartik-v/yii2-tree-manager": "@dev",
         "kartik-v/yii2-editable": "@dev",
         "kartik-v/yii2-password": "@dev",
-        "kartik-v/yii2-mpdf": "dev-master",
-        "kartik-v/yii2-widget-datetimepicker": "dev-master",
-        "kartik-v/yii2-widget-depdrop": "dev-master",
+        "kartik-v/yii2-mpdf": "*",
+        "kartik-v/yii2-widget-datetimepicker": "*",
+        "kartik-v/yii2-widget-depdrop": "@dev",
         "voskobovich/yii2-linker-behavior": "^4.0",
         "himiklab/yii2-recaptcha-widget": "^1.2",
         "codemix/yii2-localeurls": "^1.5",
@@ -51,7 +50,8 @@
         "dmstr/yii2-adminlte-asset": "^2.1",
         "bower-asset/ekko-lightbox": "*",
         "skeeks/yii2-assets-auto-compress": "*",
-        "2amigos/yii2-gallery-widget": "~1.0"
+        "2amigos/yii2-gallery-widget": "~1.0",
+        "yii2mod/yii2-google-maps-markers": "*"
         
     },
     "require-dev": {

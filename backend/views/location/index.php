@@ -5,7 +5,7 @@ use kartik\grid\GridView;
 use common\helpers\GridviewHelper;
 use yii\helpers\ArrayHelper;
 use backend\models\Clubs;
-use yii\widgets\Pjax;
+//use yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\LocationSearch */
@@ -18,7 +18,7 @@ $currentBtn = GridviewHelper::getCurrentBtn($context_array);
 <div class="clubs-index">
 
     <?php 
-     Pjax::begin(['id' => 'pjax-gridview-container', 'enablePushState' => true]);
+     //    Pjax::begin(['id' => 'pjax-gridview-container', 'enablePushState' => true]);
     $gridColumn = [
         ['class' => 'yii\grid\SerialColumn'],
 
@@ -81,7 +81,7 @@ $currentBtn = GridviewHelper::getCurrentBtn($context_array);
                 ],
             ]
         );
-    Pjax::end();
+    //    Pjax::end();
  ?>
     
 </div>

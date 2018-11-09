@@ -31,7 +31,7 @@ abstract class ContextTexts implements Context
         // TEXTS first button -> Texts
         $context_array[ContextLetter::TEXTS][] = [
             'CW_type'       => ContextLetter::TEXTS,
-            'button_title'  => Menu::textblocksText(),
+//            'button_title'  => Menu::textblocksText(),
             'new_label'     => Yii::t('appMenu', self::LBL_NEW),
             'mod_label'     => Yii::t('appMenu', self::LBL_MODIFY),
             'view_label'    => Yii::t('appMenu', self::LBL_VIEW),

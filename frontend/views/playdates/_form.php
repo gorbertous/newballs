@@ -55,7 +55,7 @@ use common\dictionaries\ClubSessions;
                 <div class="col-xs-6">
                     <?=
                     $form->hrwSelect2($model, 'location_id', [
-                        'data'          => ArrayHelper::map(Location::find()->all(), 'location_id', 'name'),
+                        'data'          => ArrayHelper::map(Location::find()->where(['c_id' => Yii::$app->session->get('c_id')])->all(), 'location_id', 'name'),
                         'options'       => ['id' => 'loc-id'],
                         'pluginOptions' => ['allowClear' => true]
                     ])
@@ -77,23 +77,13 @@ use common\dictionaries\ClubSessions;
             </div>
              <div class="row">     
                 <div class="col-xs-6">
-                    <?php if ($model->isNewRecord): ?>
-                        <?=  $form->field($model, 'season_id')->widget(DepDrop::classname(), [
-                                'options'=>['id' =>'season-id'],
-                                'pluginOptions' =>[
-                                    'depends' => ['c-id'],
-                                    'placeholder' => 'Select...',
-                                    'url'=>Url::to(['/playdates/subcat'])
-                                ]
-                        ]);?>
-                    <?php else: ?>
-                         <?= $form->hrwSelect2($model, 'season_id', [
+                    <?= $form->hrwSelect2($model, 'season_id', [
                             'data' => Somenumbers::all(),
                             'hideSearch' => true,
                             'disabled' => true,
                             'options' => ['placeholder' => '']
                         ]) ?>
-                    <?php endif; ?>
+                   
                 </div>
                  <div class="col-xs-6">
                     <?= $form->hrwSelect2($model, 'session_id', [

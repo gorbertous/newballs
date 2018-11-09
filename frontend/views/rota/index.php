@@ -9,7 +9,7 @@ use kartik\grid\GridView;
 use common\dictionaries\OutcomeStatus;
 use yii\helpers\Url;
 use common\helpers\GridviewHelper;
-use yii\widgets\Pjax;
+//use yii\widgets\Pjax;
 
 $this->title = GridviewHelper::getTitle($context_array);
 $currentBtn = GridviewHelper::getCurrentBtn($context_array);
@@ -53,11 +53,11 @@ if ($searchModel->timefilter == 1) {
     </div>
    
     <?php
-    Pjax::begin(['id' => 'pjax-gridview-container', 'enablePushState' => true]);
+//    Pjax::begin(['id' => 'pjax-gridview-container', 'enablePushState' => true]);
     $gridColumn = [
-        ['class' => 'yii\grid\SerialColumn', 
-            'contentOptions' => ['style' => 'width:20px;'],
-        ],
+//        ['class' => 'yii\grid\SerialColumn', 
+//            'contentOptions' => ['style' => 'width:20px;'],
+//        ],
         [
              'attribute' => 'termin_id',
              'format' => 'raw',
@@ -99,8 +99,22 @@ if ($searchModel->timefilter == 1) {
          ],
          [
              'attribute' => 'court_id',
-             'value' => function($model){                   
-                 return  '<h4>Court No : '. $model->court_id . '</h4>';                   
+             'value' => function($model){
+                $url = Url::toRoute(['rota/bookcourt', 'id' => $model->termin_id, 'id2' => $model->court_id]);
+                $link = Html::a('Court not yet booked!', $url, 
+                [
+                    'title' => Yii::t('app', 'book a court'),
+                    'class' => 'text-success',
+                    'data' => [
+                        'confirm' => Yii::t('app', 'You are confirming that you have booked this court!'),
+                        'method' => 'post',
+                    ],
+                ]);
+                 $booked = $model->isCourtBooked($model->termin_id, $model->court_id);
+                 $booked_by = !empty($booked) ? 'Court booked by '. $booked->bookedBy->name  : $link;
+                 //show court booking link
+                $show_booking_link = Yii::$app->session->get('club_court_booking')? $booked_by : '';
+                 return  '<h4>Court No : '. $model->court_id . '</h4>' . $show_booking_link;                   
              },
              'format' => 'raw',
              //'label' => Yii::t('app', 'Court No'),
@@ -110,6 +124,38 @@ if ($searchModel->timefilter == 1) {
              'groupOddCssClass' => 'kv-group-even',
              'groupEvenCssClass' => 'kv-group-even'
          ],
+         [
+            'attribute' => 'slot_id',
+            'label' => Yii::t('app', 'Slot No'),
+            'encodeLabel' => false,
+            'format'    => 'raw',
+            'headerOptions' => ['style'=>'text-align:center'],
+            'contentOptions' => function ($model, $key, $index, $column) {
+                 switch($model->slot_id) {
+                    case 1:
+                        $bg_color = '#B3C7DC';
+                        break;
+                    case 2:
+                        $bg_color = '#668EB9';
+                        break;
+                    case 3:
+                        $bg_color = '#FFC2BB';
+                        break;
+                    case 4:
+                        $bg_color = '#FF8883';
+                        break;
+                }
+                return ['style' => 'background-color:' 
+                    . $bg_color];
+            },
+            'value'     => function($model) {
+               
+                    return '<strong>'. $model->slot_id . '</strong>';
+                
+            },
+            'enableSorting' => false,
+            'width'      => '50px;',
+        ],
          [
              'attribute' => 'member_id',
              'label' => Yii::t('app', 'Member'),
@@ -144,18 +190,7 @@ if ($searchModel->timefilter == 1) {
              'enableSorting' => false,
          ],
         
-        [
-            'attribute' => 'slot_id',
-            'label' => Yii::t('app', 'Slot No'),
-            'format'    => 'raw',
-            'value'     => function($model) {
-               
-                    return '<strong>'. $model->slot_id . '</strong>';
-                
-            },
-            'enableSorting' => false,
-            'width'      => '100px;',
-        ],
+        
         [
             'attribute' => 'tokens',
             'hAlign'    => GridView::ALIGN_CENTER,
@@ -249,7 +284,7 @@ if ($searchModel->timefilter == 1) {
                 ],
             ]
         );
-    Pjax::end();
+//    Pjax::end();
  ?>
     
 </div>

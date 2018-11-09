@@ -4,7 +4,7 @@ use kartik\grid\GridView;
 use common\helpers\GridviewHelper;
 use yii\helpers\ArrayHelper;
 //use backend\models\Members;
-use yii\widgets\Pjax;
+//use yii\widgets\Pjax;
 use common\helpers\ViewsHelper;
 
 $this->title = GridviewHelper::getTitle($context_array);
@@ -18,7 +18,7 @@ $greencheck = '<i class="text-success fa fa-check fa-lg" aria-hidden="true"></i>
 <div class="members-index">
 
 <?php 
-    Pjax::begin(['id' => 'pjax-gridview-container', 'enablePushState' => true]);
+//    Pjax::begin(['id' => 'pjax-gridview-container', 'enablePushState' => true]);
     $gridColumn = [
         ['class' => 'yii\grid\SerialColumn'],
 
@@ -34,7 +34,17 @@ $greencheck = '<i class="text-success fa fa-check fa-lg" aria-hidden="true"></i>
         [
             'attribute'           => 'member_id',
             'label'               => Yii::t('modelattr', 'Name'),
-            'value'               => 'fullName',
+            'format'         => 'raw',
+            'value'               => function($model) {
+                $name = empty($model->firstname) ? '<span class="badge bg-red">Missing name - update this profile!</span>' : $model->name;
+                $mobile = empty($model->phone_mobile) ? $model->phone : $model->phone_mobile;
+                $email = isset($model->user) ? $model->user->email : '';
+                $ischair = $model->is_organiser ? ' <span class="badge bg-red pull-right">Club Chairman</span>' : '';
+                $iswebmaster = $model->user_id == 1 ? ' <span class="badge bg-orange pull-right">Webmaster</span>' : '';
+                $iscommemb = $model->is_admin? ' <span class="badge bg-green pull-right">Committee Member</span>' : '';
+                $iscoach = isset($model->memType) && ($model->memType->mem_type_id == 5) ? ' <span class="badge bg-blue pull-right">Coach</span>' : '';
+                return $name .'<br>'. $email .'<br>'.$mobile . $ischair . $iswebmaster . $iscommemb . $iscoach;
+            },
             'filterType'          => GridView::FILTER_SELECT2,
             'filter'              => ViewsHelper::getMembersList(),
             'filterWidgetOptions' => [
@@ -224,7 +234,7 @@ $greencheck = '<i class="text-success fa fa-check fa-lg" aria-hidden="true"></i>
     
     echo GridView::widget([
                 'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
+                'filterModel' => $searchModel,
                 'columns'        => $gridColumn,
                 'id' => 'gridview-club-id',
                 'responsive'          => true,
@@ -243,7 +253,7 @@ $greencheck = '<i class="text-success fa fa-check fa-lg" aria-hidden="true"></i>
                 ],
             ]
         );
-    Pjax::end();
+//    Pjax::end();
  ?>
     
 </div>

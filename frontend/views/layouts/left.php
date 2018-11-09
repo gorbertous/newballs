@@ -57,10 +57,18 @@ if (!Yii::$app->user->isGuest) {
                                 'visible' => Yii::$app->user->can('reader')
                             ],
                             [
+                                'label'   => MenuTypes::yourGamesText(),
+                                'icon'    => MenuTypes::Y_GAMES_ICON_MENU,
+                                'url'     => Url::toRoute(['yourgames/index']),
+                                'active'  => ($route == 'yourgames/index'),
+                                'visible' => Yii::$app->user->can('reader')
+                            ],
+                            [
                                 'label'   => MenuTypes::clubText() . ' Stats',
                                 'icon'    => MenuTypes::CLUB_ICON_MENU,
                                 'url'     => Url::toRoute(['clubs/stats']),
-                                'active'  => ($route == 'clubs/stats')
+                                'active'  => ($route == 'clubs/stats'),
+                                'visible' => Yii::$app->user->can('reader')
                             ],
                             [
                                 'label'   => MenuTypes::membersText(),
@@ -75,7 +83,7 @@ if (!Yii::$app->user->isGuest) {
                                 'url'     => Url::toRoute(['clubs/photos']),
 //                                                'visible' => $perm->isMenuVisible('texts'),
                                 'active'  => ($route == 'clubs/photos'),
-                                'visible' => Yii::$app->user->can('writer')
+                                'visible' => Yii::$app->user->can('reader')
                             ],
                             [
                                 'label'   => MenuTypes::newsText(),
@@ -141,8 +149,8 @@ if (!Yii::$app->user->isGuest) {
                                 'label'  => MenuTypes::textblocksText(),
                                 'icon'   => MenuTypes::TEXTBLOCKS_ICON_MENU,
                                 'url'    => Url::toRoute(['texts/index']),
-                                'visible' => Yii::$app->user->can('team_admin'),
-                                'active' => ($route == 'texts/index')
+                                'active' => ($route == 'texts/index'),
+                                'visible' => Yii::$app->user->can('team_admin')
                             ],
                             [
                                 'label'   => MenuTypes::logText(),

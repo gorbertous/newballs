@@ -94,6 +94,18 @@ class RotaController extends Controller
         return $this->redirect(Yii::$app->request->referrer);
     }
     
+    public function actionBookcourt($id, $id2)
+    {
+        $model = new \backend\models\JCourtBooked();
+        $model->termin_id = $id;
+        $model->court_id = $id2;
+        $model->booked_by = Yii::$app->user->member->member_id;
+        $model->save(false);
+        Yii::$app->session->setFlash('success', 'Message about your court booking saved in the database!');
+          
+        return $this->redirect(Yii::$app->request->referrer);
+    }
+    
      /**
      * Updates an existing GamesBoard model.
      * If update is successful, the browser will be redirected to the 'view' page.

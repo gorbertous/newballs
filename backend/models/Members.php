@@ -229,6 +229,26 @@ class Members extends \yii\db\ActiveRecord
             return '';
         }
     }
+    
+    /**
+     * mailing list - active members
+     *
+     * @return array list
+     */
+    public function getMailingList(array $andWhere = [])
+    {
+        $membership = Members::find()
+                ->joinWith('user')
+                ->where(['c_id' => Yii::$app->session->get('c_id')])
+                ->andWhere(['is_active' => true])
+                ->all();
+
+
+        if (!empty($andWhere)) {
+            $membership->andWhere($andWhere);
+        }
+        return  join(',', \yii\helpers\ArrayHelper::getColumn($membership, 'email'));
+    }
 
     /**
      * Getter for games/tokens stats

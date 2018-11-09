@@ -225,11 +225,11 @@ abstract class MenuTypes
 
     /** -- */
 
-    public static function HandlingEquipment_text(): string {
-        return Yii::t('appMenu', 'Handling equipment');
+    public static function yourGamesText(): string {
+        return Yii::t('appMenu', 'Your Games');
     }
-    const HANDLING_EQUIPMENT_ICON = 'fa fa-thumbs-up';
-    const HANDLING_EQUIPMENT_ICON_MENU = 'thumbs-up';
+    const Y_GAMES_ICON = 'fa fa-thumbs-up';
+    const Y_GAMES_ICON_MENU = 'thumbs-up';
 
     /** -- */
 

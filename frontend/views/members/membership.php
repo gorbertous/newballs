@@ -4,7 +4,7 @@ use kartik\grid\GridView;
 use common\helpers\GridviewHelper;
 use yii\helpers\ArrayHelper;
 use common\helpers\ViewsHelper;
-use yii\widgets\Pjax;
+//use yii\widgets\Pjax;
 
 
 $this->title = GridviewHelper::getTitle($context_array);
@@ -13,6 +13,8 @@ $currentBtn = GridviewHelper::getCurrentBtn($context_array);
 $redcross = '<i class="text-danger fa fa-times fa-lg" aria-hidden="true"></i>';
 $greencheck = '<i class="text-success fa fa-check fa-lg" aria-hidden="true"></i>';
 $club = \backend\models\Clubs::findOne(Yii::$app->session->get('c_id'));
+
+
 ?>
  
 <div class="membership-index">
@@ -29,8 +31,21 @@ $club = \backend\models\Clubs::findOne(Yii::$app->session->get('c_id'));
         </div>
     </div>
     
+    <div class="panel-group" id="accordion2">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h4 class="panel-title">
+              <a data-toggle="collapse" data-parent="#accordio2" href="#collapse2"><?= Yii::t('modelattr', 'Mailing List')?>&nbsp;&nbsp;<span class="caret" style="border-width: 5px;"></span></a>
+            </h4>
+          </div>
+          <div id="collapse2" class="panel-collapse collapse">
+              <div class="panel-body"><?= \backend\models\Members::getMailingList()?></div>
+          </div>
+        </div>
+    </div>
+    
     <?php 
-    Pjax::begin(['id' => 'pjax-gridview-container', 'enablePushState' => true]);
+//    Pjax::begin(['id' => 'pjax-gridview-container', 'enablePushState' => true]);
     $gridColumn = [
         ['class' => 'yii\grid\SerialColumn'],
 
@@ -203,7 +218,7 @@ $club = \backend\models\Clubs::findOne(Yii::$app->session->get('c_id'));
                 ],
             ]
         );
-    Pjax::end();
+//    Pjax::end();
  ?>
     
 </div>

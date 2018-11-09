@@ -121,6 +121,7 @@ class PlaydatesController extends Controller
     {
         $model = new PlayDates();
         $model->c_id = Yii::$app->session->get('c_id');
+        $model->season_id = Yii::$app->session->get('club_season');
 
         if ($model->load(Yii::$app->request->post())) {
 

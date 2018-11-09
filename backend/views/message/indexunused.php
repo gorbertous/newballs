@@ -6,7 +6,7 @@ use yii\helpers\Url;
 use yii\helpers\ArrayHelper;
 use backend\models\Sourcemessage;
 use common\helpers\GridviewHelper;
-use yii\widgets\Pjax;
+//use yii\widgets\Pjax;
 
 $this->title = GridviewHelper::getTitle($context_array);
 $currentBtn = GridviewHelper::getCurrentBtn($context_array);
@@ -34,7 +34,7 @@ $this->registerJs($script);
 <div class="messageunused-index">
 
     <?php
-    Pjax::begin(['id' => 'pjax-gridview-container', 'enablePushState' => true]);
+    //    Pjax::begin(['id' => 'pjax-gridview-container', 'enablePushState' => true]);
     $gridColumn = [
         ['class' => 'yii\grid\SerialColumn'],
 
@@ -171,7 +171,7 @@ $this->registerJs($script);
                 ],
             ]
         );
-    Pjax::end();
+    //    Pjax::end();
  ?>
     
 </div>

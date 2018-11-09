@@ -238,7 +238,7 @@ class SiteController extends Controller
      */
     public function actionSetupSession($c_id)
     {
-        session_regenerate_id();
+//        session_regenerate_id();
         $club = Clubs::findOne($c_id);
 
         // set up some additional session variables to be used in the header avoiding db queries
@@ -265,7 +265,14 @@ class SiteController extends Controller
             $session->set('club_name', $club->name);
             $session->set('club_season', $club->season_id);
             $session->set('club_logo', $club->logo);
-
+            // club preferences
+            $session->set('club_coach_stats', $club->coach_stats);
+            $session->set('club_token_stats', $club->token_stats);
+            $session->set('club_play_stats', $club->play_stats);
+            $session->set('club_scores', $club->scores);
+            $session->set('club_match_instigation', $club->match_instigation);
+            $session->set('club_court_booking', $club->court_booking);
+            $session->set('club_money_stats', $club->money_stats);
 
             $session->set('club_languages', Yii::$app->contLang->defaultClubLanguages);
             $session->set('_content_language', '_' . strtoupper(Yii::$app->language));

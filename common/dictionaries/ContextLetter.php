@@ -21,6 +21,7 @@ abstract class ContextLetter
     const MEMBERS = 'M';
     const PLAYDATES = 'C';
     const ROTA = 'R';
-    const LOGS = 'R';
+    const LOGS = 'L';
+    const YOURGAMES = 'Y';
 
 }
