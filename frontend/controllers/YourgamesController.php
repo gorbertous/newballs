@@ -6,7 +6,6 @@ use Yii;
 use frontend\models\GamesSearch;
 use yii\web\Controller;
 use yii\filters\AccessControl;
-use common\helpers\Errorhandler as Errorhandler;
 use yii\filters\VerbFilter;
 use common\dictionaries\ContextLetter;
 

@@ -18,7 +18,7 @@ Yii::$app->view->registerCss($css);
 <div class="text-info">
     <h2>
         <?= Yii::t('app', 'Welcome'); ?> <strong><?= Yii::$app->user->contact->Fullname; ?></strong>,
-        <?= Yii::t('app', 'choose a company below or'); ?>
+        <?= Yii::t('app', 'choose a club below or'); ?>
         <a href="/backend/logout"><?= Yii::t('app', 'logout'); ?></a>.
     </h2>
 </div>

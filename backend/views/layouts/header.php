@@ -4,13 +4,6 @@ use yii\helpers\Html;
 use yii\helpers\StringHelper;
 use yii\helpers\Url;
 
-if (!empty(Yii::$app->session->get('member_photo'))) {
-    $profileThumb90 = '@uploadsURL/profile-thumbs/90x90-' . Yii::$app->session->get('member_photo');
-    $profileThumb25 = '@uploadsURL/profile-thumbs/25x25-' . Yii::$app->session->get('member_photo');
-} else {
-    $profileThumb90 = '/img/profile-default90x90.png';
-    $profileThumb25 = '/img/profile-default25x25.png';
-}
 ?>
 
 <header class="main-header">
@@ -35,7 +28,7 @@ if (!empty(Yii::$app->session->get('member_photo'))) {
 
                     <li class="dropdown user user-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false" title="<?= Yii::t('app', 'Open profile menu'); ?>">
-                            <?= Html::img($profileThumb25, ['class' => 'user-image', 'alt' => StringHelper::truncate(Html::encode(Yii::$app->user->identity->username), 2)]); ?>
+                            
                             <span class="hidden-xs">
                                 <strong><?= StringHelper::truncate(Html::encode(Yii::$app->user->identity->username), 20); ?></strong> 
                                 &nbsp;&nbsp;
@@ -46,12 +39,9 @@ if (!empty(Yii::$app->session->get('member_photo'))) {
                         <ul class="dropdown-menu">
                             <!-- User image -->
                             <li class="user-header">
-                               
-                                <?= Html::img($profileThumb90, ['class' => 'img-circle', 'alt' => StringHelper::truncate(Html::encode(Yii::$app->user->identity->username), 2)]); ?>
-
+                                
                                 <p>
-                                     <?= Yii::$app->session->get('member_name')?>
-                                    <small>Member since <?= Yii::$app->session->get('member_since')?></small>
+                                    <?= Yii::$app->session->get('member_name')?>
                                 </p>
                             </li>
                             

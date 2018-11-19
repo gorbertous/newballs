@@ -76,12 +76,12 @@ $greencheck = '<i class="text-success fa fa-check fa-lg" aria-hidden="true"></i>
             :
             GridviewHelper::getResetgrida($currentBtn)
     ];
-    $toolbar[] = '{export}';
+    $toolbar[] = GridviewHelper::getExportMenu($dataProvider, $gridColumn);
     $toolbar[] = '{toggleData}';
     
     echo GridView::widget([
                 'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
+                'filterModel' => $searchModel,
                 'columns'        => $gridColumn,
                 'id' => 'gridview-club-id',
                 'responsive'          => true,

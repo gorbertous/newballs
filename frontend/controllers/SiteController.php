@@ -246,7 +246,9 @@ class SiteController extends Controller
         $user_id = Yii::$app->user->id;
         $member = Members::find()
                 ->where(['user_id' => $user_id])
+                ->andWhere(['c_id' => $club->c_id])
                 ->one();
+        
         $session = Yii::$app->session;
 
         if (isset($member)) {
@@ -265,6 +267,7 @@ class SiteController extends Controller
             $session->set('club_name', $club->name);
             $session->set('club_season', $club->season_id);
             $session->set('club_logo', $club->logo);
+            $session->set('club_chair_email', $club->chair->email);
             // club preferences
             $session->set('club_coach_stats', $club->coach_stats);
             $session->set('club_token_stats', $club->token_stats);

@@ -58,6 +58,7 @@ Yii::$app->view->registerCss($css);
             <ul>
             <?php foreach ($model as $m) { ?>
                 <li>
+                    <h4><?= $m->name ?></h4>
                     <h4><?= $m->club->name ?></h4>
                     <?= Html::submitButton('<img src="'. $m->club->getThumbnailUrl($m->club->logo, [100, 100]) .
                         '" alt="'. $m->name .'" class="img-thumbnail center-block" style="padding: 5px 5px 5px 5px;">',

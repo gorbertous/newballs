@@ -45,12 +45,12 @@ $currentBtn = GridviewHelper::getCurrentBtn($context_array);
          GridviewHelper::getNewbutton($currentBtn) . ' ' .
          GridviewHelper::getResetgrida($currentBtn)
     ];
-    $toolbar[] = '{export}';
+    $toolbar[] = GridviewHelper::getExportMenu($dataProvider, $gridColumn);
     $toolbar[] = '{toggleData}';
     
     echo GridView::widget([
                 'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
+                'filterModel' => $searchModel,
                 'columns'        => $gridColumn,
                 'id' => 'gridview-club-id',
                 'responsive'          => true,
@@ -69,7 +69,7 @@ $currentBtn = GridviewHelper::getCurrentBtn($context_array);
                 ],
             ]
         );
-    Pjax::end();
+//    Pjax::end();
  ?>
     
 </div>

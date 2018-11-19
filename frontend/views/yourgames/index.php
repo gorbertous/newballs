@@ -130,7 +130,8 @@ $no_days = \backend\models\GamesBoard::getDaystonextgame();
 //        $currentBtn);
    
     
-    $lefttoolbar = GridviewHelper::getLefttoolbar($context_array, $currentBtn);
+    $lefttoolbar = ['List of your pending games'];
+    
     
     // right toolbar + custom buttons
 //    $toolbar[] = [
@@ -138,7 +139,7 @@ $no_days = \backend\models\GamesBoard::getDaystonextgame();
 //         GridviewHelper::getNewbutton($currentBtn) . ' ' .
 //         GridviewHelper::getResetgrida($currentBtn)
 //    ];
-    $toolbar[] = '{export}';
+    $toolbar[] = GridviewHelper::getExportMenu($dataProvider, $gridColumn);
     $toolbar[] = '{toggleData}';
     
     echo GridView::widget([

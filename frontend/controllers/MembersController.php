@@ -54,7 +54,7 @@ class MembersController extends Controller
                     [
                         'controllers' => ['members'],
                         'actions'     => [
-                            'index', 'view', 'update', 'membership', 'editmember'
+                            'index', 'view', 'update', 'membership', 'editmember', 'indextwo'
                         ],
                         'allow'       => true,
                         'roles'       => ['member']
@@ -117,6 +117,17 @@ class MembersController extends Controller
                     'searchModel'   => $searchModel,
                     'dataProvider'  => $dataProvider,
                     'context_array' => $this->getSpecificContextArray()
+        ]);
+    }
+    
+    public function actionIndextwo()
+    {
+        $searchModel = new MembersSearch;
+        $dataProvider = $searchModel->search(Yii::$app->request->getQueryParams());
+
+        return $this->render('indextwo', [
+            'dataProvider' => $dataProvider,
+            'searchModel' => $searchModel,
         ]);
     }
 

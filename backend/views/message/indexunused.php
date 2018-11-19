@@ -147,7 +147,7 @@ $this->registerJs($script);
          GridviewHelper::getResetgrida($currentBtn) . ' ' .
          GridviewHelper::getLangsyncbutton($pendinguploads)
     ];
-    $toolbar[] = '{export}';
+    $toolbar[] = GridviewHelper::getExportMenu($dataProvider, $gridColumn);
     $toolbar[] = '{toggleData}';
     
     echo GridView::widget([

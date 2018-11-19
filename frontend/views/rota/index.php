@@ -89,8 +89,8 @@ if ($searchModel->timefilter == 1) {
                 }
                 $final_list = !empty($reserves_list) ? 'Current Reserves List:<br>'. $reserves_list: '';
                 
-                $slots_notification = $model->getSlotsLeft($model->termin_id) == 0 ? 'All the slots are taken - '.$link : '<small>'.$model->getSlotsLeft($model->termin_id).' Slots Left <small>';
-                return $slots_notification.'<h4>'. $dispdate . ' at '. $disptime . '   - Location: '. $model->termin->location->address. '</h4>'.$final_list;                   
+                $slots_notification = $model->getSlotsLeft($model->termin_id) == 0 ? 'All the slots are taken - '.$link : '<small> ('.$model->getSlotsLeft($model->termin_id).' Slots Left) </small>';
+                return  $dispdate . ' at '. $disptime . '   <small>- Location: '. $model->termin->location->address . '</small>' . $slots_notification. $final_list;                   
              },
              'group' => true,
              'groupedRow' => true,
@@ -114,12 +114,12 @@ if ($searchModel->timefilter == 1) {
                  $booked_by = !empty($booked) ? 'Court booked by '. $booked->bookedBy->name  : $link;
                  //show court booking link
                 $show_booking_link = Yii::$app->session->get('club_court_booking')? $booked_by : '';
-                 return  '<h4>Court No : '. $model->court_id . '</h4>' . $show_booking_link;                   
+                 return  '<strong>Court No : '. $model->court_id . '</strong>' . $show_booking_link;                   
              },
              'format' => 'raw',
              //'label' => Yii::t('app', 'Court No'),
              'group' => true,
-             'subGroupOf'=>1,
+             'subGroupOf'=>0,
              'groupedRow' => true,
              'groupOddCssClass' => 'kv-group-even',
              'groupEvenCssClass' => 'kv-group-even'
@@ -240,6 +240,7 @@ if ($searchModel->timefilter == 1) {
             ],
             'filterInputOptions'  => ['placeholder' => '', 'id' => 'grid-board-search-ID_status'],
             'enableSorting' => false,
+//            'visible' => Yii::$app->user->can('writer')
         ],
         
     ]; 
@@ -262,10 +263,14 @@ if ($searchModel->timefilter == 1) {
     ];
     $toolbar[] = '{export}';
     $toolbar[] = '{toggleData}';
+//    $toolbar[] = GridviewHelper::getExportMenu($dataProvider, $gridColumn);
     
     echo GridView::widget([
                 'dataProvider' => $dataProvider,
                 'filterModel' => $searchModel,
+//                'options' => [
+//                    'class' => 'YourCustomTableClass',
+//                 ],
                 'columns'        => $gridColumn,
                 'id' => 'gridview-club-id',
                 'responsive'          => true,

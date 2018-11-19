@@ -69,16 +69,16 @@ class GamesSearch extends GamesBoard
 
         if ($this->timefilter == 1) {
             $query->andWhere(['>', 'play_dates.termin_date', new Expression('NOW()')])
-                    ->orderBy(['games_board.termin_id' => SORT_ASC,
+                    ->orderBy(['play_dates.termin_date' => SORT_ASC,
                         'games_board.court_id'  => SORT_ASC,
                         'games_board.slot_id'   => SORT_ASC]);
         } elseif ($this->timefilter == 2) {
             $query->andWhere(['<', 'play_dates.termin_date', new Expression('NOW()')])
-                    ->orderBy(['games_board.termin_id' => SORT_DESC,
+                    ->orderBy(['play_dates.termin_date' => SORT_DESC,
                         'games_board.court_id'  => SORT_ASC,
                         'games_board.slot_id'   => SORT_ASC]);
         } else {
-            $query->orderBy(['games_board.termin_id' => SORT_DESC,
+            $query->orderBy(['play_dates.termin_date' => SORT_DESC,
                 'games_board.court_id'  => SORT_ASC,
                 'games_board.slot_id'   => SORT_ASC]);
         }

@@ -68,7 +68,7 @@ if ($searchModel->timefilter == 1) {
                 <?=Html::submitButton('Status Updates', ['class' => 'btn btn-info',]);?>
             </div>
         </div>
-    <?php elseif ($searchModel->timefilter == 1): ?>
+    <?php elseif ($searchModel->timefilter == 1 && Yii::$app->user->can('team_admin')): ?>
         <?=Html::beginForm(['gamesboard/sendemailreminder'],'post');?>
         <div class="row">     
             <div class="col-xs-6">
@@ -223,7 +223,7 @@ if ($searchModel->timefilter == 1) {
          GridviewHelper::getNewbutton($currentBtn) . ' ' .
          GridviewHelper::getResetgrida($currentBtn)
     ];
-    $toolbar[] = '{export}';
+    $toolbar[] = GridviewHelper::getExportMenu($dataProvider, $gridColumn);
     $toolbar[] = '{toggleData}';
     
     echo GridView::widget([

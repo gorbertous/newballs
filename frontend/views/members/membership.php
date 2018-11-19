@@ -194,7 +194,7 @@ $club = \backend\models\Clubs::findOne(Yii::$app->session->get('c_id'));
 //         GridviewHelper::getNewbutton($currentBtn) . ' ' .
 //         GridviewHelper::getResetgrida($currentBtn)
 //    ];
-    $toolbar[] = '{export}';
+    $toolbar[] = GridviewHelper::getExportMenu($dataProvider, $gridColumn);
     $toolbar[] = '{toggleData}';
     
     echo GridView::widget([

@@ -11,6 +11,7 @@ use common\helpers\GridviewHelper;
 $this->title = GridviewHelper::getTitle($context_array);
 $currentBtn = GridviewHelper::getCurrentBtn($context_array);
 
+
 ?>
 
 <div class="message-index">
@@ -133,9 +134,10 @@ $header = GridviewHelper::getHeader($context_array);
     $toolbar[] = [
     'content' =>
          GridviewHelper::getNewbutton($currentBtn) . ' ' .
-         GridviewHelper::getResetgrida($currentBtn)
+         GridviewHelper::getResetgrida($currentBtn). ' ' .
+         GridviewHelper::getLangsyncbutton($pendinguploads)
     ];
-    $toolbar[] = '{export}';
+    $toolbar[] = GridviewHelper::getExportMenu($dataProvider, $gridColumn);
     $toolbar[] = '{toggleData}';
     
     echo GridView::widget([

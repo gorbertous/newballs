@@ -14,23 +14,19 @@ use common\dictionaries\NewsCategories;
 <div class="news-view">
     <div class="row">
         <div class="col-xs-6">
-            <b><u><?= Yii::t('modelattr', 'Name') ?></u></b><br>
             <?= $model->titleFB .' ('. Yii::t('diag', 'by'). ' '. $model->createUserName. ')'?><br>
         </div>
 
         <div class="col-xs-2 col-xs-offset-3">
-            <b><u><?= Yii::t('modelattr', 'Featured image') ?></u></b><br>
             <?=  $model->getIconPreviewAsHtml('ajaxfilefeatured', 90); ?><br>
-            <b><u><?= Yii::t('modelattr', 'Files') ?></u></b><br>
-            <?=  $model->getIconPreviewAsHtml('ajaxfilecontent', 90); ?><br>
+           
         </div>
     </div>
     <br>
 
     <br>
     <div class="row">
-        <div class="col-sm-12">
-            <b><u><?= Yii::t('modelattr', 'Content') ?></u></b><br>
+        <div class="col-xs-12">
             <?= $model->contentFB ?><br>
         </div>
     </div>

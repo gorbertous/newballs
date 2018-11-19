@@ -229,8 +229,10 @@ $greencheck = '<i class="text-success fa fa-check fa-lg" aria-hidden="true"></i>
 //         GridviewHelper::getNewbutton($currentBtn) . ' ' .
          GridviewHelper::getResetgrida($currentBtn)
     ];
-    $toolbar[] = '{export}';
+    
     $toolbar[] = '{toggleData}';
+//    $toolbar[] = '{export}';
+    $toolbar[] = GridviewHelper::getExportMenu($dataProvider, $gridColumn);
     
     echo GridView::widget([
                 'dataProvider' => $dataProvider,

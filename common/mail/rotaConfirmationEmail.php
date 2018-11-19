@@ -1,10 +1,10 @@
 <?php
 use yii\helpers\Html;
-use yii\helpers\Url;
+//use yii\helpers\Url;
 
 /* @var $this \yii\web\View view component instance */
 /* @var $message \yii\mail\BaseMessage instance of newly created mail message */
-
+$url = Yii::$app->urlManager->createAbsoluteUrl(['site/index', 'id' => $model->c_id]);
 ?>
 <h2>Your Game Details</h2>
 <?php if(isset($model->updatedByname)) : ?>
@@ -17,4 +17,4 @@ use yii\helpers\Url;
 <?php if($model->tokens) : ?>
     <h4 style="color: #ffc107!important;">Tokens : You are responsible for supply of tokens and a set of newish tennis balls! </h4>
 <?php endif; ?>
-    <p>For further details please check the  <?= Html::a(' website', Url::home('http')) ?></p>
+<p>For further details please check the  <?= Html::a(' website', $url) ?></p>

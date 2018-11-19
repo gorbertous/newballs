@@ -571,11 +571,7 @@ class MessageController extends Controller
             ->where(['username' => 'api'])
             ->one();
 
-        $auth_key = '';
-
-        if (isset($api_user)) {
-            $auth_key = $api_user->auth_key . ":";
-        }
+        $auth_key = isset($api_user) ? $api_user->auth_key . ":" : '';
 
         // list of messages which were updated locally
         $local_messages = Sourcemessage::find()

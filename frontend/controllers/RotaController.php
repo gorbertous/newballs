@@ -67,6 +67,7 @@ class RotaController extends Controller
         $searchModel->late = -1;
         $searchModel->seasonfilter = Yii::$app->session->get('club_season');
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider->pagination->pageSize = 50;
 
         return $this->render('index', [
                     'searchModel'   => $searchModel,
@@ -93,7 +94,7 @@ class RotaController extends Controller
         }
         return $this->redirect(Yii::$app->request->referrer);
     }
-    
+
     public function actionBookcourt($id, $id2)
     {
         $model = new \backend\models\JCourtBooked();
@@ -102,11 +103,11 @@ class RotaController extends Controller
         $model->booked_by = Yii::$app->user->member->member_id;
         $model->save(false);
         Yii::$app->session->setFlash('success', 'Message about your court booking saved in the database!');
-          
+
         return $this->redirect(Yii::$app->request->referrer);
     }
-    
-     /**
+
+    /**
      * Updates an existing GamesBoard model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
@@ -118,7 +119,7 @@ class RotaController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post())) {
-            
+
             $valid = $model->validate();
 
             if (!$valid) {

@@ -88,10 +88,17 @@ if (!Yii::$app->user->isGuest) {
                             [
                                 'label'   => MenuTypes::newsText(),
                                 'icon'    => MenuTypes::NEWS_ICON_MENU,
-                                'url'     => Url::toRoute(['news/news']),
-                                'active'  => ($route == 'news/news' || $route == 'tags/index'),
+                                'url'     => Url::toRoute(['news/index']),
+                                'active'  => ($route == 'news/index' || $route == 'tags/index'),
                                 'visible' => Yii::$app->user->can('reader')
                             ],
+//                            [
+//                                'label'   => MenuTypes::newsText(),
+//                                'icon'    => MenuTypes::NEWS_ICON_MENU,
+//                                'url'     => Url::toRoute(['news/news']),
+//                                'active'  => ($route == 'news/news' || $route == 'tags/index'),
+//                                'visible' => Yii::$app->user->can('reader')
+//                            ],
                             [
                                 'label'   => MenuTypes::rulesText(),
                                 'icon'    => MenuTypes::RULES_ICON_MENU,
@@ -138,13 +145,7 @@ if (!Yii::$app->user->isGuest) {
                                 'active'  => ($route == 'clubs/upload'),
                                 'visible' => Yii::$app->user->can('writer')
                             ],
-                            [
-                                'label'   => MenuTypes::newsText(),
-                                'icon'    => MenuTypes::NEWS_ICON_MENU,
-                                'url'     => Url::toRoute(['news/index']),
-                                'active'  => ($route == 'news/index' || $route == 'tags/index'),
-                                'visible' => Yii::$app->user->can('writer')
-                            ],
+                           
                             [
                                 'label'  => MenuTypes::textblocksText(),
                                 'icon'   => MenuTypes::TEXTBLOCKS_ICON_MENU,

@@ -54,7 +54,7 @@ $currentBtn = GridviewHelper::getCurrentBtn($context_array);
          GridviewHelper::getNewbutton($currentBtn) . ' ' .
          GridviewHelper::getResetgrida($currentBtn)
     ];
-    $toolbar[] = '{export}';
+    $toolbar[] = GridviewHelper::getExportMenu($dataProvider, $gridColumn);
     $toolbar[] = '{toggleData}';
     
     echo GridView::widget([

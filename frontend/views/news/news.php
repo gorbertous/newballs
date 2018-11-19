@@ -35,7 +35,7 @@ $greencheck = '<i class="text-success fa fa-check fa-lg" aria-hidden="true"></i>
                 return GridView::ROW_COLLAPSED;
             },
             'detail' => function ($model, $key, $index, $column) {
-                return Yii::$app->controller->renderPartial('_expand', ['model' => $model]);
+                return Yii::$app->controller->renderPartial('view', ['model' => $model]);
             },
             'headerOptions' => ['class' => 'kartik-sheet-style'],
             'expandOneOnly' => true
@@ -88,12 +88,12 @@ $greencheck = '<i class="text-success fa fa-check fa-lg" aria-hidden="true"></i>
 //         GridviewHelper::getNewbutton($currentBtn) . ' ' .
          GridviewHelper::getResetgrida($currentBtn)
     ];
-    $toolbar[] = '{export}';
+    $toolbar[] = GridviewHelper::getExportMenu($dataProvider, $gridColumn);
     $toolbar[] = '{toggleData}';
     
     echo GridView::widget([
                 'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
+                'filterModel' => $searchModel,
                 'columns'        => $gridColumn,
                 'id' => 'gridview-club-id',
                 'responsive'          => true,

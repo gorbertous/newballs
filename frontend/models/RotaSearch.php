@@ -16,6 +16,7 @@ class RotaSearch extends GamesBoard
 
     public $timefilter;
     public $seasonfilter;
+//    public $termin_date;
 
     /**
      * @inheritdoc
@@ -47,16 +48,13 @@ class RotaSearch extends GamesBoard
     public function search($params)
     {
         $query = GamesBoard::find()
-                ->joinWith('termin')
+                ->innerJoinWith('termin', true)
                 ->where(['games_board.c_id' => Yii::$app->session->get('c_id')]);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-//            'sort'  => [
-//                'defaultOrder' => [
-//                    'id' => SORT_DESC, 'court_id' => SORT_DESC, 'slot_id' => SORT_DESC
-//                ]
-//            ]
+//            'sort' => ['attributes' => ['termin_date']],
+               
         ]);
 
         $this->load($params);
@@ -69,16 +67,16 @@ class RotaSearch extends GamesBoard
 
         if ($this->timefilter == 1) {
             $query->andWhere(['>', 'play_dates.termin_date', new Expression('NOW()')])
-                    ->orderBy(['games_board.termin_id' => SORT_ASC,
+                    ->orderBy(['play_dates.termin_date' => SORT_ASC,
                         'games_board.court_id'  => SORT_ASC,
                         'games_board.slot_id'   => SORT_ASC]);
         } elseif ($this->timefilter == 2) {
             $query->andWhere(['<', 'play_dates.termin_date', new Expression('NOW()')])
-                    ->orderBy(['games_board.termin_id' => SORT_DESC,
+                    ->orderBy(['play_dates.termin_date' => SORT_DESC,
                         'games_board.court_id'  => SORT_ASC,
                         'games_board.slot_id'   => SORT_ASC]);
         } else {
-            $query->orderBy(['games_board.termin_id' => SORT_DESC,
+            $query->orderBy(['play_dates.termin_date' => SORT_DESC,
                 'games_board.court_id'  => SORT_ASC,
                 'games_board.slot_id'   => SORT_ASC]);
         }

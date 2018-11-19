@@ -7,7 +7,7 @@ use Yii;
 //use yii\db\ActiveRecord;
 use yii\helpers\Html;
 use yii\helpers\Url;
-
+use kartik\export\ExportMenu;
 use backend\models\Texts;
 
 /**
@@ -327,6 +327,36 @@ class GridviewHelper
 
             '<div class="clearfix"></div>';
         return $panelBeforeTemplate;
+    }
+    
+      /**
+     * @return string
+     */
+    public static function getExportMenu($dataProvider, $gridColumn)
+    {
+        return ExportMenu::widget([ 
+            'dataProvider' => $dataProvider, 
+            'columns' => $gridColumn, 
+            'target' => ExportMenu::TARGET_BLANK, 
+            'fontAwesome' => true, 
+            'showConfirmAlert' => false,
+            'showColumnSelector' => false,
+            'exportConfig' => [
+                ExportMenu::FORMAT_TEXT => false,
+                ExportMenu::FORMAT_PDF => [
+                    'pdfConfig' => [
+                        'orientation' => 'L',
+                    ],
+                ],
+            ],
+            'dropdownOptions' => [ 
+                'label' => Yii::t('yii', 'Export'),
+                'class' => 'btn btn-default', 
+                'itemsBefore' => [ 
+                    '<li class="dropdown-header">Export All Data</li>', 
+                ], 
+            ], 
+        ]);
     }
 
    

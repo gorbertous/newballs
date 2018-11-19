@@ -184,14 +184,18 @@ class GamesBoard extends \yii\db\ActiveRecord
     public function getDaystonextgame($some_date = null)
     {
         $next_date = self::getNextGameDate();
-        if(isset($some_date)){
-            $date_to_compare = new \DateTime($some_date);
-        }else{
-            $date_to_compare = new \DateTime($next_date->termin_date);
+        if (isset($next_date)) {
+            if (isset($some_date)) {
+                $date_to_compare = new \DateTime($some_date);
+            } else {
+                $date_to_compare = new \DateTime($next_date->termin_date);
+            }
+            $today = new \DateTime();
+            $diff = $date_to_compare->diff($today);
+            return $diff->d;
+        } else {
+            return 0;
         }
-        $today = new \DateTime();
-        $diff = $date_to_compare->diff($today);
-        return $diff->d;
     }
 
     /**
@@ -259,11 +263,20 @@ class GamesBoard extends \yii\db\ActiveRecord
     public function sendRotaConfirmationEmail($model)
     {
         if (isset($model->member->user->email)) {
-            return Yii::$app->mailer->compose('rotaConfirmationEmail', ['model' => $model])
-                            ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name . ' robot'])
-                            ->setTo($model->member->user->email)
-                            ->setSubject(Yii::$app->name . Yii::t('app', ' - Rota Confirmation Email'))
-                            ->send();
+            if (Yii::$app->session->get('c_id') == 34) {
+                return Yii::$app->mailer->compose('rotaConfirmationEmail', ['model' => $model])
+                                ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name . ' robot'])
+                                ->setTo($model->member->user->email)
+                                ->setBcc(Yii::$app->session->get('club_chair_email'))
+                                ->setSubject(Yii::$app->name . Yii::t('app', ' - Rota Confirmation Email'))
+                                ->send();
+            } else {
+                return Yii::$app->mailer->compose('rotaConfirmationEmail', ['model' => $model])
+                                ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name . ' robot'])
+                                ->setTo($model->member->user->email)
+                                ->setSubject(Yii::$app->name . Yii::t('app', ' - Rota Confirmation Email'))
+                                ->send();
+            }
         } else {
             return false;
         }

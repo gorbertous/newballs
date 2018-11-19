@@ -18,9 +18,9 @@ return [
             'downloadAction' => 'gridview/export/download',
         ],
 
-        'treemanager' => [
-            'class' => kartik\tree\Module::class,
-        ],
+//        'treemanager' => [
+//            'class' => kartik\tree\Module::class,
+//        ],
         'queuemanager' => [
             'class' => \ignatenkovnikita\queuemanager\QueueManager::class
         ],
