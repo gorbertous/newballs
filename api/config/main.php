@@ -39,13 +39,30 @@ return [
             'enableStrictParsing' => true,
             'showScriptName'      => false,
             'rules'               => [
-                ['class' => 'yii\rest\UrlRule', 'controller' => 'v1/master'],
+                [
+                    'class' => 'yii\rest\UrlRule', 
+                    'controller' => 'v1/master'
+                ],
                 'POST v1/master/makesqldump'    => 'v1/master/makesqldump',
                 'POST v1/master/getsqldumplist' => 'v1/master/getsqldumplist',
                 'POST v1/master/getfileslist'   => 'v1/master/getfileslist',
 
-                ['class' => 'yii\rest\UrlRule', 'controller' => 'v1/message'],
+                [
+                    'class' => 'yii\rest\UrlRule', 
+                    'controller' => 'v1/message'
+                ],
                 'POST v1/message/sync'  => 'v1/message/sync',
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => 'v1/country' ,  // our country api rule,
+                    'tokens' => [
+                        '{id}' => '<id:\\w+>'
+                    ]
+                ],
+                [
+                    'class' => 'yii\rest\UrlRule', 
+                    'controller' => 'v1/user'
+                ],
             ],
         ],
 

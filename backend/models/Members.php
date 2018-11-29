@@ -59,6 +59,7 @@ class Members extends \yii\db\ActiveRecord
     public $token_stats;
     public $player_stats_scheduled;
     public $player_stats_played;
+    public $player_stats_cancelled;
     public $coaching_stats;
     public $status_stats;
 
@@ -129,6 +130,7 @@ class Members extends \yii\db\ActiveRecord
             'token_stats'            => Yii::t('modelattr', 'Tokens / Balls Count'),
             'player_stats_scheduled' => Yii::t('modelattr', 'Scheduled'),
             'player_stats_played'    => Yii::t('modelattr', 'Played'),
+            'player_stats_cancelled'    => Yii::t('modelattr', 'Cancelled'),
             'coaching_stats'         => Yii::t('modelattr', 'Coaching'),
             'status_stats'           => Yii::t('modelattr', 'No Show / Non Scheduled Play'),
             'created_by'             => Yii::t('modelattr', 'Created By'),

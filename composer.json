@@ -51,7 +51,8 @@
         "bower-asset/ekko-lightbox": "*",
         "skeeks/yii2-assets-auto-compress": "*",
         "2amigos/yii2-gallery-widget": "~1.0",
-        "yii2mod/yii2-google-maps-markers": "*"
+        "yii2mod/yii2-google-maps-markers": "*",
+        "lysenkobv/yii2-geoip": "~1.0"
         
     },
     "require-dev": {

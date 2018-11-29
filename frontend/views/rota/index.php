@@ -23,8 +23,10 @@ $this->registerJs($search);
 
 $redcross = '<i class="text-danger fa fa-times fa-lg" aria-hidden="true"></i>';
 $greencheck = '<i class="text-success fa fa-check fa-lg" aria-hidden="true"></i>';
-if(!Yii::$app->session->get('member_has_paid')){
+if(!Yii::$app->session->get('member_has_paid') && Yii::$app->session->get('member_type_id') == 1){
     echo Yii::$app->session->setFlash('danger', Yii::t('app', 'Unfortunatelly the club has not yet received your membership payment, currently you cannot book the games, please settle this or contact the club chairman!') );
+}elseif(Yii::$app->session->get('member_type_id') == 4){
+    echo Yii::$app->session->setFlash('danger', Yii::t('app', 'You are a guest member, you cannot book the games, please contact the club admin to put your name down on the rota!') );
 }
 if ($searchModel->timefilter == 1) {
     $rotatitle = '<h3>' . Yii::t('modelattr', 'Future Games');
@@ -175,8 +177,9 @@ if ($searchModel->timefilter == 1) {
                     return Yii::$app->session->get('member_has_paid') ? '<strong>'. $link . '</strong>': '<strong>'.$model->member->name . '</strong>';
                 } else {
                     $class = $model->tokens ? 'text-danger' : 'text-primary';
-                    $iscoach = isset($model->member->memType) && ($model->member->memType->mem_type_id == 5) ? ' <span class="badge bg-red pull-right">Coach</span>' : '';
-                    return Html::tag('strong', $model->member->name, ['class' => $class]).$iscoach;
+                    $iscoach = isset($model->member->memType) && ($model->member->memType->mem_type_id == 5) ? ' <span class="badge bg-red pull-right">'. $model->member->memType->nameFB . '</span>' : '';
+                    $isguest = isset($model->member->memType) && ($model->member->memType->mem_type_id == 4) ? ' <span class="badge bg-info pull-right">'. $model->member->memType->nameFB . '</span>' : '';
+                    return Html::tag('strong', $model->member->name, ['class' => $class]).$iscoach.$isguest;
                 }
              },
              'filterType' => GridView::FILTER_SELECT2,
@@ -190,7 +193,10 @@ if ($searchModel->timefilter == 1) {
              'enableSorting' => false,
          ],
         
-        
+//        [
+//            'attribute' => 'member.memType.nameFB',
+//            'label' => Yii::t('app', 'Type'),
+//        ],
         [
             'attribute' => 'tokens',
             'hAlign'    => GridView::ALIGN_CENTER,
@@ -271,6 +277,11 @@ if ($searchModel->timefilter == 1) {
 //                'options' => [
 //                    'class' => 'YourCustomTableClass',
 //                 ],
+                'export'=>[
+                    'showConfirmAlert'=>false,
+                    'target'=>GridView::TARGET_SELF,
+                    'fontawsome' => true
+                ],
                 'columns'        => $gridColumn,
                 'id' => 'gridview-club-id',
                 'responsive'          => true,
@@ -287,6 +298,7 @@ if ($searchModel->timefilter == 1) {
                 'replaceTags' => [
                     '{lefttoolbar}' => join(' ', $lefttoolbar)
                 ],
+        
             ]
         );
 //    Pjax::end();

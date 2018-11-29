@@ -63,7 +63,7 @@ use common\helpers\ViewsHelper;
                    <?= $form->hrwTextInputMax($model, 'court_id') ?>
                 </div>
                 <div class="col-xs-6">
-                   <?= $form->hrwTextInputMax($model, 'court_id') ?>
+                   <?= $form->hrwTextInputMax($model, 'slot_id') ?>
                 </div>
             </div>
              <div class="row">     

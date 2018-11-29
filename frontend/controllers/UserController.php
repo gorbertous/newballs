@@ -79,7 +79,7 @@ class UserController extends Controller
     public function actionIndex()
     {
         $searchModel = new UserSearch();
-        $searchModel->mandant_id = $this->getSessionClubID();
+        $searchModel->c_id = $this->getSessionClubID();
         $searchModel->status = -2;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 

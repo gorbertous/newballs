@@ -6,7 +6,7 @@ use Yii;
 use yii\rest\Controller;
 use yii\helpers\FileHelper;
 use yii\filters\auth\HttpBasicAuth;
-use yii\web\MethodNotAllowedHttpException;
+//use yii\web\MethodNotAllowedHttpException;
 
 // the client server does a query in the user table username='api'
 // the auth_key from this user is sent to the master server
@@ -15,47 +15,52 @@ use yii\web\MethodNotAllowedHttpException;
 // ->> this means that client servers should only have one 'api' user
 //     each client server with a different auth_key
 
-class MasterController extends Controller {
+class MasterController extends Controller
+{
 
-    public function behaviors() {
+    public function behaviors()
+    {
         $behaviors = parent::behaviors();
         $behaviors['authenticator'] = [
             'class' => HttpBasicAuth::class,
         ];
         return $behaviors;
     }
-    
+
     public function actionGetfileslist()
     {
         // get the uploads folder path
-        $uploadsPath = yii::getAlias('@backups') . DIRECTORY_SEPARATOR;
-        $uploadsUrl = yii::getAlias('@backupsURL') . DIRECTORY_SEPARATOR;
-        
+        $uploadsPath = Yii::getAlias('@backups') . DIRECTORY_SEPARATOR;
+        $uploadsUrl = Yii::getAlias('@backupsURL') . DIRECTORY_SEPARATOR;
+
         $files = FileHelper::findFiles($uploadsPath, [
-            'except' => ['thumbs/',
-                'temp/',
-                'mpdf/',
-                'export/',
-                'forms/'
-                ],
-            'recursive' => true,
+                    'except'    => ['thumbs/',
+                        'temp/',
+                        'mpdf/',
+                        'export/',
+                        'forms/'
+                    ],
+                    'recursive' => true,
         ]);
         $l = strlen($uploadsPath);
         foreach ($files as &$file) {
             $file = substr($file, $l);
         }
-        
+
         return json_encode(['uploadsPath' => $uploadsPath,
-            'uploadsUrl' => $uploadsUrl,
-            'files' => $files
-                ]);
+            'uploadsUrl'  => $uploadsUrl,
+            'files'       => $files
+        ]);
     }
 
     public function actionMakesqldump()
     {
         // get the uploads folder path
-        $uploadsPath = yii::getAlias('@webroot') . DIRECTORY_SEPARATOR;
-        $uploadsUrl = yii::getAlias('@web') . DIRECTORY_SEPARATOR;
+        $uploadsPath = Yii::getAlias('@webroot') . DIRECTORY_SEPARATOR . 'sqlbackups' . DIRECTORY_SEPARATOR;
+        if (!file_exists($uploadsPath)) {
+            mkdir($uploadsPath, 0755, true);
+        }
+        $uploadsUrl = Yii::getAlias('@web') . DIRECTORY_SEPARATOR . 'sqlbackups' . DIRECTORY_SEPARATOR;
 
         $mysqldump = 'mysqldump --add-drop-table --allow-keywords -q -c -u "{username}" -h "{host}" -p"{password}" {db} | gzip -9';
         $mysqldump = 'mysqldump -u{username} -p{password} {db}';
@@ -64,44 +69,47 @@ class MasterController extends Controller {
         $mysqldump = str_replace('{password}', Yii::$app->db->password, $mysqldump);
         $mysqldump = str_replace('{host}', 'localhost', $mysqldump);
         $mysqldump = str_replace('{db}', Yii::$app->db->createCommand("SELECT DATABASE()")->queryScalar(), $mysqldump);
-        
+
         $file = Yii::$app->db->createCommand("SELECT DATABASE()")->queryScalar() . '_' .
                 date('Y-m-d_H-i-s') . '.sql';
-                
+
         exec($mysqldump . ' > ' . $uploadsPath . $file);
 
+//        var_dump(file_exists($uploadsPath . $file));die;
+
         $zip = new \ZipArchive;
-        $zip->open($uploadsPath . $file.'.zip', \ZipArchive::CREATE || \ZipArchive::OVERWRITE);
+        $zip->open($uploadsPath . $file . '.zip', \ZipArchive::CREATE || \ZipArchive::OVERWRITE);
         $zip->addFile($uploadsPath . $file, $file);
         $zip->close();
         @unlink($uploadsPath . $file);
 
         return json_encode([
             'uploadsPath' => $uploadsPath,
-            'uploadsUrl' => $uploadsUrl,
-            'file' => $file . '.zip'
+            'uploadsUrl'  => $uploadsUrl,
+            'file'        => $file . '.zip'
         ]);
     }
 
     public function actionGetsqldumplist()
     {
         // get the uploads folder path
-        $uploadsPath = yii::getAlias('@webroot') . DIRECTORY_SEPARATOR;
-        $uploadsUrl = yii::getAlias('@web') . DIRECTORY_SEPARATOR;
-        
+        $uploadsPath = Yii::getAlias('@webroot') . DIRECTORY_SEPARATOR . 'sqlbackups' . DIRECTORY_SEPARATOR;
+        $uploadsUrl = Yii::getAlias('@web') . DIRECTORY_SEPARATOR . 'sqlbackups' . DIRECTORY_SEPARATOR;
+
         $files = FileHelper::findFiles($uploadsPath, [
-            'only' => ['*.sql.zip'],
-            'recursive' => false,
+                    'only'      => ['*.sql.zip'],
+                    'recursive' => false,
         ]);
         $l = strlen($uploadsPath);
         foreach ($files as &$file) {
             $file = substr($file, $l);
         }
-        
+
         return json_encode([
             'uploadsPath' => $uploadsPath,
-            'uploadsUrl' => $uploadsUrl,
-            'files' => $files
+            'uploadsUrl'  => $uploadsUrl,
+            'files'       => $files
         ]);
     }
+
 }

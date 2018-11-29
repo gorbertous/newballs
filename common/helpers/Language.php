@@ -19,20 +19,25 @@ class Language
 //    private static $_template = '<span class="language-item" data-category="{category}" data-hash="{hash}" data-language_id="{language_id}" data-params="{params}">{message}</span>';
     private static $_labeltemplate = '<span class="language-item" data-link="{url}">{message}</span>';
     private static $_master = 'balls-tennis.com';
+   
 
-    public static function MasterName()
+    public static function getMaster()
     {
         return self::$_master;
     }
 
-    public static function LocalName()
+    public static function getLocal()
     {
         return Yii::$app->request->hostName;
     }
 
-    public static function IsMaster()
+    public static function isMaster()
     {
-        return strtolower(self::LocalName()) === strtolower(self::MasterName());
+        
+        $pos_string = strpos(strtolower(self::getLocal()),strtolower(self::getMaster()));
+        //var_dump($pos_string);die;
+//        return strtolower(self::getLocal()) === strtolower(self::getMaster());
+        return $pos_string > 0 ? true : false;
     }
 
     public static function navbarmenuitem(): array

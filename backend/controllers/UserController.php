@@ -3,7 +3,7 @@
 namespace backend\controllers;
 
 use Yii;
-use yii\helpers\Json;
+//use yii\helpers\Json;
 use yii\helpers\Html;
 use yii\base\Model;
 use yii\web\Controller;
@@ -13,7 +13,7 @@ use yii\filters\AccessControl;
 use backend\models\Members;
 use common\dictionaries\ContextLetter;
 use common\models\User;
-use common\models\UserSearch;
+use common\models\AdminusersSearch;
 use common\rbac\models\Role;
 
 /**
@@ -22,6 +22,7 @@ use common\rbac\models\Role;
  */
 class UserController extends Controller
 {
+
     use TraitController;
 
     /**
@@ -44,28 +45,28 @@ class UserController extends Controller
                 'rules' => [
                     [
                         'controllers' => ['user'],
-                        'actions' => ['index', 'create', 'update', 'delete', 'sendresetemail', 'passresetemail'],
-                        'allow' => true,
-                        'roles' => ['writer'],
+                        'actions'     => ['index', 'create', 'update', 'delete', 'sendresetemail', 'passresetemail'],
+                        'allow'       => true,
+                        'roles'       => ['writer'],
                     ],
                     [
                         'controllers' => ['user'],
-                        'actions' => ['update'],
-                        'allow' => true,
-                        'roles' => ['reader'],
+                        'actions'     => ['update'],
+                        'allow'       => true,
+                        'roles'       => ['reader'],
                     ],
                     [
                         'controllers' => ['user'],
-                        'actions' => ['view'],
-                        'allow' => true
+                        'actions'     => ['view'],
+                        'allow'       => true
                     ],
                     [
                     // other rules
                     ],
                 ], // rules
             ], // access
-            'verbs' => [
-                'class' => VerbFilter::class,
+            'verbs'  => [
+                'class'   => VerbFilter::class,
                 'actions' => [
                     'delete' => ['post'],
                 ],
@@ -78,58 +79,15 @@ class UserController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new UserSearch();
-        $searchModel->mandant_id = $this->getSessionClubID();
+        $searchModel = new AdminusersSearch();
         $searchModel->status = -2;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        // validate if there is a editable input saved via AJAX
-        if (Yii::$app->request->post('hasEditable')) {
-            // instantiate empcontract model for saving
-            $userId = Yii::$app->request->post('editableKey');
-            $model = User::findOne($userId);
-            // store a default json response as desired by editable
-            $out = Json::encode(['output' => '', 'message' => '']);
-            //$out2 = Json::encode(['output' => '', 'message' => '']);
-            // fetch the first entry in posted data (there should only be one entry 
-            // anyway in this array for an editable submission)
-            // - $posted is the posted data for Empcontracts without any indexes
-            // - $post is the converted array for single model validation
-            $posted = current($_POST['User']);
-            $post = ['User' => $posted];
-
-            // load model like any single model validation
-            if ($model->load($post)) {
-                // can save model or do something before saving model
-                $model->save();
-                $output = '';
-                if (!empty($posted['username'])) {
-                    //$userupdated = User::findOne($model->id);
-                    $output = $model->username;
-                }
-                if (isset($posted['status'])) {
-                    $output = $model->getStatusName(intval($model->status));
-                }
-                if (!empty($posted['item_name'])) {
-                    $role = Role::findOne(['user_id' => $model->id]);
-                    $role->item_name = $posted['item_name'];
-                    $role->save(false);
-                    $output = $role->item_name;
-                }
-                //$modelwu = Workunits::findOne($model->ID_Workunit);
-                //$Workplace = Members::findOne($model->ID_Workplace);
-                $out = Json::encode(['output' => $output, 'message' => '']);
-                //$out = Json::encode(['output' => $Workplace->name, 'message' => '']);
-            }
-            // return ajax json encoded response and exit
-            return $out;
-        } else {
-            return $this->renderNormalorAjax('index', [
-                        'searchModel' => $searchModel,
-                        'dataProvider' => $dataProvider,
-                        'context_array' => $this->getSpecificContextArray()
-            ]);
-        }
+        return $this->renderNormalorAjax('index', [
+                    'searchModel'   => $searchModel,
+                    'dataProvider'  => $dataProvider,
+                    'context_array' => $this->getSpecificContextArray()
+        ]);
     }
 
     /**
@@ -165,7 +123,7 @@ class UserController extends Controller
                 $role->user_id = $user->getId();
                 $role->save();
                 $member = Members::find()
-                        ->where(['c_id' => $this->getSessionClubID(),
+                        ->where(['c_id'  => $this->getSessionClubID(),
                             'email' => $user->email])
                         ->One();
 
@@ -173,7 +131,7 @@ class UserController extends Controller
                     $member = new Members();
                     $member->c_id = $this->getSessionClubID();
                     $member->user_id = $user->id;
-                   
+
                     $member->save(false);
                 }
             }
@@ -201,7 +159,7 @@ class UserController extends Controller
             $role->user_id = $id;
             $role->item_name = 'member';
         }
-        
+
         // get user details
         $user = $this->findModel($id);
         if ($user->id !== Yii::$app->user->identity->id &&
@@ -245,8 +203,8 @@ class UserController extends Controller
             return $this->redirect(Yii::$app->request->referrer);
         } else {
             return $this->renderNormalorAjax('update', [
-                'user' => $user,
-                'role' => $role
+                        'user' => $user,
+                        'role' => $role
             ]);
         }
     }
@@ -275,14 +233,14 @@ class UserController extends Controller
         $resetlink = Yii::$app->urlManager->createAbsoluteUrl(['site/reset-password', 'token' => $user->password_reset_token]);
 
         return Yii::$app->mailer->compose('@backend/mail/account/password-reset.php', [
-            'user'      => $user,
-            'resetlink' => $resetlink,
-            'logo'      => Yii::getAlias('@backend') . '/mail/logo-mail.png'
-        ])
-        ->setFrom(['noreply@esst.lu' => Yii::$app->name])
-        ->setTo($user->email)
-        ->setSubject(Yii::t('app', 'Password reset'))
-        ->send();
+                            'user'      => $user,
+                            'resetlink' => $resetlink,
+                            'logo'      => Yii::getAlias('@backend') . '/mail/logo-mail.png'
+                        ])
+                        ->setFrom(['noreply@esst.lu' => Yii::$app->name])
+                        ->setTo($user->email)
+                        ->setSubject(Yii::t('app', 'Password reset'))
+                        ->send();
     }
 
     /**
@@ -299,4 +257,5 @@ class UserController extends Controller
 
         return $this->redirect(['index']);
     }
+
 }

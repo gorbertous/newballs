@@ -145,21 +145,29 @@ class RotaController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionPdf($id)
+    public function actionPdf()
     {
-        $model = $this->findModel($id);
+        $searchModel = new RotaSearch();
+        $searchModel->timefilter = 1;
+        $searchModel->tokens = -1;
+        $searchModel->late = -1;
+        $searchModel->seasonfilter = Yii::$app->session->get('club_season');
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider->pagination->pageSize = 50;
 
-        $content = $this->renderAjax('_pdf', [
-            'model' => $model,
+        $content = $this->renderPartial('_pdf', [
+            'searchModel'   => $searchModel,
+            'dataProvider'  => $dataProvider,
+            'context_array' => $this->getSpecificContextArray()
         ]);
-
+        
         $pdf = new \kartik\mpdf\Pdf([
-            'mode'        => \kartik\mpdf\Pdf::MODE_CORE,
+            'mode'        => \kartik\mpdf\Pdf::MODE_BLANK,
             'format'      => \kartik\mpdf\Pdf::FORMAT_A4,
             'orientation' => \kartik\mpdf\Pdf::ORIENT_PORTRAIT,
             'destination' => \kartik\mpdf\Pdf::DEST_BROWSER,
             'content'     => $content,
-            'cssFile'     => '@vendor/kartik-v/yii2-mpdf/assets/kv-mpdf-bootstrap.min.css',
+            'cssFile'     => '@vendor/kartik-v/yii2-mpdf/src/assets/kv-mpdf-bootstrap.min.css',
             'cssInline'   => '.kv-heading-1{font-size:18px}',
             'options'     => ['title' => \Yii::$app->name],
             'methods'     => [
@@ -167,23 +175,11 @@ class RotaController extends Controller
                 'SetFooter' => ['{PAGENO}'],
             ]
         ]);
-
+//        $pdf->content=$mpdf->Output();
+//$pdf->filename = 'filename';
+//$pdf->destination = 'D';
+        //dd($pdf);
         return $pdf->render();
     }
 
-    /**
-     * Finds the GamesBoard model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return GamesBoard the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-//    protected function findModel($id)
-//    {
-//        if (($model = GamesBoard::findOne($id)) !== null) {
-//            return $model;
-//        } else {
-//            throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
-//        }
-//    }
 }

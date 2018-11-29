@@ -88,13 +88,13 @@ trait TraitFileUploads
 
     /**
      *
-     * @var string $uploadsFolder = yii::getAlias('@uploads') . DIRECTORY_SEPARATOR
+     * @var string $uploadsFolder = Yii::getAlias('@uploads') . DIRECTORY_SEPARATOR
      */
     public $uploadsFolder;
 
     /**
      *
-     * @var string $uploadsFolder = yii::getAlias('@uploadsURL') . '/'
+     * @var string $uploadsFolder = Yii::getAlias('@uploadsURL') . '/'
      */
     public $uploadsUrl;
 
@@ -135,8 +135,8 @@ trait TraitFileUploads
         /** @noinspection PhpUndefinedClassInspection */
         parent::init();
 
-        $this->uploadsFolder = yii::getAlias('@uploads') . DIRECTORY_SEPARATOR;
-        $this->uploadsUrl = yii::getAlias('@uploadsURL') . '/';
+        $this->uploadsFolder = Yii::getAlias('@uploads') . DIRECTORY_SEPARATOR;
+        $this->uploadsUrl = Yii::getAlias('@uploadsURL') . '/';
         $this->table = strtolower($this->tableName()) . DIRECTORY_SEPARATOR;
         $this->thumbs = 'thumbs' . DIRECTORY_SEPARATOR;
     }

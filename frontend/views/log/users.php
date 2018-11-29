@@ -46,7 +46,16 @@ $currentBtn = GridviewHelper::getCurrentBtn($context_array);
             'value'     => function ($model) {
                 return Yii::$app->formatter->asBoolean($model['cookieBased']);
             }
-        ]
+        ],
+        [
+            'attribute'           => 'ip',
+            'label'               => Yii::t('modelattr', 'IP'),
+            'value' => function($model) {
+                
+                $ip = Yii::$app->geoip->ip($model['ip']);
+                return $model['ip'] . ' (' . $ip->city . ' - ' . $ip->country . ')';
+            }
+        ],
     ];
    
     $header = GridviewHelper::getHeader($context_array);

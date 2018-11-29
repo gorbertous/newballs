@@ -25,14 +25,12 @@ $gridColumn = [
 //                    $model->getCoachingCourts();
             return $model->getMemberStats();
         },
-        'enableSorting' => true,
     ],
     [
         'attribute' => 'player_stats_played',
         'value'     => function($model) {
             return $model->getMemberStats(['status_id' => 1]);
         },
-        'enableSorting' => true,
     ],
     [
         'attribute' => 'token_stats',
@@ -47,9 +45,16 @@ $gridColumn = [
         },
     ],
     [
-        'attribute' => 'status_stats',
+        'attribute' => 'player_stats_cancelled',
         'value'     => function($model) {
-            return $model->getMemberStats(['status_id' => [3, 7]]);
+            return $model->getMemberStats(['status_id' => 5]);
+        },
+    ],
+    [
+        'attribute' => 'status_stats',
+        'format' => 'raw',
+        'value'     => function($model) {
+            return $model->getMemberStats(['status_id' => [3, 7]]) > 0 ? '<div class="text-danger">' . $model->getMemberStats(['status_id' => [3, 7]]) . '</div>' : $model->getMemberStats(['status_id' => [3, 7]]);
         },
     ],
 ];
@@ -63,7 +68,7 @@ echo GridView::widget([
     'responsiveWrap' => true,
     'condensed'      => true,
     'panel'          => [
-        'type'        => Gridview::TYPE_DEFAULT,
-        'heading'     => 'Player Stats - Current Season',
+        'type'    => Gridview::TYPE_DEFAULT,
+        'heading' => 'Player Stats - Current Season',
     ],
 ]);

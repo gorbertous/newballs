@@ -92,9 +92,9 @@ class ClubsController extends Controller
         $searchModel = new MembersSearch();
         $searchModel->is_active = 1;
         $searchModel->is_admin = -1;
-        $searchModel->has_paid = 1;
+        $searchModel->is_visible = 1;
+        //$searchModel->has_paid = 1;
         $searchModel->is_organiser = -1;
-        $searchModel->is_visible = -1;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->renderNormalorAjax('stats', [

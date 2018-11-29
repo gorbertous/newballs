@@ -66,6 +66,20 @@ class LogController extends Controller
         ]);
     }
     
+     public function actionBulk()
+    {
+        if (!empty(Yii::$app->request->post('bulkdelete'))) {
+            $selection = (array) Yii::$app->request->post('selection'); //typecasting
+            foreach ($selection as $id) {
+                $this->findModel($id)->delete();
+            }
+            Yii::$app->session->setFlash('success', 'Logs were succesfully deleted ');
+        } else {
+            Yii::$app->session->setFlash('danger', 'Error something went wrong here!');
+        }
+        return $this->redirect(Yii::$app->request->referrer);
+    }
+    
       /**
      * Lists all User Logs
      * @return mixed

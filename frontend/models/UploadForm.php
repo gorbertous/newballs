@@ -43,7 +43,7 @@ class UploadForm extends Model
     {
         if ($this->validate()) {
             $c_id = Yii::$app->session->get('c_id');
-            $uploads_dir = yii::getAlias('@uploads') . DIRECTORY_SEPARATOR . $c_id . DIRECTORY_SEPARATOR . 'photos' . DIRECTORY_SEPARATOR . $albumyear . DIRECTORY_SEPARATOR;
+            $uploads_dir = Yii::getAlias('@uploads') . DIRECTORY_SEPARATOR . $c_id . DIRECTORY_SEPARATOR . 'photos' . DIRECTORY_SEPARATOR . $albumyear . DIRECTORY_SEPARATOR;
             Helpers::createPath($uploads_dir);
             $thumbs_dir = $uploads_dir . DIRECTORY_SEPARATOR . 'thumbs'. DIRECTORY_SEPARATOR;
             Helpers::createPath($thumbs_dir);

@@ -68,10 +68,14 @@ class YourgamesController extends Controller
         $searchModel->late = -1;
         $searchModel->seasonfilter = Yii::$app->session->get('club_season');
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        
+        $member_model = \backend\models\Members::findOne(Yii::$app->session->get('member_id'));
+        
 
         return $this->render('index', [
                     'searchModel'   => $searchModel,
                     'dataProvider'  => $dataProvider,
+                    'member_model'   => $member_model,
                     'context_array' => $this->getSpecificContextArray()
         ]);
     }

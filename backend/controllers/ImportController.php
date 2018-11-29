@@ -59,7 +59,7 @@ class ImportController extends Controller
 
     public function actionUpload()
     {
-        $uploadsPath = yii::getAlias('@backups') . DIRECTORY_SEPARATOR . 'import' . DIRECTORY_SEPARATOR;
+        $uploadsPath = Yii::getAlias('@backups') . DIRECTORY_SEPARATOR . 'import' . DIRECTORY_SEPARATOR;
 
         if (!file_exists($uploadsPath)) {
             Helpers::createPath($uploadsPath);
@@ -165,7 +165,7 @@ class ImportController extends Controller
             $pendinguploads = 0;
             $model->dryrun = 1;
 
-            if (!Lx::IsMaster()) {
+            if (!Lx::isMaster()) {
                 // get current backupfiles from our master
                 $client = new Client();
 
@@ -173,7 +173,7 @@ class ImportController extends Controller
                     /** @noinspection MissedFieldInspection */
                     $response = $client->createRequest()
                             ->setMethod('POST')
-                            ->setUrl('https://www.' . Lx::MasterName() . '/api/v1/master/getsqldumplist')
+                            ->setUrl('https://www.' . Lx::getMaster() . '/api/v1/master/getsqldumplist')
                             ->setHeaders([
                                 'cache-control' => 'no-cache',
                                 'content-type'  => 'application/x-www-form-urlencoded',
@@ -248,7 +248,7 @@ class ImportController extends Controller
 
                 $response = $client->createRequest()
                         ->setMethod('POST')
-                        ->setUrl('https://www.' . Lx::MasterName() . '/api/v1/master/makesqldump')
+                        ->setUrl('https://www.' . Lx::getMaster() . '/api/v1/master/makesqldump')
                         ->setHeaders([
                             'cache-control' => 'no-cache',
                             'content-type'  => 'application/x-www-form-urlencoded',
@@ -269,8 +269,8 @@ class ImportController extends Controller
                 $ilog = Impex::CleanupFiles($FormData['dryrun']);
             } elseif ($SubmitButton == 'ExportDB') {
 
-                $zipPath = yii::getAlias('@backups') . '/ExportDB.zip';
-                $zipUrl = yii::getAlias('@backupsURL') . '/ExportDB.zip';
+                $zipPath = Yii::getAlias('@backups') . '/ExportDB.zip';
+                $zipUrl = Yii::getAlias('@backupsURL') . '/ExportDB.zip';
                 $ilog = Impex::ExportDB();
             } elseif ($SubmitButton == 'ImportDB') {
 

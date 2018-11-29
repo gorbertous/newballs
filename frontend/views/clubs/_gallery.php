@@ -3,7 +3,7 @@
 use common\helpers\Helpers;
 
 //get album years
-$albums = yii::getAlias('@uploads') . '/' . Yii::$app->session->get('c_id') . '/photos/';
+$albums = Yii::getAlias('@uploads') . '/' . Yii::$app->session->get('c_id') . '/photos/';
 if (!file_exists($albums)) {
     false;
 } else {
@@ -21,8 +21,8 @@ if (!file_exists($albums)) {
 
         //albums array
         $items = array();
-        $dirname = yii::getAlias('@uploads') . '/' . Yii::$app->session->get('c_id') . '/photos/' . $album_year . '/';
-        $imgURL = yii::getAlias('@uploadsURL') . '/' . Yii::$app->session->get('c_id') . '/photos/' . $album_year . '/';
+        $dirname = Yii::getAlias('@uploads') . '/' . Yii::$app->session->get('c_id') . '/photos/' . $album_year . '/';
+        $imgURL = Yii::getAlias('@uploadsURL') . '/' . Yii::$app->session->get('c_id') . '/photos/' . $album_year . '/';
 
         //    $listfiles = scandir($dirname);
         $images = glob($dirname . "*.{jpg,jpeg,gif,png}", GLOB_BRACE);

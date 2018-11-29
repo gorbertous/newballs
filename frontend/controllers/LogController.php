@@ -16,8 +16,9 @@ use yii\filters\AccessControl;
  */
 class LogController extends Controller
 {
+
     use TraitController;
-    
+
     /**
      * {@inheritdoc}
      */
@@ -26,7 +27,7 @@ class LogController extends Controller
         parent::init();
         $this->setSessionContext(ContextLetter::LOGS);
     }
-    
+
     public function behaviors()
     {
         return [
@@ -60,20 +61,34 @@ class LogController extends Controller
         $dataProvider = $searchModel->search(Yii::$app->request->getQueryParams());
 
         return $this->render('index', [
-            'dataProvider' => $dataProvider,
-            'searchModel' => $searchModel,
-            'context_array' => $this->getSpecificContextArray()
+                    'dataProvider'  => $dataProvider,
+                    'searchModel'   => $searchModel,
+                    'context_array' => $this->getSpecificContextArray()
         ]);
     }
-    
-     /**
+
+    public function actionBulk()
+    {
+        if (!empty(Yii::$app->request->post('bulkdelete'))) {
+            $selection = (array) Yii::$app->request->post('selection'); //typecasting
+            foreach ($selection as $id) {
+                $this->findModel($id)->delete();
+            }
+            Yii::$app->session->setFlash('success', 'Logs were succesfully deleted ');
+        } else {
+            Yii::$app->session->setFlash('danger', 'Error something went wrong here!');
+        }
+        return $this->redirect(Yii::$app->request->referrer);
+    }
+
+    /**
      * Lists all User Logs
      * @return mixed
      */
     public function actionUsers()
     {
         $sql = "SELECT ua.userId,ua.date, ua.cookieBased, ua.userAgent,  
-                        m.member_id, m.c_id, m.user_id, u.status,c.name, 
+                        m.member_id, ua.ip, m.c_id, m.user_id, u.status,c.name, 
                         CONCAT(firstname, ' ', lastname) AS fullname
                 FROM UserAuthLog ua
                 INNER JOIN user u ON ua.userId = u.id
@@ -84,13 +99,13 @@ class LogController extends Controller
 
         $lastConnectedUsers = new \yii\data\SqlDataProvider([
             'sql'        => $sql,
-            'params' => [':club_id' => Yii::$app->session->get('c_id')],
+            'params'     => [':club_id' => Yii::$app->session->get('c_id')],
             'pagination' => ['pageSize' => 20]
         ]);
 
         return $this->render('users', [
-            'dataProvider' => $lastConnectedUsers,
-            'context_array' => $this->getSpecificContextArray()
+                    'dataProvider'  => $lastConnectedUsers,
+                    'context_array' => $this->getSpecificContextArray()
         ]);
     }
 
@@ -99,14 +114,13 @@ class LogController extends Controller
      * @param integer $id
      * @return mixed
      */
-     public function actionView($id)
+    public function actionView($id)
     {
         return $this->renderNormalorAjax('view', [
                     'model' => $this->findModel($id)
         ]);
     }
 
-  
     /**
      * Deletes an existing Log model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
@@ -135,4 +149,5 @@ class LogController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+
 }

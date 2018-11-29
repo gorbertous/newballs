@@ -1,11 +1,11 @@
 <?php
 
 use yii\helpers\Html;
+use kartik\grid\GridView;
 use yii\helpers\Url;
 use yii\helpers\ArrayHelper;
-use backend\models\Contacts;
+use backend\models\Members;
 use common\helpers\GridviewHelper;
-use kartik\grid\GridView;
 //use yii\widgets\Pjax;
 
 $this->title = GridviewHelper::getTitle($context_array);
@@ -23,8 +23,8 @@ $currentBtn = GridviewHelper::getCurrentBtn($context_array);
             'format' => 'raw',
             'hAlign' => GridView::ALIGN_CENTER,
             'value'  => function ($model) {
-                if (!empty($model->contact->ID_Contact)) {
-                    return Html::button('<i class="fa fa-user"></i>', ['value' => Url::toRoute(['workers/view', 'id' => $model->contact->ID_Contact]),
+                if (!empty($model->member->member_id)) {
+                    return Html::button('<i class="fa fa-user"></i>', ['value' => Url::toRoute(['members/view', 'id' => $model->member->member_id]),
                                                                        'class' => 'showModalButton btn btn-default',
                                                                        'title' => Yii::t('appMenu', 'View member')]);
                 } else {
@@ -33,27 +33,43 @@ $currentBtn = GridviewHelper::getCurrentBtn($context_array);
             }
         ],
         [
-            'attribute'           => 'ID_Contact',
-            'label'               => Yii::t('modelattr', 'Name'),
-            'encodeLabel'         => false,
-            'value'               => 'contact.FullName',
+            'label'          => 'ID',
+            'attribute'      => 'id',
+            'contentOptions' => ['style' => 'width:20px;'],
+        ],
+        [
+            'attribute'           => 'c_id',
+            'label'               => Yii::t('modelattr', 'Club'),
+            'value'               => 'member.club.name',
             'filterType'          => GridView::FILTER_SELECT2,
-            'filter'              => ArrayHelper::map(Contacts::find()
-                ->select(['Contacts.ID_Contact', 'Firstname', 'Lastname'])
-                ->innerJoinWith('user')
-                ->where(['Contacts.ID_Mandant' => Yii::$app->session->get('mandant_id')])
-                ->andWhere(['Contacts.CW_Type' => 'W'])
-                ->all(), 'ID_Contact', 'name'),
+            'filter'              => ArrayHelper::map(Members::find()
+                ->select(['clubs.c_id', 'clubs.name'])
+                ->innerJoinWith('club')
+                ->all(), 'c_id', 'club.name'),
             'filterWidgetOptions' => [
                 'pluginOptions' => ['allowClear' => true]
             ],
-            'filterInputOptions'  => ['placeholder' => '', 'id' => 'grid-medvisits-search-ID_Contact'],
+            'filterInputOptions'  => ['placeholder' => '', 'id' => 'grid-users-search-ID_Clubs'],
         ],
         [
-            'attribute'   => 'username',
-            'label'       => Yii::t('modelattr', 'Username'),
-            'encodeLabel' => false,
-            'value'       => 'username',
+            'attribute'           => 'member_id',
+            'label'               => Yii::t('modelattr', 'Name'),
+            'value'               => 'member.fullName',
+            'filterType'          => GridView::FILTER_SELECT2,
+            'filter'              => ArrayHelper::map(Members::find()
+                ->select(['members.member_id', 'firstname', 'lastname'])
+                ->innerJoinWith('user')
+                ->all(), 'member_id', 'name'),
+            'filterWidgetOptions' => [
+                'pluginOptions' => ['allowClear' => true]
+            ],
+            'filterInputOptions'  => ['placeholder' => '', 'id' => 'grid-users-search-member_id'],
+        ],
+        [
+            'attribute' => 'username',
+            'label'     => Yii::t('modelattr', 'Username'),
+
+            'value' => 'username',
         ],
         // status
         [
@@ -73,16 +89,16 @@ $currentBtn = GridviewHelper::getCurrentBtn($context_array);
                         $data->statusName .
                         '&nbsp;</span>';
                 }
-            },
+            }
         ],
         // role
         [
-            'attribute'   => 'item_name',
-            'label'       => Yii::t('modelattr', 'Role'),
-            'encodeLabel' => false,
-            'filter'      => ['' => Yii::t('modelattr', 'Any')] + $searchModel->rolesList,
-            'filterType'  => GridView::FILTER_SELECT2,
-            'value'       => function ($data) {
+            'attribute' => 'item_name',
+            'label'     => Yii::t('modelattr', 'Role'),
+
+            'filter'     => ['' => Yii::t('modelattr', 'Any')] + $searchModel->rolesList,
+            'filterType' => GridView::FILTER_SELECT2,
+            'value'      => function ($data) {
                 return $data->roleName;
             },
 //            'contentOptions' => function($model, $key, $index, $column) {

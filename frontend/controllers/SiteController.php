@@ -262,6 +262,8 @@ class SiteController extends Controller
             $session->set('member_is_active', $member->is_active);
             $session->set('member_since', $member->memberSince);
             $session->set('member_profile_complete', $member->profileCompletion);
+            $session->set('member_type_id', $member->mem_type_id);
+            
             // club data
             $session->set('c_id', $c_id);
             $session->set('club_name', $club->name);
@@ -279,6 +281,8 @@ class SiteController extends Controller
 
             $session->set('club_languages', Yii::$app->contLang->defaultClubLanguages);
             $session->set('_content_language', '_' . strtoupper(Yii::$app->language));
+            
+            isset($member->memType) ? $session->set('member_type_text', $member->memType->nameFB) : $session->set('member_type_text', Yii::t('modelattr', 'Undefined'));
 
             $this->redirect('/rota/index');
         } else {

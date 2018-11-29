@@ -331,7 +331,7 @@ class MessageController extends Controller
             // update our timestamps, which we need for database synchronisation
             if ($source->isAttributeChanged('message', true) ||
                 $source->isAttributeChanged('category', true)) {
-                if (Lx::IsMaster()) {
+                if (Lx::isMaster()) {
                     $source->masterts = new Expression('NOW()');
                 } else {
                     $source->localts = new Expression('NOW()');
@@ -359,7 +359,7 @@ class MessageController extends Controller
 
                 // update our timestamps, which we need for database synchronisation
                 if ($message->isAttributeChanged('translation', true)) {
-                    if (Lx::IsMaster()) {
+                    if (Lx::isMaster()) {
                         $message->masterts = new Expression('NOW()');
                     } else {
                         $message->localts = new Expression('NOW()');
@@ -423,7 +423,7 @@ class MessageController extends Controller
             // update our timestamps, which we need for database synchronisation
             if ($source->isAttributeChanged('message', true) ||
                 $source->isAttributeChanged('category', true)) {
-                if (Lx::IsMaster()) {
+                if (Lx::isMaster()) {
                     $source->masterts = new Expression('NOW()');
                 } else {
                     $source->localts = new Expression('NOW()');
@@ -451,7 +451,7 @@ class MessageController extends Controller
 
                 // update our timestamps, which we need for database synchronisation
                 if ($message->isAttributeChanged('translation', true)) {
-                    if (Lx::IsMaster()) {
+                    if (Lx::isMaster()) {
                         $message->masterts = new Expression('NOW()');
                     } else {
                         $message->localts = new Expression('NOW()');
@@ -506,7 +506,7 @@ class MessageController extends Controller
 
         $dest = new Sourcemessage();
         $dest->attributes = $source->attributes;
-        if (Lx::IsMaster()) {
+        if (Lx::isMaster()) {
             $dest->masterts = new Expression('NOW()');
         } else {
             $dest->localts = new Expression('NOW()');
@@ -530,7 +530,7 @@ class MessageController extends Controller
                 $destmess = new Message();
                 $destmess->attributes = $message->attributes;
                 $destmess->id = $dest->id;
-                if (Lx::IsMaster()) {
+                if (Lx::isMaster()) {
                     $destmess->masterts = new Expression('NOW()');
                 } else {
                     $destmess->localts = new Expression('NOW()');
@@ -602,7 +602,7 @@ class MessageController extends Controller
 
         $response = $client->createRequest()
             ->setMethod('POST')
-            ->setUrl('https://www.' . Lx::MasterName() . '/api/v1/message/sync')// '.Lx::MasterName().'
+            ->setUrl('https://www.' . Lx::getMaster() . '/api/v1/message/sync')// '.Lx::getMaster().'
             ->setHeaders(array(
                 'cache-control' => 'no-cache',
                 'content-type'  => 'application/x-www-form-urlencoded',

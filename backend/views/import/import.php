@@ -22,6 +22,10 @@ $header .= '<span class="fa fa-pencil"></span> ' . Yii::t('appMenu', 'Utilities'
 /* @var $lastConnectedUsers string */
 /* @var $modelsmissingaddlang array */
 /* @var $title string */
+//echo 'ggggggggggggg';
+//var_dump(Yii::$app->request->hostName);die();
+//dd(Yii::getAlias('@webroot'));
+//dd(Yii::getAlias('@backups'));
 ?>
 
 <div class="import-form">
@@ -89,7 +93,7 @@ $header .= '<span class="fa fa-pencil"></span> ' . Yii::t('appMenu', 'Utilities'
 
         
 
-        <?php if ((!Lx::IsMaster() || Yii::$app->request->hostName == 'beta.esst.lu') && Yii::$app->user->can('admin')) { ?>
+        <?php if ((!Lx::isMaster()) && Yii::$app->user->can('developer')) { ?>
             <div class="row">
 
                 <!-- Backup master data -->
@@ -410,7 +414,7 @@ $header .= '<span class="fa fa-pencil"></span> ' . Yii::t('appMenu', 'Utilities'
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <?php if (!Lx::IsMaster()) { ?>
+                        <?php if (!Lx::isMaster()) { ?>
                             <!-- Sync translations box -->
                             <div class="box box-solid">
                                 <div class="box-header with-border">

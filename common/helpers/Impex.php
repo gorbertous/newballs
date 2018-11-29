@@ -32,8 +32,8 @@ class Impex
         // setup the folder where we will save the data
         // *******************************************
 
-        $uploadsPath = yii::getAlias('@uploads') . DIRECTORY_SEPARATOR;
-        $uploadsUrl = yii::getAlias('@uploadsURL') . '/';
+        $uploadsPath = Yii::getAlias('@uploads') . DIRECTORY_SEPARATOR;
+        $uploadsUrl = Yii::getAlias('@uploadsURL') . '/';
 
         $exportPath = $uploadsPath . $id . 'export/';
         //delete existing directory and contents
@@ -216,8 +216,8 @@ class Impex
         // setup the folder where we will save the data
         // *******************************************
 
-        $uploadsPath = yii::getAlias('@uploads') . DIRECTORY_SEPARATOR;
-        $uploadsUrl = yii::getAlias('@uploadsURL') . '/';
+        $uploadsPath = Yii::getAlias('@uploads') . DIRECTORY_SEPARATOR;
+        $uploadsUrl = Yii::getAlias('@uploadsURL') . '/';
 
         $unzipPath = $uploadsPath . $id . '/';
         if ($id == -1) {
@@ -359,8 +359,8 @@ class Impex
         // *******************************************
         // setup the folder where we will save the data
         // *******************************************
-        $uploadsPath = yii::getAlias('@uploads') . DIRECTORY_SEPARATOR;
-        $uploadsUrl = yii::getAlias('@uploadsURL') . '/';
+        $uploadsPath = Yii::getAlias('@uploads') . DIRECTORY_SEPARATOR;
+        $uploadsUrl = Yii::getAlias('@uploadsURL') . '/';
 
         $exportPath = $uploadsPath . 'export/';
         //delete existing directory and contents
@@ -552,8 +552,8 @@ class Impex
         // setup the folder where we will save the data
         // *******************************************
 
-        $uploadsPath = yii::getAlias('@uploads') . DIRECTORY_SEPARATOR;
-        $uploadsUrl = yii::getAlias('@uploadsURL') . '/';
+        $uploadsPath = Yii::getAlias('@uploads') . DIRECTORY_SEPARATOR . 'sqlbackups' . DIRECTORY_SEPARATOR;
+        $uploadsUrl = Yii::getAlias('@uploadsURL') . DIRECTORY_SEPARATOR . 'sqlbackups' . DIRECTORY_SEPARATOR;
 
         $unzipPath = $uploadsPath;
         //delete existing directory and contents
@@ -614,19 +614,19 @@ class Impex
     {
 
         $ilog = [];
-        $zipfile = yii::getAlias('@webroot') . DIRECTORY_SEPARATOR . $sqldumpfile;
+        $zipfile = Yii::getAlias('@webroot') . DIRECTORY_SEPARATOR . $sqldumpfile;
 
         @unlink($zipfile);
         // download the dump
-        $Url = 'https://' . Lx::MasterName() . '/api/web/' . $sqldumpfile;
+        $Url = 'https://' . Lx::getMaster() . '/api/web/sqlbackups/' . $sqldumpfile;
         array_push($ilog, 'Downloading ' . $Url);
         $html = file_get_contents($Url);
         $file = fopen($zipfile, "w") or die("Unable to open file!");
         fwrite($file, $html);
         fclose($file);
 
-        $uploadsPath = yii::getAlias('@uploads') . DIRECTORY_SEPARATOR;
-        $uploadsUrl = yii::getAlias('@uploadsURL') . '/';
+        $uploadsPath = Yii::getAlias('@backups') . DIRECTORY_SEPARATOR;
+        $uploadsUrl = Yii::getAlias('@backupsURL') . '/';
 
         //create directory and unzip
         array_push($ilog, 'Opening to ' . $zipfile);
@@ -682,15 +682,15 @@ class Impex
 
         $ilog = [];
 
-        $uploadsPath = yii::getAlias('@uploads') . DIRECTORY_SEPARATOR;
-        $uploadsUrl = yii::getAlias('@uploadsURL') . '/';
+        $uploadsPath = Yii::getAlias('@uploads') . DIRECTORY_SEPARATOR;
+        $uploadsUrl = Yii::getAlias('@uploadsURL') . '/';
 
         // get current list of files from our master
         $client = new Client();
         /** @noinspection MissedFieldInspection */
         $response = $client->createRequest()
             ->setMethod('POST')
-            ->setUrl('https://www.' . Lx::MasterName() . '/api/v1/master/getfileslist')
+            ->setUrl('https://www.' . Lx::getMaster() . '/api/v1/master/getfileslist')
             ->setHeaders([
                 'cache-control' => 'no-cache',
                 'content-type'  => 'application/x-www-form-urlencoded',
@@ -704,7 +704,7 @@ class Impex
             // decode the response data
             $files = $data['files'];
             foreach ($files as $file) {
-                $Url = 'https://' . Lx::MasterName() . '/uploads/' . $file;
+                $Url = 'https://' . Lx::getMaster() . '/uploads/' . $file;
                 if (strpos($file, " ")) {
                     array_push($ilog, 'Skipping ' . $Url . ' -> whitespace');
                     continue;
@@ -733,11 +733,11 @@ class Impex
 
         $ilog = [];
 
-        $uploadsPath = yii::getAlias('@uploads') . DIRECTORY_SEPARATOR;
-        $uploadsUrl = yii::getAlias('@uploadsURL') . '/';
+        $uploadsPath = Yii::getAlias('@uploads') . DIRECTORY_SEPARATOR;
+        $uploadsUrl = Yii::getAlias('@uploadsURL') . '/';
 
         $modelnamelist = [];
-        foreach (glob(yii::getAlias('@backend') . DIRECTORY_SEPARATOR .
+        foreach (glob(Yii::getAlias('@backend') . DIRECTORY_SEPARATOR .
             'models' . DIRECTORY_SEPARATOR .
             'base' . DIRECTORY_SEPARATOR . '*.php') as $filename) {
             $modelname = '\backend\models\\' . basename($filename, ".php");

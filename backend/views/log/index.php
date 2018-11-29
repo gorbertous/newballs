@@ -2,23 +2,40 @@
 
 use common\helpers\GridviewHelper;
 use kartik\grid\GridView;
-//use yii\widgets\Pjax;
+use yii\helpers\Html;
 
 $this->title = GridviewHelper::getTitle($context_array);
 $currentBtn = GridviewHelper::getCurrentBtn($context_array);
 
 ?>
-<div class="authitem-index">
+<div class="log-index">
+    <?=Html::beginForm(['log/bulk'],'post');?>
+    <div class="row">     
+        <div class="col-xs-6">
+            <?= Html::hiddenInput('bulkdelete', true)?>
+            <?= Html::submitButton('Delete Logs', ['class' => 'btn btn-info',]);?>
+        </div>
+    </div>
 
     <?php
     //    Pjax::begin(['id' => 'pjax-gridview-container', 'enablePushState' => true]);
     $gridColumn = [
+       ['class' => 'yii\grid\CheckboxColumn'],
        ['class' => 'yii\grid\SerialColumn'],
-
     	'id',
         'level',
         'category',
-        'prefix:ntext',
+        
+        [
+            'attribute'           => 'prefix',
+            'label'               => Yii::t('modelattr', 'IP'),
+            'value' => function($model) {
+                $pos = strpos($model->prefix, ']');
+                $ipaddr = substr($model->prefix,1,$pos - 1);
+                $ip = Yii::$app->geoip->ip($ipaddr);
+                return $ipaddr . ' (' . $ip->city . ' - ' . $ip->country . ')';
+            }
+        ],
         'log_time:datetime'
     ];
    
@@ -40,7 +57,7 @@ $currentBtn = GridviewHelper::getCurrentBtn($context_array);
     
     echo GridView::widget([
                 'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
+                'filterModel' => $searchModel,
                 'columns'        => $gridColumn,
                 'id' => 'gridview-club-id',
                 'responsive'          => true,
@@ -61,7 +78,7 @@ $currentBtn = GridviewHelper::getCurrentBtn($context_array);
         );
     //    Pjax::end();
  ?>
-    
+ <?= Html::endForm();?>   
 </div>
 
 

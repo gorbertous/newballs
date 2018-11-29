@@ -5,7 +5,7 @@ $params = require __DIR__ . '/../../common/config/params.php';
 return [
     'components' => [
         'request' => [
-            'cookieValidationKey' => '',
+            'cookieValidationKey' => 'QyE0Gngcx6d3QVE3GOYT',
         ],
 
         'log' => [
@@ -21,7 +21,7 @@ return [
                     'levels' => ['error', 'warning'],
 
                     'message' => [
-                        'from'    => $params['logEmail'],
+                        'from'    => $params['supportEmail'],
                         'subject' => 'Log message - API',
                         'to'      => $params['logReceivers']
                     ]

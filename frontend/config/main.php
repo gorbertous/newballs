@@ -5,7 +5,7 @@ $params = array_merge(
     require __DIR__ . '/params.php',
     require __DIR__ . '/params-local.php'
 );
-//,'assetsAutoCompress'
+
 return [
     'name' => 'Balls Tennis',
     'id' => 'app-frontend',
@@ -60,7 +60,7 @@ return [
         'view' => [
             'theme' => [
                 'pathMap' => ['@frontend/views'],
-            ]
+            ],
         ],
         
         'assetsAutoCompress' =>

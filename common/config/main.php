@@ -61,6 +61,9 @@ return [
                 'database' => 0,
             ]*/
         ],
+        'geoip' => [
+            'class' => 'lysenkobv\GeoIP\GeoIP'
+        ],
         
         'assetManager' => [
             'appendTimestamp' => true,

@@ -1,4 +1,5 @@
 <?php
+
 namespace backend\controllers;
 
 use Yii;
@@ -12,6 +13,7 @@ use common\models\LoginForm;
  */
 class SiteController extends Controller
 {
+
     /**
      * {@inheritdoc}
      */
@@ -23,17 +25,17 @@ class SiteController extends Controller
                 'rules' => [
                     [
                         'actions' => ['login', 'error'],
-                        'allow' => true,
+                        'allow'   => true,
                     ],
                     [
-                        'actions' => ['logout','index'],
-                        'allow' => true,
-                        'roles' => ['@'],
+                        'actions' => ['logout', 'index'],
+                        'allow'   => true,
+                        'roles'   => ['@'],
                     ],
                 ],
             ],
-            'verbs' => [
-                'class' => VerbFilter::className(),
+            'verbs'  => [
+                'class'   => VerbFilter::className(),
                 'actions' => [
                     'logout' => ['post', 'get'],
                 ],
@@ -61,7 +63,6 @@ class SiteController extends Controller
     public function actionIndex()
     {
         if (Yii::$app->user->isGuest) {
-            
             return $this->redirect('/admin/login');
         }
         return $this->render('index');
@@ -81,30 +82,29 @@ class SiteController extends Controller
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-             $this->actionSetupSession();
+            $this->actionSetupSession();
             return $this->goBack();
         } else {
             $model->password = '';
 
             return $this->render('login', [
-                'model' => $model,
+                        'model' => $model,
             ]);
         }
     }
-    
+
     /**
      * @param int $club_id
      */
     public function actionSetupSession()
     {
 //        session_regenerate_id();
-      
         // set up some additional session variables to be used in the header avoiding db queries
         // we don't use Yii::$app->user->identity->id
         $user_id = Yii::$app->user->id;
         $member = \backend\models\Members::find()
-            ->where(['user_id' => $user_id])
-            ->one();
+                ->where(['user_id' => $user_id])
+                ->one();
         $session = Yii::$app->session;
 
         if (isset($member)) {
@@ -114,10 +114,10 @@ class SiteController extends Controller
             $session->set('member_id', $member->member_id);
             $session->set('member_photo', $member->photo);
             $session->set('member_name', $member->name);
-           
+
             $session->set('club_languages', Yii::$app->contLang->defaultClubLanguages);
             $session->set('_content_language', '_' . strtoupper(Yii::$app->language));
-          
+
             $this->redirect('/admin/index');
         } else {
             //fail user cannot proceed - missing data
@@ -138,4 +138,5 @@ class SiteController extends Controller
 
         return $this->goHome();
     }
+
 }

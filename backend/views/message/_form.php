@@ -106,11 +106,11 @@ $htmlmode = $source->translationEN != strip_tags($source->translationEN) ||
                     <?php } ?>
 
                     <p style="text-align:center;">
-                        <?php if (Lx::IsMaster()) { ?>
-                            <?= '<strong>Master:</strong> ' . Lx::MasterName() ?>
+                        <?php if (Lx::isMaster()) { ?>
+                            <?= '<strong>Master:</strong> ' . Lx::getMaster() ?>
                         <?php } else { ?>
-                            <?= '<strong>Local:</strong> ' . Lx::LocalName() ?><br>
-                            <?= '<strong>Master:</strong> ' . Lx::MasterName() ?>
+                            <?= '<strong>Local:</strong> ' . Lx::getLocal() ?><br>
+                            <?= '<strong>Master:</strong> ' . Lx::getMaster() ?>
                         <?php } ?>
                     </p>
 

@@ -76,8 +76,8 @@ class UserSearch extends User
         ];
 
         $dataProvider->sort->attributes['member_id'] = [
-            'asc'  => ['members.Lastname' => SORT_ASC, 'members.Firstname' => SORT_ASC],
-            'desc' => ['members.Lastname' => SORT_DESC, 'members.Firstname' => SORT_DESC],
+            'asc'  => ['members.lastname' => SORT_ASC, 'members.firstname' => SORT_ASC],
+            'desc' => ['members.lastname' => SORT_DESC, 'members.firstname' => SORT_DESC],
         ];
 
         if (!($this->validate())) {
@@ -100,8 +100,8 @@ class UserSearch extends User
 
         $query->andFilterWhere(['like', 'user.username', $this->username])
             ->andFilterWhere(['like', 'user.email', $this->email])
-            ->andFilterWhere(['like', 'members.firstname', $this->firstname])
-            ->andFilterWhere(['like', 'members.lastname', $this->lastname])
+//            ->andFilterWhere(['like', 'members.firstname', $this->firstname])
+//            ->andFilterWhere(['like', 'members.lastname', $this->lastname])
             //->andFilterWhere(['like', 'CONCAT(members.Firstname, members.Lastname)', $this->member_id])
             ->andFilterWhere(['like', 'item_name', $this->item_name]);
 
