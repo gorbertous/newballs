@@ -10,7 +10,7 @@ use kartik\widgets\Select2;
 use yii\helpers\ArrayHelper;
 use backend\models\Clubs;
 
-$this->title = 'Signup';
+$this->title = Yii::t('app', 'Join');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="site-signup">
@@ -24,7 +24,7 @@ $this->params['breadcrumbs'][] = $this->title;
             
             <?= $form->field($model, 'club')->widget(Select2::classname(), [
                 'data' => ArrayHelper::map(Clubs::find()->all(), 'c_id', 'name'),
-                'options'    => ['placeholder' => 'Select club to join']
+                'options'    => ['placeholder' => Yii::t('app', 'Select club to join')]
             ]); ?>
 
             <?= $form->field($model, 'username')->textInput(
@@ -39,14 +39,14 @@ $this->params['breadcrumbs'][] = $this->title;
             <?= $form->field($model, 'captcha')->widget(\himiklab\yii2\recaptcha\ReCaptcha::class); ?>
 
             <div class="form-group">
-                <?= Html::submitButton('Signup', ['class' => 'btn btn-primary', 'name' => 'signup-button']) ?>
+                <?= Html::submitButton(Yii::t('app', 'Submit'), ['class' => 'btn btn-primary', 'name' => 'signup-button']) ?>
             </div>
 
             <?php ActiveForm::end(); ?>
 
             <?php if ($model->scenario === 'rna'): ?>
                 <div style="color:#666;margin:1em 0">
-                    <i>*<?= Yii::t('app', 'We will send you an email with account activation link.') ?></i>
+                    <i>*<?= Yii::t('app', 'We will send you an email with the account activation link!') ?></i>
                 </div>
             <?php endif ?>
         </div>

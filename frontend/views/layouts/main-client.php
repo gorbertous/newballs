@@ -40,7 +40,7 @@ AppAsset::register($this);
                         <ul class="nav navbar-nav navbar-right">
                             <li><a href="/index"><?= Yii::t('app', 'Home') ?></a></li>
                             <li><a href="/about"><?= Yii::t('app', 'About') ?></a></li>
-                            <li><a href="/signup"><span class="glyphicon glyphicon-user"></span> <?= Yii::t('app', 'Sign Up') ?></a></li>
+                            <li><a href="/signup"><span class="glyphicon glyphicon-user"></span> <?= Yii::t('app', 'Join') ?></a></li>
                             <li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> <?= Yii::t('app', 'Login') ?></a></li>
                         </ul>
                     </div>
@@ -59,7 +59,7 @@ AppAsset::register($this);
             <div class="container">
                 <p class="pull-left">&copy; <?= Html::encode(Yii::$app->name) ?> <?= date('Y') ?></p>
 
-                <p class="pull-right">Tell your friends and collegues about the club, the more the merrier!</p>
+                <p class="pull-right"><?= Yii::t('app', 'Tell your friends and collegues about the club, the more the merrier!') ?></p>
             </div>
         </footer>
 

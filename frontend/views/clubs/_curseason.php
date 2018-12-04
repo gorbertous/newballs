@@ -69,6 +69,6 @@ echo GridView::widget([
     'condensed'      => true,
     'panel'          => [
         'type'    => Gridview::TYPE_DEFAULT,
-        'heading' => 'Player Stats - Current Season',
+        'heading' => Yii::t('modelattr', 'Player Stats - Current Season'),
     ],
 ]);

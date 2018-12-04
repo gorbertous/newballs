@@ -4,7 +4,7 @@ use kartik\grid\GridView;
 use common\helpers\GridviewHelper;
 use yii\helpers\ArrayHelper;
 use backend\models\Clubs;
-//use yii\widgets\Pjax;
+use yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\ReservesSearch */
@@ -17,7 +17,7 @@ $currentBtn = GridviewHelper::getCurrentBtn($context_array);
 <div class="fees-index">
 
     <?php 
-    //    Pjax::begin(['id' => 'pjax-gridview-container', 'enablePushState' => true]);
+    Pjax::begin(['id' => 'pjax-gridview-container', 'enablePushState' => true]);
     $gridColumn = [
         ['class' => 'yii\grid\SerialColumn'],
 
@@ -67,7 +67,7 @@ $currentBtn = GridviewHelper::getCurrentBtn($context_array);
          GridviewHelper::getNewbutton($currentBtn) . ' ' .
          GridviewHelper::getResetgrida($currentBtn)
     ];
-    $toolbar[] = GridviewHelper::getExportMenu($dataProvider, $gridColumn);
+    $toolbar[] = '{export}';
     $toolbar[] = '{toggleData}';
     
     echo GridView::widget([
@@ -91,7 +91,7 @@ $currentBtn = GridviewHelper::getCurrentBtn($context_array);
                 ],
             ]
         );
-    //    Pjax::end();
+    Pjax::end();
  ?>
     
 </div>

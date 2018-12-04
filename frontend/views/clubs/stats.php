@@ -36,7 +36,7 @@
 
 <div class="tabscus">
     <input type="radio" name="tabs" id="tabone" checked="checked">
-    <label for="tabone"><h3 class="panel-title"><span class="fa fa-dashboard"></span> Players </h3></label>
+    <label for="tabone"><h3 class="panel-title"><span class="fa fa-dashboard"></span> <?= Yii::t('modelattr', 'Players') ?> </h3></label>
     <div class="tabcus">
 
         <?=
@@ -48,7 +48,7 @@
     </div>
 
     <input type="radio" name="tabs" id="tabtwo">
-    <label for="tabtwo"><h3 class="panel-title"><span class="fa fa-history"></span> Club </h3></label>
+    <label for="tabtwo"><h3 class="panel-title"><span class="fa fa-history"></span> <?= Yii::t('appMenu', 'Club') ?> </h3></label>
     <div class="tabcus">
         <?=
         $this->render('_hisdata', [
@@ -58,7 +58,7 @@
     </div>
 
     <input type="radio" name="tabs" id="tabthree">
-    <label for="tabthree"><h3 class="panel-title"><span class="fa fa-desktop"></span> Tournaments </h3></label>
+    <label for="tabthree"><h3 class="panel-title"><span class="fa fa-desktop"></span> <?= Yii::t('modelattr', 'Tournaments') ?> </h3></label>
     <div class="tabcus">
          <?= $model->tournament_page?>
     </div>

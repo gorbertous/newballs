@@ -124,7 +124,7 @@ class Clubs extends ActiveRecord
             'admin_ids'         => Yii::t('modelattr', 'Club Admins'),
             'chair_id'          => Yii::t('modelattr', 'Club Chairman'),
             'location_id'       => Yii::t('modelattr', 'Main Location'),
-            'is_active'         => Yii::t('modelattr', 'Is Active'),
+            'is_active'         => Yii::t('modelattr', 'Active'),
             'payment'           => Yii::t('modelattr', 'Payment'),
             'rota_removal'      => Yii::t('modelattr', 'Allow members to cancel games'),
             'photo_one'         => Yii::t('modelattr', 'Photo One'),

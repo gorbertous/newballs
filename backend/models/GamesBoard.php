@@ -62,7 +62,7 @@ class GamesBoard extends \yii\db\ActiveRecord
             'termin_id'     => Yii::t('modelattr', 'Date'),
             'member_id'     => Yii::t('modelattr', 'Member'),
             'court_id'      => Yii::t('modelattr', 'Court'),
-            'slot_id'       => Yii::t('modelattr', 'Slot'),
+            'slot_id'       => Yii::t('app', 'Slot'),
             'status_id'     => Yii::t('modelattr', 'Status'),
             'fines'         => Yii::t('modelattr', 'Fines'),
             'tokens'        => Yii::t('modelattr', 'Tokens'),
@@ -147,13 +147,27 @@ class GamesBoard extends \yii\db\ActiveRecord
     }
 
     /**
+     * get score
+     * @param integer $termin_id
+     * @param integer $score_id
+     * @return String - number.
+     */
+    public function getGameScore($termin_id, $court_id)
+    {
+        $score = Scores::find()
+                ->where(['termin_id' => $termin_id])
+                ->andWhere(['court_id' => $court_id])
+                ->all();
+        return $score;
+    }
+
+    /**
      * get members who are already on the rota
      *
      * @return Array - number.
      */
     public function getPlayersOnRota($termin_id)
     {
-
         $mem_ids = GamesBoard::find()
                 ->where(['termin_id' => $termin_id])
                 ->andWhere(['>', 'member_id', 1])//free slot id = 1
@@ -289,6 +303,16 @@ class GamesBoard extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Clubs::className(), ['c_id' => 'c_id']);
     }
+    
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+//    public function getGameScore()
+//    {
+//        
+//        return $this->hasMany(Scores::className(), ['termin_id' => 'termin_id', 'court_id' => 'court_id'])
+//                    ->via('termin');
+//    }
 
     /**
      * @return \yii\db\ActiveQuery

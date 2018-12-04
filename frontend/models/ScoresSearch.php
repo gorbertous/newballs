@@ -62,7 +62,7 @@ class ScoresSearch extends Scores
 
         $query->andFilterWhere([
             'score_id' => $this->score_id,
-            'termin_id' => $this->termin_id,
+            'play_dates.termin_id' => $this->termin_id,
             'court_id' => $this->court_id,
             'created_by' => $this->created_by,
             'updated_by' => $this->updated_by,

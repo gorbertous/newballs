@@ -34,8 +34,8 @@ class UploadForm extends Model
     public function attributeLabels()
     {
         return [
-            'albumyear'  => Yii::t('modelattr', 'Album Year'),
-            'imageFiles' => Yii::t('modelattr', 'Pictures'),
+            'albumyear' => Yii::t('modelattr', 'Album') . ' '. Yii::t('modelattr', 'Year'),
+            'imageFiles' => Yii::t('modelattr', 'Photos'),
         ];
     }
 

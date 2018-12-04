@@ -6,7 +6,7 @@ use yii\helpers\Url;
 use yii\helpers\ArrayHelper;
 use backend\models\Sourcemessage;
 use common\helpers\GridviewHelper;
-//use yii\widgets\Pjax;
+use yii\widgets\Pjax;
 
 
 $this->title = GridviewHelper::getTitle($context_array);
@@ -35,7 +35,7 @@ $this->registerJs($script);
 <div class="messagedupes-index">
 
     <?php
-    //    Pjax::begin(['id' => 'pjax-gridview-container', 'enablePushState' => true]);
+    Pjax::begin(['id' => 'pjax-gridview-container', 'enablePushState' => true]);
     $gridColumn = [
         ['class' => 'yii\grid\SerialColumn'],
 
@@ -154,7 +154,7 @@ $this->registerJs($script);
          GridviewHelper::getResetgrida($currentBtn).
          GridviewHelper::getLangsyncbutton($pendinguploads)
     ];
-    $toolbar[] = GridviewHelper::getExportMenu($dataProvider, $gridColumn);
+    $toolbar[] = '{export}';
     $toolbar[] = '{toggleData}';
     
     echo GridView::widget([
@@ -178,7 +178,7 @@ $this->registerJs($script);
                 ],
             ]
         );
-    //    Pjax::end();
+    Pjax::end();
  ?>
     
 </div>

@@ -15,7 +15,7 @@ use kartik\select2\Select2;
 <div class="panel panel-default">
     <div class="panel-heading">    
 
-        <h3 class="panel-title"><span class="fa fa-desktop"></span> Club&nbsp;<span class="fa fa-file-image-o"></span> Photos </h3>
+        <h3 class="panel-title"><span class="fa fa-desktop"></span> <?= Yii::t('appMenu', 'Club') ?>&nbsp;<span class="fa fa-file-image-o"></span> <?= Yii::t('appMenu', 'Photos') ?> </h3>
         <div class="clearfix"></div>
     </div>
     <div class="panel-body">
@@ -33,7 +33,7 @@ use kartik\select2\Select2;
                 <?=
                 $form->field($model, 'albumyear')->widget(Select2::classname(), [
                     'data'          => Years::all(),
-                    'options'       => ['placeholder' => 'Select a year ...'],
+                    'options'       => ['placeholder' => Yii::t('modelattr','Select a year ...')],
                     'pluginOptions' => [
                         'allowClear' => true
                     ],

@@ -4,7 +4,7 @@
 
 use yii\helpers\Html;
 
-$this->title = 'About the Club';
+$this->title = Yii::t('app', 'About the Club');
 
 ?>
 <div class="site-about">

@@ -6,7 +6,7 @@ use yii\helpers\Url;
 use yii\helpers\ArrayHelper;
 use backend\models\Sourcemessagescan;
 use common\helpers\GridviewHelper;
-//use yii\widgets\Pjax;
+use yii\widgets\Pjax;
 
 $this->title = GridviewHelper::getTitle($context_array);
 $currentBtn = GridviewHelper::getCurrentBtn($context_array);
@@ -15,7 +15,7 @@ $currentBtn = GridviewHelper::getCurrentBtn($context_array);
 <div class="messagescanblacklisted-index">
 
     <?php
-    //    Pjax::begin(['id' => 'pjax-gridview-container', 'enablePushState' => true]);
+    Pjax::begin(['id' => 'pjax-gridview-container', 'enablePushState' => true]);
     $gridColumn = [
         ['class' => 'yii\grid\SerialColumn'],
 
@@ -86,7 +86,7 @@ $currentBtn = GridviewHelper::getCurrentBtn($context_array);
          GridviewHelper::getNewbutton($currentBtn) . ' ' .
          GridviewHelper::getResetgrida($currentBtn)
     ];
-    $toolbar[] = GridviewHelper::getExportMenu($dataProvider, $gridColumn);
+    $toolbar[] = '{export}';
     $toolbar[] = '{toggleData}';
     
     echo GridView::widget([
@@ -110,7 +110,7 @@ $currentBtn = GridviewHelper::getCurrentBtn($context_array);
                 ],
             ]
         );
-    //    Pjax::end();
+    Pjax::end();
  ?>
     
 </div>

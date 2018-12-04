@@ -21,7 +21,7 @@ use common\helpers\Helpers;
     ?>
 
     <ul class="nav nav-pills" id="tabContent">
-        <li class="active"><a href="#fees" data-toggle="tab"><?= Yii::t('modelattr', 'Fees') ?></a></li>
+        <li class="active"><a href="#fees" data-toggle="tab"><?= Yii::t('appMenu', 'Fees') ?></a></li>
 
         <!-- Audit tab  -->
         <?php if(Yii::$app->user->can('team_memebr')): ?>

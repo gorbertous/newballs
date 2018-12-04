@@ -48,7 +48,7 @@ class AdminusersSearch extends User
     {
         $query = User::find()
                 ->joinWith('role')
-                ->innerJoinWith('members');
+                ->joinWith('members');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

@@ -10,9 +10,9 @@ $resetLink = Yii::$app->urlManager->createAbsoluteUrl(['site/activate-account',
 
 
 <div class="password-reset">
-    <p>Hello <?= Html::encode($user->username) ?>,</p>
+    <p><?= Yii::t('app', 'Hello')?> &nbsp; <?= Html::encode($user->username) ?>,</p>
 
-    <p>Follow the link below to activate your account:</p>
+    <p><?= Yii::t('app', 'Follow the link below to activate your account:')?></p>
 
     <p><?= Html::a(Html::encode($resetLink), $resetLink) ?></p>
 </div>

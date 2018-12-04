@@ -3,7 +3,7 @@
 use common\helpers\GridviewHelper;
 use backend\models\Texts;
 use kartik\grid\GridView;
-//use yii\widgets\Pjax;
+use yii\widgets\Pjax;
 
 $this->title = GridviewHelper::getTitle($context_array);
 $currentBtn = GridviewHelper::getCurrentBtn($context_array);
@@ -13,7 +13,7 @@ $currentBtn = GridviewHelper::getCurrentBtn($context_array);
 <div class="texts-index">
 
     <?php
-    //    Pjax::begin(['id' => 'pjax-gridview-container', 'enablePushState' => true]);
+    Pjax::begin(['id' => 'pjax-gridview-container', 'enablePushState' => true]);
     $gridColumn = [
         ['class' => 'yii\grid\SerialColumn'],
         [
@@ -43,7 +43,7 @@ $currentBtn = GridviewHelper::getCurrentBtn($context_array);
          GridviewHelper::getNewbutton($currentBtn) . ' ' .
          GridviewHelper::getResetgrida($currentBtn)
     ];
-    $toolbar[] = GridviewHelper::getExportMenu($dataProvider, $gridColumn);
+    $toolbar[] = '{export}';
     $toolbar[] = '{toggleData}';
     
     echo GridView::widget([
@@ -67,7 +67,7 @@ $currentBtn = GridviewHelper::getCurrentBtn($context_array);
                 ],
             ]
         );
-    //    Pjax::end();
+    Pjax::end();
  ?>
     
 </div>

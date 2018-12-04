@@ -9,7 +9,7 @@ use kartik\grid\GridView;
 use common\dictionaries\OutcomeStatus;
 use yii\helpers\Url;
 use common\helpers\GridviewHelper;
-//use yii\widgets\Pjax;
+use yii\widgets\Pjax;
 
 $this->title = GridviewHelper::getTitle($context_array);
 $currentBtn = GridviewHelper::getCurrentBtn($context_array);
@@ -55,7 +55,7 @@ if ($searchModel->timefilter == 1) {
     </div>
    
     <?php
-//    Pjax::begin(['id' => 'pjax-gridview-container', 'enablePushState' => true]);
+    Pjax::begin(['id' => 'pjax-gridview-container', 'enablePushState' => true]);
     $gridColumn = [
 //        ['class' => 'yii\grid\SerialColumn', 
 //            'contentOptions' => ['style' => 'width:20px;'],
@@ -68,12 +68,12 @@ if ($searchModel->timefilter == 1) {
                 $disptime = Yii::$app->formatter->asTime($model->termin->termin_date, 'short');
                 
                 $url = Url::toRoute(['reserves/insert', 'id' => $model->termin_id]);
-                $link = Html::a('click here to put your name on the reserves list!', $url, 
+                $link = Html::a(Yii::t('app', 'click here to put your name on the reserves list!'), $url, 
                 [
                     'title' => Yii::t('app', 'add your name on the reserves list'),
                     'class' => 'text-success',
                     'data' => [
-                        'confirm' => Yii::t('app', 'Warning, the reserve list operates on the first comes first served basis, in case a slot becomes available, the club admin will put your name on the rota '),
+                        'confirm' => Yii::t('app', 'Warning, the reserve list operates on the first comes first served basis, in case a slot becomes available, the club admin will put your name on the rota'),
                         'method' => 'post',
                     ],
                 ]);
@@ -89,10 +89,10 @@ if ($searchModel->timefilter == 1) {
                 }else{
                     $reserves_list = '';
                 }
-                $final_list = !empty($reserves_list) ? 'Current Reserves List:<br>'. $reserves_list: '';
+                $final_list = !empty($reserves_list) ? Yii::t('app', 'Current Reserves List').':<br>'. $reserves_list: '';
                 
-                $slots_notification = $model->getSlotsLeft($model->termin_id) == 0 ? 'All the slots are taken - '.$link : '<small> ('.$model->getSlotsLeft($model->termin_id).' Slots Left) </small>';
-                return  $dispdate . ' at '. $disptime . '   <small>- Location: '. $model->termin->location->address . '</small>' . $slots_notification. $final_list;                   
+                $slots_notification = $model->getSlotsLeft($model->termin_id) == 0 ? Yii::t('app', 'All the slots are taken').' - '.$link : '<small> ('.$model->getSlotsLeft($model->termin_id).' '. Yii::t('app', 'Slots Left').') </small>';
+                return  $dispdate . ' at '. $disptime . '   <small>-  '.Yii::t('modelattr', 'Location').':'. $model->termin->location->address . '</small>' . $slots_notification. $final_list;                   
              },
              'group' => true,
              'groupedRow' => true,
@@ -102,8 +102,27 @@ if ($searchModel->timefilter == 1) {
          [
              'attribute' => 'court_id',
              'value' => function($model){
+                 
+                $today = new DateTime();
+                $play_date = new DateTime($model->termin->termin_date);
+                
+                if(!empty($model->getGameScore($model->termin_id, $model->court_id))){
+                    $statsbutton = '<span class="custom-margin">' . Html::button(Yii::t('modelattr', 'View Score'), [
+                        'value' => Url::toRoute(['playdates/scores', 'termin_id' => $model->termin_id, 'court_id' => $model->court_id]),
+                        'class' => 'btn btn-info btn-style showModalButton',
+                        'title' => Yii::t('modelattr', 'View Score')
+                    ]).'</span>';
+                }elseif(empty($model->getGameScore($model->termin_id, $model->court_id)) && $play_date < $today ){
+                    $statsbutton = '<span class="custom-margin">' . Html::button(Yii::t('modelattr', 'Upload Score'), [
+                        'value' => Url::toRoute(['playdates/uploadscore', 'termin_id' => $model->termin_id, 'court_id' => $model->court_id]),
+                        'class' => 'btn btn-info btn-style showModalButton',
+                        'title' => Yii::t('modelattr', 'Upload Score')
+                    ]).'</span>';
+                }else{
+                    $statsbutton = '';
+                }
                 $url = Url::toRoute(['rota/bookcourt', 'id' => $model->termin_id, 'id2' => $model->court_id]);
-                $link = Html::a('Court not yet booked!', $url, 
+                $link = Html::a(Yii::t('app', 'Court not yet booked!'), $url, 
                 [
                     'title' => Yii::t('app', 'book a court'),
                     'class' => 'text-success',
@@ -112,11 +131,12 @@ if ($searchModel->timefilter == 1) {
                         'method' => 'post',
                     ],
                 ]);
-                 $booked = $model->isCourtBooked($model->termin_id, $model->court_id);
-                 $booked_by = !empty($booked) ? 'Court booked by '. $booked->bookedBy->name  : $link;
-                 //show court booking link
+                
+                $booked = $model->isCourtBooked($model->termin_id, $model->court_id);
+                $booked_by = !empty($booked) ? Yii::t('app', 'Court booked by').' '. $booked->bookedBy->name  : $link;
+                //show court booking link
                 $show_booking_link = Yii::$app->session->get('club_court_booking')? $booked_by : '';
-                 return  '<strong>Court No : '. $model->court_id . '</strong>' . $show_booking_link;                   
+                return  '<strong>'.Yii::t('app', 'Court').' No : '. $model->court_id . '</strong>' . $show_booking_link  . $statsbutton;                   
              },
              'format' => 'raw',
              //'label' => Yii::t('app', 'Court No'),
@@ -128,7 +148,7 @@ if ($searchModel->timefilter == 1) {
          ],
          [
             'attribute' => 'slot_id',
-            'label' => Yii::t('app', 'Slot No'),
+            'label' => Yii::t('app', 'Slot') . ' '.Yii::t('app', 'No'),
             'encodeLabel' => false,
             'format'    => 'raw',
             'headerOptions' => ['style'=>'text-align:center'],
@@ -160,7 +180,7 @@ if ($searchModel->timefilter == 1) {
         ],
          [
              'attribute' => 'member_id',
-             'label' => Yii::t('app', 'Member'),
+             'label' => Yii::t('modelattr', 'Member'),
              'format' => 'raw',
              'value' => function($model){
                 if($model->member_id == 1){
@@ -301,7 +321,7 @@ if ($searchModel->timefilter == 1) {
         
             ]
         );
-//    Pjax::end();
+    Pjax::end();
  ?>
     
 </div>

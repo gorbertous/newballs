@@ -218,7 +218,7 @@ abstract class MenuTypes
     /** -- */
 
     public static function photosText(): string {
-        return Yii::t('appMenu', 'Club Photos');
+        return Yii::t('appMenu', 'Photos');
     }
     const PHOTOS_ICON = 'fa-file-image-o';
     const PHOTOS_ICON_MENU = 'file-image-o';
@@ -322,7 +322,7 @@ abstract class MenuTypes
     /** -- */
 
     public static function playdatesText(): string {
-        return Yii::t('modelattr', 'Publish Rota');
+        return Yii::t('appMenu', 'Publish Rota');
     }
     const PLAYDATES_ICON = 'fa fa-cogs';
     const PLAYDATES_ICON_MENU = 'cogs';

@@ -51,18 +51,18 @@ if (!empty(Yii::$app->session->get('member_photo'))) {
 
                                 <p>
                                      <?= Yii::$app->session->get('member_name')?>
-                                    <small>Member since <?= Yii::$app->session->get('member_since')?></small>
+                                    <small><?= Yii::t('app', 'Member Since'); ?> <?= Yii::$app->session->get('member_since')?></small>
                                 </p>
                             </li>
                             
                             <li class="user-body">
                                 <div class="row">
                                     <div class="col-xs-4 text-center">
-                                        <a data-toggle="tooltip" title="Light theme" href="#" data-change-theme-color="skin-blue-light"><span style="width: 100%; height: 30px; border: 1px solid #ccc; background-color: #f9fafc; display: block;"></span></a>
+                                        <a data-toggle="tooltip" title="<?= Yii::t('app', 'Light Theme'); ?>" href="#" data-change-theme-color="skin-blue-light"><span style="width: 100%; height: 30px; border: 1px solid #ccc; background-color: #f9fafc; display: block;"></span></a>
                                     </div>
 
                                     <div class="col-xs-4 text-center">
-                                        <a data-toggle="tooltip" title="Dark theme" href="#" data-change-theme-color="skin-blue"><span style="width: 100%; height: 30px; border: 1px solid #222d32; background-color: #222d32; display: block;"></span></a>
+                                        <a data-toggle="tooltip" title="<?= Yii::t('app', 'Dark Theme'); ?>" href="#" data-change-theme-color="skin-blue"><span style="width: 100%; height: 30px; border: 1px solid #222d32; background-color: #222d32; display: block;"></span></a>
                                     </div>
                                 </div>
                                 

@@ -59,7 +59,7 @@ class RotaController extends Controller
     {
         if (!Yii::$app->session->get('member_is_active')) {
             Yii::$app->session->setFlash('danger', Yii::t('app', 'Your account has been temporarily suspended, contact the site administrator'));
-            return $this->redirect(['/clubs/stats']);
+            return $this->redirect(['/clubs/warning']);
         }
         $searchModel = new RotaSearch();
         $searchModel->timefilter = 1;
@@ -78,7 +78,7 @@ class RotaController extends Controller
 
     public function actionInsert($id)
     {
-        /** @var $model \backend\models\base\GamesBoard */
+        /** @var $model \backend\models\GamesBoard */
         // check for existing name on the court
         $is_on_court = GamesBoard::checkForExisting($id);
         if ($is_on_court) {

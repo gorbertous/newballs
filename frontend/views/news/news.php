@@ -8,7 +8,7 @@ use common\dictionaries\NewsCategories;
 use common\helpers\GridviewHelper;
 use backend\models\News;
 use kartik\grid\GridView;
-//use yii\widgets\Pjax;
+use yii\widgets\Pjax;
 
 $this->title = GridviewHelper::getTitle($context_array);
 $currentBtn = GridviewHelper::getCurrentBtn($context_array);
@@ -20,7 +20,7 @@ $greencheck = '<i class="text-success fa fa-check fa-lg" aria-hidden="true"></i>
 <div class="news-news">
 
     <?php
-//    Pjax::begin(['id' => 'pjax-gridview-container', 'enablePushState' => true]);
+Pjax::begin(['id' => 'pjax-gridview-container', 'enablePushState' => true]);
     $gridColumn = [
         ['class' => 'yii\grid\SerialColumn'],
 //        [
@@ -88,7 +88,7 @@ $greencheck = '<i class="text-success fa fa-check fa-lg" aria-hidden="true"></i>
 //         GridviewHelper::getNewbutton($currentBtn) . ' ' .
          GridviewHelper::getResetgrida($currentBtn)
     ];
-    $toolbar[] = GridviewHelper::getExportMenu($dataProvider, $gridColumn);
+    $toolbar[] = '{export}';
     $toolbar[] = '{toggleData}';
     
     echo GridView::widget([
@@ -112,7 +112,7 @@ $greencheck = '<i class="text-success fa fa-check fa-lg" aria-hidden="true"></i>
                 ],
             ]
         );
-//    Pjax::end();
+Pjax::end();
  ?>
     
 </div>

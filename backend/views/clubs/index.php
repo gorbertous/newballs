@@ -2,7 +2,7 @@
 
 use kartik\grid\GridView;
 use common\helpers\GridviewHelper;
-//use yii\widgets\Pjax;
+use yii\widgets\Pjax;
 
 
 $this->title = GridviewHelper::getTitle($context_array);
@@ -17,7 +17,7 @@ $greencheck = '<i class="text-success fa fa-check fa-lg" aria-hidden="true"></i>
 <div class="clubs-index">
 
     <?php 
-    //    Pjax::begin(['id' => 'pjax-gridview-container', 'enablePushState' => true]);
+    Pjax::begin(['id' => 'pjax-gridview-container', 'enablePushState' => true]);
     $gridColumn = [
         ['class' => 'yii\grid\SerialColumn'],
         [
@@ -43,7 +43,7 @@ $greencheck = '<i class="text-success fa fa-check fa-lg" aria-hidden="true"></i>
          GridviewHelper::getNewbutton($currentBtn) . ' ' .
          GridviewHelper::getResetgrida($currentBtn)
     ];
-    $toolbar[] = GridviewHelper::getExportMenu($dataProvider, $gridColumn);
+    $toolbar[] = '{export}';
     $toolbar[] = '{toggleData}';
     
     echo GridView::widget([
@@ -67,7 +67,7 @@ $greencheck = '<i class="text-success fa fa-check fa-lg" aria-hidden="true"></i>
                 ],
             ]
         );
-    //    Pjax::end();
+    Pjax::end();
  ?>
     
 </div>

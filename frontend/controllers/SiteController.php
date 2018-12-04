@@ -220,7 +220,7 @@ class SiteController extends Controller
             if (empty($clubs)) {
                 // something is wrong because we should always have at least one club 
                 Yii::$app->user->logout();
-                Yii::$app->session->setFlash('danger', Yii::t('app', 'Your account has not been setup correctly, please contact the site administrator for help'));
+                Yii::$app->session->setFlash('danger', Yii::t('app', 'Your account has not been set up correctly, contact the site administrator'));
                 $this->goHome();
             }
 
@@ -288,7 +288,7 @@ class SiteController extends Controller
         } else {
             //fail user cannot proceed - missing data
             Yii::$app->user->logout();
-            $session->setFlash('danger', Yii::t('app', 'Your account has not been setup correctly, please contact the site administrator for help'));
+            $session->setFlash('danger', Yii::t('app', 'Your account has not been set up correctly, contact the site administrator'));
             $this->goHome();
         }
     }
@@ -370,7 +370,7 @@ class SiteController extends Controller
 
             if (!$user) {
                 // display error message to user
-                Yii::$app->session->setFlash('error', Yii::t('app', 'We couldn\'t sign you up, please contact us.'));
+                Yii::$app->session->setFlash('error', Yii::t('app', 'Your account has not been set up correctly, contact the site administrator'));
                 return $this->refresh();
             }
 
@@ -385,7 +385,7 @@ class SiteController extends Controller
 
             if (!Yii::$app->user->login($user)) {
                 // display error message to user
-                Yii::$app->session->setFlash('warning', Yii::t('app', 'Please try to log in.'));
+                Yii::$app->session->setFlash('warning', Yii::t('app', 'Please try to log in'));
 
                 // log this error, so we can debug possible problem easier.
                 Yii::error('Login after sign up failed! User ' . Html::encode($user->username) . ' could not log in.');
@@ -407,7 +407,7 @@ class SiteController extends Controller
         // sending email has failed
         if (!$model->sendAccountActivationEmail($user)) {
             // display error message to user
-            Yii::$app->session->setFlash('error', Yii::t('app', 'We couldn\'t send you account activation email, please contact us.'));
+            Yii::$app->session->setFlash('error', Yii::t('app', 'We failed to send you an account activation email, please contact us'));
 
             // log this error, so we can debug possible problem easier.
             Yii::error('Signup failed! User ' . Html::encode($user->username) . ' could not sign up. 
@@ -416,8 +416,7 @@ class SiteController extends Controller
 
         // everything is OK
         Yii::$app->session->setFlash('success', Yii::t('app', 'Hello') . ' ' . Html::encode($user->username) . '. ' .
-                Yii::t('app', 'To be able to log in, you need to confirm your registration. 
-                Please check your email, we have sent you a message.'));
+                Yii::t('app', 'To be able to log in, you need to confirm your registration, please check your email, we have sent you a message'));
     }
 
     /**
@@ -432,11 +431,11 @@ class SiteController extends Controller
         $model = new PasswordResetRequestForm();
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->sendEmail()) {
-                Yii::$app->session->setFlash('success', 'Check your email for further instructions.');
+                Yii::$app->session->setFlash('success', Yii::t('app', 'Check your email for further instructions'));
 
                 return $this->goHome();
             } else {
-                Yii::$app->session->setFlash('error', 'Sorry, we are unable to reset password for the provided email address.');
+                Yii::$app->session->setFlash('error', Yii::t('app', 'Sorry, we are unable to reset the password for the provided email address'));
             }
         }
 
@@ -463,7 +462,7 @@ class SiteController extends Controller
         }
 
         if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->resetPassword()) {
-            Yii::$app->session->setFlash('success', 'New password saved.');
+            Yii::$app->session->setFlash('success', Yii::t('app', 'New password saved'));
 
             return $this->goHome();
         }

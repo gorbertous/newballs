@@ -36,7 +36,7 @@ use kartik\widgets\Select2;
                 'data' => ArrayHelper::map(\backend\models\Members::find()
                         ->where(['c_id' => Yii::$app->session->get('c_id')])
                         ->orderBy('member_id')->all(), 'member_id', 'name'),
-                'options' => ['placeholder' => Yii::t('app', 'Select Member')],
+                'options' => ['placeholder' => Yii::t('app', 'Member')],
                 'pluginOptions' => [
                     'allowClear' => true
                 ],

@@ -8,6 +8,7 @@ use common\dictionaries\OutcomeStatus;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
+
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\GamesboardSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -27,7 +28,6 @@ $no_days = \backend\models\GamesBoard::getDaystonextgame();
 
 
     <?php
-//    Pjax::begin(['id' => 'pjax-gridview-container', 'enablePushState' => true]);
     $gridColumn = [
         ['class' => 'yii\grid\SerialColumn'],
         [
@@ -123,7 +123,7 @@ $no_days = \backend\models\GamesBoard::getDaystonextgame();
 //        $currentBtn);
 
 
-    $lefttoolbar = ['List of your pending games'];
+    $lefttoolbar = [Yii::t('modelattr', 'List of your pending games')];
 
 
     // right toolbar + custom buttons
@@ -132,7 +132,7 @@ $no_days = \backend\models\GamesBoard::getDaystonextgame();
 //         GridviewHelper::getNewbutton($currentBtn) . ' ' .
 //         GridviewHelper::getResetgrida($currentBtn)
 //    ];
-    $toolbar[] = GridviewHelper::getExportMenu($dataProvider, $gridColumn);
+    $toolbar[] = '{export}';
     $toolbar[] = '{toggleData}';
 
     echo GridView::widget([
@@ -152,10 +152,9 @@ $no_days = \backend\models\GamesBoard::getDaystonextgame();
         'itemLabelPlural'     => Yii::t('modelattr', 'records'),
         'replaceTags'         => [
             '{lefttoolbar}' => join(' ', $lefttoolbar)
-        ],
-            ]
+            ],
+        ]
     );
-//    Pjax::end();
 //    dd($member_model->getMemberStats());
     echo DetailView::widget([
         'model'      => $member_model,
@@ -163,7 +162,7 @@ $no_days = \backend\models\GamesBoard::getDaystonextgame();
         'hover'      => true,
         'mode'       => DetailView::MODE_VIEW,
         'panel'      => [
-            'heading' => 'Your Stats - Current Season',
+            'heading' => Yii::t('modelattr', 'Your Stats - Current Season'),
             'type'    => DetailView::TYPE_INFO,
         ],
         'buttons1'   => '',

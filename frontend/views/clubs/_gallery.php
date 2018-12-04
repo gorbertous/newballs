@@ -10,12 +10,13 @@ if (!file_exists($albums)) {
     //    $dirs = \yii\helpers\FileHelper::findFiles($albums);
     //    $dirs = array_filter(glob($albums), 'is_dir');
     $dirs = \yii\helpers\FileHelper::findDirectories($albums, ['recursive' => false]);
+    rsort($dirs);
 
     //show albums
     foreach ($dirs as $dir) {
         echo '<div class="row"><div class="col-md-12">';
         $album_year = substr($dir, strlen($albums));
-        $header_text = '<h3 class="panel-title"><span class="fa fa-file-image-o"></span> Album Year ' . $album_year . ' </h3><br>';
+        $header_text = '<h3 class="panel-title"><span class="fa fa-file-image-o"></span>'.' '. Yii::t('modelattr', 'Album').' '.Yii::t('modelattr', 'Year') .' '. $album_year . ' </h3><br>';
         echo $header_text;
 
 

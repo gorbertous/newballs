@@ -24,7 +24,7 @@ use common\helpers\ViewsHelper;
     ?>
 
     <ul class="nav nav-pills" id="tabContent">
-        <li class="active"><a href="#general" data-toggle="tab"><?= Yii::t('modelattr', 'Profile') ?></a></li>
+        <li class="active"><a href="#general" data-toggle="tab"><?= Yii::t('app', 'Profile') ?></a></li>
         <?php if(Yii::$app->user->can('writer')): ?>
             <li><a href="#settings" data-toggle="tab"><?= Yii::t('modelattr', 'Settings') ?></a></li>
         <?php endif; ?>
@@ -99,7 +99,7 @@ use common\helpers\ViewsHelper;
                 <div class="col-md-6">
                     <div class="row">
                         <div class="col-xs-12">
-                            <label class="control-label"><?= Yii::t('modelattr', 'Photo') ?><?= Yii::t('modelattr', ' - Max file size 8MB') ?></label>
+                            <label class="control-label"><?= Yii::t('modelattr', 'Photo') . ' ' ?><?= Yii::t('modelattr', '- Max file size 8MB') ?></label>
                             <?= /** @noinspection PhpUnhandledExceptionInspection */
                                 $form->hrwFileInput($model, 'ajaxfileinputPhoto')
                             ?>

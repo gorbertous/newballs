@@ -35,22 +35,22 @@ trait TraitDictionaries
      *
      * @param string $table
      * @param string $field
-     * @param int $mandant_id
+     * @param int $c_id
      * @return array
      * @throws \yii\db\Exception
      */
-    public static function getUsed($table, $field, $mandant_id)
+    public static function getUsed($table, $field, $c_id)
     {
         $all = self::all();
 
         $selected = [];
 
         $sql = <<<SQL
-        SELECT DISTINCT {$field} FROM {$table} WHERE ID_Mandant = :mandant_id;
+        SELECT DISTINCT {$field} FROM {$table} WHERE c_id = :c_id;
 SQL;
 
         $used = ArrayHelper::getColumn(Yii::$app->db->createCommand($sql, [
-            ':mandant_id' => $mandant_id
+            ':c_id' => $c_id
         ])->queryAll(), $field);
 
         foreach ($used as $type) {

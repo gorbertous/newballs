@@ -54,7 +54,7 @@ class ClubsController extends Controller
                     ],
                     [
                         'controllers' => ['clubs'],
-                        'actions'     => ['stats','photos'],
+                        'actions'     => ['stats', 'photos', 'warning'],
                         'allow'       => true,
                         'roles'       => ['member']
                     ],
@@ -82,6 +82,15 @@ class ClubsController extends Controller
                     'searchModel'   => $searchModel,
                     'dataProvider'  => $dataProvider,
                     'context_array' => $this->getSpecificContextArray()
+        ]);
+    }
+
+    public function actionWarning()
+    {
+        $model = $this->findModel(Yii::$app->session->get('c_id'));
+
+        return $this->renderNormalorAjax('warning', [
+                    'model' => $model
         ]);
     }
 
@@ -134,7 +143,6 @@ class ClubsController extends Controller
     {
         $viewGallery = $this->renderPartial('_gallery');
         return $this->render('photos', ['gallery' => $viewGallery]);
-
     }
 
     /**

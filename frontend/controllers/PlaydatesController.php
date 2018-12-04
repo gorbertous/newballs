@@ -83,6 +83,63 @@ class PlaydatesController extends Controller
         ]);
     }
 
+    /**
+     * Displays a scores.
+     * @param integer $termin_id
+     * @param integer $score_id
+     * @return mixed
+     */
+    public function actionScores($termin_id, $court_id)
+    {
+        // get players on the court
+        $game = \backend\models\GamesBoard::find()
+                ->joinWith('member')
+                ->where(['games_board.termin_id' => $termin_id])
+                ->andWhere(['games_board.court_id' => $court_id])
+                ->all();
+        // get score
+        $score = \backend\models\Scores::find()
+                ->where(['termin_id' => $termin_id])
+                ->andWhere(['court_id' => $court_id])
+                ->one();
+
+        return $this->renderNormalorAjax('score', [
+                    'game'  => $game,
+                    'score' => $score,
+        ]);
+    }
+    
+    /**
+     * Displays a scores.
+     * @param integer $termin_id
+     * @param integer $score_id
+     * @return mixed
+     */
+    public function actionUploadscore($termin_id, $court_id)
+    {
+         /** @var $model \backend\models\GamesBoard */
+        $model = new \backend\models\Scores();
+        $model->termin_id = $termin_id;
+        $model->court_id = $court_id;
+
+        if ($model->load(Yii::$app->request->post())) {
+
+            $valid = $model->validate();
+
+            if (!$valid) {
+                $this->getBaseMsg($model->errors);
+            }
+
+            $model->save(false);
+            Yii::$app->session->setFlash('success', 'You have successfully uploaded the score!');
+            return $this->redirect(Yii::$app->request->referrer);
+        } else {
+            return $this->renderNormalorAjax('uploadscore', [
+                        'model' => $model
+            ]);
+        }
+    }
+
     private function getYearSeason($id = 1)
     {
         $yearseason = \backend\models\Clubs::find()

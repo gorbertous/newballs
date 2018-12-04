@@ -169,7 +169,6 @@ class PlayDates extends \yii\db\ActiveRecord
         }
     }
 
-
     /**
      * @return \yii\db\ActiveQuery
      */
