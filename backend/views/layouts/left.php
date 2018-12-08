@@ -72,7 +72,7 @@ if (!Yii::$app->user->isGuest) {
                                 'label'   => MenuTypes::translationsText(),
                                 'icon'    => MenuTypes::TRANSLATIONS_ICON_MENU,
                                 'url'     => Url::toRoute(['message/index']),
-                                'active'  => ($route == 'message/index'),
+                                'active'  => ($route == 'message/index' || $route == 'message/indexdupes' || $route == 'message/scanrun' || $route == 'message/scannew' || $route == 'message/indexunused' || $route == 'message/scanblacklisted'),
                                 'visible' => Yii::$app->user->can('team_admin')
                             ],
                             [

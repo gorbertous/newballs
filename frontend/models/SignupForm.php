@@ -33,7 +33,7 @@ class SignupForm extends Model
             ['username', 'match',  'not' => true,
                 // we do not want to allow users to pick one of spam/bad usernames 
                 'pattern' => '/\b('.Yii::$app->params['user.spamNames'].')\b/i',
-                'message' => Yii::t('app', 'It\'s impossible to have that username.')],            
+                'message' => Yii::t('app', 'The selected username is not possible!')],            
             ['username', 'unique', 'targetClass' => '\common\models\User', 
                 'message' => Yii::t('app', 'This username has already been taken.')],
 
@@ -42,7 +42,7 @@ class SignupForm extends Model
             ['email', 'email'],
             ['email', 'string', 'max' => 255],
             ['email', 'unique', 'targetClass' => '\common\models\User', 
-                'message' => 'This email address has already been taken.'],
+                'message' => Yii::t('app', 'This email address has already been taken!')],
 
             ['password', 'required'],
             [['club'], 'integer'],

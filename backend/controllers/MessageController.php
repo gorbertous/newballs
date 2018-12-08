@@ -30,7 +30,7 @@ class MessageController extends Controller
     use TraitController;
 
     // which folders should be scanned
-    private $scanroot = '@backend' . DIRECTORY_SEPARATOR;
+    private $scanroot = '@root' . DIRECTORY_SEPARATOR;
     // list of the php function for translating messages.
     private $phpTranslators = ['::t'];
     // list of the js function for translating messages.
@@ -51,6 +51,8 @@ class MessageController extends Controller
         '/messages',
         '/vendor',
         '/backend/assets',
+        '/frontend/assets',
+        '/api/assets',
         '/BaseYii.php',
         'runtime',
         'bower',
@@ -684,7 +686,7 @@ class MessageController extends Controller
             'except' => $this->ignoredItems,
             'only'   => $this->phpPatterns,
         ]);
-
+      
         // first fetch constants
         $implementstack = [];
         foreach ($files as $file) {
@@ -706,6 +708,7 @@ class MessageController extends Controller
                 }
             }
         }
+        
         // apply all the implements
         foreach ($implementstack as $kis => $vis) {
             foreach ($this->_constElements as $constname => $msg) {
@@ -790,7 +793,7 @@ class MessageController extends Controller
         SMS::deleteAll(['valid' => 0]);
 
         // redirect to the new items found
-        return $this->redirect('/message/scannew');
+        return $this->redirect('/admin/message/scannew');
     }
 
     /**

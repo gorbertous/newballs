@@ -110,13 +110,13 @@ class User extends UserIdentity implements IdentityInterface
             ['username', 'match',  'not' => true,
                 // we do not want to allow users to pick one of spam/bad usernames 
                 'pattern' => '/\b('.Yii::$app->params['user.spamNames'].')\b/i',
-                'message' => Yii::t('app', 'It\'s impossible to have that username.')],
+                'message' => Yii::t('app', 'The selected username is not possible!')],
             // password field is required on 'create' scenario
             ['password', 'required', 'on' => 'create'],
             // use Kartik presets to determine password strength
             [['password'], StrengthValidator::class, 'preset' => 'normal'],
-            ['username', 'unique', 'message' => Yii::t('modelattr', 'This username has already been taken!')],
-            ['email', 'unique', 'message' => Yii::t('modelattr', 'This email address has already been taken!')]
+            ['username', 'unique', 'message' => Yii::t('app', 'This username has already been taken.')],
+            ['email', 'unique', 'message' => Yii::t('app', 'This email address has already been taken!')]
         ];
     }
 

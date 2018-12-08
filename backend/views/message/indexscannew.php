@@ -97,7 +97,7 @@ $currentBtn = GridviewHelper::getCurrentBtn($context_array);
     
     echo GridView::widget([
                 'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
+                'filterModel' => $searchModel,
                 'columns'        => $gridColumn,
                 'id' => 'gridview-club-id',
                 'responsive'          => true,

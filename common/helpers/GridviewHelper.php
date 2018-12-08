@@ -124,7 +124,7 @@ class GridviewHelper
                         if (Yii::$app->user->can('writer')) {
                             return Html::a('<i class="fa fa-envelope-o"></i>', Url::to($url), [
                                 'class' => 'btn btn-default btn-style',
-                                'title' => Yii::t('appMenu', 'Send password reset email')
+                                'title' => Yii::t('app', 'Send password reset email')
                             ]);
                         }
                         return '';
