@@ -234,8 +234,10 @@ class MessageController extends Controller
         if (isset($_POST['expandRowKey'])) {
             $referrer = explode('?', Yii::$app->request->referrer)[0];
             $referrer = substr($referrer, strrpos($referrer, '/') + 1);
+//            dd($referrer);
             switch ($referrer) {
                 case 'index':
+                case 'message':
                 case 'indexdupes':
                     $id = $_POST['expandRowKey']['id'];
                     $sms = SMS::findOne(['source_message_id' => $id]);

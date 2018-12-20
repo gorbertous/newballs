@@ -261,7 +261,7 @@ class GamesBoard extends \yii\db\ActiveRecord
             return Yii::$app->mailer->compose('rotaReminderEmail', ['model' => $model, 'count' => $count, 'date' => $date])
                             ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name . ' robot'])
                             ->setTo($model->user->email)
-                            ->setSubject(Yii::$app->name . Yii::t('app', ' - Rota Reminder Email'))
+                            ->setSubject(Yii::$app->name . ' - '. Yii::t('app', 'Rota Reminder Email'))
                             ->send();
         } else {
             return false;
@@ -282,13 +282,13 @@ class GamesBoard extends \yii\db\ActiveRecord
                                 ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name . ' robot'])
                                 ->setTo($model->member->user->email)
                                 ->setBcc(Yii::$app->session->get('club_chair_email'))
-                                ->setSubject(Yii::$app->name . Yii::t('app', ' - Rota Confirmation Email'))
+                                ->setSubject(Yii::$app->name . ' - '.Yii::t('app', 'Rota Confirmation Email'))
                                 ->send();
             } else {
                 return Yii::$app->mailer->compose('rotaConfirmationEmail', ['model' => $model])
                                 ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name . ' robot'])
                                 ->setTo($model->member->user->email)
-                                ->setSubject(Yii::$app->name . Yii::t('app', ' - Rota Confirmation Email'))
+                                ->setSubject(Yii::$app->name . ' - '. Yii::t('app', 'Rota Confirmation Email'))
                                 ->send();
             }
         } else {

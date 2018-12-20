@@ -62,10 +62,12 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        if (Yii::$app->user->isGuest) {
-            return $this->redirect('/admin/login');
+//        dd($this->goHome());
+        if (empty(Yii::$app->session->get('member_id'))) {
+            return $this->redirect(['site/login']);
+        } else {
+            return $this->render('index');
         }
-        return $this->render('index');
     }
 
     /**
@@ -76,7 +78,7 @@ class SiteController extends Controller
     public function actionLogin()
     {
         $this->layout = 'main-login';
-        if (!Yii::$app->user->isGuest) {
+        if (!empty(Yii::$app->session->get('member_id'))) {
             return $this->redirect('/admin/index');
         }
 

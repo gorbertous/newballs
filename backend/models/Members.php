@@ -7,6 +7,7 @@ use Yii;
 use asinfotrack\yii2\audittrail\behaviors\AuditTrailBehavior;
 use common\models\User;
 use backend\models\Countries;
+use yii\db\Expression;
 
 /**
  * This is the model class for table "members".
@@ -127,7 +128,7 @@ class Members extends \yii\db\ActiveRecord
             'is_visible'             => Yii::t('modelattr', 'Visible'),
             'ban_scoreupload'        => Yii::t('modelattr', 'Ban Score Upload'),
             'coaching'               => Yii::t('modelattr', 'Interested in coaching lessons'),
-            'token_stats'            => Yii::t('modelattr', 'Tokens'). ' / ' . Yii::t('modelattr', 'Balls Count'),
+            'token_stats'            => Yii::t('modelattr', 'Tokens') . ' / ' . Yii::t('modelattr', 'Balls Count'),
             'player_stats_scheduled' => Yii::t('modelattr', 'Scheduled'),
             'player_stats_played'    => Yii::t('modelattr', 'Played'),
             'player_stats_cancelled' => Yii::t('modelattr', 'Cancelled'),
@@ -231,7 +232,7 @@ class Members extends \yii\db\ActiveRecord
             return '';
         }
     }
-    
+
     /**
      * mailing list - active members
      *
@@ -249,7 +250,7 @@ class Members extends \yii\db\ActiveRecord
         if (!empty($andWhere)) {
             $membership->andWhere($andWhere);
         }
-        return  join(',', \yii\helpers\ArrayHelper::getColumn($membership, 'email'));
+        return join(',', \yii\helpers\ArrayHelper::getColumn($membership, 'email'));
     }
 
     /**
@@ -270,7 +271,24 @@ class Members extends \yii\db\ActiveRecord
         }
         return $stats_count->count();
     }
-   
+
+    /**
+     * Getter for pending games count
+     *
+     * @return string
+     */
+    public function getPendingGamesNo()
+    {
+        $pending_count = GamesBoard::find()
+                ->joinWith('termin')
+                ->where(['games_board.c_id' => Yii::$app->session->get('c_id')])
+                ->andWhere(['games_board.member_id' => Yii::$app->session->get('member_id')])
+                ->andWhere(['>', 'play_dates.termin_date', new Expression('NOW()')])
+                ->count();
+
+        return $pending_count;
+    }
+
 //    public function getCoachingCourts()
 //    {
 //        $courts_with_coach = GamesBoard::find()
@@ -297,7 +315,7 @@ class Members extends \yii\db\ActiveRecord
         //extract the list of courts and date ids
         $courts_list = \yii\helpers\ArrayHelper::getColumn($subQuery, 'court_id');
         $termins_list = \yii\helpers\ArrayHelper::getColumn($subQuery, 'termin_id');
-       
+
         $coaching_stats = GamesBoard::find()
                 ->where(['in', 'termin_id', $termins_list])
                 ->andWhere(['member_id' => $this->member_id])

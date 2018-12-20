@@ -281,6 +281,7 @@ class SiteController extends Controller
 
             $session->set('club_languages', Yii::$app->contLang->defaultClubLanguages);
             $session->set('_content_language', '_' . strtoupper(Yii::$app->language));
+            $session->set('member_pending_count', $member->getPendingGamesNo());
             
             isset($member->memType) ? $session->set('member_type_text', $member->memType->nameFB) : $session->set('member_type_text', Yii::t('modelattr', 'Undefined'));
 

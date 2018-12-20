@@ -24,6 +24,7 @@ $currentBtn = GridviewHelper::getCurrentBtn($context_array);
         [
             'class' => 'kartik\grid\ExpandRowColumn',
             'value' => function ($model) {
+//            dd($model->sourceMessage->sourceMessageScan->loccount);
                 if (isset($model->sourceMessage->sourceMessageScan) &&
                     $model->sourceMessage->sourceMessageScan->loccount > 0) {
                         return GridView::ROW_COLLAPSED ;

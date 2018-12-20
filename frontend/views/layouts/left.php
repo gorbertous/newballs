@@ -30,16 +30,18 @@ if (!Yii::$app->user->isGuest) {
                     <?= Html::img($profileThumb90, ['class' => 'img-circle', 'alt' => StringHelper::truncate(Html::encode(Yii::$app->user->identity->username), 2)]); ?>
                 </div>
                 <div class="pull-left info">
-               
+                    <p><?= Yii::$app->session->get('member_name')?></p>
+                    <p><small><?= Yii::t('app', 'Member Since'); ?> <?= Yii::$app->session->get('member_since')?></small></p>
+                    
                 </div>
             </div>
-            
+            <br>
             <!-- sidebar menu -->
             <?=
             Menu::widget(
             [
-              'options' => ['class' => 'sidebar-menu tree', 'data-widget'=> 'tree', 'data-accordion' => 0],
-//                                'encodeLabels' => false,
+                'options' => ['class' => 'sidebar-menu tree', 'data-widget'=> 'tree', 'data-accordion' => 0],
+                'encodeLabels' => false,
                 "items" => [
 //                                    ["label" => "Home", "url" => "/dashboard/index", "icon" => "home"],
                     // MENU => MEMBERS
@@ -57,7 +59,7 @@ if (!Yii::$app->user->isGuest) {
                                 'visible' => Yii::$app->user->can('reader')
                             ],
                             [
-                                'label'   => MenuTypes::yourGamesText(),
+                                'label'   => '<span class="left-menu-text">' . MenuTypes::yourGamesText()  . '</span>' . ' <span class="label label-info">' . Yii::$app->session->get('member_pending_count') . '</span>',
                                 'icon'    => MenuTypes::Y_GAMES_ICON_MENU,
                                 'url'     => Url::toRoute(['yourgames/index']),
                                 'active'  => ($route == 'yourgames/index'),
