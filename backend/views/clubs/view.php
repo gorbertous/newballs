@@ -1,124 +1,183 @@
 <?php
 
+use common\helpers\Helpers;
 use yii\helpers\Html;
-use kartik\detail\DetailView;
-use kartik\datecontrol\DateControl;
+use yii\widgets\DetailView;
 
-/**
- * @var yii\web\View $this
- * @var backend\models\Clubs $model
- */
+/* @var $this yii\web\View */
+/* @var $model backend\models\Clubs */
 
-$this->title = $model->name;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('modelattr', 'Clubs'), 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+$redcross = '<i class="text-danger fa fa-times fa-lg" aria-hidden="true"></i>';
+$greencheck = '<i class="text-success fa fa-check fa-lg" aria-hidden="true"></i>';
+
+$logo = (empty($model->logo) ? '' : $model->getThumbnailUrl($model->logo, [160, 120], false));
+
+$gridColumn = [
+    'season_id',
+    //    [
+    //         'label' => Yii::t('modelattr', 'About Page'),
+    //        'value' => function($model) {
+    //            return isset($model->season_id) ? \common\dictionaries\Sports::get($model->session_id) : null;
+    //        },
+    //    ],
+    [
+        'label' => Yii::t('modelattr', 'Club Chairman'),
+        'value' => function($model) {
+            return isset($model->chair) ? $model->chair->name : null;
+        },
+    ],
+    [
+        'label' => Yii::t('modelattr', 'Sport'),
+        'value' => function($model) {
+            return isset($model->sport_id) ? \common\dictionaries\Sports::get($model->sport_id) : null;
+        },
+    ],
+    [
+        'label' => Yii::t('modelattr', 'Games Average Duration'),
+        'value' => function($model) {
+            return isset($model->session_id) ? \common\dictionaries\ClubSessions::get($model->session_id) : null;
+        },
+    ],
+    [
+        'label'  => Yii::t('modelattr', 'About Page'),
+        'format' => 'html',
+        'value'  => $model->home_page,
+    ],
+    [
+        'label'  => Yii::t('modelattr', 'Members Page'),
+        'format' => 'html',
+        'value'  => $model->members_page,
+    ],
+    [
+        'label'  => Yii::t('modelattr', 'Rota Page'),
+        'format' => 'html',
+        'value'  => $model->rota_page,
+    ],
+    [
+        'label'  => Yii::t('modelattr', 'Tournament Page'),
+        'format' => 'html',
+        'value'  => $model->tournament_page,
+    ],
+    [
+        'label'  => Yii::t('modelattr', 'Summary Page'),
+        'format' => 'html',
+        'value'  => $model->summary_page,
+    ],
+    [
+        'label'  => Yii::t('modelattr', 'Record Coaching Sessions'),
+        'format' => 'html',
+        'value'  => function($model)use ($redcross, $greencheck) {
+            if ($model->coach_stats == 1) {
+                return $greencheck;
+            } else {
+                return $redcross;
+            }
+        }
+    ],
+    [
+        'label'  => Yii::t('modelattr', 'Balls/Tokens Responsibility count'),
+        'format' => 'html',
+        'value'  => function($model)use ($redcross, $greencheck) {
+            if ($model->token_stats == 1) {
+                return $greencheck;
+            } else {
+                return $redcross;
+            }
+        }
+    ],
+    [
+        'label'  => Yii::t('modelattr', 'Record Player Games'),
+        'format' => 'html',
+        'value'  => function($model)use ($redcross, $greencheck) {
+            if ($model->play_stats == 1) {
+                return $greencheck;
+            } else {
+                return $redcross;
+            }
+        }
+    ],
+    [
+        'label'  => Yii::t('modelattr', 'Score Uploading Facility'),
+        'format' => 'html',
+        'value'  => function($model)use ($redcross, $greencheck) {
+            if ($model->scores == 1) {
+                return $greencheck;
+            } else {
+                return $redcross;
+            }
+        }
+    ],
+    [
+        'label'  => Yii::t('modelattr', 'Allow members to schedule games'),
+        'format' => 'html',
+        'value'  => function($model)use ($redcross, $greencheck) {
+            if ($model->match_instigation == 1) {
+                return $greencheck;
+            } else {
+                return $redcross;
+            }
+        }
+    ],
+    [
+        'label'  => Yii::t('modelattr', 'Do you need to book courts'),
+        'format' => 'html',
+        'value'  => function($model)use ($redcross, $greencheck) {
+            if ($model->court_booking == 1) {
+                return $greencheck;
+            } else {
+                return $redcross;
+            }
+        }
+    ],
+    [
+        'label'  => Yii::t('modelattr', 'Money Stats'),
+        'format' => 'html',
+        'value'  => function($model)use ($redcross, $greencheck) {
+            if ($model->money_stats == 1) {
+                return $greencheck;
+            } else {
+                return $redcross;
+            }
+        }
+    ],
+];
+    
 ?>
+
 <div class="clubs-view">
-    <div class="page-header">
-        <h1><?= Html::encode($this->title) ?></h1>
+    <div class="row">
+        <div class="col-md-6">
+            <h4><?= $model->name ?></h4>
+            <?= $model->location->fullAddress ?>
+        </div>   
+
+        <div class="col-md-6">              
+            <?=
+            !empty($model->logo) ? Html::img($logo, ['class' => 'img-rounded', 'alt' => Yii::t('modelattr', 'Logo'), 'title' => Yii::t('modelattr', 'Logo')]) :
+                    Html::img('@frontend/img/profile-default90x90.png')
+            ?>
+        </div>
     </div>
-
-
-    <?= DetailView::widget([
-        'model' => $model,
-        'condensed' => false,
-        'hover' => true,
-        'mode' => Yii::$app->request->get('edit') == 't' ? DetailView::MODE_EDIT : DetailView::MODE_VIEW,
-        'panel' => [
-            'heading' => $this->title,
-            'type' => DetailView::TYPE_INFO,
-        ],
-        'attributes' => [
-            'c_id',
-            'season_id',
-            'session_id',
-            'css_id',
-            'type_id',
-            'lang',
-            'name',
-            'logo',
-            'logo_orig',
-            'home_page:ntext',
-            'rules_page:ntext',
-            'members_page:ntext',
-            'rota_page:ntext',
-            'tournament_page:ntext',
-            'subscription_page:ntext',
-            'summary_page:ntext',
-            'email_header:email',
-            'site_url:url',
-            'site_currency',
-            'coach_stats',
-            'token_stats',
-            'play_stats',
-            'scores',
-            'match_instigation',
-            'court_booking',
-            'money_stats',
-            [
-                'attribute' => 'activation_date',
-                'format' => [
-                    'datetime', (isset(Yii::$app->modules['datecontrol']['displaySettings']['datetime']))
-                        ? Yii::$app->modules['datecontrol']['displaySettings']['datetime']
-                        : 'd-m-Y H:i:s A'
-                ],
-                'type' => DetailView::INPUT_WIDGET,
-                'widgetOptions' => [
-                    'class' => DateControl::classname(),
-                    'type' => DateControl::FORMAT_DATETIME
-                ]
-            ],
-            'admin_id',
-            'chair_id',
-            'sport_id',
-            'location_id',
-            'is_active',
-            'subscription_id',
-            'payment',
-            'with_customheader',
-            'rota_removal',
-            'rota_block',
-            'photo_one',
-            'photo_two',
-            'photo_three',
-            'photo_four',
-            'custom_header',
-            'custom_footer',
-            'rota_style',
-            'client_url:url',
-            'created_by',
-            'updated_by',
-            [
-                'attribute' => 'created_at',
-                'format' => [
-                    'datetime', (isset(Yii::$app->modules['datecontrol']['displaySettings']['datetime']))
-                        ? Yii::$app->modules['datecontrol']['displaySettings']['datetime']
-                        : 'd-m-Y H:i:s A'
-                ],
-                'type' => DetailView::INPUT_WIDGET,
-                'widgetOptions' => [
-                    'class' => DateControl::classname(),
-                    'type' => DateControl::FORMAT_DATETIME
-                ]
-            ],
-            [
-                'attribute' => 'updated_at',
-                'format' => [
-                    'datetime', (isset(Yii::$app->modules['datecontrol']['displaySettings']['datetime']))
-                        ? Yii::$app->modules['datecontrol']['displaySettings']['datetime']
-                        : 'd-m-Y H:i:s A'
-                ],
-                'type' => DetailView::INPUT_WIDGET,
-                'widgetOptions' => [
-                    'class' => DateControl::classname(),
-                    'type' => DateControl::FORMAT_DATETIME
-                ]
-            ],
-        ],
-        'deleteOptions' => [
-            'url' => ['delete', 'id' => $model->c_id],
-        ],
-        'enableEditMode' => true,
-    ]) ?>
-
+    <div class="row">
+        <div class="col-md-12">
+            <?php
+            echo DetailView::widget([
+                'model'      => $model,
+                'attributes' => $gridColumn
+            ]);
+            ?>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="clearfix"></div>
+            <?php
+            echo Helpers::getModalFooter($model, $model->c_id, 'view', [
+                'buttons' => ['cancel']
+            ]);
+            ?>
+        </div>
+    </div>
+    <div class="clearfix"></div>
 </div>
+
