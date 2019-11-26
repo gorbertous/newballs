@@ -4,7 +4,7 @@ use kartik\grid\GridView;
 use common\helpers\GridviewHelper;
 use yii\helpers\ArrayHelper;
 use common\helpers\ViewsHelper;
-use yii\widgets\Pjax;
+//use yii\widgets\Pjax;
 
 
 $this->title = GridviewHelper::getTitle($context_array);
@@ -39,13 +39,13 @@ $club = \backend\models\Clubs::findOne(Yii::$app->session->get('c_id'));
             </h4>
           </div>
           <div id="collapse2" class="panel-collapse collapse">
-              <div class="panel-body"><?= \backend\models\Members::getMailingList()?></div>
+              <div class="panel-body"><p style="word-break: break-all;"><?= \backend\models\Members::getMailingList()?></p></div>
           </div>
         </div>
     </div>
     
     <?php 
-    Pjax::begin(['id' => 'pjax-gridview-container', 'enablePushState' => true]);
+//    Pjax::begin(['id' => 'pjax-gridview-container', 'enablePushState' => true]);
     $gridColumn = [
         ['class' => 'yii\grid\SerialColumn'],
 
@@ -218,7 +218,7 @@ $club = \backend\models\Clubs::findOne(Yii::$app->session->get('c_id'));
                 ],
             ]
         );
- Pjax::end();
+// Pjax::end();
  ?>
     
 </div>

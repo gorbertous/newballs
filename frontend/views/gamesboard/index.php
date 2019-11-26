@@ -2,7 +2,7 @@
 
 use kartik\grid\GridView;
 use kartik\widgets\Select2;
-use yii\widgets\Pjax;
+//use yii\widgets\Pjax;
 use common\helpers\GridviewHelper;
 use yii\helpers\ArrayHelper;
 use common\dictionaries\OutcomeStatus;
@@ -80,7 +80,7 @@ if ($searchModel->timefilter == 1) {
     <?php endif ?>
     
     <?php 
-    Pjax::begin(['id' => 'pjax-gridview-container', 'enablePushState' => true]);
+//    Pjax::begin(['id' => 'pjax-gridview-container', 'enablePushState' => true]);
     $gridColumn = [
         ['class' => 'yii\grid\CheckboxColumn'],
         ['class' => 'yii\grid\SerialColumn'],
@@ -247,7 +247,7 @@ if ($searchModel->timefilter == 1) {
                 ],
             ]
         );
-    Pjax::end();
+//    Pjax::end();
  ?>
  <?php if ($searchModel->timefilter  == 2): ?>
     <?= Html::endForm();?> 

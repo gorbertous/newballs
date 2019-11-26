@@ -22,6 +22,7 @@ use common\rbac\models\Role;
  */
 class UserController extends Controller
 {
+
     use TraitController;
 
     /**
@@ -44,28 +45,28 @@ class UserController extends Controller
                 'rules' => [
                     [
                         'controllers' => ['user'],
-                        'actions' => ['index', 'create', 'update', 'delete', 'sendresetemail', 'passresetemail'],
-                        'allow' => true,
-                        'roles' => ['writer'],
+                        'actions'     => ['index', 'create', 'update', 'delete', 'sendresetemail', 'passresetemail', 'updateacc'],
+                        'allow'       => true,
+                        'roles'       => ['writer'],
                     ],
                     [
                         'controllers' => ['user'],
-                        'actions' => ['update'],
-                        'allow' => true,
-                        'roles' => ['reader'],
+                        'actions'     => ['updateacc'],
+                        'allow'       => true,
+                        'roles'       => ['reader'],
                     ],
                     [
                         'controllers' => ['user'],
-                        'actions' => ['view'],
-                        'allow' => true
+                        'actions'     => ['view'],
+                        'allow'       => true
                     ],
                     [
                     // other rules
                     ],
                 ], // rules
             ], // access
-            'verbs' => [
-                'class' => VerbFilter::class,
+            'verbs'  => [
+                'class'   => VerbFilter::class,
                 'actions' => [
                     'delete' => ['post'],
                 ],
@@ -125,8 +126,8 @@ class UserController extends Controller
             return $out;
         } else {
             return $this->renderNormalorAjax('index', [
-                        'searchModel' => $searchModel,
-                        'dataProvider' => $dataProvider,
+                        'searchModel'   => $searchModel,
+                        'dataProvider'  => $dataProvider,
                         'context_array' => $this->getSpecificContextArray()
             ]);
         }
@@ -138,8 +139,7 @@ class UserController extends Controller
     public function actionView($id)
     {
         $model = $this->findModel($id);
-        if ($model->id === Yii::$app->user->identity->id ||
-                Yii::$app->user->can('writer')) {
+        if ($model->id === Yii::$app->user->identity->id || Yii::$app->user->can('writer')) {
             return $this->renderNormalorAjax('view', [
                         'model' => $model
             ]);
@@ -165,7 +165,7 @@ class UserController extends Controller
                 $role->user_id = $user->getId();
                 $role->save();
                 $member = Members::find()
-                        ->where(['c_id' => $this->getSessionClubID(),
+                        ->where(['c_id'  => $this->getSessionClubID(),
                             'email' => $user->email])
                         ->One();
 
@@ -173,7 +173,7 @@ class UserController extends Controller
                     $member = new Members();
                     $member->c_id = $this->getSessionClubID();
                     $member->user_id = $user->id;
-                   
+
                     $member->save(false);
                 }
             }
@@ -195,13 +195,14 @@ class UserController extends Controller
         // get role
         $role = Role::findOne(['user_id' => $id]);
 
+
         if (empty($role)) {
             // make shure we always have a default member role
             $role = new Role();
             $role->user_id = $id;
             $role->item_name = 'member';
         }
-        
+
         // get user details
         $user = $this->findModel($id);
         if ($user->id !== Yii::$app->user->identity->id &&
@@ -233,7 +234,61 @@ class UserController extends Controller
             // update email in contact table if it has changed in the user table
             if (!empty($user->email)) {
                 $member = Members::find()->where(['user_id' => $user->id])->one();
-                if (isset($contact)) {
+                if (isset($member)) {
+                    $member->email = $user->email;
+                    $member->save(false);
+                }
+            }
+//            dd($user);
+            $user->save(false);
+            $role->save(false);
+            Yii::$app->session->setFlash('error', Yii::t('app', 'Account updated!'));
+
+            return $this->redirect(Yii::$app->request->referrer);
+//            return $this->goHome();
+        } else {
+            return $this->renderNormalorAjax('update', [
+                        'user' => $user,
+                        'role' => $role
+            ]);
+        }
+    }
+
+    public function actionUpdateacc($id)
+    {
+        // get role
+        $role = Role::findOne(['user_id' => $id]);
+
+        if (empty($role)) {
+            // make shure we always have a default member role
+            $role = new Role();
+            $role->user_id = $id;
+            $role->item_name = 'member';
+        }
+
+        // get user details
+        $user = $this->findModel($id);
+        if ($user->id !== Yii::$app->user->identity->id) {
+            throw new ForbiddenHttpException(Yii::t('app', 'You are not allowed to access this page.'));
+        }
+
+        // load user data with role and validate them
+        if ($user->load(Yii::$app->request->post()) && Model::validateMultiple([$user, $role])) {
+
+            // only if user entered new password we want to hash and save it
+            if ($user->password) {
+                $user->setPassword($user->password);
+            }
+
+            // if consultant is activating user manually we want to remove account activation token
+            if ($user->status == User::STATUS_ACTIVE && $user->account_activation_token != null) {
+                $user->removeAccountActivationToken();
+            }
+
+            // update email in contact table if it has changed in the user table
+            if (!empty($user->email)) {
+                $member = Members::find()->where(['user_id' => $user->id])->one();
+                if (isset($member)) {
                     $member->email = $user->email;
                     $member->save(false);
                 }
@@ -241,12 +296,14 @@ class UserController extends Controller
 
             $user->save(false);
             $role->save(false);
+            Yii::$app->session->setFlash('success', Yii::t('app', 'Account updated!'));
 
-            return $this->redirect(Yii::$app->request->referrer);
+//            return $this->redirect(Yii::$app->request->referrer);
+            return $this->goHome();
         } else {
             return $this->renderNormalorAjax('update', [
-                'user' => $user,
-                'role' => $role
+                        'user' => $user,
+                        'role' => $role
             ]);
         }
     }
@@ -275,14 +332,14 @@ class UserController extends Controller
         $resetlink = Yii::$app->urlManager->createAbsoluteUrl(['site/reset-password', 'token' => $user->password_reset_token]);
 
         return Yii::$app->mailer->compose('@backend/mail/account/password-reset.php', [
-            'user'      => $user,
-            'resetlink' => $resetlink,
-            'logo'      => Yii::getAlias('@backend') . '/mail/logo-mail.png'
-        ])
-        ->setFrom(['noreply@esst.lu' => Yii::$app->name])
-        ->setTo($user->email)
-        ->setSubject(Yii::t('app', 'Password reset'))
-        ->send();
+                            'user'      => $user,
+                            'resetlink' => $resetlink,
+                            'logo'      => Yii::getAlias('@backend') . '/mail/logo-mail.png'
+                        ])
+                        ->setFrom(['noreply@esst.lu' => Yii::$app->name])
+                        ->setTo($user->email)
+                        ->setSubject(Yii::t('app', 'Password reset'))
+                        ->send();
     }
 
     /**
@@ -299,4 +356,5 @@ class UserController extends Controller
 
         return $this->redirect(['index']);
     }
+
 }

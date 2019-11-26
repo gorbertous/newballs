@@ -168,8 +168,7 @@ class ActiveForm extends \kartik\widgets\ActiveForm
     {
         /* @var $model \backend\models\Mandants */
         $options = $model->getwidgetconfig($attribute);
-       
-
+        
         if (!isset($options['options']['id'])) {
             $options['options']['id'] = mt_rand();
         }

@@ -46,6 +46,7 @@ class MembersSearch extends Members
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'pagination' => [ 'pageSize' => 50 ],
             'sort'  => [
                 'defaultOrder' => [
                     'lastname' => SORT_ASC

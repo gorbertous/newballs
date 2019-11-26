@@ -9,7 +9,7 @@ use kartik\grid\GridView;
 use common\dictionaries\OutcomeStatus;
 use yii\helpers\Url;
 use common\helpers\GridviewHelper;
-use yii\widgets\Pjax;
+//use yii\widgets\Pjax;
 
 $this->title = GridviewHelper::getTitle($context_array);
 $currentBtn = GridviewHelper::getCurrentBtn($context_array);
@@ -55,7 +55,7 @@ if ($searchModel->timefilter == 1) {
     </div>
    
     <?php
-    Pjax::begin(['id' => 'pjax-gridview-container', 'enablePushState' => true]);
+//    Pjax::begin(['id' => 'pjax-gridview-container', 'enablePushState' => true]);
     $gridColumn = [
 //        ['class' => 'yii\grid\SerialColumn', 
 //            'contentOptions' => ['style' => 'width:20px;'],
@@ -166,6 +166,8 @@ if ($searchModel->timefilter == 1) {
                     case 4:
                         $bg_color = '#FF8883';
                         break;
+                    default:
+                        $bg_color = '#FF8883';
                 }
                 return ['style' => 'background-color:' 
                     . $bg_color];
@@ -321,7 +323,7 @@ if ($searchModel->timefilter == 1) {
         
             ]
         );
-    Pjax::end();
+//    Pjax::end();
  ?>
     
 </div>

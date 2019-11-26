@@ -3,18 +3,14 @@
 use common\rbac\models\Authitem;
 use kartik\widgets\Select2;
 use yii\helpers\Html;
-use yii\widgets\ActiveForm;
+use backend\widgets\ActiveForm;
 use kartik\password\PasswordInput;
+use common\helpers\Helpers;
 
 /* @var $this yii\web\View */
 /* @var $user \common\models\User */
 /* @var $form yii\widgets\ActiveForm */
 
-if (Yii::$app->user->can('writer')) {
-    $readonly = false;
-} else {
-    $readonly = true;
-}
 ?>
 
 <div class="user-form">
@@ -80,17 +76,11 @@ if (Yii::$app->user->can('writer')) {
         <div class="clearfix"></div>
     </div>
 
-    <div class="form-group pull-right">
-        <?=
-        Html::submitButton('<span class="fa fa-check"></span>&nbsp;' .
-            ($user->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update')), ['class' => $user->isNewRecord ? 'btn btn-success' : 'btn btn-success'])
-        ?>
-
-        <?=
-        Html::Button('<span class="fa fa-times"></span>&nbsp;' .
-            Yii::t('app', 'Cancel'), ['class' => 'btn btn-danger', 'data-dismiss' => 'modal'])
-        ?>
-    </div>
+    <?php
+        echo Helpers::getModalFooter($user, null, null, [
+            'buttons' => ['create_update', 'cancel']
+        ]);
+    ?>
 
     <?php ActiveForm::end(); ?>
 

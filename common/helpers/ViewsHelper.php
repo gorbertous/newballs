@@ -4,7 +4,7 @@ namespace common\helpers;
 
 use Yii;
 use yii\widgets\ListView;
-use yii\widgets\Pjax;
+//use yii\widgets\Pjax;
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
 use yii\data\ActiveDataProvider;
@@ -297,7 +297,7 @@ class ViewsHelper
 
             Pjax::begin(['enablePushState' => false, 'enableReplaceState' => false]);
             echo $html1 . $html2 . $html3;
-            Pjax::end();
+            //    Pjax::end();
         }
     }
 

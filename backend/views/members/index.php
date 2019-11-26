@@ -4,7 +4,7 @@ use kartik\grid\GridView;
 use common\helpers\GridviewHelper;
 use yii\helpers\ArrayHelper;
 use backend\models\Members;
-use yii\widgets\Pjax;
+//use yii\widgets\Pjax;
 
 $this->title = GridviewHelper::getTitle($context_array);
 $currentBtn = GridviewHelper::getCurrentBtn($context_array);
@@ -18,7 +18,7 @@ $greencheck = '<i class="text-success fa fa-check fa-lg" aria-hidden="true"></i>
 <div class="mandants-index">
 
     <?php 
-    Pjax::begin(['id' => 'pjax-gridview-container', 'enablePushState' => true]);
+    //    Pjax::begin(['id' => 'pjax-gridview-container', 'enablePushState' => true]);
     $gridColumn = [
         ['class' => 'yii\grid\SerialColumn'],
         [
@@ -217,7 +217,7 @@ $greencheck = '<i class="text-success fa fa-check fa-lg" aria-hidden="true"></i>
                 ],
             ]
         );
-    Pjax::end();
+    //    Pjax::end();
  ?>
     
 </div>

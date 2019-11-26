@@ -51,7 +51,7 @@ if (Yii::$app->user->can('writer')) {
                             'showMeter' => true,
                             'toggleMask' => false
                             ]
-                        ])->passwordInput(['placeholder' => Yii::t('app', 'New pwd ( if you want to change it )')]);
+                        ])->passwordInput(['placeholder' => Yii::t('app', 'New pwd ( if you want to change it ....)')]);
                     ?>
                 <?php endif ?>
             </div>

@@ -241,9 +241,11 @@ class Members extends \yii\db\ActiveRecord
     public function getMailingList(array $andWhere = [])
     {
         $membership = Members::find()
+                ->select('user.email')
                 ->joinWith('user')
                 ->where(['c_id' => Yii::$app->session->get('c_id')])
                 ->andWhere(['is_active' => true])
+                ->andWhere(['is_visible' => true])
                 ->all();
 
 
