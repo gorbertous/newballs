@@ -279,14 +279,14 @@ class GamesBoard extends \yii\db\ActiveRecord
         if (isset($model->member->user->email)) {
             if (Yii::$app->session->get('c_id') == 34) {
                 return Yii::$app->mailer->compose('rotaConfirmationEmail', ['model' => $model])
-                                ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name . ' robot'])
+                                ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name . ' automated mail - no reply'])
                                 ->setTo($model->member->user->email)
                                 ->setBcc(Yii::$app->session->get('club_chair_email'))
                                 ->setSubject(Yii::$app->name . ' - '.Yii::t('app', 'Rota Confirmation Email'))
                                 ->send();
             } else {
                 return Yii::$app->mailer->compose('rotaConfirmationEmail', ['model' => $model])
-                                ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name . ' robot'])
+                                ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name . ' automated mail - no reply'])
                                 ->setTo($model->member->user->email)
                                 ->setSubject(Yii::$app->name . ' - '. Yii::t('app', 'Rota Confirmation Email'))
                                 ->send();

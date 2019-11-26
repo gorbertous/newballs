@@ -139,7 +139,7 @@ class SignupForm extends Model
     public function sendAccountActivationEmail($user)
     {
         return Yii::$app->mailer->compose('accountActivationToken', ['user' => $user])
-                                ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name . ' robot'])
+                                ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name . ' automated mail - no reply'])
                                 ->setTo($this->email)
                                 ->setSubject('Account activation for ' . Yii::$app->name)
                                 ->send();
