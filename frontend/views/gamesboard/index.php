@@ -68,7 +68,7 @@ if ($searchModel->timefilter == 1) {
                 <?=Html::submitButton('Status Updates', ['class' => 'btn btn-info',]);?>
             </div>
         </div>
-    <?php elseif ($searchModel->timefilter == 1 && Yii::$app->user->can('team_admin')): ?>
+    <?php elseif ($searchModel->timefilter == 1 && Yii::$app->user->can('team_member')): ?>
         <?=Html::beginForm(['gamesboard/sendemailreminder'],'post');?>
         <div class="row">     
             <div class="col-xs-6">

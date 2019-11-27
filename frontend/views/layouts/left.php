@@ -132,6 +132,13 @@ if (!Yii::$app->user->isGuest) {
                                 'visible' => Yii::$app->user->can('writer')
                             ],
                             [
+                                'label'   => MenuTypes::adminusersText(),
+                                'icon'    => MenuTypes::ADMINRBAC_ICON_MENU,
+                                'url'     => Url::toRoute(['user/index']),
+                                'active'  => ($route == 'user/index'),
+                                'visible' => Yii::$app->user->can('team_admin')
+                            ],
+                            [
                                 'label'   => MenuTypes::playdatesText(),
                                 'icon'    => MenuTypes::PLAYDATES_ICON_MENU,
                                 'url'     => Url::toRoute(['playdates/index']),
