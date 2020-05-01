@@ -3,7 +3,7 @@
 namespace backend\models;
 
 use Yii;
-//use voskobovich\linker\LinkerBehavior;
+use voskobovich\linker\LinkerBehavior;
 use asinfotrack\yii2\audittrail\behaviors\AuditTrailBehavior;
 use common\models\User;
 use backend\models\Countries;
@@ -46,10 +46,14 @@ use yii\db\Expression;
  * @property int $created_at
  * @property int $updated_at
  *
+ * @property Clubs[] $clubs
  * @property GamesBoard[] $gamesBoards
+ * @property JClubMemRoles[] $jClubMemRoles
+ * @property JCourtBooked[] $jCourtBookeds
  * @property User $user
  * @property Clubs $c
  * @property MembershipType $memType
+ * @property Reserves[] $reserves
  */
 class Members extends \yii\db\ActiveRecord
 {
@@ -63,6 +67,7 @@ class Members extends \yii\db\ActiveRecord
     public $player_stats_cancelled;
     public $coaching_stats;
     public $status_stats;
+    public $club_role;
 
     /**
      * {@inheritdoc}
@@ -80,7 +85,7 @@ class Members extends \yii\db\ActiveRecord
         return [
             [['user_id', 'c_id', 'mem_type_id', 'grade_id', 'gender', 'is_admin', 'is_organiser', 'is_active', 'has_paid', 'is_visible', 'ban_scoreupload', 'coaching', 'created_by', 'updated_by', 'created_at', 'updated_at'], 'integer'],
             [['c_id'], 'required'],
-            [['dob'], 'safe'],
+            [['dob','clubroles_ids'], 'safe'],
             [['title', 'zip'], 'string', 'max' => 20],
             [['firstname', 'lastname', 'email', 'city'], 'string', 'max' => 50],
             [['photo', 'orig_photo'], 'string', 'max' => 150],
@@ -134,6 +139,7 @@ class Members extends \yii\db\ActiveRecord
             'player_stats_cancelled' => Yii::t('modelattr', 'Cancelled'),
             'coaching_stats'         => Yii::t('modelattr', 'Coached'),
             'status_stats'           => Yii::t('modelattr', 'No Show') . ' / ' . Yii::t('modelattr', 'Non Scheduled Play'),
+            'clubroles_ids'          => Yii::t('modelattr', 'Club Roles'),
             'created_by'             => Yii::t('modelattr', 'Created By'),
             'updated_by'             => Yii::t('modelattr', 'Updated By'),
             'created_at'             => Yii::t('modelattr', 'Created At'),
@@ -147,7 +153,7 @@ class Members extends \yii\db\ActiveRecord
     public function behaviors()
     {
         return array_merge(self::BTbehaviors(), [
-            'audittrail' => [
+            'audittrail'     => [
                 'class'             => AuditTrailBehavior::className(),
                 // some of the optional configurations
                 'ignoredAttributes' => ['created_at', 'updated_at', 'created_by', 'updated_by'],
@@ -164,17 +170,13 @@ class Members extends \yii\db\ActiveRecord
                     'last_checked' => 'datetime'
                 ]
             ],
-                // this will be removed if model is readonly
-//            'linkerBehavior' => [
-//                'class'     => LinkerBehavior::class,
-//                'relations' => [
-//                    'contacttypes_ids' => 'contactTypes',
-//                    'trainings_ids'    => 'jTrainingsContacts',
-//                    'managers_ids'     => 'jContactsManagers',
-//                    'responders_ids'   => 'firstResponders',
-//                    'notiflist_ids'    => 'notificationslists'
-//                ]
-//            ]
+            // this will be removed if model is readonly
+            'linkerBehavior' => [
+                'class'     => LinkerBehavior::class,
+                'relations' => [
+                    'clubroles_ids' => 'memberRoles',
+                ]
+            ]
         ]);
     }
 
@@ -442,6 +444,23 @@ class Members extends \yii\db\ActiveRecord
     public function getGamesBoards()
     {
         return $this->hasMany(GamesBoard::className(), ['member_id' => 'member_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getJClubMemRoles()
+    {
+        return $this->hasMany(JClubMemRoles::className(), ['member_id' => 'member_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getMemberRoles()
+    {
+        return $this->hasMany(ClubRoles::class, ['id' => 'role_id'])
+                        ->via('jClubMemRoles');
     }
 
     /**

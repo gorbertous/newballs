@@ -206,22 +206,22 @@ class Clubs extends ActiveRecord
     {
         $membership = Members::find()
                 ->where(['c_id' => $this->c_id]);
-       
+
         if (!empty($andWhere)) {
             $membership->andWhere($andWhere);
         }
         return $membership;
     }
-    
+
     public function getGamesStats(array $andWhere = [], string $innerjoin = '')
     {
         $games = GamesBoard::find()
                 ->where(['games_board.c_id' => $this->c_id]);
-        
+
         if (!empty($innerjoin)) {
             $games->innerJoinWith($innerjoin);
         }
-        
+
         if (!empty($andWhere)) {
             $games->andWhere($andWhere);
         }

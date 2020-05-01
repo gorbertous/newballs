@@ -21,8 +21,8 @@ $search = "$('.search-button').click(function(){
 });";
 $this->registerJs($search);
 
-$redcross = '<i class="text-danger fa fa-times fa-lg" aria-hidden="true"></i>';
-$greencheck = '<i class="text-success fa fa-check fa-lg" aria-hidden="true"></i>';
+$redcross = '<i class="text-danger fa fa-times" aria-hidden="true">'.Yii::t('modelattr', 'No').'</i>';
+$greencheck = '<i class="text-success fa fa-check" aria-hidden="true">'.Yii::t('modelattr', 'Yes').'</i>';
 if(!Yii::$app->session->get('member_has_paid') && Yii::$app->session->get('member_type_id') == 1){
     echo Yii::$app->session->setFlash('danger', Yii::t('app', 'Unfortunatelly the club has not yet received your membership payment, currently you cannot book the games, please settle this or contact the club chairman!') );
 }elseif(Yii::$app->session->get('member_type_id') == 4){
@@ -52,6 +52,27 @@ if ($searchModel->timefilter == 1) {
               </div>
           </div>
         </div>
+        <?php if ($searchModel->timefilter == 1 && Yii::$app->user->can('team_member')): ?>
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h4 class="panel-title">
+                  <a data-toggle="collapse" data-parent="#accordion" href="#collapse2"><?= Yii::t('app', 'Send Email Reminder')?>&nbsp;&nbsp;<span class="caret" style="border-width: 5px;"></span></a>
+                </h4>
+              </div>
+              <div id="collapse2" class="panel-collapse collapse">
+                  <div class="panel-body">
+                        <?=Html::beginForm(['gamesboard/sendemailreminder'],'post');?>
+                        <div class="row">     
+                            <div class="col-xs-6">
+                                <?= Html::hiddenInput('sendemail', true)?>
+                                <?= Html::submitButton(Yii::t('app', 'Send Email Reminder'), ['class' => 'btn btn-info',]);?>
+                            </div>
+                        </div>
+                        <?= Html::endForm();?> 
+                  </div>
+              </div>
+            </div>
+        <?php endif ?>
     </div>
    
     <?php
@@ -152,6 +173,7 @@ if ($searchModel->timefilter == 1) {
             'encodeLabel' => false,
             'format'    => 'raw',
             'headerOptions' => ['style'=>'text-align:center'],
+             
             'contentOptions' => function ($model, $key, $index, $column) {
                  switch($model->slot_id) {
                     case 1:
@@ -169,7 +191,7 @@ if ($searchModel->timefilter == 1) {
                     default:
                         $bg_color = '#FF8883';
                 }
-                return ['style' => 'background-color:' 
+                return ['style' => 'width: 10px; background-color:' 
                     . $bg_color];
             },
             'value'     => function($model) {
@@ -178,7 +200,8 @@ if ($searchModel->timefilter == 1) {
                 
             },
             'enableSorting' => false,
-            'width'      => '50px;',
+           
+            
         ],
          [
              'attribute' => 'member_id',
@@ -223,6 +246,7 @@ if ($searchModel->timefilter == 1) {
             'attribute' => 'tokens',
             'hAlign'    => GridView::ALIGN_CENTER,
             'format'    => 'raw',
+            'contentOptions' => ['style' => 'width: 10px;'],
             'value'     => function($model)use ($redcross, $greencheck) {
                 if ($model->tokens == 1) {
                     return $greencheck;
@@ -234,13 +258,14 @@ if ($searchModel->timefilter == 1) {
             'filter'     => [-1 => Yii::t('modelattr', 'All'),
                 0  => Yii::t('modelattr', 'No'),
                 1  => Yii::t('modelattr', 'Yes')],
-            'width'      => '100px;',
+            
             'enableSorting' => false,
         ],
         [
             'attribute' => 'late',
             'hAlign'    => GridView::ALIGN_CENTER,
             'format'    => 'raw',
+            'contentOptions' => ['style' => 'width: 10px;'],
             'value'     => function($model)use ($redcross, $greencheck) {
                 if ($model->late == 1) {
                     return $greencheck;
@@ -252,7 +277,7 @@ if ($searchModel->timefilter == 1) {
             'filter'     => [-1 => Yii::t('modelattr', 'All'),
                 0  => Yii::t('modelattr', 'No'),
                 1  => Yii::t('modelattr', 'Yes')],
-            'width'      => '100px;',
+            
             'enableSorting' => false,
         ],
         [
@@ -268,7 +293,7 @@ if ($searchModel->timefilter == 1) {
             ],
             'filterInputOptions'  => ['placeholder' => '', 'id' => 'grid-board-search-ID_status'],
             'enableSorting' => false,
-//            'visible' => Yii::$app->user->can('writer')
+            'visible' => $searchModel->timefilter == 1 ? false : true
         ],
         
     ]; 

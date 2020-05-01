@@ -4,14 +4,15 @@ use kartik\grid\GridView;
 use common\helpers\GridviewHelper;
 use yii\helpers\ArrayHelper;
 use common\helpers\ViewsHelper;
+use backend\models\ClubRoles;
 //use yii\widgets\Pjax;
 
 
 $this->title = GridviewHelper::getTitle($context_array);
 $currentBtn = GridviewHelper::getCurrentBtn($context_array);
 
-$redcross = '<i class="text-danger fa fa-times fa-lg" aria-hidden="true"></i>';
-$greencheck = '<i class="text-success fa fa-check fa-lg" aria-hidden="true"></i>';
+$redcross = '<i class="text-danger fa fa-times " aria-hidden="true">'.Yii::t('modelattr', 'No').'</i>';
+$greencheck = '<i class="text-success fa fa-check " aria-hidden="true">'.Yii::t('modelattr', 'Yes').'</i>';
 $club = \backend\models\Clubs::findOne(Yii::$app->session->get('c_id'));
 
 
@@ -47,12 +48,30 @@ $club = \backend\models\Clubs::findOne(Yii::$app->session->get('c_id'));
     <?php 
 //    Pjax::begin(['id' => 'pjax-gridview-container', 'enablePushState' => true]);
     $gridColumn = [
-        ['class' => 'yii\grid\SerialColumn'],
-
+        [
+            'class' => 'yii\grid\SerialColumn',
+            'contentOptions' => ['style' => 'width: 10px;'],
+        ],
+        
+        [
+            'attribute'      => 'club_role',
+            'label'          => Yii::t('modelattr', 'Role'),
+            'contentOptions' => ['style' => 'width: 50px;'],
+            'format'         => 'raw',
+            'value'          => function($model) {
+                $c_role = [];
+                foreach ($model->memberRoles as $mem_role) {
+                    $bcolor = ClubRoles::getRoleColor($mem_role->id);
+                    $formated_string =  "<span class='$bcolor'>{$mem_role->role}</span>";
+                    array_push($c_role, $formated_string);
+                }
+                return join('<br>', $c_role);
+            },
+        ],
         [
             'label'          => Yii::t('modelattr', 'Photo'),
+            'contentOptions' => ['style' => 'width:80px;'],
             'format'         => 'raw',
-            'contentOptions' => ['style' => 'width:90px;'],
             'value'          => function ($model) {
                 $gravatar = isset($model->user->email) ? $model->getGravatar($model->user->email) : null;
                 return !empty($model->photo) ? $model->getIconPreviewAsHtml('ajaxfileinputPhoto', 60) : $gravatar;
@@ -61,21 +80,14 @@ $club = \backend\models\Clubs::findOne(Yii::$app->session->get('c_id'));
         [
             'attribute'           => 'member_id',
             'label'               => Yii::t('modelattr', 'Name'),
+            'contentOptions' => ['style' => 'width:140px;'],
             'format'         => 'raw',
             'value'               => function($model) {
                 $mobile = empty($model->phone_mobile) ? $model->phone : $model->phone_mobile;
                 $email = isset($model->user) ? $model->user->email : '';
-                $ischair = $model->is_organiser ? ' <span class="badge bg-red pull-right">Club Chairman</span>' : '';
-                $iswebmaster = $model->user_id == 1 ? ' <span class="badge bg-orange pull-right">Webmaster</span>' : '';
-                $iscommemb = $model->is_admin? ' <span class="badge bg-green pull-right">Committee Member</span>' : '';
                 $iscoach = isset($model->memType) && ($model->memType->mem_type_id == 5) ? ' <span class="badge bg-blue pull-right">Coach</span>' : '';
-                return $model->name .'<br>'. $email .'<br>'.$mobile . $ischair . $iswebmaster . $iscommemb . $iscoach;
+                return $model->name .'<br>'. $email .'<br>'.$mobile . $iscoach;
             },
-//            'contentOptions' => function ($model, $key, $index, $column) {
-//                return ['style' => 'background-color:' 
-//                    . (!empty($model->coefTK_se) && $model->coefTK / $model->coefTK_se < 2
-//                        ? 'red' : 'blue')];
-//            },
             'filterType'          => GridView::FILTER_SELECT2,
             'filter'              => ViewsHelper::getMembersList(),
             'filterWidgetOptions' => [
@@ -86,6 +98,7 @@ $club = \backend\models\Clubs::findOne(Yii::$app->session->get('c_id'));
         [
             'attribute'           => 'mem_type_id',
             'label'               => Yii::t('modelattr', 'Type'),
+            'contentOptions'      => ['style' => 'width:100px;'],
             'value'               => 'memType.nameFB',
             'filterType'          => GridView::FILTER_SELECT2,
             'filter'              => ArrayHelper::map(\backend\models\MembershipType::find()->all(), 'mem_type_id', 'nameFB'),
@@ -93,6 +106,21 @@ $club = \backend\models\Clubs::findOne(Yii::$app->session->get('c_id'));
                 'pluginOptions' => ['allowClear' => true]
             ],
             'filterInputOptions'  => ['placeholder' => '', 'id' => 'grid-memtype-search-member_id'],
+        ],
+        [
+            'attribute' => 'grade_id',
+            'label'          => Yii::t('modelattr', 'Level'),
+            'contentOptions' => ['style' => 'width:90px;'],
+            'format'         => 'raw',
+            'value'          => function ($model) {
+                return isset($model->grade_id) ? common\dictionaries\Grades::get($model->grade_id) : null;
+            },
+            'filterType'          => GridView::FILTER_SELECT2,
+            'filter'              => common\dictionaries\Grades::all(),
+            'filterWidgetOptions' => [
+                'pluginOptions' => ['allowClear' => true]
+            ],
+            'filterInputOptions'  => ['placeholder' => '', 'id' => 'grid-nat-search-grades'],
         ],
         [
             'attribute'           => 'nationality',
@@ -143,20 +171,6 @@ $club = \backend\models\Clubs::findOne(Yii::$app->session->get('c_id'));
                 0  => Yii::t('modelattr', 'No'),
                 1  => Yii::t('modelattr', 'Yes')],
             'width'      => '100px;',
-        ],
-        [
-            'attribute' => 'grade_id',
-            'label'          => Yii::t('modelattr', 'Level'),
-            'format'         => 'raw',
-            'value'          => function ($model) {
-                return isset($model->grade_id) ? common\dictionaries\Grades::get($model->grade_id) : null;
-            },
-            'filterType'          => GridView::FILTER_SELECT2,
-            'filter'              => common\dictionaries\Grades::all(),
-            'filterWidgetOptions' => [
-                'pluginOptions' => ['allowClear' => true]
-            ],
-            'filterInputOptions'  => ['placeholder' => '', 'id' => 'grid-nat-search-grades'],
         ],
       
         [

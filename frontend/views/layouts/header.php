@@ -73,7 +73,7 @@ if (!empty(Yii::$app->session->get('member_photo'))) {
                                     <button title="<?= Yii::t('app', 'Update'); ?>" value="<?= Url::toRoute(['user/updateacc', 'id' => Yii::$app->user->identity->id]); ?>" class="btn btn-default btn-flat showModalButton">
                                         <?= Yii::t('app', 'Account'); ?>
                                     </button>
-                                    <button title="<?= Yii::t('app', 'Profile'); ?>" value="<?= Url::toRoute(['members/update', 'id' => Yii::$app->user->member->member_id]); ?>" class="btn btn-default btn-flat showModalButton">
+                                    <button title="<?= Yii::t('app', 'Profile'); ?>" value="<?= Url::toRoute(['members/update', 'id' => Yii::$app->session->get('member_id')]); ?>" class="btn btn-default btn-flat showModalButton">
                                         <?= Yii::t('app', 'Profile'); ?>
                                     </button>
                                 </div>

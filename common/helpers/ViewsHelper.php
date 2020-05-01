@@ -11,6 +11,7 @@ use yii\data\ActiveDataProvider;
 use backend\models\Countries;
 use backend\models\MembershipType;
 use backend\models\Members;
+use backend\models\ClubRoles;
 use common\rbac\models\Authitem;
 
 /**
@@ -131,6 +132,20 @@ class ViewsHelper
 
         return ArrayHelper::map($authitems->all(), 'name', 'name');
     }
+    
+     /**
+     * @param null type
+     *
+     * @return array
+     */
+    public static function getClubRoles()
+    {
+        $roles = ClubRoles::find()
+            ->orderBy(['role' => SORT_ASC]);
+
+        return ArrayHelper::map($roles->all(), 'id', 'role');
+    }
+    
     
   
     /**

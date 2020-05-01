@@ -25,7 +25,7 @@ use kartik\widgets\Select2;
                 'data' => ArrayHelper::map(\backend\models\PlayDates::find()
                         ->where(['c_id' => Yii::$app->session->get('c_id')])
                         ->orderBy(['termin_id' => SORT_DESC])->asArray()->all(), 'termin_id', 'termin_date'),
-                'options' => ['placeholder' => Yii::t('app', 'Select Date')],
+                'options' => ['placeholder' => Yii::t('app', 'Date')],
                 'pluginOptions' => [
                     'allowClear' => true
                 ],
@@ -36,7 +36,7 @@ use kartik\widgets\Select2;
                 'data' => ArrayHelper::map(\backend\models\Members::find()
                         ->where(['c_id' => Yii::$app->session->get('c_id')])
                         ->orderBy('member_id')->all(), 'member_id', 'name'),
-                'options' => ['placeholder' => Yii::t('app', 'Member')],
+                'options' => ['placeholder' => Yii::t('modelattr', 'Member')],
                 'pluginOptions' => [
                     'allowClear' => true
                 ],

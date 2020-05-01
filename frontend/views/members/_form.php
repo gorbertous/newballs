@@ -144,7 +144,16 @@ use common\helpers\ViewsHelper;
                         <?= $form->hrwCheckboxX($model, 'is_visible') ?>
                     </div>
                 </div>
-                <?php if(Yii::$app->user->can('team_member')): ?>
+                <div class="row">
+                    <div class="col-md-6">
+                        <?= $form->hrwSelect2($model, 'clubroles_ids', [
+                                'data' => ViewsHelper::getClubRoles(),
+                                'options' => ['multiple' => true,'id' => 'id-role'],
+                                'pluginOptions' => [ 'allowClear' => true ]
+                        ]) ?>
+                    </div>
+                </div>
+                <?php if(Yii::$app->user->can('developer')): ?>
                     <div class="row">
                         <div class="col-md-6">
                             <?= $form->hrwCheckboxX($model, 'is_admin') ?>
@@ -155,6 +164,7 @@ use common\helpers\ViewsHelper;
                             <?= $form->hrwCheckboxX($model, 'ban_scoreupload') ?>
                         </div>
                     </div>
+                    
                 <?php endif; ?>
             </div>
         <?php endif; ?>

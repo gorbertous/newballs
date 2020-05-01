@@ -431,24 +431,6 @@ $header .= '<span class="fa fa-pencil"></span> ' . Yii::t('appMenu', 'Utilities'
                                 </div>
                             </div>
                         <?php } ?>
-
-                        <!-- Maintenance mode box -->
-                        <div class="box box-solid">
-                            <div class="box-header with-border">
-                                <h3 class="box-title"><span
-                                            class="fa fa-exclamation-triangle"></span> <?= Yii::t('appMenu', 'Maintenance mode') ?>
-                                </h3>
-                            </div>
-
-                            <div class="box-body">
-                                <?= $form->field($model, 'maintenancemode')->radioList(
-                                    [0 => Yii::t('app', 'No'), 1 => Yii::t('app', 'Yes')],
-                                    ['inline' => true])->label(false); ?>
-
-                                <?= Html::submitButton('<span class="fa fa-wrench"></span>&nbsp; ' .
-                                    (Yii::t('app', 'Set mode')), ['name' => 'SubmitButton', 'value' => 'Maintenancemode', 'class' => 'btn btn-success btn-block']); ?>
-                            </div>
-                        </div>
                 </div>
 
             </div> <!-- // end .row -->

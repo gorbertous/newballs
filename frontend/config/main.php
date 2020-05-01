@@ -10,7 +10,7 @@ return [
     'name' => 'Balls Tennis',
     'id' => 'app-frontend',
     'basePath' => dirname(__DIR__),
-    'bootstrap' => ['log', 'maintenanceMode','assetsAutoCompress'],
+    'bootstrap' => ['log', 'brussens\maintenance\Maintenance','assetsAutoCompress'],
     'controllerNamespace' => 'frontend\controllers',
     'modules' => [
         'gridview' => [
@@ -104,15 +104,6 @@ return [
             ],
         ],
         
-        'maintenanceMode' => [
-            'class' => brussens\maintenance\MaintenanceMode::class,
-            'title' => 'This site is under maintenance',
-            'message' => 'We should be back shortly!',
-            'enabled' => false,
-            'urls' => ['site/index', 'login','request-password-reset'],
-            'roles' => ['developer'],
-        ],
-        
         'urlManager' => array_merge(
             require __DIR__ . '/../../common/config/url-manager.php',
             [
@@ -161,4 +152,58 @@ return [
         ],
     ],
     'params' => $params,
+    //        'maintenanceMode' => [
+//            'class' => brussens\maintenance\MaintenanceMode::class,
+//            'title' => 'This site is under maintenance',
+//            'message' => 'We should be back shortly!',
+//            'enabled' => false,
+//            'urls' => ['site/index', 'login','request-password-reset'],
+//            'roles' => ['developer'],
+//        ],
+    'container' => [
+        'singletons' => [
+            'brussens\maintenance\Maintenance' => [
+                'class' => 'brussens\maintenance\Maintenance',
+
+                // Route to action
+                'route' => 'maintenance/index',
+
+                // Filters. Read Filters for more info.
+                'filters' => [
+                    [
+                        'class' => 'brussens\maintenance\filters\URIFilter',
+                        'uri' => [
+                            'debug/default/toolbar',
+                            'debug/default/view',
+                            'site/index',
+                            'login',
+                            'request-password-reset'
+                        ]
+                    ],
+                    // Allowed roles filter
+                    [
+                        'class' => 'brussens\maintenance\filters\RoleFilter',
+                        'roles' => [
+                            'developer',
+                        ]
+                    ]
+                ],
+
+                // HTTP Status Code
+                'statusCode' => 503,
+
+                //Retry-After header
+                'retryAfter' => 120 // or Wed, 21 Oct 2015 07:28:00 GMT for example
+            ],
+            'brussens\maintenance\StateInterface' => [
+                'class' => 'brussens\maintenance\states\FileState',
+
+                // optional: use different filename for controlling maintenance state:
+                // 'fileName' => 'myfile.ext',
+
+                // optional: use different directory for controlling maintenance state:
+                // 'directory' => '@mypath',
+            ]
+        ]
+    ]
 ];

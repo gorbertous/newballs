@@ -19,7 +19,7 @@ Yii::$app->view->registerCss($css);
     <h2>
         <?= Yii::t('app', 'Welcome'); ?> <strong><?= Yii::$app->user->member->name; ?></strong>,
         <?= Yii::t('app', 'choose a club below or'); ?>
-        <a href="/logout"><?= Yii::t('app', 'logout'); ?></a>.
+        <a href="/logout"><?= Yii::t('app', 'Logout'); ?></a>.
     </h2>
 </div>
 

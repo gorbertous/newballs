@@ -73,7 +73,7 @@ if ($searchModel->timefilter == 1) {
         <div class="row">     
             <div class="col-xs-6">
                 <?= Html::hiddenInput('sendemail', true)?>
-                <?= Html::submitButton('Send Email Reminder', ['class' => 'btn btn-info',]);?>
+                <?= Html::submitButton(Yii::t('app', 'Send Email Reminder'), ['class' => 'btn btn-info',]);?>
             </div>
         </div>
         <?= Html::endForm();?> 
@@ -82,8 +82,14 @@ if ($searchModel->timefilter == 1) {
     <?php 
 //    Pjax::begin(['id' => 'pjax-gridview-container', 'enablePushState' => true]);
     $gridColumn = [
-        ['class' => 'yii\grid\CheckboxColumn'],
-        ['class' => 'yii\grid\SerialColumn'],
+        [
+            'class' => 'yii\grid\CheckboxColumn',
+            'contentOptions' => ['style' => 'width:10px;'],
+        ],
+        [
+            'class' => 'yii\grid\SerialColumn',
+            'contentOptions' => ['style' => 'width:10px;'],
+        ],
 
         [
             'label'          => 'ID',
@@ -94,7 +100,6 @@ if ($searchModel->timefilter == 1) {
         [
             'attribute'           => 'termin_id',
             'label'               => Yii::t('modelattr', 'Date'),
-            'contentOptions' => ['style' => 'width:150px;'],
             'value'               => 'termin.termin_date',
             'filterType'          => GridView::FILTER_SELECT2,
             'filter'              => ArrayHelper::map(backend\models\PlayDates::find()
@@ -111,7 +116,7 @@ if ($searchModel->timefilter == 1) {
             'attribute'           => 'member_id',
             'label'               => Yii::t('modelattr', 'Member'),
             'value'               => 'member.name',
-            'contentOptions' => ['style' => 'width:150px;'],
+            
             'filterType'          => GridView::FILTER_SELECT2,
             'filter'              => ViewsHelper::getMembersList(),
             'filterWidgetOptions' => [
@@ -127,7 +132,7 @@ if ($searchModel->timefilter == 1) {
             'headerOptions' => ['style'=>'text-align:center'],
            
             'contentOptions' => function ($model, $key, $index, $column) {
-                return ['style' => 'background-color:' 
+                return ['style' => 'width:10px; background-color:' 
                     . (($model->court_id % 2) == 0
                         ? '#B3C7DC' : '#FFC2BB')];
             },
@@ -152,7 +157,7 @@ if ($searchModel->timefilter == 1) {
                         $bg_color = '#FF8883';
                         break;
                 }
-                return ['style' => 'background-color:' 
+                return ['style' => 'width:10px; background-color:' 
                     . $bg_color];
             },
         ],

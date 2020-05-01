@@ -3,7 +3,7 @@
 use kartik\grid\GridView;
 use common\helpers\GridviewHelper;
 use yii\helpers\ArrayHelper;
-//use backend\models\Members;
+use backend\models\ClubRoles;
 //use yii\widgets\Pjax;
 use common\helpers\ViewsHelper;
 
@@ -21,7 +21,21 @@ $greencheck = '<i class="text-success fa fa-check fa-lg" aria-hidden="true"></i>
 //    Pjax::begin(['id' => 'pjax-gridview-container', 'enablePushState' => true]);
     $gridColumn = [
         ['class' => 'yii\grid\SerialColumn'],
-
+        [
+            'attribute'      => 'club_role',
+            'label'          => Yii::t('modelattr', 'Role'),
+            'contentOptions' => ['style' => 'width: 50px;'],
+            'format'         => 'raw',
+            'value'          => function($model) {
+                $c_role = [];
+                foreach ($model->memberRoles as $mem_role) {
+                    $bcolor = ClubRoles::getRoleColor($mem_role->id);
+                    $formated_string =  "<span class='$bcolor'>{$mem_role->role}</span>";
+                    array_push($c_role, $formated_string);
+                }
+                return join('<br>', $c_role);
+            },
+        ],
         [
             'label'          => Yii::t('modelattr', 'Photo'),
             'format'         => 'raw',
@@ -39,11 +53,8 @@ $greencheck = '<i class="text-success fa fa-check fa-lg" aria-hidden="true"></i>
                 $name = empty($model->firstname) ? '<span class="badge bg-red">Missing name - update this profile!</span>' : $model->name;
                 $mobile = empty($model->phone_mobile) ? $model->phone : $model->phone_mobile;
                 $email = isset($model->user) ? $model->user->email : '';
-                $ischair = $model->is_organiser ? ' <span class="badge bg-red pull-right">Club Chairman</span>' : '';
-                $iswebmaster = $model->user_id == 1 ? ' <span class="badge bg-orange pull-right">Webmaster</span>' : '';
-                $iscommemb = $model->is_admin? ' <span class="badge bg-green pull-right">Committee Member</span>' : '';
                 $iscoach = isset($model->memType) && ($model->memType->mem_type_id == 5) ? ' <span class="badge bg-blue pull-right">Coach</span>' : '';
-                return $name .'<br>'. $email .'<br>'.$mobile . $ischair . $iswebmaster . $iscommemb . $iscoach;
+                return $name .'<br>'. $email .'<br>'.$mobile . $iscoach;
             },
             'filterType'          => GridView::FILTER_SELECT2,
             'filter'              => ViewsHelper::getMembersList(),

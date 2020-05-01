@@ -208,8 +208,6 @@ class ImportController extends Controller
             $migrationstatus = file($temp_file);
 
 
-            $model->maintenancemode = (Yii::$app->maintenanceMode->getIsEnabled(true) ? 1 : 0);
-
             return $this->renderNormalorAjax('import', ['model'                => $model,
                         'migrationstatus'      => $migrationstatus,
                         'pendinguploads'       => $pendinguploads,
@@ -357,13 +355,6 @@ class ImportController extends Controller
                 foreach ($ri as $file) {
                     $ilog[] = $file;
                     $file->isDir() ? rmdir($file) : unlink($file);
-                }
-            } elseif ($SubmitButton == 'Maintenancemode') {
-
-                if (empty($FormData['maintenancemode'])) {
-                    Yii::$app->maintenanceMode->disable();
-                } else {
-                    Yii::$app->maintenanceMode->enable();
                 }
             }
 

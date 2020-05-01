@@ -109,7 +109,7 @@ class GamesBoard extends \yii\db\ActiveRecord
     {
         $rotaentry = GamesBoard::findOne(['id' => $id]);
         $isoncourt = GamesBoard::find()
-                ->where(['member_id' => Yii::$app->user->member->member_id])
+                ->where(['member_id' => Yii::$app->session->get('member_id')])
                 ->andWhere(['termin_id' => $rotaentry->termin_id])
                 ->one();
         if (isset($isoncourt)) {

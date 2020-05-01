@@ -67,7 +67,7 @@ class RotaController extends Controller
         $searchModel->late = -1;
         $searchModel->seasonfilter = Yii::$app->session->get('club_season');
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        $dataProvider->pagination->pageSize = 50;
+        $dataProvider->pagination->pageSize = 64;
 
         return $this->render('index', [
                     'searchModel'   => $searchModel,
@@ -85,7 +85,7 @@ class RotaController extends Controller
             Yii::$app->session->setFlash('warning', 'Your name is already on the rota!');
         } else {
             $model = $this->findModel($id);
-            $model->member_id = Yii::$app->user->member->member_id;
+            $model->member_id = Yii::$app->session->get('member_id');
             $model->save(false);
             if ($model->sendRotaConfirmationEmail($model)) {
                 Yii::$app->session->setFlash('success', 'Confirmation email has been sent out to you, check your mail box.');
@@ -100,7 +100,7 @@ class RotaController extends Controller
         $model = new \backend\models\JCourtBooked();
         $model->termin_id = $id;
         $model->court_id = $id2;
-        $model->booked_by = Yii::$app->user->member->member_id;
+        $model->booked_by = Yii::$app->session->get('member_id');
         $model->save(false);
         Yii::$app->session->setFlash('success', 'Message about your court booking saved in the database!');
 
