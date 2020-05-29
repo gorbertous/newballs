@@ -14,6 +14,7 @@ class AdminLtePluginAsset extends AssetBundle
         // more plugin CSS here
     ];
     public $depends = [
-        'dmstr\web\AdminLteAsset',
+        'dmstr\adminlte\web\AdminLteAsset',
+        'dmstr\adminlte\web\FontAwesomeAsset',
     ];
 }

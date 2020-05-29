@@ -24,16 +24,16 @@ use common\dictionaries\OutcomeStatus;
     ?>
 
     <ul class="nav nav-pills" id="tabContent">
-        <li class="active"><a href="#rota" data-toggle="tab"><?= Yii::t('modelattr', 'Rota') ?></a></li>
+        <li class="nav-item"><a href="#rota" data-toggle="tab"><?= Yii::t('modelattr', 'Rota') ?></a></li>
 
         <!-- Audit tab  -->
         <?= Helpers::getAuditTab() ?>
     </ul>
 
     <div class="tab-content">
-        <div class="tab-pane active well" id="rota">
+        <div class="tab-pane active card card-body bg-light" id="rota">
             <div class="row">
-                <div class="col-xs-6">
+                <div class="col-md-6">
                     <?=
                     $form->hrwSelect2($model, 'c_id', [
                         'data'          => ArrayHelper::map(Clubs::find()->all(), 'c_id', 'name'),
@@ -42,7 +42,7 @@ use common\dictionaries\OutcomeStatus;
                     ])
                     ?>
                 </div>
-                <div class="col-xs-6">
+                <div class="col-md-6">
                     <?=
                     $form->hrwSelect2($model, 'member_id', [
                         'data'          => ArrayHelper::map(\backend\models\Members::find()->all(), 'member_id', 'name'),
@@ -53,7 +53,7 @@ use common\dictionaries\OutcomeStatus;
                 </div>
             </div>      
             <div class="row"> 
-                <div class="col-xs-8">
+                <div class="col-md-8">
                     <?=
                     $form->hrwSelect2($model, 'termin_id', [
                         'data'          => ArrayHelper::map(\backend\models\PlayDates::find()->all(), 'termin_id', 'termin_date'),
@@ -62,20 +62,20 @@ use common\dictionaries\OutcomeStatus;
                     ])
                     ?>
                 </div>
-                <div class="col-xs-4">
+                <div class="col-md-4">
                    <?= $form->hrwTextInputMax($model, 'court_id') ?>
                    <?= $form->hrwTextInputMax($model, 'slot_id') ?>
                 </div>
             </div>
              <div class="row">     
-                <div class="col-xs-6">
+                <div class="col-md-6">
                    <?= $form->hrwSelect2($model, 'status_id', [
                             'data' => OutcomeStatus::all(),
                             'hideSearch' => true,
                             'options' => ['placeholder' => '']
                         ]) ?>
                 </div>
-                 <div class="col-xs-6">
+                 <div class="col-md-6">
                      <?= $form->hrwCheckboxX($model, 'tokens') ?>
                      <?= $form->hrwCheckboxX($model, 'late') ?>
                 </div>

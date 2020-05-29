@@ -66,7 +66,7 @@ $currentBtn = GridviewHelper::getCurrentBtn($context_array);
                 'whitelist' => function ($url, $model) use ($currentBtn) {
                     return Html::a('<i class="fa fa-thumbs-up"></i>', 
                         Url::toRoute($currentBtn['whitelist'] . '/' . $model->id),
-                        ['class' => 'btn btn-default',
+                        ['class' => 'btn-outline-secondary',
                         'title' => 'Whitelist item']);
                 }
             ]
@@ -94,12 +94,13 @@ $currentBtn = GridviewHelper::getCurrentBtn($context_array);
         'filterModel' => $searchModel,
                 'columns'        => $gridColumn,
                 'id' => 'gridview-club-id',
+                'tableOptions' => ['class' => 'table table-responsive'],
                 'responsive'          => true,
-                'responsiveWrap' => true,
-                'condensed' => true,
+                'responsiveWrap' => false,
+                'condensed' => false,
                 'panelBeforeTemplate' => GridviewHelper::getPanelBefore(),
                 'panel' => [
-                    'type'    => Gridview::TYPE_DEFAULT,
+                    'type'    => Gridview::TYPE_PRIMARY,
                     'heading' => $header,
                 ],
                 'toolbar'             => $toolbar,

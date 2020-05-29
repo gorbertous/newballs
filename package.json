@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "postcss.config.js",
-  "dependencies": {},
+  "dependencies": {
+    "@popperjs/core": "^2.4.0"
+  },
   "devDependencies": {
     "autoprefixer": "^8.2.0",
     "css-mqpacker": "^6.0.2",

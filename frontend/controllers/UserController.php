@@ -80,7 +80,7 @@ class UserController extends Controller
     public function actionIndex()
     {
         $searchModel = new UserSearch();
-        $searchModel->c_id = $this->getSessionClubID();
+        $searchModel->c_id = Yii::$app->session->get('c_id');
         $searchModel->status = -2;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
@@ -165,13 +165,13 @@ class UserController extends Controller
                 $role->user_id = $user->getId();
                 $role->save();
                 $member = Members::find()
-                        ->where(['c_id'  => $this->getSessionClubID(),
+                        ->where(['c_id'  => Yii::$app->session->get('c_id'),
                             'email' => $user->email])
                         ->One();
 
                 if (!isset($member)) {
                     $member = new Members();
-                    $member->c_id = $this->getSessionClubID();
+                    $member->c_id = Yii::$app->session->get('c_id');
                     $member->user_id = $user->id;
 
                     $member->save(false);

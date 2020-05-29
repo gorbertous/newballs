@@ -26,14 +26,14 @@ $htmlmode = $source->translationEN != strip_tags($source->translationEN) ||
         <?= $form->field($source, 'id')->hiddenInput(['value'=> $source->id])->label(false) ?>
 
         <ul class="nav nav-pills" id="tabContent">
-            <li <?= ($language == 'en' ? 'class="active"':'') ?>><a href="#en" data-toggle="tab"><?= Yii::t('app', 'English') ?></a></li>
-            <li <?= ($language == 'fr' ? 'class="active"':'') ?>><a href="#fr" data-toggle="tab"><?= Yii::t('app', 'French') ?></a></li>
-            <li <?= ($language == 'de' ? 'class="active"':'') ?>><a href="#de" data-toggle="tab"><?= Yii::t('app', 'German') ?></a></li>
+            <li class="nav-item"><a href="#en" <?= ($language == 'en' ? 'class="nav-link active"':'class="nav-link"') ?> data-toggle="tab"><?= Yii::t('app', 'English') ?></a></li>
+            <li class="nav-item"><a href="#fr" <?= ($language == 'fr' ? 'class="nav-link active"':'class="nav-link"') ?> data-toggle="tab"><?= Yii::t('app', 'French') ?></a></li>
+            <li class="nav-item"><a href="#de" <?= ($language == 'de' ? 'class="nav-link active"':'class="nav-link"') ?> data-toggle="tab"><?= Yii::t('app', 'German') ?></a></li>
         </ul>
 
         <?php if($htmlmode) { ?>
 
-            <div class="tab-content well">
+            <div class="tab-content card card-body bg-light">
 
                 <div class="tab-pane <?= ($language == 'en' ? 'active':'') ?>" id="en">
                     <?= $form->field($source, 'translationEN')->widget(TinyMce::class, [
@@ -61,7 +61,7 @@ $htmlmode = $source->translationEN != strip_tags($source->translationEN) ||
 
         <?php } else { ?>
 
-            <div class="tab-content well">
+            <div class="tab-content card card-body bg-light">
 
                 <div class="tab-pane <?= ($language == 'en' ? 'active':'') ?>" id="en">
                     <?= $form->field($source, 'translationEN')->textarea(['rows' => 3])
@@ -82,7 +82,7 @@ $htmlmode = $source->translationEN != strip_tags($source->translationEN) ||
 
         <?php } ?>
 
-        <div class="well">
+        <div class="card card-body bg-light">
             <div class="row">
                 <div class="col-md-12">
 
@@ -118,17 +118,17 @@ $htmlmode = $source->translationEN != strip_tags($source->translationEN) ||
             </div>
         </div>
 
-        <div class="form-group pull-right">
-            <?= Html::Button('<span class="fa fa-refresh"></span>&nbsp;' .
+        <div class="modal-footer">
+            <?= Html::Button('<span class="fas fa-sync"></span>&nbsp;' .
                 '<span id="syncmessagespan">'.($pendinguploads == 0 ? '' : $pendinguploads . ' Up') .'</span>',
-                ['class' => 'btn btn-info', 'id' => 'syncmessage']); ?>
+                ['class' => 'btn btn-primary', 'id' => 'syncmessage']); ?>
 
-            <?= Html::submitButton('<span class="fa fa-check"></span>&nbsp;' .
+            <?= Html::submitButton('<span class="fas fa-check"></span>&nbsp;' .
                             ($source->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update')), ['class' => $source->isNewRecord ?
                                 'btn btn-success' : 'btn btn-success']); ?>
 
-            <?= Html::Button('<span class="fa fa-times"></span>&nbsp;' .
-                    Yii::t('app', 'Cancel'), ['class' => 'btn btn-danger', 'data-dismiss' => 'modal']); ?>
+            <?= Html::Button('<span class="fas fa-times"></span>&nbsp;' .
+                    Yii::t('app', 'Cancel'), ['class' => 'btn btn-danger', 'data-izimodal-close' => 'modal']); ?>
         </div>
 
     <?php ActiveForm::end(); ?>

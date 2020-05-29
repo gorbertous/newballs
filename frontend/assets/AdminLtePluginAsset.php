@@ -7,13 +7,14 @@ class AdminLtePluginAsset extends AssetBundle
     public $sourcePath = '@vendor/almasaeed2010/adminlte/plugins';
     public $js = [
         
-        // more plugin Js here
+        // more plugin JS here
     ];
     public $css = [
        
         // more plugin CSS here
     ];
     public $depends = [
-        'dmstr\web\AdminLteAsset',
+        'dmstr\adminlte\web\AdminLteAsset',
+        'dmstr\adminlte\web\FontAwesomeAsset',
     ];
 }

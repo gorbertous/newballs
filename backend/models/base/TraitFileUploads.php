@@ -422,7 +422,7 @@ trait TraitFileUploads
         }
         if (!file_exists($this->uniqueFolder . $uniquename)) {
             // the source file is missing, show a question mark
-            $aimgtag = '<span class="file-other-icon"><i class="fa fa-eye-slash text-danger"></i></span>';
+            $aimgtag = '<span class="file-other-icon"><i class="fas fa-eye-slash text-danger"></i></span>';
             if (YII_ENV_DEV) {
                 $aimgtag .= $this->uniqueFolder . $uniquename;
             }

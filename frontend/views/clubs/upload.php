@@ -12,13 +12,13 @@ use kartik\select2\Select2;
  */
 ?>
 
-<div class="panel panel-default">
-    <div class="panel-heading">    
+<div class="card" style="width: 100%;">  
+    <div class="card-header text-white bg-primary">   
 
-        <h3 class="panel-title"><span class="fa fa-desktop"></span> <?= Yii::t('appMenu', 'Club') ?>&nbsp;<span class="fa fa-file-image-o"></span> <?= Yii::t('appMenu', 'Photos') ?> </h3>
+        <h5 class="panel-title"><span class="fas fa-desktop"></span> <?= Yii::t('appMenu', 'Club') ?>&nbsp;<span class="fas fa-file-image"></span> <?= Yii::t('appMenu', 'Photos') ?> </h5>
         <div class="clearfix"></div>
     </div>
-    <div class="panel-body">
+    <div class="card-body">
         <h4><?= Yii::t('modelattr', 'Max file size 8MB, to upload multiple files at the same time, select the files and drag & drop them directly from your file explorer window!') ?></h4>
         <?php
         $form = ActiveForm::begin([

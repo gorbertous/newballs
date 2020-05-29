@@ -38,10 +38,10 @@ class GridviewHelper
 
                 case '{view}':
                     $buttons['view'] = function ($url, $model) use ($currentBtn) {
-                        return Html::button('<i class="fa fa-eye"></i>', [
+                        return Html::button('<i class="fas fa-eye"></i>', [
                             'value' => Url::to($url),
-                            'class' => 'btn btn-default btn-style showModalButton',
-                            'title' => $currentBtn['view_label'] . ' ' . $model->titleSuffix
+                            'class' => 'btn btn-outline-secondary showModalButton',
+                            'title' => $currentBtn['view_label'] .  ' ' . $model->titleSuffix
                         ]);
                     };
                     break;
@@ -52,8 +52,8 @@ class GridviewHelper
                     $buttons['print_card_qr'] = function ($url, $model) use ($currentBtn) {
                         preg_match_all('!\d+!', $url, $getInt);
                         $link = explode('/',  $url);
-                        return Html::a('<i class="fa fa-id-card"></i>', 'authorizations/print/' . $getInt[0][0] . '?mode=print&view=card', [
-                            'class'     => 'btn btn-default btn-style',
+                        return Html::a('<i class="fas fa-id-card"></i>', 'authorizations/print/' . $getInt[0][0] . '?mode=print&view=card', [
+                            'class'     => 'btn btn-outline-secondary btn-style',
                             'title'     => $currentBtn['print_label'] . ' ' . $model->titleSuffix,
                             'data-pjax' => '0',
                             'target'    => '_blank'
@@ -66,9 +66,9 @@ class GridviewHelper
                 case '{update}':
                     $buttons['update'] = function ($url, $model) use ($currentBtn) {
 //                        if (Yii::$app->user->can('writer')) {
-                            return Html::button('<i class="fa fa-pencil-square-o"></i>', [
+                            return Html::button('<i class="fas fa-edit"></i>', [
                                 'value' => Url::to($url),
-                                'class' => 'btn btn-default btn-style showModalButton',
+                                'class' => 'btn btn-outline-secondary showModalButton',
                                 'title' => $currentBtn['mod_label'] . ' ' . $model->titleSuffix
                             ]);
 //                        }
@@ -81,8 +81,8 @@ class GridviewHelper
                 case '{delete}':
                     $buttons['delete'] = function ($url, $model) use ($currentBtn) {
 //                        if (Yii::$app->user->can('writer')) {
-                            return Html::a('<i class="fa fa-trash"></i>', Url::to($url), [
-                                'class'        => 'btn btn-default btn-style',
+                            return Html::a('<i class="fas fa-trash-alt"></i>', Url::to($url), [
+                                'class'        => 'btn btn-outline-secondary',
                                 'title'        => $currentBtn['del_label'] . ' ' . $model->titleSuffix,
                                 'data-confirm' => Yii::t('yii', 'Are you sure to delete this item?'),
                                 'data-method'  => 'post'
@@ -96,8 +96,8 @@ class GridviewHelper
 
                 case '{print}':
                     $buttons['print'] = function ($url, $model) use ($currentBtn) {
-                        return Html::a('<i class="fa fa-print"></i>', Url::to($url) . '?mode=print&view=one', [
-                            'class'     => 'btn btn-default btn-style',
+                        return Html::a('<i class="fas fa-print"></i>', Url::to($url) . '?mode=print&view=one', [
+                            'class'     => 'btn btn-outline-secondary',
                             'title'     => $currentBtn['print_label'] . ' ' . $model->titleSuffix,
                             'data-pjax' => '0',
                             'target'    => '_blank'
@@ -109,9 +109,9 @@ class GridviewHelper
 
                 case '{printselect}':
                     $buttons['printselect'] = function ($url) use ($currentBtn) {
-                        return Html::button('<i class="fa fa-print"></i>', [
+                        return Html::button('<i class="fas fa-print"></i>', [
                             'value' => Url::to($url),
-                            'class' => 'btn btn-default showModalButton btn-style',
+                            'class' => 'btn btn-outline-secondary showModalButton',
                             'title' => Yii::t('app', 'List of printable documents')
                         ]);
                     };
@@ -122,8 +122,8 @@ class GridviewHelper
                 case '{passresetemail}':
                     $buttons['passresetemail'] = function ($url) use ($currentBtn) {
                         if (Yii::$app->user->can('writer')) {
-                            return Html::a('<i class="fa fa-envelope-o"></i>', Url::to($url), [
-                                'class' => 'btn btn-default btn-style',
+                            return Html::a('<i class="fas fa-envelope"></i>', Url::to($url), [
+                                'class' => 'btn btn-outline-secondary',
                                 'title' => Yii::t('app', 'Send password reset email')
                             ]);
                         }
@@ -201,7 +201,7 @@ class GridviewHelper
      */
     public static function getPrinta(&$currentBtn)
     {
-        return Html::a('<i class="fa fa-print"></i> ' . $currentBtn['print_btntext'],
+        return Html::a('<i class="fas fa-print"></i> ' . $currentBtn['print_btntext'],
             Url::toRoute([
                 $currentBtn['print_btnlink'],
                 'id'   => 0,
@@ -224,9 +224,9 @@ class GridviewHelper
     {
        
         if (Yii::$app->user->can('writer')) {
-            return Html::button('<i class="fa fa-plus"></i>', [
+            return Html::button('<i class="fas fa-plus"></i>', [
                 'value' => Url::toRoute($currentBtn['create']),
-                'class' => 'showModalButton btn btn-success',
+                'class' => 'btn btn-success showModalButton',
                 'title' => $currentBtn['new_label']
             ]);
         }
@@ -242,11 +242,11 @@ class GridviewHelper
     public static function getResetgrida(&$currentBtn)
     {
        
-        return Html::a('<i class="fa fa-repeat"></i>', [
+        return Html::a('<i class="fas fa-redo"></i>', [
             Url::to(($currentBtn['link']))
         ], [
                 'data-pjax' => 0,
-                'class'     => 'btn btn-default',
+                'class'     => 'btn btn-secondary',
                 'title'     => Yii::t('diag', 'Reset Grid')
             ]
         );
@@ -258,9 +258,9 @@ class GridviewHelper
      */
     public static function getLangsyncbutton($pendinguploads = 0)
     {
-        return Html::Button('<span class="fa fa-refresh"></span>&nbsp;' .
+        return Html::Button('<i class="fas fa-sync"></i>&nbsp;' .
             '<span id="syncmessagespan">' . ($pendinguploads == 0 ? '' : $pendinguploads . ' Up') . '</span>', [
-                'class'     => 'btn btn-info pull-right',
+                'class'     => 'btn btn-primary float-right',
                 'id'        => 'syncmessage',
                 'data-pjax' => '0'
             ]
@@ -284,8 +284,8 @@ class GridviewHelper
 
         // PANEL HEADER + FILTERS
         return
-            '<span class="' . $context_array['ti_icon1'] . '"></span> ' . $context_array['title1'] . '&nbsp;' .
-            '<span class="' . $context_array['ti_icon2'] . '"></span> ' . $context_array['title2'] . ' ' . $infobtn;
+            '<i class="' . $context_array['ti_icon1'] . '"></i> ' . $context_array['title1'] . '&nbsp;' .
+            '<i class="' . $context_array['ti_icon2'] . '"></i> ' . $context_array['title2'] .' ' .$infobtn;
     }
 
     /**
@@ -301,7 +301,7 @@ class GridviewHelper
         // LEFT TOOLBAR
         foreach ($context_array as $btn) {
             if (is_array($btn) && isset($btn['button_title'])) {
-                $lefttoolbar[] = Html::a('<span class="' . $btn['fa_icon'] . '"></span> ' . $btn['button_title'], [$btn['link']], [
+                $lefttoolbar[] = Html::a('<i class="' . $btn['fa_icon'] . '"></i> ' . $btn['button_title'], [$btn['link']], [
                     'class'     => 'btn ' . ($btn === $currentBtn ? 'btn-primary disabled' : 'btn-default'),
                     'data-pjax' => 0,
                     'data-role' => 'link'
@@ -319,7 +319,7 @@ class GridviewHelper
     public static function getPanelBefore()
     {
         $panelBeforeTemplate = '{lefttoolbar}' .
-            '<div class="pull-right btn-toolbar kv-grid-toolbar" role="toolbar">' .
+            '<div class="float-right btn-toolbar kv-grid-toolbar" role="toolbar">' .
             '{toolbar}' .
             '</div>' .
 
@@ -351,7 +351,7 @@ class GridviewHelper
             ],
             'dropdownOptions' => [ 
                 'label' => Yii::t('yii', 'Export'),
-                'class' => 'btn btn-default', 
+                'class' => 'btn btn-outline-secondary', 
                 'itemsBefore' => [ 
                     '<li class="dropdown-header">Export All Data</li>', 
                 ], 

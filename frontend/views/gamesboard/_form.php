@@ -24,7 +24,7 @@ use common\helpers\ViewsHelper;
     ?>
 
     <ul class="nav nav-pills" id="tabContent">
-        <li class="active"><a href="#rota" data-toggle="tab"><?= Yii::t('appMenu', 'Rota') ?></a></li>
+        <li class="nav-item"><a class="nav-link active" href="#rota" data-toggle="tab"><?= Yii::t('appMenu', 'Rota') ?></a></li>
 
         <!-- Audit tab  -->
         <?php if(Yii::$app->user->can('team_memebr')): ?>
@@ -33,9 +33,9 @@ use common\helpers\ViewsHelper;
     </ul>
 
     <div class="tab-content">
-        <div class="tab-pane active well" id="rota">
+        <div class="tab-pane active card card-body bg-light" id="rota">
             <div class="row">
-                <div class="col-xs-6">
+                <div class="col-md-6">
                     <?=
                     $form->hrwSelect2($model, 'member_id', [
                         'data'          => ViewsHelper::getMembersList(),
@@ -44,7 +44,7 @@ use common\helpers\ViewsHelper;
                     ])
                     ?>
                 </div>
-                <div class="col-xs-6">
+                <div class="col-md-6">
                     <?=
                     $form->hrwSelect2($model, 'termin_id', [
                         'data'          => ArrayHelper::map(\backend\models\PlayDates::find()
@@ -59,22 +59,22 @@ use common\helpers\ViewsHelper;
                 </div>
             </div>      
             <div class="row"> 
-                <div class="col-xs-6">
+                <div class="col-md-6">
                    <?= $form->hrwTextInputMax($model, 'court_id') ?>
                 </div>
-                <div class="col-xs-6">
+                <div class="col-md-6">
                    <?= $form->hrwTextInputMax($model, 'slot_id') ?>
                 </div>
             </div>
              <div class="row">     
-                <div class="col-xs-6">
+                <div class="col-md-6">
                    <?= $form->hrwSelect2($model, 'status_id', [
                             'data' => OutcomeStatus::all(),
                             'hideSearch' => true,
                             'options' => ['placeholder' => '']
                         ]) ?>
                 </div>
-                 <div class="col-xs-6">
+                 <div class="col-md-6">
                      <?= $form->hrwCheckboxX($model, 'tokens') ?>
                      <?= $form->hrwCheckboxX($model, 'late') ?>
                 </div>

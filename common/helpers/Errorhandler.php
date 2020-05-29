@@ -56,7 +56,7 @@ class Errorhandler
                     Html::a('!&nbsp;<i class="fa fa-chain-broken"></i>&nbsp;!',
                         Url::to('/' . $modeltablename . '/unlinkrelateddata/' . $model[$fks[0]['rcn']]),
                         [
-                            'class' => 'btn btn-default btn-md',
+                            'class' => 'btn-outline-secondary btn-md',
                             'title' => 'unlink ' . $model->levelDescription
                         ]);
                 break;

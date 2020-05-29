@@ -184,7 +184,7 @@ class ViewsHelper
                 $box_color = 'bg-green';
             }
 
-            $html1 = "<div class='col-lg-3 col-xs-6' id='box'>" .
+            $html1 = "<div class='col-lg-3 col-md-6' id='box'>" .
                 "<div class='small-box {$box_color}'>" .
                 "<div class='inner'>" .
                 "<h3>{$count}</h3>" .
@@ -227,7 +227,7 @@ class ViewsHelper
         extract($TDCategory);
 
         /** @var $box_linkurl string */
-        $html1 = "<div class='col-lg-3 col-xs-6' id='box'>" .
+        $html1 = "<div class='col-lg-3 col-md-6' id='box'>" .
             "<div class='small-box {$box_color}'>" .
             "<div class='inner'>" .
             "<p>{$disptitle}</p>" .
@@ -294,7 +294,7 @@ class ViewsHelper
                 'options'      => [
                     'tag' => false
                 ],
-                'layout'       => '<span class="pull-right">{summary}</span>' .
+                'layout'       => '<span class="float-right">{summary}</span>' .
                     '<div class="clearfix"></div>' .
                     '{pager}' .
                     '<div class="clearfix"></div>' .

@@ -16,8 +16,8 @@ use yii\helpers\Html;
 $this->title = GridviewHelper::getTitle($context_array);
 $currentBtn = GridviewHelper::getCurrentBtn($context_array);
 
-$redcross = '<i class="text-danger fa fa-times fa-lg" aria-hidden="true"></i>';
-$greencheck = '<i class="text-success fa fa-check fa-lg" aria-hidden="true"></i>';
+$redcross = '<i class="text-danger fas fa-times fa-lg" aria-hidden="true"></i>';
+$greencheck = '<i class="text-success fas fa-check fa-lg" aria-hidden="true"></i>';
 
 $this->params['breadcrumbs'][] = $this->title;
 $search = "$('.search-button').click(function(){
@@ -37,14 +37,14 @@ if ($searchModel->timefilter == 1) {
 
 <div class="games-board-index">
     <div class="panel-group" id="accordion">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h4 class="panel-title">
-              <a data-toggle="collapse" data-parent="#accordion" href="#collapse1"><?= Yii::t('app', 'Rota Search')?>&nbsp;&nbsp;<span class="caret" style="border-width: 5px;"></span></a>
-            </h4>
+        <div class="card" style="width: 100%;">     
+            <div class="card-header">
+            <h5 class="panel-title">
+              <a class="card-link" data-toggle="collapse" data-parent="#accordion" href="#collapse1"><?= Yii::t('app', 'Rota Search')?>&nbsp;&nbsp;<i class="right fas fa-angle-down"></i></a>
+            </h5>
           </div>
           <div id="collapse1" class="panel-collapse">
-              <div class="panel-body">
+              <div class="card-body">
                     <div class="search-form">
                         <?=  $this->render('_search', ['model' => $searchModel]); ?>
                     </div>
@@ -52,32 +52,34 @@ if ($searchModel->timefilter == 1) {
           </div>
         </div>
     </div>
-    <?php if ($searchModel->timefilter == 2): ?>
-        <?=Html::beginForm(['gamesboard/bulk'],'post');?>
-        <div class="row">     
-            <div class="col-xs-6">
-                <?= Select2::widget([
-                    'name' => 'status_id',
-                    'data' => OutcomeStatus::all(),
-                    'options' => [
-                        'placeholder' => '',
-                    ],
-                ])?>
+    <div class="card-body">
+        <?php if ($searchModel->timefilter == 2): ?>
+            <?=Html::beginForm(['gamesboard/bulk'],'post');?>
+            <div class="row">     
+                <div class="col-3">
+                    <?= Select2::widget([
+                        'name' => 'status_id',
+                        'data' => OutcomeStatus::all(),
+                        'options' => [
+                            'placeholder' => '',
+                        ],
+                    ])?>
+                </div>
+                 <div class="col-3">
+                    <?=Html::submitButton('Status Updates', ['class' => 'btn btn-primary',]);?>
+                </div>
             </div>
-             <div class="col-xs-6">
-                <?=Html::submitButton('Status Updates', ['class' => 'btn btn-info',]);?>
+        <?php elseif ($searchModel->timefilter == 1 && Yii::$app->user->can('team_member')): ?>
+            <?=Html::beginForm(['gamesboard/sendemailreminder'],'post');?>
+            <div class="row">     
+                <div class="col-6">
+                    <?= Html::hiddenInput('sendemail', true)?>
+                    <?= Html::submitButton(Yii::t('app', 'Send Email Reminder'), ['class' => 'btn btn-primary',]);?>
+                </div>
             </div>
-        </div>
-    <?php elseif ($searchModel->timefilter == 1 && Yii::$app->user->can('team_member')): ?>
-        <?=Html::beginForm(['gamesboard/sendemailreminder'],'post');?>
-        <div class="row">     
-            <div class="col-xs-6">
-                <?= Html::hiddenInput('sendemail', true)?>
-                <?= Html::submitButton(Yii::t('app', 'Send Email Reminder'), ['class' => 'btn btn-info',]);?>
-            </div>
-        </div>
-        <?= Html::endForm();?> 
-    <?php endif ?>
+            <?= Html::endForm();?> 
+        <?php endif ?>
+    </div>
     
     <?php 
 //    Pjax::begin(['id' => 'pjax-gridview-container', 'enablePushState' => true]);
@@ -236,12 +238,13 @@ if ($searchModel->timefilter == 1) {
                 'filterModel' => $searchModel,
                 'columns'        => $gridColumn,
                 'id' => 'gridview-club-id',
+                'tableOptions' => ['class' => 'table table-responsive'],
                 'responsive'          => true,
-                'responsiveWrap' => true,
-                'condensed' => true,
+                'responsiveWrap' => false,
+                'condensed' => false,
                 'panelBeforeTemplate' => GridviewHelper::getPanelBefore(),
                 'panel' => [
-                    'type'    => Gridview::TYPE_DEFAULT,
+                    'type'    => Gridview::TYPE_PRIMARY,
                     'heading' => $header,
                 ],
                 'toolbar'             => $toolbar,

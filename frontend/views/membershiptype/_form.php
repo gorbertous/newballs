@@ -23,7 +23,7 @@ $alllang = Yii::$app->contLang->languages;
     ?>
 
     <ul class="nav nav-pills" id="tabContent">
-        <li class="active"><a href="#fees" data-toggle="tab"><?= Yii::t('modelattr', 'Membership Types') ?></a></li>
+        <li class="nav-item"><a class="nav-link active" href="#fees" data-toggle="tab"><?= Yii::t('modelattr', 'Membership Types') ?></a></li>
 
         <!-- Audit tab  -->
         <?php if(Yii::$app->user->can('team_memebr')): ?>
@@ -32,10 +32,10 @@ $alllang = Yii::$app->contLang->languages;
     </ul>
 
     <div class="tab-content">
-        <div class="tab-pane active well" id="fees">
+        <div class="tab-pane active card card-body bg-light" id="fees">
            
             <div class="row">
-                <div class="col-xs-12">
+                <div class="col-md-12">
                     <?php
                     foreach ($alllang as $iso) {
                         echo $form->hrwTextInputMax($model, 'name_'.$iso);

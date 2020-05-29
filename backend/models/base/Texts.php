@@ -163,9 +163,9 @@ class Texts extends ActiveRecord
         if (empty($model)) {
             $hotlink = '';
         } else {
-            $hotlink = Html::button('<i class="fa fa-pencil"></i>' . $code, [
+            $hotlink = Html::button('<i class="fas fa-pencil-alt"></i>' . $code, [
                 'value' => Url::toRoute(['texts/update', 'id' => $model->text_id]),
-                'class' => 'showModalButton btn btn-default btn-xs',
+                'class' => 'showModalButton btn btn-outline-secondary',
                 'title' => Yii::t('app', 'Update')
             ]);
         }
@@ -197,8 +197,8 @@ class Texts extends ActiveRecord
                 'size'         => PopoverX::SIZE_LARGE,
                 'placement'    => PopoverX::ALIGN_BOTTOM,
                 'content'      => $content,
-                'toggleButton' => ['label' => '<i class="fa fa-info i info"></i>',
-                                   'class' => 'btn-danger'],
+                'toggleButton' => ['label' => '<i class="fas fa-info"></i>',
+                                   'class' => 'btn btn-danger'],
             ]);
         } else {
             if (empty($content)) {
@@ -210,8 +210,8 @@ class Texts extends ActiveRecord
                     'size'         => PopoverX::SIZE_LARGE,
                     'placement'    => PopoverX::ALIGN_BOTTOM,
                     'content'      => $content,
-                    'toggleButton' => ['label' => '<i class="fa fa-info i info"></i>',
-                                       'class' => 'btn-info'],
+                    'toggleButton' => ['label' => '<i class="fas fa-info"></i>',
+                                       'class' => 'btn btn-danger'],
                 ]);
             }
         }
@@ -243,7 +243,7 @@ class Texts extends ActiveRecord
 
         $html = <<<HTML
         <div class="alert alert-{$roleClass}">
-            <span class="fa fa-info i info icon"></span>
+            <i class="fas fa-info"></i>
     
             <span class="text">
             {$content} {$hotlink}

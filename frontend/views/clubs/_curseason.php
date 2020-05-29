@@ -1,7 +1,28 @@
+
+ 
 <?php
 
 use kartik\grid\GridView;
 use common\helpers\ViewsHelper;
+use yii\helpers\Html;
+
+?>
+
+
+<div class="card-body">
+    <?php if (Yii::$app->user->can('team_member')): ?>
+        <?=Html::beginForm(['playerstats/generateplayerstats'],'post');?>
+        <div class="row">     
+            <div class="col-6">
+                <?= Html::hiddenInput('generatestats', true)?>
+                <?= Html::submitButton(Yii::t('app', 'Generate Player Stats'), ['class' => 'btn btn-primary',]);?>
+            </div>
+        </div>
+        <?= Html::endForm();?> 
+    <?php endif ?>
+</div>
+
+<?php
 
 $gridColumn = [
     ['class' => 'yii\grid\SerialColumn'],
@@ -64,11 +85,12 @@ echo GridView::widget([
     'filterModel'    => $searchModel,
     'columns'        => $gridColumn,
     'id'             => 'gridview-members-id',
+    'tableOptions' => ['class' => 'table table-responsive'],
     'responsive'     => true,
-    'responsiveWrap' => true,
-    'condensed'      => true,
+    'responsiveWrap' => false,
+    'condensed'      => false,
     'panel'          => [
-        'type'    => Gridview::TYPE_DEFAULT,
+        'type'    => Gridview::TYPE_PRIMARY,
         'heading' => Yii::t('modelattr', 'Player Stats - Current Season'),
     ],
 ]);

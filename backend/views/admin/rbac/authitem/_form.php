@@ -17,7 +17,7 @@ $indexpage = array_slice(explode('/', Yii::$app->request->referrer), -1)[0];
             ]);
     
     ?>
-    <div class="well">
+    <div class="card card-body bg-light">
         <div class="row">
             <div class="col-md-12">
                 <?= $form->hrwTextInputMax($model, 'name'); ?>
@@ -83,24 +83,20 @@ $indexpage = array_slice(explode('/', Yii::$app->request->referrer), -1)[0];
         <?php endif; ?>
     </div>
 
-    <div class="row">
+    
+    <div class="modal-footer">
+        <?=
+        Html::submitButton('<i class="fas fa-check"></i>&nbsp;' .
+                ($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update')), ['class' => $model->isNewRecord ?
+                    'btn btn-success' : 'btn btn-success'])
+        ?>
 
-        <div class="col-md-12">
-            <div class="form-group pull-right">
-                <?=
-                Html::submitButton('<span class="fa fa-check"></span>&nbsp;' .
-                        ($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update')), ['class' => $model->isNewRecord ?
-                            'btn btn-success' : 'btn btn-success'])
-                ?>
-
-                <?=
-                Html::Button('<span class="fa fa-times"></span>&nbsp;' .
-                        Yii::t('app', 'Cancel'), ['class' => 'btn btn-danger', 'data-dismiss' => 'modal'])
-                ?>
-            </div>
-        </div>
-        <div class="clearfix"></div>
-    </div>
+        <?=
+        Html::Button('<i class="fas fa-times"></i>&nbsp;' .
+                Yii::t('app', 'Cancel'), ['class' => 'btn btn-danger', 'data-izimodal-close' => 'modal'])
+        ?>
+    </div> 
+  
 
     <?php ActiveForm::end(); ?>
 

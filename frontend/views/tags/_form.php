@@ -18,7 +18,7 @@ $alllang = Yii::$app->contLang->languages;
     ]);
     ?>
 
-    <div class="well">
+    <div class="card card-body bg-light">
         <div class="row">
             <div class="col-md-12">
                 <?php
@@ -30,20 +30,16 @@ $alllang = Yii::$app->contLang->languages;
         </div>
     </div>
 
-    <div class="row">
+   
+    <div class="modal-footer">
+        <?= Html::submitButton('<span class="fas fa-check"></span>&nbsp;' .
+                        ($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update')), ['class' => $model->isNewRecord ?
+                            'btn btn-success' : 'btn btn-success']) ?>
 
-        <div class="col-md-12">
-        <div class="form-group pull-right">
-            <?= Html::submitButton('<span class="fa fa-check"></span>&nbsp;' .
-                            ($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update')), ['class' => $model->isNewRecord ?
-                                'btn btn-success' : 'btn btn-success']) ?>
-
-            <?= Html::Button('<span class="fa fa-times"></span>&nbsp;' .
-                    Yii::t('app', 'Cancel'), ['class' => 'btn btn-danger', 'data-dismiss' => 'modal']) ?>
-        </div>
-        <div class="clearfix"></div>
+        <?= Html::Button('<span class="fas fa-times"></span>&nbsp;' .
+                Yii::t('app', 'Cancel'), ['class' => 'btn btn-danger', 'data-izimodal-close' => 'modal']) ?>
     </div>
-
+     
     <?php ActiveForm::end(); ?>
 
     <div class="clearfix"></div>

@@ -72,7 +72,7 @@ $header .= '<span class="fa fa-exclamation"></span> ' . Yii::t('appMenu', 'Risk 
 
     $panelBeforeTemplate = '
         {lefttoolbar}
-        <div class="pull-right">
+        <div class="float-right">
             <div class="btn-toolbar kv-grid-toolbar" role="toolbar">
                 {toolbar}
             </div>    
@@ -85,7 +85,7 @@ $header .= '<span class="fa fa-exclamation"></span> ' . Yii::t('appMenu', 'Risk 
         'filterModel' => $searchModel,
         'columns' => $gridColumn,
         'panel' => [
-            'type' => GridView::TYPE_DEFAULT,
+            'type' => Gridview::TYPE_PRIMARY,
             'heading' => $header,
         ],
         'panelBeforeTemplate' => $panelBeforeTemplate,
@@ -100,9 +100,9 @@ $header .= '<span class="fa fa-exclamation"></span> ' . Yii::t('appMenu', 'Risk 
                 Html::button('<i class="fa fa-upload fa-rotate-180"></i>', ['value' => Url::toRoute('risksitu/fromlibrary'),
                     'class' => 'showModalButton btn btn-success',
                     'title' => Yii::t('app', 'Get from library')]) . ' ' .
-                Html::a('<i class="fa fa-repeat"></i>', ['index'], [
+                Html::a('<i class="fa fa-redo"></i>', ['index'], [
                     'data-pjax' => 0,
-                    'class' => 'btn btn-default',
+                    'class' => 'btn-outline-secondary',
                     'title' => Yii::t('diag', 'Reset Grid')])
             ],
             '{export}',
@@ -113,7 +113,7 @@ $header .= '<span class="fa fa-exclamation"></span> ' . Yii::t('appMenu', 'Risk 
                 'fontAwesome' => true, 
                 'dropdownOptions' => [ 
                     'label' => Yii::t('yii', 'Export'),
-                    'class' => 'btn btn-default', 
+                    'class' => 'btn-outline-secondary', 
                     'itemsBefore' => [ 
                         '<li class="dropdown-header">Export All Data</li>', 
                     ], 
@@ -129,7 +129,7 @@ $header .= '<span class="fa fa-exclamation"></span> ' . Yii::t('appMenu', 'Risk 
                         ['class' => 'btn btn-primary disabled']) . ' ' .
                     Html::a('<span class="fa fa-sitemap"></span> ' . Yii::t('appMenu', 'Risktypes'), 
                         ['/risktypes'],
-                        ['class' => 'btn btn-default']);
+                        ['class' => 'btn-outline-secondary']);
             }
         ]
     ]);

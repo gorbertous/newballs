@@ -45,7 +45,7 @@ echo TabularForm::widget([
     'gridSettings' => [
         'panel' => [
             'heading' => false,
-            'type' => GridView::TYPE_DEFAULT,
+            'type' => Gridview::TYPE_PRIMARY,
             'before' => false,
             'footer' => false,
             'after' => Html::button('<i class="glyphicon glyphicon-plus"></i>' . Yii::t('modelattr', 'Add J Club Mem Roles'), ['type' => 'button', 'class' => 'btn btn-success kv-batch-create', 'onClick' => 'addRowJClubMemRoles()']),

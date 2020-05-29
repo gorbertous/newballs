@@ -22,7 +22,7 @@ use backend\models\Clubs;
     ?>
 
     <ul class="nav nav-pills" id="tabContent">
-        <li class="active"><a href="#reserves" data-toggle="tab"><?= Yii::t('modelattr', 'Scores') ?></a></li>
+        <li class="nav-item"><a class="nav-link active" href="#reserves" data-toggle="tab"><?= Yii::t('modelattr', 'Scores') ?></a></li>
 
         <!-- Audit tab  -->
         <?php if(Yii::$app->user->can('team_memebr')): ?>
@@ -31,9 +31,9 @@ use backend\models\Clubs;
     </ul>
 
     <div class="tab-content">
-        <div class="tab-pane active well" id="reserves">
+        <div class="tab-pane active card card-body bg-light" id="reserves">
            <div class="row"> 
-                <div class="col-xs-6">
+                <div class="col-md-6">
                     <?=
                     $form->hrwSelect2($model, 'termin_id', [
                         'data'          => ArrayHelper::map(\backend\models\PlayDates::find()
@@ -46,26 +46,26 @@ use backend\models\Clubs;
                     ])
                     ?>
                 </div>
-               <div class="col-xs-6">
+               <div class="col-md-6">
                      <?= $form->hrwTextInputMax($model, 'court_id') ?>
                 </div>
             </div>
             <div class="row"> 
-                 <div class="col-xs-3">
+                 <div class="col-md-3">
                    <?= $form->hrwTextInputMax($model, 'set_one') ?>
                 </div>
-                <div class="col-xs-3">
+                <div class="col-md-3">
                    <?= $form->hrwTextInputMax($model, 'set_two') ?>
                 </div>
-                <div class="col-xs-3">
+                <div class="col-md-3">
                    <?= $form->hrwTextInputMax($model, 'set_three') ?>
                 </div>
             </div>
              <div class="row">
-                <div class="col-xs-3">
+                <div class="col-md-3">
                    <?= $form->hrwTextInputMax($model, 'set_four') ?>
                 </div>
-                 <div class="col-xs-3">
+                 <div class="col-md-3">
                    <?= $form->hrwTextInputMax($model, 'set_five') ?>
                 </div>
             </div>      

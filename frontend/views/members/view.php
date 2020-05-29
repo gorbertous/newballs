@@ -7,8 +7,8 @@ use common\helpers\Helpers;
 /* @var $model backend\models\Members */
 
 
-$redcross = '<i class="text-danger fa fa-times fa-lg" aria-hidden="true"></i>';
-$greencheck = '<i class="text-success fa fa-check fa-lg" aria-hidden="true"></i>';
+$redcross = '<i class="text-danger fas fa-times fa-lg" aria-hidden="true"></i>';
+$greencheck = '<i class="text-success fas fa-check fa-lg" aria-hidden="true"></i>';
 ?>
 
 <div class="row">

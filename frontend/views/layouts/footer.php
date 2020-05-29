@@ -1,11 +1,11 @@
 
 <!-- footer content -->
 <footer class="main-footer">
-    <div class="pull-left">
+    <div class="float-left">
         <?= common\widgets\LanguageChooser::widget(); ?>
     </div>
 
-    <div class="pull-right hidden-xs text-right">
+    <div class="float-right hidden-xs text-right">
         <?php if (!Yii::$app->user->isGuest) { ?>
         Version <strong><?= Yii::$app->version; ?></strong> -
         <?php } ?>

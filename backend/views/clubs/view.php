@@ -7,8 +7,8 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model backend\models\Clubs */
 
-$redcross = '<i class="text-danger fa fa-times fa-lg" aria-hidden="true"></i>';
-$greencheck = '<i class="text-success fa fa-check fa-lg" aria-hidden="true"></i>';
+$redcross = '<i class="text-danger fas fa-times fa-lg" aria-hidden="true"></i>';
+$greencheck = '<i class="text-success fas fa-check fa-lg" aria-hidden="true"></i>';
 
 $logo = (empty($model->logo) ? '' : $model->getThumbnailUrl($model->logo, [160, 120], false));
 

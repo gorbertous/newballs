@@ -22,7 +22,7 @@ use common\helpers\ViewsHelper;
     ?>
 
     <ul class="nav nav-pills" id="tabContent">
-        <li class="active"><a href="#reserves" data-toggle="tab"><?= Yii::t('modelattr', 'Reserves') ?></a></li>
+        <li class="nav-item"><a class="nav-link active" href="#reserves" data-toggle="tab"><?= Yii::t('modelattr', 'Reserves') ?></a></li>
 
         <!-- Audit tab  -->
         <?php if(Yii::$app->user->can('team_memebr')): ?>
@@ -31,9 +31,9 @@ use common\helpers\ViewsHelper;
     </ul>
 
     <div class="tab-content">
-        <div class="tab-pane active well" id="reserves">
+        <div class="tab-pane active card card-body bg-light" id="reserves">
             <div class="row">
-                <div class="col-xs-6">
+                <div class="col-md-6">
                     <?=
                     $form->hrwSelect2($model, 'member_id', [
                         'data'          => ViewsHelper::getMembersList(),
@@ -44,7 +44,7 @@ use common\helpers\ViewsHelper;
                 </div>
             </div>      
             <div class="row"> 
-                <div class="col-xs-6">
+                <div class="col-md-6">
                     <?=
                     $form->hrwSelect2($model, 'termin_id', [
                         'data'          => ArrayHelper::map(\backend\models\PlayDates::find()

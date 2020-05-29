@@ -12,7 +12,7 @@ use backend\models\Members;
  */
 class MembersSearch extends Members
 {
-   
+
     /**
      * @inheritdoc
      */
@@ -53,31 +53,8 @@ class MembersSearch extends Members
                 ],
             ]
         ]);
-        
-//        $dataProvider->setSort([
-//            'attributes' => [
-//                'member_id',
-//                'player_stats' => [
-//                    'asc' => ['COUNT(member_id2)' =>SORT_ASC ],
-//                    'desc' => ['COUNT(member_id)' => SORT_DESC],
-//                    'default' => SORT_ASC
-//                ],
-//                'token_stats' => [
-//                    'asc' => ['COUNT(member_id)' =>SORT_ASC ],
-//                    'desc' => ['COUNT(member_id)' => SORT_DESC],
-//                    'default' => SORT_ASC
-//                ],
-//                'status_stats' => [
-//                    'asc' => ['COUNT(member_id)' =>SORT_ASC ],
-//                    'desc' => ['COUNT(member_id)' => SORT_DESC],
-//                    'default' => SORT_ASC
-//                ],
-//            ]
-//        ]);
 
         $this->load($params);
-        
-     
 
         if (!$this->validate()) {
             // uncomment the following line if you do not want to return any records when validation fails
@@ -127,16 +104,9 @@ class MembersSearch extends Members
             'dob'             => $this->dob,
             'ban_scoreupload' => $this->ban_scoreupload,
             'gender'          => $this->gender,
-//            'token_stats'          => $this->token_stats,
-//            'count(member_id)'          => $this->player_stats,
-//            'status_stats'          => $this->status_stats,
         ]);
 
         $query->andFilterWhere(['=', 'nationality', $this->nationality]);
-        
-//        if (isset($this->player_stats)) {
-//             $query->having(['=', 'COUNT(member_id)', $this->player_stats]);
-//        }
 
         return $dataProvider;
     }

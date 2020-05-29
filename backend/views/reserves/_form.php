@@ -22,16 +22,16 @@ use backend\models\Clubs;
     ?>
 
     <ul class="nav nav-pills" id="tabContent">
-        <li class="active"><a href="#reserves" data-toggle="tab"><?= Yii::t('modelattr', 'Reserves') ?></a></li>
+        <li class="nav-item"><a class="nav-link active" href="#reserves" data-toggle="tab"><?= Yii::t('modelattr', 'Reserves') ?></a></li>
 
         <!-- Audit tab  -->
         <?= Helpers::getAuditTab() ?>
     </ul>
 
     <div class="tab-content">
-        <div class="tab-pane active well" id="reserves">
+        <div class="tab-pane active card card-body bg-light" id="reserves">
             <div class="row">
-                <div class="col-xs-6">
+                <div class="col-md-6">
                     <?=
                     $form->hrwSelect2($model, 'c_id', [
                         'data'          => ArrayHelper::map(Clubs::find()->all(), 'c_id', 'name'),
@@ -40,7 +40,7 @@ use backend\models\Clubs;
                     ])
                     ?>
                 </div>
-                <div class="col-xs-6">
+                <div class="col-md-6">
                     <?=
                     $form->hrwSelect2($model, 'member_id', [
                         'data'          => ArrayHelper::map(\backend\models\Members::find()->all(), 'member_id', 'name'),
@@ -51,7 +51,7 @@ use backend\models\Clubs;
                 </div>
             </div>      
             <div class="row"> 
-                <div class="col-xs-6">
+                <div class="col-md-6">
                     <?=
                     $form->hrwSelect2($model, 'termin_id', [
                         'data'          => ArrayHelper::map(\backend\models\PlayDates::find()->all(), 'termin_id', 'termin_date'),

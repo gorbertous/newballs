@@ -34,6 +34,12 @@ use yii\db\Expression;
  * @property int $country_id
  * @property string $nationality
  * @property string $dob
+ * @property int $token_stats
+ * @property int $player_stats_scheduled
+ * @property int $player_stats_played
+ * @property int $player_stats_cancelled
+ * @property int $coaching_stats
+ * @property int $status_stats
  * @property int $is_admin
  * @property int $is_organiser
  * @property int $is_active
@@ -45,6 +51,8 @@ use yii\db\Expression;
  * @property int $updated_by
  * @property int $created_at
  * @property int $updated_at
+ * @property string $username
+ * @property string $password
  *
  * @property Clubs[] $clubs
  * @property GamesBoard[] $gamesBoards
@@ -61,12 +69,12 @@ class Members extends \yii\db\ActiveRecord
     use \backend\models\base\TraitFileUploads;
     use \backend\models\base\TraitBlameableTimestamp;
 
-    public $token_stats;
-    public $player_stats_scheduled;
-    public $player_stats_played;
-    public $player_stats_cancelled;
-    public $coaching_stats;
-    public $status_stats;
+//    public $token_stats;
+//    public $player_stats_scheduled;
+//    public $player_stats_played;
+//    public $player_stats_cancelled;
+//    public $coaching_stats;
+//    public $status_stats;
     public $club_role;
 
     /**
@@ -83,7 +91,8 @@ class Members extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'c_id', 'mem_type_id', 'grade_id', 'gender', 'is_admin', 'is_organiser', 'is_active', 'has_paid', 'is_visible', 'ban_scoreupload', 'coaching', 'created_by', 'updated_by', 'created_at', 'updated_at'], 'integer'],
+            [['user_id', 'c_id', 'mem_type_id', 'grade_id', 'gender', 'token_stats', 'player_stats_scheduled', 'player_stats_played', 'player_stats_cancelled', 'coaching_stats', 'status_stats', 'is_admin', 'is_organiser', 'is_active', 'has_paid', 'is_visible', 'ban_scoreupload', 'coaching', 'created_by', 'updated_by', 'created_at', 'updated_at'], 'integer'],
+//            [['user_id', 'c_id', 'mem_type_id', 'grade_id', 'gender', 'is_admin', 'is_organiser', 'is_active', 'has_paid', 'is_visible', 'ban_scoreupload', 'coaching', 'created_by', 'updated_by', 'created_at', 'updated_at'], 'integer'],
             [['c_id'], 'required'],
             [['dob','clubroles_ids'], 'safe'],
             [['title', 'zip'], 'string', 'max' => 20],

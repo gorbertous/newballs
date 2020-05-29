@@ -7,8 +7,8 @@ use yii\helpers\Html;
 use kartik\grid\GridView;
 use yii\helpers\Url;
 
-$redcross = '<i class="text-danger fa fa-times fa-lg" aria-hidden="true"></i>';
-$greencheck = '<i class="text-success fa fa-check fa-lg" aria-hidden="true"></i>';
+$redcross = '<i class="text-danger fas fa-times fa-lg" aria-hidden="true"></i>';
+$greencheck = '<i class="text-success fas fa-check fa-lg" aria-hidden="true"></i>';
 
 $gridColumn = [
     [
@@ -124,7 +124,7 @@ $gridColumn = [
                 return Yii::$app->session->get('member_has_paid') ? '<strong>' . $link . '</strong>' : '<strong>' . $model->member->name . '</strong>';
             } else {
                 $class = $model->tokens ? 'text-danger' : 'text-primary';
-                $iscoach = isset($model->member->memType) && ($model->member->memType->mem_type_id == 5) ? ' <span class="badge bg-red pull-right">Coach</span>' : '';
+                $iscoach = isset($model->member->memType) && ($model->member->memType->mem_type_id == 5) ? ' <span class="badge bg-red float-right">Coach</span>' : '';
                 return Html::tag('strong', $model->member->name, ['class' => $class]) . $iscoach;
             }
         },

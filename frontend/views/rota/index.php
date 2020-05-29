@@ -21,10 +21,10 @@ $search = "$('.search-button').click(function(){
 });";
 $this->registerJs($search);
 
-$redcross = '<i class="text-danger fa fa-times" aria-hidden="true">'.Yii::t('modelattr', 'No').'</i>';
-$greencheck = '<i class="text-success fa fa-check" aria-hidden="true">'.Yii::t('modelattr', 'Yes').'</i>';
+$redcross = '<i class="text-danger fas fa-times" aria-hidden="true">'.Yii::t('modelattr', 'No').'</i>';
+$greencheck = '<i class="text-success fas fa-check" aria-hidden="true">'.Yii::t('modelattr', 'Yes').'</i>';
 if(!Yii::$app->session->get('member_has_paid') && Yii::$app->session->get('member_type_id') == 1){
-    echo Yii::$app->session->setFlash('danger', Yii::t('app', 'Unfortunatelly the club has not yet received your membership payment, currently you cannot book the games, please settle this or contact the club chairman!') );
+    echo Yii::$app->session->setFlash('danger', Yii::t('app', 'Unfortunately the club has not yet received your membership payment, currently you cannot book the games, please settle this or contact the club chairman!') );
 }elseif(Yii::$app->session->get('member_type_id') == 4){
     echo Yii::$app->session->setFlash('danger', Yii::t('app', 'You are a guest member, you cannot book the games, please contact the club admin to put your name down on the rota!') );
 }
@@ -36,45 +36,52 @@ if ($searchModel->timefilter == 1) {
     $rotatitle = '<h3>' . Yii::t('modelattr', 'Entire Rota');
 }
 ?>
+
+
 <div class="rota-index">
-    <div class="panel-group" id="accordion">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h4 class="panel-title">
-              <a data-toggle="collapse" data-parent="#accordion" href="#collapse1"><?= Yii::t('app', 'Rota Search')?>&nbsp;&nbsp;<span class="caret" style="border-width: 5px;"></span></a>
-            </h4>
-          </div>
-          <div id="collapse1" class="panel-collapse collapse">
-              <div class="panel-body">
-                    <div class="search-form">
-                        <?=  $this->render('_search', ['model' => $searchModel]); ?>
-                    </div>
-              </div>
-          </div>
+    
+    <div id="accordion">
+        <div class="card" style="width: 100%;">     
+            <div class="card-header">
+                <h5 class="panel-title">
+                <a class="card-link" data-toggle="collapse" href="#collapse1"><?= Yii::t('app', 'Rota Search')?>&nbsp;&nbsp;<i class="right fas fa-angle-down"></i></a>
+                </h5>
+            </div>   
+
+            <div id="collapse1" class="collapse" data-parent="#accordion">
+                
+                      <div class="card-body">
+                          <?=  $this->render('_search', ['model' => $searchModel]); ?>
+                      </div>
+                
+            </div>
         </div>
+
         <?php if ($searchModel->timefilter == 1 && Yii::$app->user->can('team_member')): ?>
-            <div class="panel panel-default">
-              <div class="panel-heading">
-                <h4 class="panel-title">
-                  <a data-toggle="collapse" data-parent="#accordion" href="#collapse2"><?= Yii::t('app', 'Send Email Reminder')?>&nbsp;&nbsp;<span class="caret" style="border-width: 5px;"></span></a>
-                </h4>
-              </div>
-              <div id="collapse2" class="panel-collapse collapse">
-                  <div class="panel-body">
-                        <?=Html::beginForm(['gamesboard/sendemailreminder'],'post');?>
+            <div class="card" style="width: 100%;">     
+                <div class="card-header">
+                    <h5 class="panel-title">
+                    <a class="card-link" data-toggle="collapse" href="#collapse2"><?= Yii::t('app', 'Send Email Reminder') ?>&nbsp;&nbsp;<i class="right fas fa-angle-down"></i></a>
+                    </h5>
+                </div>       
+                <div id="collapse2" class="collapse" data-parent="#accordion">
+                    
+                    <div class="card-body">
+                        <?= Html::beginForm(['gamesboard/sendemailreminder'], 'post'); ?>
                         <div class="row">     
-                            <div class="col-xs-6">
-                                <?= Html::hiddenInput('sendemail', true)?>
-                                <?= Html::submitButton(Yii::t('app', 'Send Email Reminder'), ['class' => 'btn btn-info',]);?>
+                            <div class="col-md-6">
+                                <?= Html::hiddenInput('sendemail', true) ?>
+                                <?= Html::submitButton(Yii::t('app', 'Send Email Reminder'), ['class' => 'btn btn-primary',]); ?>
                             </div>
                         </div>
-                        <?= Html::endForm();?> 
-                  </div>
-              </div>
-            </div>
+                        <?= Html::endForm(); ?> 
+                    </div>
+                   
+                </div>
+            </div> 
         <?php endif ?>
     </div>
-   
+    
     <?php
 //    Pjax::begin(['id' => 'pjax-gridview-container', 'enablePushState' => true]);
     $gridColumn = [
@@ -130,13 +137,13 @@ if ($searchModel->timefilter == 1) {
                 if(!empty($model->getGameScore($model->termin_id, $model->court_id))){
                     $statsbutton = '<span class="custom-margin">' . Html::button(Yii::t('modelattr', 'View Score'), [
                         'value' => Url::toRoute(['playdates/scores', 'termin_id' => $model->termin_id, 'court_id' => $model->court_id]),
-                        'class' => 'btn btn-info btn-style showModalButton',
+                        'class' => 'btn btn btn-outline-primary showModalButton',
                         'title' => Yii::t('modelattr', 'View Score')
                     ]).'</span>';
                 }elseif(empty($model->getGameScore($model->termin_id, $model->court_id)) && $play_date < $today ){
                     $statsbutton = '<span class="custom-margin">' . Html::button(Yii::t('modelattr', 'Upload Score'), [
                         'value' => Url::toRoute(['playdates/uploadscore', 'termin_id' => $model->termin_id, 'court_id' => $model->court_id]),
-                        'class' => 'btn btn-info btn-style showModalButton',
+                        'class' => 'btn btn-outline-primary showModalButton',
                         'title' => Yii::t('modelattr', 'Upload Score')
                     ]).'</span>';
                 }else{
@@ -222,8 +229,8 @@ if ($searchModel->timefilter == 1) {
                     return Yii::$app->session->get('member_has_paid') ? '<strong>'. $link . '</strong>': '<strong>'.$model->member->name . '</strong>';
                 } else {
                     $class = $model->tokens ? 'text-danger' : 'text-primary';
-                    $iscoach = isset($model->member->memType) && ($model->member->memType->mem_type_id == 5) ? ' <span class="badge bg-red pull-right">'. $model->member->memType->nameFB . '</span>' : '';
-                    $isguest = isset($model->member->memType) && ($model->member->memType->mem_type_id == 4) ? ' <span class="badge bg-info pull-right">'. $model->member->memType->nameFB . '</span>' : '';
+                    $iscoach = isset($model->member->memType) && ($model->member->memType->mem_type_id == 5) ? ' <span class="badge bg-red float-right">'. $model->member->memType->nameFB . '</span>' : '';
+                    $isguest = isset($model->member->memType) && ($model->member->memType->mem_type_id == 4) ? ' <span class="badge bg-info float-right">'. $model->member->memType->nameFB . '</span>' : '';
                     return Html::tag('strong', $model->member->name, ['class' => $class]).$iscoach.$isguest;
                 }
              },
@@ -331,12 +338,13 @@ if ($searchModel->timefilter == 1) {
                 ],
                 'columns'        => $gridColumn,
                 'id' => 'gridview-club-id',
+                'tableOptions' => ['class' => 'table table-responsive'],
                 'responsive'          => true,
-                'responsiveWrap' => true,
-                'condensed' => true,
+                'responsiveWrap' => false,
+                'condensed' => false,
                 'panelBeforeTemplate' => GridviewHelper::getPanelBefore(),
                 'panel' => [
-                    'type'    => Gridview::TYPE_DEFAULT,
+                    'type'    => Gridview::TYPE_PRIMARY,
                     'heading' => $header,
                 ],
                 'toolbar'             => $toolbar,

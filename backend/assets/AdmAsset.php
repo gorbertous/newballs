@@ -14,7 +14,6 @@ class AdmAsset extends AssetBundle
     public $css = [
         'css/site.css',
         'css/iziModal.css',
-        '//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic',
     ];
     public $js = [
         'js/app.js',
@@ -23,6 +22,6 @@ class AdmAsset extends AssetBundle
     ];
     public $depends = [
         'yii\web\YiiAsset',
-        'yii\bootstrap\BootstrapAsset',
+        'yii\bootstrap4\BootstrapAsset',
     ];
 }

@@ -25,7 +25,7 @@ if (Yii::$app->user->can('writer')) {
     ]);
     ?>
 
-    <div class="well">
+    <div class="card card-body bg-light">
 
         <div class="row">
             <div class="col-md-6">
@@ -77,18 +77,18 @@ if (Yii::$app->user->can('writer')) {
             </div>
         <?php endif ?>
 
-        <div class="clearfix"></div>
+        
     </div>
 
-    <div class="form-group pull-right">
+    <div class="modal-footer">
         <?=
-        Html::submitButton('<span class="fa fa-check"></span>&nbsp;' .
+        Html::submitButton('<span class="fas fa-check"></span>&nbsp;' .
             ($user->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update')), ['class' => $user->isNewRecord ? 'btn btn-success' : 'btn btn-success'])
         ?>
 
         <?=
-        Html::Button('<span class="fa fa-times"></span>&nbsp;' .
-            Yii::t('app', 'Cancel'), ['class' => 'btn btn-danger', 'data-dismiss' => 'modal'])
+        Html::Button('<span class="fas fa-times"></span>&nbsp;' .
+            Yii::t('app', 'Cancel'), ['class' => 'btn btn-danger', 'data-izimodal-close' => 'modal'])
         ?>
     </div>
 

@@ -64,15 +64,15 @@ $currentBtn = GridviewHelper::getCurrentBtn($context_array);
             'template' => '{create}{blacklist}',
             'buttons' => [
                 'create' => function ($url, $model) use ($currentBtn) {
-                    return Html::button('<i class="fa fa-plus"></i>', [
+                    return Html::button('<i class="fas fa-plus"></i>', [
                         'value' => Url::toRoute($currentBtn['create'], ['id' => $model->id]),
                         'class' => 'showModalButton btn btn-success',
                         'title' => $currentBtn['new_label']]);
                 },
                 'blacklist' => function ($url, $model) use ($currentBtn) {
-                    return Html::a('<i class="fa fa-thumbs-down"></i>', 
+                    return Html::a('<i class="fas fa-thumbs-down"></i>', 
                         Url::toRoute($currentBtn['blacklist'] . '/' . $model->id),
-                        ['class' => 'btn btn-default',
+                        ['class' => 'btn btn-outline-secondary',
                         'title' => 'Blacklist item']);
                 }
             ]
@@ -100,12 +100,13 @@ $currentBtn = GridviewHelper::getCurrentBtn($context_array);
                 'filterModel' => $searchModel,
                 'columns'        => $gridColumn,
                 'id' => 'gridview-club-id',
+                'tableOptions' => ['class' => 'table table-responsive'],
                 'responsive'          => true,
-                'responsiveWrap' => true,
-                'condensed' => true,
+                'responsiveWrap' => false,
+                'condensed' => false,
                 'panelBeforeTemplate' => GridviewHelper::getPanelBefore(),
                 'panel' => [
-                    'type'    => Gridview::TYPE_DEFAULT,
+                    'type'    => Gridview::TYPE_PRIMARY,
                     'heading' => $header,
                 ],
                 'toolbar'             => $toolbar,

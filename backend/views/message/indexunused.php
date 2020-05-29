@@ -102,21 +102,21 @@ $this->registerJs($script);
             'template' => '{view}{update}{delete}{copy}',
             'buttons' => [
                 'view' => function ($url, $model) {
-                    return Html::button('<i class="fa fa-eye"></i>', ['value' => Url::to(['message/view','id' => $model->id,'id2' => $model->language]),
-                        'class' => 'showModalButton btn btn-default',
+                    return Html::button('<i class="fas fa-eye"></i>', ['value' => Url::to(['message/view','id' => $model->id,'id2' => $model->language]),
+                        'class' => 'showModalButton btn btn-outline-secondary',
                         'transtitle' => Yii::t('appMenu', 'View translation'),
                         'title' => Yii::t('appMenu', 'View translation')]);
                 },
                 'update' => function ($url, $model) {
-                    return Html::button('<i class="fa fa-pencil"></i>', ['value' => Url::to(['message/update','id' => $model->id,'id2' => $model->language]),
-                        'class' => 'showModalButton btn btn-default',
+                    return Html::button('<i class="fas fa-pencil-alt"></i>', ['value' => Url::to(['message/update','id' => $model->id,'id2' => $model->language]),
+                        'class' => 'showModalButton btn btn-outline-secondary',
                         'transtitle' => Yii::t('appMenu', 'Modify translation'),
                         'title' => Yii::t('appMenu', 'Modify translation')]);
                 },
                 'delete' => function ($url, $model) {
-                    return Html::a('<i class="fa fa-trash"></i>', 
+                    return Html::a('<i class="fas fa-trash-alt"></i>', 
                             Url::to(['message/delete','id' => $model->id, 'id2' => $model->language]), 
-                            ['class' => 'btn btn-default',
+                            ['class' => 'btn btn-outline-secondary',
                             'title' => Yii::t('appMenu', 'Delete translation'),
                             'data-confirm' => Yii::t('yii', 'Are you sure to delete this item?').
                             PHP_EOL.'cat: '.$model->sourceMessage->category.
@@ -126,7 +126,7 @@ $this->registerJs($script);
                 'copy' => function ($url, $model) {
                     return Html::a('<i class="fa fa-clone"></i>', 
                             Url::to(['message/copy','id' => $model->id]),
-                            ['class' => 'btn btn-default',
+                            ['class' => 'btn btn-outline-secondary',
                             'title' => Yii::t('appMenu', 'Copy translation')]);
                 }
                
@@ -155,12 +155,13 @@ $this->registerJs($script);
         'filterModel' => $searchModel,
                 'columns'        => $gridColumn,
                 'id' => 'gridview-club-id',
+                'tableOptions' => ['class' => 'table table-responsive'],
                 'responsive'          => true,
-                'responsiveWrap' => true,
-                'condensed' => true,
+                'responsiveWrap' => false,
+                'condensed' => false,
                 'panelBeforeTemplate' => GridviewHelper::getPanelBefore(),
                 'panel' => [
-                    'type'    => Gridview::TYPE_DEFAULT,
+                    'type'    => Gridview::TYPE_PRIMARY,
                     'heading' => $header,
                 ],
                 'toolbar'             => $toolbar,

@@ -107,7 +107,7 @@ class Clubs extends ActiveRecord
             'name'              => Yii::t('modelattr', 'Name'),
             'logo'              => Yii::t('modelattr', 'Logo'),
             'logo_orig'         => Yii::t('modelattr', 'Logo'),
-            'home_page'         => Yii::t('modelattr', 'Home Page'),
+            'home_page'         => Yii::t('modelattr', 'About Page'),
             'rules_page'        => Yii::t('modelattr', 'Rules Page'),
             'members_page'      => Yii::t('modelattr', 'Members Page'),
             'rota_page'         => Yii::t('modelattr', 'Rota Page'),
@@ -176,7 +176,7 @@ class Clubs extends ActiveRecord
                 'allowedfileextensions' => $this->FI_IMAGES,
                 'theme'                 => 'explorer',
                 'maxuploadfilesize'     => 1024 * 10,
-                'resizeimagestosize'    => $this->IMGRESIZE_S_512,
+                'resizeimagestosize'    => $this->IMGRESIZE_L_2048,
                 'resizeimagestoquality' => $this->IMGQUALITY_H_90
             ],
         ];

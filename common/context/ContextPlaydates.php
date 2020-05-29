@@ -30,7 +30,7 @@ abstract class ContextPlaydates implements Context
 
         // Playdates -> index
         $context_array[ContextLetter::PLAYDATES][] = [
-            'button_title'  => Menu::playdatesText(),
+            'button_title'  => Menu::playdatesText2(),
             'new_label'     => Yii::t('appMenu', self::LBL_NEW),
             'mod_label'     => Yii::t('appMenu', self::LBL_MODIFY),
             'view_label'    => Yii::t('appMenu', self::LBL_VIEW),

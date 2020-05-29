@@ -20,7 +20,7 @@ use kartik\widgets\Select2;
     
    
     <div class="row">
-        <div class="col-xs-6">
+        <div class="col-md-4">
             <?= $form->field($model, 'timefilter')->widget(Select2::classname(), [
                 'data' => BooleanFilter::all(),
                 'pluginOptions' => [
@@ -28,7 +28,7 @@ use kartik\widgets\Select2;
                 ],
             ]); ?>
         </div>
-        <div class="col-xs-6">
+        <div class="col-md-4">
             <?= $form->field($model, 'seasonfilter')->widget(Select2::classname(), [
                 'data' => common\dictionaries\Somenumbers::all(Yii::$app->session->get('club_season')),
                 'pluginOptions' => [
@@ -42,7 +42,7 @@ use kartik\widgets\Select2;
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'Search'), ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton(Yii::t('app', 'Reset'), ['class' => 'btn btn-default']) ?>
+        <?= Html::resetButton(Yii::t('app', 'Reset'), ['class' => 'btn btn-danger']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

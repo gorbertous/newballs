@@ -52,7 +52,7 @@ $this->registerJs($search);
                 'fontAwesome' => true,
                 'dropdownOptions' => [
                     'label' => 'Full',
-                    'class' => 'btn btn-default',
+                    'class' => 'btn-outline-secondary',
                     'itemsBefore' => [
                         '<li class="dropdown-header">Export All Data</li>',
                     ],

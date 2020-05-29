@@ -21,7 +21,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'mode' => DetailView::MODE_VIEW,
         'panel' => [
             'heading' => $this->title,
-            'type' => DetailView::TYPE_INFO,
+            'type' => DetailView::TYPE_PRIMARY,
         ],
         'attributes' => [
             'level',

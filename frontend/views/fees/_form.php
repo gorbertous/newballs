@@ -21,7 +21,7 @@ use common\helpers\Helpers;
     ?>
 
     <ul class="nav nav-pills" id="tabContent">
-        <li class="active"><a href="#fees" data-toggle="tab"><?= Yii::t('appMenu', 'Fees') ?></a></li>
+        <li class="nav-item"><a class="nav-link active" href="#fees" data-toggle="tab"><?= Yii::t('appMenu', 'Fees') ?></a></li>
 
         <!-- Audit tab  -->
         <?php if(Yii::$app->user->can('team_memebr')): ?>
@@ -30,9 +30,9 @@ use common\helpers\Helpers;
     </ul>
 
     <div class="tab-content">
-        <div class="tab-pane active well" id="fees">
+        <div class="tab-pane active card card-body bg-light" id="fees">
             <div class="row">
-                <div class="col-xs-6">
+                <div class="col-md-6">
                     <?=
                     $form->hrwSelect2($model, 'mem_type_id', [
                         'data'          => ArrayHelper::map(\backend\models\MembershipType::find()->all(), 'mem_type_id', 'nameFB'),
@@ -43,7 +43,7 @@ use common\helpers\Helpers;
                 </div>
             </div>      
             <div class="row"> 
-                <div class="col-xs-6">
+                <div class="col-md-6">
                    <?= $form->hrwTextInputMax($model, 'mem_fee') ?>
                 </div>
             </div>

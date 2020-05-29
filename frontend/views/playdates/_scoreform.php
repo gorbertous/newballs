@@ -21,27 +21,27 @@ use yii\helpers\Html;
     ?>
 
     <ul class="nav nav-pills" id="tabContent">
-        <li class="active"><a href="#scores" data-toggle="tab"><?= Yii::t('modelattr', 'Scores') ?></a></li>
+        <li class="nav-item"><a class="nav-link active" href="#scores" data-toggle="tab"><?= Yii::t('modelattr', 'Scores') ?></a></li>
     </ul>
 
     <div class="tab-content">
-        <div class="tab-pane active well" id="scores">
+        <div class="tab-pane active card card-body bg-light" id="scores">
             <div class="row"> 
-                 <div class="col-xs-3">
+                 <div class="col-md-3">
                    <?= $form->hrwTextInputMax($model, 'set_one') ?>
                 </div>
-                <div class="col-xs-3">
+                <div class="col-md-3">
                    <?= $form->hrwTextInputMax($model, 'set_two') ?>
                 </div>
-                <div class="col-xs-3">
+                <div class="col-md-3">
                    <?= $form->hrwTextInputMax($model, 'set_three') ?>
                 </div>
             </div>
              <div class="row">
-                <div class="col-xs-3">
+                <div class="col-md-3">
                    <?= $form->hrwTextInputMax($model, 'set_four') ?>
                 </div>
-                 <div class="col-xs-3">
+                 <div class="col-md-3">
                    <?= $form->hrwTextInputMax($model, 'set_five') ?>
                 </div>
             </div>      

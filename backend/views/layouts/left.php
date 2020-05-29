@@ -2,17 +2,25 @@
 
 use common\dictionaries\MenuTypes;
 use yii\helpers\Url;
-use dmstr\widgets\Menu;
+use dmstr\adminlte\widgets\Menu;
 
 $route = $this->context->route;
 
-
+$logo = '/img/AdminLTELogo.png';
 
 if (!Yii::$app->user->isGuest) {
     ?>
-    <aside class="main-sidebar">
+    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+        <!-- Brand Logo -->
+        <a href="index3.html" class="brand-link">
+          <img src="<?= $logo ?>" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
+               style="opacity: .8">
+          <span class="brand-text font-weight-light">AdminLTE 3</span>
+        </a>
+        
+        <div class="sidebar">
 
-        <section class="sidebar">
+        <nav class="mt-2">
 
             <?= Menu::widget(
             [
@@ -95,7 +103,9 @@ if (!Yii::$app->user->isGuest) {
             ]
         )
         ?>
-        </section>
+        </nav>
+            
+        </div>
 
     </aside>
 

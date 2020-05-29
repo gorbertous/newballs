@@ -32,16 +32,16 @@ use backend\models\ClubStyles;
     ?>
 
         <ul class="nav nav-pills" id="tabContent">
-            <li class="active"><a href="#general" data-toggle="tab"><?= Yii::t('modelattr', 'General') ?></a></li>
-            <li><a href="#pages" data-toggle="tab"><?= Yii::t('modelattr', 'Main Pages') ?></a></li>
-            <li><a href="#pagesoth" data-toggle="tab"><?= Yii::t('modelattr', 'Other Pages') ?></a></li>
-            <li><a href="#data" data-toggle="tab"><?= Yii::t('modelattr', 'Data') ?></a></li>
+            <li class="nav-item"><a class="nav-link active" href="#general" data-toggle="tab"><?= Yii::t('modelattr', 'General') ?></a></li>
+            <li class="nav-item"><a class="nav-link" href="#pages" data-toggle="tab"><?= Yii::t('modelattr', 'Main Pages') ?></a></li>
+            <li class="nav-item"><a class="nav-link" href="#pagesoth" data-toggle="tab"><?= Yii::t('modelattr', 'Other Pages') ?></a></li>
+            <li class="nav-item"><a class="nav-link" href="#data" data-toggle="tab"><?= Yii::t('modelattr', 'Data') ?></a></li>
             <!-- Audit tab  -->
             <?= Helpers::getAuditTab()?>
         </ul>
 
         <div class="tab-content">
-            <div class="tab-pane active well" id="general">
+            <div class="tab-pane active card card-body bg-light" id="general">
 
                 <div class="row">
                     <div class="col-md-6">                        
@@ -66,7 +66,7 @@ use backend\models\ClubStyles;
                 <hr class="grey-dark" />
 
             </div>
-            <div class="tab-pane well" id="pages">
+            <div class="tab-pane card card-body bg-light" id="pages">
                 <div class="row">
                     <div class="col-md-12">
                         <?= $form->hrwTinyMce($model, 'home_page') ?>
@@ -85,7 +85,7 @@ use backend\models\ClubStyles;
                 
             </div>
             
-            <div class="tab-pane well" id="pagesoth">
+            <div class="tab-pane card card-body bg-light" id="pagesoth">
                 
                 <div class="row">
                     <div class="col-md-12">
@@ -110,7 +110,7 @@ use backend\models\ClubStyles;
                 </div>
             </div>
                
-            <div class="tab-pane well" id="data">
+            <div class="tab-pane card card-body bg-light" id="data">
                  <div class="row">
                     <div class="col-md-6">
                         <?= $form->hrwSelect2($model, 'css_id', [

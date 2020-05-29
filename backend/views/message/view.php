@@ -28,7 +28,7 @@ use common\helpers\Helpers;
         </div>
     </div>
 
-    <div class="form-group no-print pull-right">
+    <div class="form-group no-print float-right">
        <?php echo Helpers::getModalFooter($model, $model->id, 'view', [
             'buttons' => ['cancel']
         ]); ?>

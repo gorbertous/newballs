@@ -25,7 +25,7 @@ $currentBtn = GridviewHelper::getCurrentBtn($context_array);
             'value'  => function ($model) {
                 if (!empty($model->member->member_id)) {
                     return Html::button('<i class="fa fa-user"></i>', ['value' => Url::toRoute(['members/view', 'id' => $model->member->member_id]),
-                                                                       'class' => 'showModalButton btn btn-default',
+                                                                       'class' => 'showModalButton btn-outline-secondary',
                                                                        'title' => Yii::t('appMenu', 'View member')]);
                 } else {
                     return '';
@@ -129,12 +129,13 @@ $currentBtn = GridviewHelper::getCurrentBtn($context_array);
         'filterModel' => $searchModel,
                 'columns'        => $gridColumn,
                 'id' => 'gridview-club-id',
+                'tableOptions' => ['class' => 'table table-responsive'],
                 'responsive'          => true,
-                'responsiveWrap' => true,
-                'condensed' => true,
+                'responsiveWrap' => false,
+                'condensed' => false,
                 'panelBeforeTemplate' => GridviewHelper::getPanelBefore(),
                 'panel' => [
-                    'type'    => Gridview::TYPE_DEFAULT,
+                    'type'    => Gridview::TYPE_PRIMARY,
                     'heading' => $header,
                 ],
                 'toolbar'             => $toolbar,

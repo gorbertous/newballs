@@ -15,7 +15,7 @@ namespace backend\widgets;
  * @author Alexander Makarov <sam@rmcreative.ru>
  * @package backend\widgets
  */
-class Alert extends \yii\bootstrap\Widget
+class Alert extends \yii\bootstrap4\Widget
 {
     /**
      * @var array the alert types configuration for the flash messages.
@@ -53,7 +53,7 @@ class Alert extends \yii\bootstrap\Widget
                     $this->options['class'] = $this->alertTypes[$type] . $appendCss;
                     /* assign unique id to each alert box */
                     $this->options['id'] = $this->getId() . '-' . $type;
-                    echo \yii\bootstrap\Alert::widget([
+                    echo \yii\bootstrap4\Alert::widget([
                         'body'        => $message,
                         'closeButton' => $this->closeButton,
                         'options'     => $this->options,

@@ -13,7 +13,6 @@ use backend\models\Members;
 use common\helpers\Helpers;
 use common\helpers\Thumbnails;
 use common\dictionaries\ContextLetter;
-//use common\models\User;
 use kartik\grid\EditableColumnAction;
 use yii\helpers\ArrayHelper;
 
@@ -150,7 +149,7 @@ class MembersController extends Controller
                     'context_array' => $this->getSpecificContextArray()
         ]);
     }
-
+    
     /**
      * {@inheritdoc}
      */

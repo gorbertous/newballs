@@ -42,16 +42,16 @@ use common\dictionaries\ClubSessions;
     ?>
 
     <ul class="nav nav-pills" id="tabContent">
-        <li class="active"><a href="#playdate" data-toggle="tab"><?= Yii::t('modelattr', 'Play Date') ?></a></li>
+        <li class="nav-item"><a class="nav-link active" href="#playdate" data-toggle="tab"><?= Yii::t('modelattr', 'Play Date') ?></a></li>
 
         <!-- Audit tab  -->
         <?= Helpers::getAuditTab() ?>
     </ul>
 
     <div class="tab-content">
-        <div class="tab-pane active well" id="playdate">
+        <div class="tab-pane active card card-body bg-light" id="playdate">
             <div class="row">
-                <div class="col-xs-6">
+                <div class="col-md-6">
                     <?=
                     $form->hrwSelect2($model, 'c_id', [
                         'data'          => ArrayHelper::map(Clubs::find()->all(), 'c_id', 'name'),
@@ -60,7 +60,7 @@ use common\dictionaries\ClubSessions;
                     ])
                     ?>
                 </div>
-                <div class="col-xs-6">
+                <div class="col-md-6">
                     <?=
                     $form->hrwSelect2($model, 'location_id', [
                         'data'          => ArrayHelper::map(Location::find()->all(), 'location_id', 'name'),
@@ -71,7 +71,7 @@ use common\dictionaries\ClubSessions;
                 </div>
             </div>      
             <div class="row"> 
-                <div class="col-xs-8">
+                <div class="col-md-8">
                      <?= $form->field($model, 'termin_date')->widget(DateTimePicker::classname(), [
                             'options' => ['placeholder' => 'Enter play date time ...'],
                             'pluginOptions' => [
@@ -79,12 +79,12 @@ use common\dictionaries\ClubSessions;
                             ]
                     ]);?>
                 </div>
-                <div class="col-xs-4">
+                <div class="col-md-4">
                    <?= $form->hrwTextInputMax($model, 'recurr_no') ?>
                 </div>
             </div>
              <div class="row">     
-                <div class="col-xs-6">
+                <div class="col-md-6">
                     <?php if ($model->isNewRecord): ?>
                         <?=  $form->field($model, 'season_id')->widget(DepDrop::classname(), [
                                 'options'=>['id' =>'season-id'],
@@ -103,7 +103,7 @@ use common\dictionaries\ClubSessions;
                         ]) ?>
                     <?php endif; ?>
                 </div>
-                 <div class="col-xs-6">
+                 <div class="col-md-6">
                     <?= $form->hrwSelect2($model, 'session_id', [
                         'data' => ClubSessions::all(),
                         'hideSearch' => true,
@@ -113,13 +113,13 @@ use common\dictionaries\ClubSessions;
             </div>
                     
             <div class="row"> 
-                <div class="col-xs-4">
+                <div class="col-md-4">
                     <?= $form->hrwTextInputMax($model, 'courts_no') ?>
                 </div>
-                <div class="col-xs-4">
+                <div class="col-md-4">
                     <?= $form->hrwTextInputMax($model, 'slots_no') ?>
                 </div>
-                <div class="col-xs-4">
+                <div class="col-md-4">
                    <?= $form->hrwCheckboxX($model, 'active') ?>
                 </div>
             </div>

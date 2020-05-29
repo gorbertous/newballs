@@ -17,7 +17,7 @@
     "require": {
         "php": ">=7.0.0",
         "yiisoft/yii2": "~2.0.20",
-        "yiisoft/yii2-bootstrap": "~2.0.0",
+        "yiisoft/yii2-bootstrap4" : "^2.0.8",
         "yiisoft/yii2-swiftmailer": "~2.1.0",
         "yiisoft/yii2-imagine": "~2.1.0",
         "yiisoft/yii2-httpclient": "~2.0.0",
@@ -26,7 +26,7 @@
         "yiisoft/yii2-queue": "^2.0",
         "yii2tech/authlog": "*",
         "kartik-v/yii2-widgets": "*",
-        "kartik-v/yii2-grid": "@dev",
+        "kartik-v/yii2-grid": "dev-master",
         "kartik-v/yii2-dialog": "@dev",
         "kartik-v/yii2-datecontrol": "@dev",
         "kartik-v/dependent-dropdown": "@dev",
@@ -37,6 +37,9 @@
         "kartik-v/yii2-mpdf": "*",
         "kartik-v/yii2-widget-datetimepicker": "*",
         "kartik-v/yii2-widget-depdrop": "@dev",
+        "kartik-v/yii2-widget-spinner": "dev-master",
+        "kartik-v/bootstrap-popover-x": "dev-master",
+        "kartik-v/bootstrap-tabs-x": "dev-master",
         "voskobovich/yii2-linker-behavior": "^4.0",
         "himiklab/yii2-recaptcha-widget": "^1.2",
         "codemix/yii2-localeurls": "^1.5",
@@ -47,12 +50,14 @@
         "asinfotrack/yii2-audittrail": "dev-master",
         "yii2tech/ar-linkmany": "*",
         "brussens/yii2-maintenance-mode": "*",
-        "dmstr/yii2-adminlte-asset": "^2.1",
+        "dmstr/yii2-adminlte-asset": "dev-master",
         "bower-asset/ekko-lightbox": "*",
         "skeeks/yii2-assets-auto-compress": "*",
         "2amigos/yii2-gallery-widget": "~1.0",
         "yii2mod/yii2-google-maps-markers": "*",
-        "lysenkobv/yii2-geoip": "~1.0"
+        "lysenkobv/yii2-geoip": "~1.0",
+        "rmrevin/yii2-fontawesome":"~3.5"
+
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",
@@ -66,7 +71,8 @@
         "mootensai/yii2-enhanced-gii": "dev-master",
         "warrence/yii2-kartikgii": "dev-master",
         "phpunit/php-invoker": "^1.1",
-        "insolita/yii2-migration-generator": "~2.3"
+        "insolita/yii2-migration-generator": "~3.1",
+        "c006/yii2-migration-utility": "dev-master"
     },
     "config": {
         "process-timeout": 1800,

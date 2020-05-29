@@ -10,7 +10,7 @@ use kartik\grid\GridView;
 
     <?php yii\widgets\Pjax::begin(['id' => 'pjax-refresh-selects']); ?>
 
-    <div class="well">
+    <div class="card card-body bg-light">
     <?php
         $gridColumn = [
             ['class' => 'yii\grid\SerialColumn'],
@@ -42,17 +42,16 @@ use kartik\grid\GridView;
     ?>
     </div>
 
-    <div class="clearfix"></div>
 
-    <div class="form-group pull-right">
+    <div class="modal-footer">
         <?php if ($dataProvider->count > 0) { ?>
             <?= Html::a('<span class="fa fa-upload fa-rotate-180"></span>&nbsp;' .
                     Yii::t('app', 'Import all'), Url::toRoute(Yii::$app->controller->id.'/fromlibrary/'.implode('-',$dataProvider->getKeys())), [
                                 'class' => 'btn btn-success']) ?>
         <?php } ?>
 
-        <?= Html::Button('<span class="fa fa-times"></span>&nbsp;' .
-                Yii::t('app', 'Cancel'), ['class' => 'btn btn-danger', 'data-dismiss' => 'modal']) ?>
+        <?= Html::Button('<span class="fas fa-times"></span>&nbsp;' .
+                Yii::t('app', 'Cancel'), ['class' => 'btn btn-danger', 'data-izimodal-close' => 'modal']) ?>
     </div>
 
     <?php yii\widgets\Pjax::end(); ?>

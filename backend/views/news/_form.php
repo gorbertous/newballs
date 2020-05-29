@@ -29,19 +29,19 @@ $alllang = Yii::$app->contLang->languages;
     ?>
 
     <ul class="nav nav-pills" id="tabContent">
-        <li class="active"><a href="#description" data-toggle="tab"><?= Yii::t('modelattr', 'Description') ?></a></li>
-        <li><a href="#file" data-toggle="tab"><?= Yii::t('modelattr', 'Images') ?></a></li>
-        <li><a href="#parameters" data-toggle="tab"><?= Yii::t('modelattr', 'Parameters') ?></a></li>
-        <li><a href="#tags" data-toggle="tab"><?= Yii::t('modelattr', 'Tags') ?></a></li>
+        <li class="nav-item"><a class="nav-link active" href="#description" data-toggle="tab"><?= Yii::t('modelattr', 'Description') ?></a></li>
+        <li class="nav-item"><a class="nav-link" href="#file" data-toggle="tab"><?= Yii::t('modelattr', 'Images') ?></a></li>
+        <li class="nav-item"><a class="nav-link" href="#parameters" data-toggle="tab"><?= Yii::t('modelattr', 'Parameters') ?></a></li>
+        <li class="nav-item"><a class="nav-link" href="#tags" data-toggle="tab"><?= Yii::t('modelattr', 'Tags') ?></a></li>
         <!-- Audit tab  -->
         <?= Helpers::getAuditTab()?>
     </ul>
 
     <div class="tab-content">
 
-        <div class="tab-pane well active" id="description">
+        <div class="tab-pane card card-body bg-light active" id="description">
             <div class="row">
-                <div class="col-xs-6">
+                <div class="col-md-6">
                     <?=
                     $form->hrwSelect2($model, 'c_id', [
                         'data'          => ArrayHelper::map(Clubs::find()->all(), 'c_id', 'name'),
@@ -50,7 +50,7 @@ $alllang = Yii::$app->contLang->languages;
                     ])
                     ?>
                 </div>
-                <div class="col-xs-6">
+                <div class="col-md-6">
                     <?= $form->hrwSelect2($model, 'category', [
                         'data'       => NewsCategories::all(),
                         'hideSearch' => true])
@@ -59,7 +59,7 @@ $alllang = Yii::$app->contLang->languages;
             </div>
 
             <div class="row">
-                <div class="col-xs-12">
+                <div class="col-md-12">
                     <?php
                     foreach ($alllang as $iso) {
                         echo $form->hrwTextInputMax($model, 'title_'.$iso);
@@ -69,7 +69,7 @@ $alllang = Yii::$app->contLang->languages;
                 </div>
             </div>
         </div>
-        <div class="tab-pane well" id="file">
+        <div class="tab-pane card card-body bg-light" id="file">
             <div class="row">
                 <div class="col-md-6">
                     <label class="control-label"><?= Yii::t('modelattr', 'Featured image') ?></label>
@@ -85,7 +85,7 @@ $alllang = Yii::$app->contLang->languages;
             </div>
         </div>
 
-        <div class="tab-pane well" id="parameters">
+        <div class="tab-pane card card-body bg-light" id="parameters">
             <div class="row">
                 <div class="col-md-6">
                     <?= $form->hrwCheckboxX($model, 'is_public') ?>
@@ -96,7 +96,7 @@ $alllang = Yii::$app->contLang->languages;
                 </div>
             </div>
         </div>
-        <div class="tab-pane well" id="tags">
+        <div class="tab-pane card card-body bg-light" id="tags">
             <div class="row">
                 <div class="col-md-12">
                     <?= $form->hrwSelect2($model, 'tags_ids', [

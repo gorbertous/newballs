@@ -11,12 +11,15 @@ $currentBtn = GridviewHelper::getCurrentBtn($context_array);
 ?>
 <div class="log-index">
     <?=Html::beginForm(['log/bulk'],'post');?>
-    <div class="row">     
-        <div class="col-xs-6">
-            <?= Html::hiddenInput('bulkdelete', true)?>
-            <?= Html::submitButton('Delete Logs', ['class' => 'btn btn-info',]);?>
-        </div>
-    </div>
+        
+        
+            <div class="row">     
+                <div class="col-md-3 mb-2">
+                    <?= Html::hiddenInput('bulkdelete', true)?>
+                    <?= Html::submitButton('Delete Logs', ['class' => 'btn btn-primary',]);?>
+                </div>
+            </div>
+      
 
     <?php
     //    Pjax::begin(['id' => 'pjax-gridview-container', 'enablePushState' => true]);
@@ -61,12 +64,13 @@ $currentBtn = GridviewHelper::getCurrentBtn($context_array);
                 'filterModel' => $searchModel,
                 'columns'        => $gridColumn,
                 'id' => 'gridview-club-id',
+                'tableOptions' => ['class' => 'table table-responsive'],
                 'responsive'          => true,
-                'responsiveWrap' => true,
-                'condensed' => true,
+                'responsiveWrap' => false,
+                'condensed' => false,
                 'panelBeforeTemplate' => GridviewHelper::getPanelBefore(),
                 'panel' => [
-                    'type'    => Gridview::TYPE_DEFAULT,
+                    'type'    => Gridview::TYPE_PRIMARY,
                     'heading' => $header,
                 ],
                 'toolbar'             => $toolbar,

@@ -21,7 +21,7 @@ use common\helpers\Helpers;
     ]);
     ?>
 
-    <div class="well">
+    <div class="card card-body bg-light">
 
         <div class="row">
             <div class="col-md-6">

@@ -14,37 +14,47 @@ AppAsset::register($this);
     <head>
         <meta charset="<?= Yii::$app->charset ?>">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="google-site-verification" content="JI6gDOmLIr7vV1xvbXNDzOysLEz6iQy3iDqHrQbRA2E" />
         <?php $this->registerCsrfMetaTags() ?>
         <title><?= Html::encode($this->title) ?></title>
         <link rel="icon" type="image/x-icon" href="/favicon.ico?v=2" />
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
         <?php $this->head() ?>
     </head>
     <body>
         <?php $this->beginBody() ?>
 
         <div class="wrap">
-            <nav class="navbar-default navbar-fixed-top">
-                <div class="container-fluid">
-                    <div class="navbar-header">
-                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>                        
-                        </button>
-                        <a class="navbar-brand" href="/"><?= Html::img('/img/tennis-ball.png', ['alt' => Yii::$app->name, 'style' => 'height : 35px; width : 35px;']) ?></a>
-                    </div>
-                    <div id="navbar" class="navbar-collapse collapse">
-
-                        <ul class="nav navbar-nav navbar-right">
-                            <li><a href="/index"><?= Yii::t('app', 'Home') ?></a></li>
-                            <li><a href="/about"><?= Yii::t('app', 'About') ?></a></li>
-                            <li><a href="/signup"><span class="glyphicon glyphicon-user"></span> <?= Yii::t('app', 'Join') ?></a></li>
-                            <li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> <?= Yii::t('app', 'Login') ?></a></li>
-                        </ul>
-                    </div>
+          
+            
+            <!-- Navigation -->
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+              <div class="container">
+                  <a class="navbar-brand" href="/"><?= Html::img('/img/tennis-ball.png', ['alt' => Yii::$app->name, 'style' => 'height : 35px; width : 35px;']) ?> <span>BALLS TENNIS</span></a>
+                
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                  <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                      <a class="nav-link active" href="/index""><?= Yii::t('app', 'Home') ?>
+                        <span class="sr-only">(current)</span>
+                      </a>
+                    </li>
+                    <li id="link-about" class="nav-item">
+                      <a class="nav-link" href="/about"><?= Yii::t('app', 'About') ?></a>
+                    </li>
+                    <li id="link-signup" class="nav-item">
+                      <a class="nav-link" href="/signup"><i class="fas fa-user"></i> <?= Yii::t('app', 'Join') ?></a>
+                    </li>
+                    <li id="link-login" class="nav-item">
+                      <a class="nav-link" href="/login"><i class="fas fa-sign-in-alt"></i> <?= Yii::t('app', 'Login') ?></a>
+                    </li>
+                  </ul>
                 </div>
+              </div>
             </nav>
 
 
@@ -54,15 +64,15 @@ AppAsset::register($this);
                 <?= $content ?>
             </div>
         </div>
-
-        <footer class="footer">
-            <div class="container">
-                <p class="pull-left">&copy; <?= Html::encode(Yii::$app->name) ?> <?= date('Y') ?></p>
-
-                <p class="pull-right"><?= Yii::t('app', 'Tell your friends and collegues about the club, the more the merrier!') ?></p>
-            </div>
+        
+        <!-- Footer -->
+        <footer class="py-5 bg-dark">
+          <div class="container">
+            <p class="m-0 text-center text-white">Copyright &copy; <?= Html::encode(Yii::$app->name) ?> <?= date('Y') ?></p>
+            <p class="m-0 text-center text-white"><?= Yii::t('app', 'Tell your friends and collegues about the club, the more the merrier!') ?></p>
+          </div>
+          <!-- /.container -->
         </footer>
-
 
         <?php $this->endBody() ?>
     </body>

@@ -24,6 +24,9 @@ return [
         'queuemanager' => [
             'class' => \ignatenkovnikita\queuemanager\QueueManager::class
         ],
+        'utility' => [
+            'class' => 'c006\utility\migration\Module',
+        ],
     ],
     'components' => [
         'request' => [

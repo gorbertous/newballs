@@ -13,11 +13,11 @@ use common\dictionaries\NewsCategories;
 <h3><?= NewsCategories::get($model->category) ?></h3>
 <div class="news-view">
     <div class="row">
-        <div class="col-xs-6">
+        <div class="col-md-6">
             <?= $model->titleFB .' ('. Yii::t('diag', 'by'). ' '. $model->createUserName. ')'?><br>
         </div>
 
-        <div class="col-xs-2 col-xs-offset-3">
+        <div class="col-md-2 col-md-offset-3">
             <?=  $model->getIconPreviewAsHtml('ajaxfilefeatured', 90); ?><br>
            
         </div>
@@ -26,7 +26,7 @@ use common\dictionaries\NewsCategories;
 
     <br>
     <div class="row">
-        <div class="col-xs-12">
+        <div class="col-md-12">
             <?= $model->contentFB ?><br>
         </div>
     </div>

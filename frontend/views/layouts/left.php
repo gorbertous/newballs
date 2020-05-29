@@ -3,7 +3,7 @@
 use common\dictionaries\MenuTypes;
 use yii\helpers\Url;
 use yii\helpers\StringHelper;
-use dmstr\widgets\Menu;
+use dmstr\adminlte\widgets\Menu;
 use yii\helpers\Html;
 
 $route = $this->context->route;
@@ -16,31 +16,40 @@ if (!empty(Yii::$app->session->get('member_photo'))) {
     $profileThumb25 = '/img/profile-default25x25.png';
 }
 
+$logo = '/img/tennis-ball.png';
+
 
 if (!Yii::$app->user->isGuest) {
     ?>
-    <aside class="main-sidebar">
-
-        <section class="sidebar">
+    <aside class="main-sidebar sidebar-dark-secondary elevation-4">
+        
+        <!-- Brand Logo -->
+        <a href="<?= Yii::$app->homeUrl ?>" class="brand-link">
+            <img src="<?= $logo ?>" alt="<?= Yii::$app->session->get('club_name') ?>" class="brand-image img-circle elevation-3" style="opacity: .8">
+            <span class="brand-text font-weight-light"><?= Yii::$app->session->get('club_name') ?></span>
+        </a>
+        <div class="sidebar">
             
-            <!-- Sidebar user panel -->
-            <div class="user-panel">
-                <div class="pull-left image">
-                    
-                    <?= Html::img($profileThumb90, ['class' => 'img-circle', 'alt' => StringHelper::truncate(Html::encode(Yii::$app->user->identity->username), 2)]); ?>
-                </div>
-                <div class="pull-left info">
-                    <p><?= Yii::$app->session->get('member_name')?></p>
-                    <p><small><?= Yii::t('app', 'Member Since'); ?> <?= Yii::$app->session->get('member_since')?></small></p>
-                    
-                </div>
+            <!-- Sidebar user (optional) -->
+            <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+               
+              <div class="image">
+                <?= Html::img($profileThumb90, ['class' => 'img-circle elevation-2', 'alt' => StringHelper::truncate(Html::encode(Yii::$app->user->identity->username), 2)]); ?>
+              </div>
+               
+              <div class="info">
+                  <?= Html::a( Yii::$app->session->get('member_name'), Yii::$app->homeUrl, ['class' => 'd-block']) ?>
+                  <div class="nav-header font-weight-light"><small><?= Yii::t('app', 'Member Since'); ?> <?= Yii::$app->session->get('member_since')?></small></div>
+               
+              </div>
             </div>
-            <br>
+          
+            <nav class="mt-2">
             <!-- sidebar menu -->
             <?=
             Menu::widget(
             [
-                'options' => ['class' => 'sidebar-menu tree', 'data-widget'=> 'tree', 'data-accordion' => 0],
+                'options' => ['class' => 'nav nav-pills nav-sidebar flex-column', 'data-widget'=> 'treeview', 'role'=> 'menu','data-accordion' => false],
                 'encodeLabels' => false,
                 "items" => [
 //                                    ["label" => "Home", "url" => "/dashboard/index", "icon" => "home"],
@@ -59,7 +68,7 @@ if (!Yii::$app->user->isGuest) {
                                 'visible' => Yii::$app->user->can('reader')
                             ],
                             [
-                                'label'   => '<span class="left-menu-text">' . MenuTypes::yourGamesText()  . '</span>' . ' <span class="label label-info">' . Yii::$app->session->get('member_pending_count') . '</span>',
+                                'label'   => '<span class="left-menu-text">' . MenuTypes::yourGamesText()  . '</span>' . ' <span class="badge badge-info right">' . Yii::$app->session->get('member_pending_count') . '</span>',
                                 'icon'    => MenuTypes::Y_GAMES_ICON_MENU,
                                 'url'     => Url::toRoute(['yourgames/index']),
                                 'active'  => ($route == 'yourgames/index'),
@@ -175,8 +184,8 @@ if (!Yii::$app->user->isGuest) {
             ]
             )
             ?>
-
-        </section>
+            </nav>
+        </div>
 
     </aside>
 

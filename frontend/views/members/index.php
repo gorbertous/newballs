@@ -10,8 +10,9 @@ use common\helpers\ViewsHelper;
 $this->title = GridviewHelper::getTitle($context_array);
 $currentBtn = GridviewHelper::getCurrentBtn($context_array);
 
-$redcross = '<i class="text-danger fa fa-times fa-lg" aria-hidden="true"></i>';
-$greencheck = '<i class="text-success fa fa-check fa-lg" aria-hidden="true"></i>';
+$redcross = '<i class="text-danger fas fa-times fa-lg" aria-hidden="true"></i>';
+$greencheck = '<i class="text-success fas fa-check fa-lg" aria-hidden="true"></i>';
+
 
 ?>
 
@@ -21,28 +22,20 @@ $greencheck = '<i class="text-success fa fa-check fa-lg" aria-hidden="true"></i>
 //    Pjax::begin(['id' => 'pjax-gridview-container', 'enablePushState' => true]);
     $gridColumn = [
         ['class' => 'yii\grid\SerialColumn'],
+       
         [
-            'attribute'      => 'club_role',
-            'label'          => Yii::t('modelattr', 'Role'),
-            'contentOptions' => ['style' => 'width: 50px;'],
+            'label'          => Yii::t('modelattr', 'Photo'),
             'format'         => 'raw',
-            'value'          => function($model) {
+            'contentOptions' => ['style' => 'width:90px;'],
+            'value'          => function ($model) {
                 $c_role = [];
                 foreach ($model->memberRoles as $mem_role) {
                     $bcolor = ClubRoles::getRoleColor($mem_role->id);
                     $formated_string =  "<span class='$bcolor'>{$mem_role->role}</span>";
                     array_push($c_role, $formated_string);
                 }
-                return join('<br>', $c_role);
-            },
-        ],
-        [
-            'label'          => Yii::t('modelattr', 'Photo'),
-            'format'         => 'raw',
-            'contentOptions' => ['style' => 'width:90px;'],
-            'value'          => function ($model) {
                 $gravatar = isset($model->user->email) ? $model->getGravatar($model->user->email) : null;
-                return !empty($model->photo) ? $model->getIconPreviewAsHtml('ajaxfileinputPhoto', 60) : $gravatar;
+                return !empty($model->photo) ? $model->getIconPreviewAsHtml('ajaxfileinputPhoto', 90) . '<br>' . join('<br>', $c_role): $gravatar . '<br>' . join('<br>', $c_role);
             }
         ],
         [
@@ -53,7 +46,7 @@ $greencheck = '<i class="text-success fa fa-check fa-lg" aria-hidden="true"></i>
                 $name = empty($model->firstname) ? '<span class="badge bg-red">Missing name - update this profile!</span>' : $model->name;
                 $mobile = empty($model->phone_mobile) ? $model->phone : $model->phone_mobile;
                 $email = isset($model->user) ? $model->user->email : '';
-                $iscoach = isset($model->memType) && ($model->memType->mem_type_id == 5) ? ' <span class="badge bg-blue pull-right">Coach</span>' : '';
+                $iscoach = isset($model->memType) && ($model->memType->mem_type_id == 5) ? ' <span class="badge bg-blue float-right">Coach</span>' : '';
                 return $name .'<br>'. $email .'<br>'.$mobile . $iscoach;
             },
             'filterType'          => GridView::FILTER_SELECT2,
@@ -145,7 +138,7 @@ $greencheck = '<i class="text-success fa fa-check fa-lg" aria-hidden="true"></i>
                 'header'=>'Is Visible',
                 'formOptions'=>['action' => ['/members/editmember']], // point to the new action        
                 'inputType'=>\kartik\editable\Editable::INPUT_SELECT2,
-                'asPopover' => true,
+                
                 'options' => [
                     'data' => [
                         0  => Yii::t('modelattr', 'No'),
@@ -250,12 +243,11 @@ $greencheck = '<i class="text-success fa fa-check fa-lg" aria-hidden="true"></i>
                 'filterModel' => $searchModel,
                 'columns'        => $gridColumn,
                 'id' => 'gridview-club-id',
+                'tableOptions' => ['class' => 'table table-responsive'],
                 'responsive'          => true,
-                'responsiveWrap' => true,
-                'condensed' => true,
                 'panelBeforeTemplate' => GridviewHelper::getPanelBefore(),
                 'panel' => [
-                    'type'    => Gridview::TYPE_DEFAULT,
+                    'type'    => Gridview::TYPE_PRIMARY,
                     'heading' => $header,
                 ],
                 'toolbar'             => $toolbar,

@@ -15,7 +15,7 @@ abstract class MenuTypes
     public static function memrotaText(): string {
         return Yii::t('appMenu', 'Rota');
     }
-    const MEMROTA_ICON = 'fa fa-dashboard';
+    const MEMROTA_ICON = 'fas fa-dashboard';
     const MEMROTA_ICON_MENU = 'dashboard';
 
     /** -- */
@@ -23,7 +23,7 @@ abstract class MenuTypes
     public static function logText(): string {
         return Yii::t('appMenu', 'Logs');
     }
-    const LOGS_ICON = 'fa fa-bolt';
+    const LOGS_ICON = 'fas fa-bolt';
     const LOGS_ICON_MENU = 'bolt';
 
     /** -- */
@@ -31,7 +31,7 @@ abstract class MenuTypes
     public static function rulesText(): string {
         return Yii::t('appMenu', 'Rules');
     }
-    const RULES_ICON = 'fa fa-balance-scale';
+    const RULES_ICON = 'fas fa-balance-scale';
     const RULES_ICON_MENU = 'balance-scale';
 
     /** -- */
@@ -43,7 +43,7 @@ abstract class MenuTypes
             return Yii::t('appMenu', 'Company');
         }
     }
-    const COMPANY_ICON = 'fa fa-industry';
+    const COMPANY_ICON = 'fas fa-industry';
     const COMPANY_ICON_MENU = 'industry';
 
     /** -- */
@@ -51,7 +51,7 @@ abstract class MenuTypes
     public static function dataText(): string {
         return Yii::t('appMenu', 'Data');
     }
-    const DATA_ICON = 'fa fa-file-text';
+    const DATA_ICON = 'fas fa-file-text';
     const DATA_ICON_MENU = 'file-text';
 
     /** -- */
@@ -59,7 +59,7 @@ abstract class MenuTypes
     public static function Documents_text(): string {
         return Yii::t('appMenu', 'Documents');
     }
-    const DOCUMENTS_ICON = 'fa fa-certificate';
+    const DOCUMENTS_ICON = 'fas fa-certificate';
     const DOCUMENTS_ICON_MENU = 'certificate';
 
     /** -- */
@@ -67,7 +67,7 @@ abstract class MenuTypes
     public static function Documenttypes_text(): string {
         return Yii::t('appMenu', 'Document types');
     }
-    const DOCUMENTTYPES_ICON = 'fa fa-sitemap';
+    const DOCUMENTTYPES_ICON = 'fas fa-sitemap';
     const DOCUMENTTYPES_ICON_MENU = 'sitemap';
 
     /** -- */
@@ -75,7 +75,7 @@ abstract class MenuTypes
     public static function userLogText(): string {
         return Yii::t('appMenu', 'User Log');
     }
-    const USER_LOG_ICON = 'fa fa-user';
+    const USER_LOG_ICON = 'fas fa-user';
     const USER_LOG_ICON_MENU = 'user';
 
     /** -- */
@@ -83,7 +83,7 @@ abstract class MenuTypes
     public static function membersText(): string {
         return Yii::t('appMenu', 'Membership');
     }
-    const MEMBERS_ICON = 'fa fa-user-plus';
+    const MEMBERS_ICON = 'fas fa-user-plus';
     const MEMBERS_ICON_MENU = 'user-plus';
 
     /** -- */
@@ -91,7 +91,7 @@ abstract class MenuTypes
     public static function Workplaces_text(): string {
         return Yii::t('appMenu', 'Buildings');
     }
-    const WORKPLACES_ICON = 'fa fa-map-marker';
+    const WORKPLACES_ICON = 'fas fa-map-marker';
     const WORKPLACES_ICON_MENU = 'map-marker';
 
     /** -- */
@@ -99,7 +99,7 @@ abstract class MenuTypes
     public static function Suppliers_text(): string {
         return Yii::t('appMenu', 'Suppliers');
     }
-    const SUPPLIERS_ICON = 'fa fa-truck';
+    const SUPPLIERS_ICON = 'fas fa-truck';
     const SUPPLIRS_ICON_MENU = 'truck';
 
     /** -- */
@@ -107,7 +107,7 @@ abstract class MenuTypes
     public static function clubsText(): string {
         return Yii::t('appMenu', 'Clubs');
     }
-    const CLUBS_ICON = 'fa fa-industry';
+    const CLUBS_ICON = 'fas fa-industry';
     const CLUBS_ICON_MENU = 'industry';
 
     /** -- */
@@ -115,7 +115,7 @@ abstract class MenuTypes
     public static function clubText(): string {
         return Yii::t('appMenu', 'Club');
     }
-    const CLUB_ICON = 'fa fa-industry';
+    const CLUB_ICON = 'fas fa-industry';
     const CLUB_ICON_MENU = 'industry';
 
     /** -- */
@@ -123,7 +123,7 @@ abstract class MenuTypes
     public static function Workers_text(): string {
         return Yii::t('appMenu', 'Workers');
     }
-    const WORKERS_ICON = 'fa fa-user';
+    const WORKERS_ICON = 'fas fa-user';
     const WORKERS_ICON_MENU = 'user';
 
     /** -- */
@@ -131,7 +131,7 @@ abstract class MenuTypes
     public static function Medicalcare_text(): string {
         return Yii::t('appMenu', 'Medical care');
     }
-    const MEDICALCARE_ICON = 'fa fa-stethoscope';
+    const MEDICALCARE_ICON = 'fas fa-stethoscope';
     const MEDICALCARE_ICON_MENU = 'stethoscope';
 
     /** -- */
@@ -139,7 +139,7 @@ abstract class MenuTypes
     public static function Postings_text(): string {
         return Yii::t('appMenu', 'Postings');
     }
-    const POSTINGS_ICON = 'fa fa-briefcase';
+    const POSTINGS_ICON = 'fas fa-briefcase';
     const POSTINGS_ICON_MENU = 'briefcase';
 
     /** -- */
@@ -147,7 +147,7 @@ abstract class MenuTypes
     public static function Trainings_text(): string {
         return Yii::t('appMenu', 'Trainings');
     }
-    const TRAININGS_ICON = 'fa fa-graduation-cap';
+    const TRAININGS_ICON = 'fas fa-graduation-cap';
     const TRAININGS_ICON_MENU = 'graduation-cap';
 
     /** -- */
@@ -155,7 +155,7 @@ abstract class MenuTypes
     public static function Authorizations_text(): string {
         return Yii::t('appMenu', 'Authorizations');
     }
-    const AUTHORIZATIONS_ICON = 'fa fa-minus-circle';
+    const AUTHORIZATIONS_ICON = 'fas fa-minus-circle';
     const AUTHORIZATIONS_ICON_MENU = 'minus-circle';
 
     /** -- */
@@ -163,7 +163,7 @@ abstract class MenuTypes
     public static function Absences_text(): string {
         return Yii::t('appMenu', 'Leaves');
     }
-    const ABSENCES_ICON = 'fa fa-medkit';
+    const ABSENCES_ICON = 'fas fa-medkit';
     const ABSENCES_ICON_MENU = 'medkit';
 
     /** -- */
@@ -171,7 +171,7 @@ abstract class MenuTypes
     public static function SafetyAndHealth_text(): string {
         return Yii::t('appMenu', 'Safety and health');
     }
-    const SAFETY_AND_HEALTH_ICON = 'fa fa-warning';
+    const SAFETY_AND_HEALTH_ICON = 'fas fa-warning';
     const SAFETY_AND_HEALTH_ICON_MENU = 'warning';
 
     /** -- */
@@ -179,7 +179,7 @@ abstract class MenuTypes
     public static function Workunits_text(): string {
         return Yii::t('appMenu', 'Workunits');
     }
-    const WORKUNITS_ICON = 'fa fa-wrench';
+    const WORKUNITS_ICON = 'fas fa-wrench';
     const WORKUNITS_ICON_MENU = 'wrench';
 
   
@@ -188,7 +188,7 @@ abstract class MenuTypes
     public static function RiskAssessment_text(): string {
         return Yii::t('appMenu', 'Risk assessment');
     }
-    const RISKASSESSMENT_ICON = 'fa fa-heartbeat';
+    const RISKASSESSMENT_ICON = 'fas fa-heartbeat';
     const RISKASSESSMENT_ICON_MENU = 'heartbeat';
 
     /** -- */
@@ -196,7 +196,7 @@ abstract class MenuTypes
     public static function ActivityReport_text(): string {
         return Yii::t('appMenu', 'Activity report');
     }
-    const ACTIVITY_REPORT_ICON = 'fa fa-history';
+    const ACTIVITY_REPORT_ICON = 'fas fa-history';
     const ACTIVITY_REPORT_ICON_MENU = 'history';
     
     /** -- */
@@ -204,7 +204,7 @@ abstract class MenuTypes
     public static function memtypeText(): string {
         return Yii::t('appMenu', 'Membership Types');
     }
-    const MEMTYPE_ICON = 'fa fa-book';
+    const MEMTYPE_ICON = 'fas fa-book';
     const MEMTYPE_ICON_MENU = 'book';
 
     /** -- */
@@ -212,7 +212,7 @@ abstract class MenuTypes
     public static function locationsText(): string {
         return Yii::t('appMenu', 'Locations');
     }
-    const LOCATIONS_ICON = 'fa fa-building';
+    const LOCATIONS_ICON = 'fas fa-building';
     const LOCATIONS_ICON_MENU = 'building';
 
     /** -- */
@@ -220,15 +220,15 @@ abstract class MenuTypes
     public static function photosText(): string {
         return Yii::t('appMenu', 'Photos');
     }
-    const PHOTOS_ICON = 'fa-file-image-o';
-    const PHOTOS_ICON_MENU = 'file-image-o';
+    const PHOTOS_ICON = 'far fa-image';
+    const PHOTOS_ICON_MENU = 'image';
 
     /** -- */
 
     public static function yourGamesText(): string {
         return Yii::t('appMenu', 'Your Games');
     }
-    const Y_GAMES_ICON = 'fa fa-thumbs-up';
+    const Y_GAMES_ICON = 'fas fa-thumbs-up';
     const Y_GAMES_ICON_MENU = 'thumbs-up';
 
     /** -- */
@@ -236,7 +236,7 @@ abstract class MenuTypes
     public static function Transport_text(): string {
         return Yii::t('appMenu', 'Transport');
     }
-    const TRANSPORT_ICON = 'fa fa-truck';
+    const TRANSPORT_ICON = 'fas fa-truck';
     const TRANSPORT_ICON_MENU = 'truck';
 
     /** -- */
@@ -244,7 +244,7 @@ abstract class MenuTypes
     public static function FireEquipment_text(): string {
         return Yii::t('appMenu', 'Fire equipment');
     }
-    const FIRE_EQUIPMENT_ICON = 'fa fa-fire';
+    const FIRE_EQUIPMENT_ICON = 'fas fa-fire';
     const FIRE_EQUIPMENT_ICON_MENU = 'fire';
 
     /** -- */
@@ -252,7 +252,7 @@ abstract class MenuTypes
     public static function FirstAid_text(): string {
         return Yii::t('appMenu', 'First aid');
     }
-    const FIRSTAID_ICON = 'fa fa-medkit';
+    const FIRSTAID_ICON = 'fas fa-medkit';
     const FIRSTAID_ICON_MENU = 'medkit';
 
     /** -- */
@@ -260,7 +260,7 @@ abstract class MenuTypes
     public static function getChemicalsText(): string {
         return Yii::t('appMenu', 'Chemicals');
     }
-    const CHEMICALS_ICON = 'fa fa-flask';
+    const CHEMICALS_ICON = 'fas fa-flask';
     const CHEMICALS_ICON_MENU = 'flask';
 
     /** -- */
@@ -268,7 +268,7 @@ abstract class MenuTypes
     public static function feesText(): string {
         return Yii::t('appMenu', 'Fees');
     }
-    const FEES_ICON = 'fa fa-shield';
+    const FEES_ICON = 'fas fa-shield';
     const FEES_ICON_MENU = 'shield';
 
     /** -- */
@@ -276,7 +276,7 @@ abstract class MenuTypes
     public static function utilitiessText(): string {
         return Yii::t('appMenu', 'Configuration');
     }
-    const UTILITIES_ICON = 'fa fa-desktop';
+    const UTILITIES_ICON = 'fas fa-desktop';
     const UTILITIES_ICON_MENU = 'desktop';
 
     /** -- */
@@ -284,7 +284,7 @@ abstract class MenuTypes
     public static function translationsText(): string {
         return Yii::t('appMenu', 'Translations');
     }
-    const TRANSLATIONS_ICON = 'fa fa-language';
+    const TRANSLATIONS_ICON = 'fas fa-language';
     const TRANSLATIONS_ICON_MENU = 'language';
 
     /** -- */
@@ -292,7 +292,7 @@ abstract class MenuTypes
     public static function usersText(): string {
         return Yii::t('appMenu', 'Users');
     }
-    const USERS_ICON = 'fa fa-user';
+    const USERS_ICON = 'fas fa-user';
     const USERS_ICON_MENU = 'user';
 
     /** -- */
@@ -300,7 +300,7 @@ abstract class MenuTypes
     public static function textblocksText(): string {
         return Yii::t('appMenu', 'Textblocks');
     }
-    const TEXTBLOCKS_ICON = 'fa fa-align-left';
+    const TEXTBLOCKS_ICON = 'fas fa-align-left';
     const TEXTBLOCKS_ICON_MENU = 'align-left';
 
     /** -- */
@@ -308,7 +308,7 @@ abstract class MenuTypes
     public static function utilitiesText(): string {
         return Yii::t('appMenu', 'Utilities');
     }
-    const IMPORT_ICON = 'fa fa-upload';
+    const IMPORT_ICON = 'fas fa-upload';
     const IMPORT_ICON_MENU = 'upload';
 
     /** -- */
@@ -316,16 +316,24 @@ abstract class MenuTypes
     public static function rotaText(): string {
         return Yii::t('appMenu', 'Rota');
     }
-    const ROTA_ICON = 'fa fa-dashboard';
-    const ROTA_ICON_MENU = 'dashboard';
+    const ROTA_ICON = 'fas fa-tachometer-alt';
+    const ROTA_ICON_MENU = 'tachometer-alt';
 
     /** -- */
 
     public static function playdatesText(): string {
         return Yii::t('appMenu', 'Manage Rota');
     }
-    const PLAYDATES_ICON = 'fa fa-cogs';
+    const PLAYDATES_ICON = 'fas fa-cogs';
     const PLAYDATES_ICON_MENU = 'cogs';
+    
+     /** -- */
+
+    public static function playdatesText2(): string {
+        return Yii::t('appMenu', 'Publish Dates');
+    }
+    const PLAYDATES2_ICON = 'fas fa-cogs';
+    const PLAYDATES2_ICON_MENU = 'cogs';
 
    
     /** -- */
@@ -333,7 +341,7 @@ abstract class MenuTypes
     public static function reservesText(): string {
         return Yii::t('appMenu', 'Reserves');
     }
-    const RESERVES_ICON = 'fa fa-clock-o';
+    const RESERVES_ICON = 'fas fa-clock-o';
     const RESERVES_ICON_MENU = 'clock-o';
 
     /** -- */
@@ -341,7 +349,7 @@ abstract class MenuTypes
     public static function scoresText(): string {
         return Yii::t('appMenu', 'Scores');
     }
-    const SCORES_ICON = 'fa fa-history';
+    const SCORES_ICON = 'fas fa-history';
     const SCORES_ICON_MENU = 'history';
 
     /** -- */
@@ -349,7 +357,7 @@ abstract class MenuTypes
     public static function ToDo_text(): string {
         return Yii::t('appMenu', 'ToDo');
     }
-    const TODO_ICON = 'fa fa-list-ol';
+    const TODO_ICON = 'fas fa-list-ol';
     const TODO_ICON_MENU = 'list-ol';
 
     /** -- */
@@ -357,7 +365,7 @@ abstract class MenuTypes
     public static function adminText(): string {
         return Yii::t('appMenu', 'Administration');
     }
-    const ADMIN_ICON = 'fa fa-lock';
+    const ADMIN_ICON = 'fas fa-lock';
     const ADMIN_ICON_MENU = 'lock';
     
      /** -- */
@@ -365,7 +373,7 @@ abstract class MenuTypes
     public static function adminusersText(): string {
         return Yii::t('appMenu', 'Users');
     }
-    const ADMINRBAC_ICON = 'fa fa-users';
+    const ADMINRBAC_ICON = 'fas fa-users';
     const ADMINRBAC_ICON_MENU = 'users';
     
     /** -- */
@@ -373,13 +381,13 @@ abstract class MenuTypes
     public static function adminauthitemText(): string {
         return Yii::t('appMenu', 'Roles');
     }
-    const ADMINAUTHITEM_ICON = 'fa fa-arrow-right';
+    const ADMINAUTHITEM_ICON = 'fas fa-arrow-right';
     const ADMINAUTHITEM_ICON_MENU = 'arrow-right';
     
      public static function adminauthitempText(): string {
         return Yii::t('appMenu', 'Permissions');
     }
-    const ADMINAUTHITEMP_ICON = 'fa fa-arrow-right';
+    const ADMINAUTHITEMP_ICON = 'fas fa-arrow-right';
     const ADMINAUTHITEMP_ICON_MENU = 'arrow-right';
     
     /** -- */
@@ -387,7 +395,7 @@ abstract class MenuTypes
     public static function Adminauthitemchild_text(): string {
         return Yii::t('appMenu', 'Roles Parent/Child');
     }
-    const ADMINAUTHITEMCHILD_ICON = 'fa fa-arrow-right';
+    const ADMINAUTHITEMCHILD_ICON = 'fas fa-arrow-right';
     const ADMINAUTHITEMCHILD_ICON_MENU = 'arrow-right';
    
    
@@ -395,7 +403,7 @@ abstract class MenuTypes
     public static function Legislation_text(): string {
         return Yii::t('appMenu', 'Legislation');
     }
-    const LEGISLATION_ICON = 'fa fa-gavel';
+    const LEGISLATION_ICON = 'fas fa-gavel';
     const LEGISLATION_ICON_MENU = 'gavel';
 
     /** -- */
@@ -403,15 +411,15 @@ abstract class MenuTypes
     public static function newsText(): string {
         return Yii::t('appMenu', 'News');
     }
-    const NEWS_ICON = 'fa fa-newspaper-o';
-    const NEWS_ICON_MENU = 'newspaper-o';
+    const NEWS_ICON = 'far fa-newspaper';
+    const NEWS_ICON_MENU = 'newspaper';
 
     /** -- */
 
     public static function Documentation_text(): string {
         return Yii::t('appMenu', 'Documentation');
     }
-    const DOCUMENTATION_ICON = 'fa fa-file-o';
+    const DOCUMENTATION_ICON = 'fas fa-file-o';
     const DOCUMENTATION_ICON_MENU = 'file-o';
   
 }

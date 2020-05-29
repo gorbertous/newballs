@@ -11,39 +11,48 @@ use backend\models\ClubRoles;
 $this->title = GridviewHelper::getTitle($context_array);
 $currentBtn = GridviewHelper::getCurrentBtn($context_array);
 
-$redcross = '<i class="text-danger fa fa-times " aria-hidden="true">'.Yii::t('modelattr', 'No').'</i>';
-$greencheck = '<i class="text-success fa fa-check " aria-hidden="true">'.Yii::t('modelattr', 'Yes').'</i>';
+$redcross = '<i class="text-danger fas fa-times " aria-hidden="true">'.Yii::t('modelattr', 'No').'</i>';
+$greencheck = '<i class="text-success fas fa-check " aria-hidden="true">'.Yii::t('modelattr', 'Yes').'</i>';
 $club = \backend\models\Clubs::findOne(Yii::$app->session->get('c_id'));
 
 
 ?>
  
 <div class="membership-index">
-    <div class="panel-group" id="accordion">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h4 class="panel-title">
-              <a data-toggle="collapse" data-parent="#accordion" href="#collapse1"><?= Yii::t('modelattr', 'Membership Payment Details')?>&nbsp;&nbsp;<span class="caret" style="border-width: 5px;"></span></a>
-            </h4>
-          </div>
-          <div id="collapse1" class="panel-collapse collapse">
-            <div class="panel-body"><?= $club->subscription_page?></div>
-          </div>
+    <div id="accordion">
+        <div class="card" style="width: 100%;">     
+            <div class="card-header">
+                <h5 class="panel-title">
+                <a class="card-link" data-toggle="collapse" href="#collapse1"><?= Yii::t('modelattr', 'Membership Payment Details')?>&nbsp;&nbsp;<i class="right fas fa-angle-down"></i></a>
+                </h5>
+            </div>   
+
+            <div id="collapse1" class="collapse" data-parent="#accordion">
+                
+                      <div class="card-body">
+                          <?= $club->subscription_page?>
+                      </div>
+                
+            </div>
+        </div>
+        
+        <div class="card" style="width: 100%;">     
+            <div class="card-header">
+                <h5 class="panel-title">
+                <a class="card-link" data-toggle="collapse" href="#collapse2"><?= Yii::t('modelattr', 'Mailing List')?>&nbsp;&nbsp;<i class="right fas fa-angle-down"></i></a>
+                </h5>
+            </div>   
+
+            <div id="collapse2" class="collapse" data-parent="#accordion">
+                
+                      <div class="card-body">
+                          <p style="word-break: break-all;"><?= \backend\models\Members::getMailingList()?></p>
+                      </div>
+                
+            </div>
         </div>
     </div>
     
-    <div class="panel-group" id="accordion2">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h4 class="panel-title">
-              <a data-toggle="collapse" data-parent="#accordio2" href="#collapse2"><?= Yii::t('modelattr', 'Mailing List')?>&nbsp;&nbsp;<span class="caret" style="border-width: 5px;"></span></a>
-            </h4>
-          </div>
-          <div id="collapse2" class="panel-collapse collapse">
-              <div class="panel-body"><p style="word-break: break-all;"><?= \backend\models\Members::getMailingList()?></p></div>
-          </div>
-        </div>
-    </div>
     
     <?php 
 //    Pjax::begin(['id' => 'pjax-gridview-container', 'enablePushState' => true]);
@@ -53,28 +62,20 @@ $club = \backend\models\Clubs::findOne(Yii::$app->session->get('c_id'));
             'contentOptions' => ['style' => 'width: 10px;'],
         ],
         
+        
         [
-            'attribute'      => 'club_role',
-            'label'          => Yii::t('modelattr', 'Role'),
-            'contentOptions' => ['style' => 'width: 50px;'],
+            'label'          => Yii::t('modelattr', 'Photo'),
+            'contentOptions' => ['style' => 'width:80px;'],
             'format'         => 'raw',
-            'value'          => function($model) {
+            'value'          => function ($model) {
                 $c_role = [];
                 foreach ($model->memberRoles as $mem_role) {
                     $bcolor = ClubRoles::getRoleColor($mem_role->id);
                     $formated_string =  "<span class='$bcolor'>{$mem_role->role}</span>";
                     array_push($c_role, $formated_string);
                 }
-                return join('<br>', $c_role);
-            },
-        ],
-        [
-            'label'          => Yii::t('modelattr', 'Photo'),
-            'contentOptions' => ['style' => 'width:80px;'],
-            'format'         => 'raw',
-            'value'          => function ($model) {
                 $gravatar = isset($model->user->email) ? $model->getGravatar($model->user->email) : null;
-                return !empty($model->photo) ? $model->getIconPreviewAsHtml('ajaxfileinputPhoto', 60) : $gravatar;
+                return !empty($model->photo) ? $model->getIconPreviewAsHtml('ajaxfileinputPhoto', 90) . '<br>' . join('<br>', $c_role): $gravatar . '<br>' . join('<br>', $c_role);
             }
         ],
         [
@@ -85,7 +86,7 @@ $club = \backend\models\Clubs::findOne(Yii::$app->session->get('c_id'));
             'value'               => function($model) {
                 $mobile = empty($model->phone_mobile) ? $model->phone : $model->phone_mobile;
                 $email = isset($model->user) ? $model->user->email : '';
-                $iscoach = isset($model->memType) && ($model->memType->mem_type_id == 5) ? ' <span class="badge bg-blue pull-right">Coach</span>' : '';
+                $iscoach = isset($model->memType) && ($model->memType->mem_type_id == 5) ? ' <span class="badge bg-blue float-right">Coach</span>' : '';
                 return $model->name .'<br>'. $email .'<br>'.$mobile . $iscoach;
             },
             'filterType'          => GridView::FILTER_SELECT2,
@@ -216,12 +217,13 @@ $club = \backend\models\Clubs::findOne(Yii::$app->session->get('c_id'));
                 'filterModel' => $searchModel,
                 'columns'        => $gridColumn,
                 'id' => 'gridview-club-id',
+                'tableOptions' => ['class' => 'table table-responsive'],
                 'responsive'          => true,
-                'responsiveWrap' => true,
-                'condensed' => true,
+                'responsiveWrap' => false,
+                'condensed' => false,
                 'panelBeforeTemplate' => GridviewHelper::getPanelBefore(),
                 'panel' => [
-                    'type'    => Gridview::TYPE_DEFAULT,
+                    'type'    => Gridview::TYPE_PRIMARY,
                     'heading' => $header,
                 ],
                 'toolbar'             => $toolbar,

@@ -22,7 +22,7 @@ use common\helpers\ViewsHelper;
     ?>
 
     <ul class="nav nav-pills" id="tabContent">
-        <li class="active"><a href="#location" data-toggle="tab"><?= Yii::t('modelattr', 'Location') ?></a></li>
+        <li class="nav-item"><a class="nav-link active" href="#location" data-toggle="tab"><?= Yii::t('modelattr', 'Location') ?></a></li>
 
         <!-- Audit tab  -->
         <?php if(Yii::$app->user->can('team_memebr')): ?>
@@ -31,21 +31,21 @@ use common\helpers\ViewsHelper;
     </ul>
 
     <div class="tab-content">
-        <div class="tab-pane active well" id="location">
+        <div class="tab-pane active card card-body bg-light" id="location">
             <div class="row">
                 <div class="col-md-6">
                     <div class="row">
-                        <div class="col-xs-12">
+                        <div class="col-md-12">
                             <?= $form->hrwTextInputMax($model, 'name') ?>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-xs-6">
+                        <div class="col-md-6">
                             <?= $form->hrwTextInputMax($model, 'phone') ?>
                         </div>
                     </div>
                     <div class="row"> 
-                        <div class="col-xs-12">
+                        <div class="col-md-12">
                             <?= $form->hrwTextInputMax($model, 'google_par_one') ?>
                         </div>
                         
@@ -55,20 +55,20 @@ use common\helpers\ViewsHelper;
                 </div>
                 <div class="col-md-6">
                     <div class="row"> 
-                        <div class="col-xs-12">
+                        <div class="col-md-12">
                             <?= $form->hrwTextInputMax($model, 'address') ?>
                         </div>
                         
                     </div>
                     
                     <div class="row"> 
-                        <div class="col-xs-4">
+                        <div class="col-md-4">
                             <?= $form->hrwTextInputMax($model, 'zip') ?>
                         </div>
-                        <div class="col-xs-4">
+                        <div class="col-md-4">
                             <?= $form->hrwTextInputMax($model, 'city') ?>
                         </div>
-                        <div class="col-xs-4">
+                        <div class="col-md-4">
                             <?=
                             $form->hrwSelect2($model, 'co_code', [
                                 'data'          => ViewsHelper::getCountriesList(['continent' => 'EU']),
@@ -78,7 +78,7 @@ use common\helpers\ViewsHelper;
                         </div>
                     </div>
                      <div class="row"> 
-                        <div class="col-xs-12">
+                        <div class="col-md-12">
                             <?= $form->hrwTextInputMax($model, 'google_par_two') ?>
                         </div>
                         

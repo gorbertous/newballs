@@ -58,7 +58,7 @@ class Helpers
      */
     public static function getAuditTab()
     {
-        $tab = '<li><a href="#audit" data-toggle="tab">' . Yii::t('appMenu', 'Audit') . '</a></li>';
+        $tab = '<li class="nav-item"><a class="nav-link" href="#audit" data-toggle="tab">' . Yii::t('appMenu', 'Audit') . '</a></li>';
         return Yii::$app->user->can('team_member') ? $tab : '';
     }
 
@@ -98,31 +98,30 @@ class Helpers
      */
     public static function getModalFooter($model, int $id = null, string $printType = null, array $buttons)
     {
-        $html = '<div class="clear"></div>' .
-                '<div class="form-group pull-right">';
+        $html = '<div class="modal-footer">';
 
         foreach ($buttons['buttons'] as $btnKey => $btnValue) {
             switch ($btnValue) {
                 case 'create_update':
-                    $html .= Html::submitButton('<span class="fa fa-check"></span>&nbsp;' . ($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update')), [
+                    $html .= Html::submitButton('<i class="fas fa-check"></i>&nbsp;' . ($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update')), [
                                 'class' => 'btn btn-success'
                     ]);
                     break;
 
                 case 'save':
-                    $html .= '&nbsp;' . Html::a('<span class="fa fa-floppy-o"></span>&nbsp;' . Yii::t('app', 'Save'), [
+                    $html .= '&nbsp;' . Html::a('<i class="fas fa-floppy-o"></i>&nbsp;' . Yii::t('app', 'Save'), [
                                 'print',
                                 'id'   => $id,
                                 'mode' => 'save',
                                 'view' => $printType
                                     ], [
-                                'class'  => 'btn btn-info',
+                                'class'  => 'btn btn-primary',
                                 'target' => '_blank'
                     ]);
                     break;
 
                 case 'print':
-                    $html .= '&nbsp;' . Html::a('<span class="fa fa-print"></span>&nbsp;' . Yii::t('app', 'Print'), [
+                    $html .= '&nbsp;' . Html::a('<i class="fas fa-print"></i>&nbsp;' . Yii::t('app', 'Print'), [
                                 'print',
                                 'id'   => $id,
                                 'mode' => 'print',
@@ -134,9 +133,9 @@ class Helpers
                     break;
 
                 case 'cancel':
-                    $html .= '&nbsp;' . Html::Button('<span class="fa fa-times"></span>&nbsp;' . Yii::t('app', 'Cancel'), [
+                    $html .= '&nbsp;' . Html::Button('<i class="fas fa-times"></i>&nbsp;' . Yii::t('app', 'Cancel'), [
                                 'class'        => 'btn btn-danger',
-                                'data-dismiss' => 'modal'
+                                'data-izimodal-close' => 'modal'
                     ]);
                     break;
 
@@ -145,8 +144,7 @@ class Helpers
             }
         }
 
-        $html .= '</div>' .
-                '<div class="clear"></div>';
+        $html .= '</div>';
 
         if (Yii::$app->request->get('mode') !== 'print') {
             return $html;
