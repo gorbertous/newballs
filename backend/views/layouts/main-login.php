@@ -32,7 +32,7 @@ AppAsset::register($this);
         'brandLabel' => Yii::$app->name,
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
-            'class' => 'main-header navbar navbar-expand navbar-dark bg-dark',
+            'class' => 'navbar navbar-expand-lg navbar-dark bg-dark fixed-top',
         ],
     ]);
    

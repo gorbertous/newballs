@@ -23,15 +23,15 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'token_stats') ?>
 
-    <?= $form->field($model, 'player_stats_scheduled') ?>
+    <?= $form->field($model, 'scheduled_stats') ?>
 
-    <?php // echo $form->field($model, 'player_stats_played') ?>
+    <?php // echo $form->field($model, 'played_stats') ?>
 
-    <?php // echo $form->field($model, 'player_stats_cancelled') ?>
+    <?php // echo $form->field($model, 'cancelled_stats') ?>
 
     <?php // echo $form->field($model, 'coaching_stats') ?>
 
-    <?php // echo $form->field($model, 'status_stats') ?>
+    <?php // echo $form->field($model, 'noshow_stats') ?>
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('modelattr', 'Search'), ['class' => 'btn btn-primary']) ?>

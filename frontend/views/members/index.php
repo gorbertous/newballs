@@ -92,6 +92,7 @@ $greencheck = '<i class="text-success fas fa-check fa-lg" aria-hidden="true"></i
                 'inputType'=>\kartik\editable\Editable::INPUT_SELECT2,
                 'asPopover' => true,
                 'options' => [
+                    'id'=>'id-active',
                     'data' => [
                         0  => Yii::t('modelattr', 'No'),
                         1  => Yii::t('modelattr', 'Yes')],
@@ -116,6 +117,7 @@ $greencheck = '<i class="text-success fas fa-check fa-lg" aria-hidden="true"></i
                 'inputType'=>\kartik\editable\Editable::INPUT_SELECT2,
                 'asPopover' => true,
                 'options' => [
+                    'id'=>'id-payed',
                     'data' => [
                         0  => Yii::t('modelattr', 'No'),
                         1  => Yii::t('modelattr', 'Yes')],
@@ -140,6 +142,7 @@ $greencheck = '<i class="text-success fas fa-check fa-lg" aria-hidden="true"></i
                 'inputType'=>\kartik\editable\Editable::INPUT_SELECT2,
                 
                 'options' => [
+                    'id'=>'id-visible',
                     'data' => [
                         0  => Yii::t('modelattr', 'No'),
                         1  => Yii::t('modelattr', 'Yes')],
@@ -245,6 +248,8 @@ $greencheck = '<i class="text-success fas fa-check fa-lg" aria-hidden="true"></i
                 'id' => 'gridview-club-id',
                 'tableOptions' => ['class' => 'table table-responsive'],
                 'responsive'          => true,
+                'responsiveWrap' => false,
+                'condensed' => false,
                 'panelBeforeTemplate' => GridviewHelper::getPanelBefore(),
                 'panel' => [
                     'type'    => Gridview::TYPE_PRIMARY,

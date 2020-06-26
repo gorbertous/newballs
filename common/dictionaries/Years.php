@@ -13,21 +13,22 @@ abstract class Years
 
     use TraitDictionaries;
 
-    const Y1 = 2005;
-    const Y2 = 2006;
-    const Y3 = 2007;
-    const Y4 = 2008;
-    const Y5 = 2009;
-    const Y6 = 2010;
-    const Y7 = 2011;
-    const Y8 = 2012;
-    const Y9 = 2013;
-    const Y10 = 2014;
-    const Y11 = 2015;
-    const Y12 = 2016;
-    const Y13 = 2017;
-    const Y14 = 2018;
-    const Y15 = 2019;
+    const Y0 = 0;
+    const Y1 = 1;
+    const Y2 = 2;
+    const Y3 = 3;
+    const Y4 = 4;
+    const Y5 = 5;
+    const Y6 = 6;
+    const Y7 = 7;
+    const Y8 = 8;
+    const Y9 = 9;
+    const Y10 = 10;
+    const Y11 = 11;
+    const Y12 = 12;
+    const Y13 = 13;
+    const Y14 = 14;
+//    const Y15 = 15;
    
 
     /**
@@ -36,23 +37,38 @@ abstract class Years
     public static function all(): array
     {
         return [
-            self::Y1  => Yii::t('modelattr', 'Year') . ' 2005',
-            self::Y2  => Yii::t('modelattr', 'Year') . ' 2006',
-            self::Y3  => Yii::t('modelattr', 'Year') . ' 2007',
-            self::Y4  => Yii::t('modelattr', 'Year') . ' 2008',
-            self::Y5  => Yii::t('modelattr', 'Year') . ' 2009',
-            self::Y6  => Yii::t('modelattr', 'Year') . ' 2010',
-            self::Y7  => Yii::t('modelattr', 'Year') . ' 2011',
-            self::Y8  => Yii::t('modelattr', 'Year') . ' 2012',
-            self::Y9  => Yii::t('modelattr', 'Year') . ' 2013',
-            self::Y10 => Yii::t('modelattr', 'Year') . ' 2014',
-            self::Y11 => Yii::t('modelattr', 'Year') . ' 2015',
-            self::Y12 => Yii::t('modelattr', 'Year') . ' 2016',
-            self::Y13 => Yii::t('modelattr', 'Year') . ' 2017',
-            self::Y14 => Yii::t('modelattr', 'Year') . ' 2018',
-            self::Y15 => Yii::t('modelattr', 'Year') . ' 2019',
+            self::Y0  => Yii::t('app', 'All time'),
+            self::Y1  => '2006/2007',
+            self::Y2  => '2007/2008',
+            self::Y3  => '2008/2009',
+            self::Y4  => '2009/2010',
+            self::Y5  => '2010/2011',
+            self::Y6  => '2011/2012',
+            self::Y7  => '2012/2013',
+            self::Y8  => '2013/2014',
+            self::Y9  => '2014/2015',
+            self::Y10 => '2015/2016',
+            self::Y11 => '2016/2017',
+            self::Y12 => '2017/2018',
+            self::Y13 => '2018/2019',
+            self::Y14 => '2019/2020',
+//            self::Y15 => '2019',
             
         ];
+    }
+    
+     /**
+     * @param $type
+     *
+     * @return mixed|string
+     */
+    public static function getYear($type)
+    {
+        $all = self::all();
+        if (isset($all[$type])) {
+            return $all[$type];
+        }
+        return '-';
     }
   
 

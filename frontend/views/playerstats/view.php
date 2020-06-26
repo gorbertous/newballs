@@ -33,11 +33,11 @@ $this->params['breadcrumbs'][] = $this->title;
             'member_id',
             'season_id',
             'token_stats',
-            'player_stats_scheduled',
-            'player_stats_played',
-            'player_stats_cancelled',
+            'scheduled_stats',
+            'played_stats',
+            'cancelled_stats',
             'coaching_stats',
-            'status_stats',
+            'noshow_stats',
         ],
     ]) ?>
 

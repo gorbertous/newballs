@@ -158,6 +158,9 @@ if ($searchModel->timefilter == 1) {
                     case 4:
                         $bg_color = '#FF8883';
                         break;
+                    default:
+                        $bg_color = '#FF8883';
+                        break;
                 }
                 return ['style' => 'width:10px; background-color:' 
                     . $bg_color];
@@ -202,6 +205,23 @@ if ($searchModel->timefilter == 1) {
             'format'    => 'raw',
             'value'     => function($model)use ($redcross, $greencheck) {
                 if ($model->late == 1) {
+                    return $greencheck;
+                } else {
+                    return $redcross;
+                }
+            },
+            'filterType' => GridView::FILTER_SELECT2,
+            'filter'     => [-1 => Yii::t('modelattr', 'All'),
+                0  => Yii::t('modelattr', 'No'),
+                1  => Yii::t('modelattr', 'Yes')],
+            'width'      => '100px;',
+        ],
+        [
+            'attribute' => 'coaching',
+            'hAlign'    => GridView::ALIGN_CENTER,
+            'format'    => 'raw',
+            'value'     => function($model)use ($redcross, $greencheck) {
+                if ($model->coaching == 1) {
                     return $greencheck;
                 } else {
                     return $redcross;

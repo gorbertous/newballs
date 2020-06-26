@@ -18,15 +18,15 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'token_stats')->textInput() ?>
 
-    <?= $form->field($model, 'player_stats_scheduled')->textInput() ?>
+    <?= $form->field($model, 'scheduled_stats')->textInput() ?>
 
-    <?= $form->field($model, 'player_stats_played')->textInput() ?>
+    <?= $form->field($model, 'played_stats')->textInput() ?>
 
-    <?= $form->field($model, 'player_stats_cancelled')->textInput() ?>
+    <?= $form->field($model, 'cancelled_stats')->textInput() ?>
 
     <?= $form->field($model, 'coaching_stats')->textInput() ?>
 
-    <?= $form->field($model, 'status_stats')->textInput() ?>
+    <?= $form->field($model, 'noshow_stats')->textInput() ?>
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('modelattr', 'Save'), ['class' => 'btn btn-success']) ?>

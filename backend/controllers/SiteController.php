@@ -79,7 +79,7 @@ class SiteController extends Controller
     {
         $this->layout = 'main-login';
         if (!empty(Yii::$app->session->get('member_id'))) {
-            return $this->redirect('/admin/index');
+            return $this->redirect('/admin/import');
         }
 
         $model = new LoginForm();

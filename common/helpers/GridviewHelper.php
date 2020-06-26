@@ -285,7 +285,7 @@ class GridviewHelper
         // PANEL HEADER + FILTERS
         return
             '<i class="' . $context_array['ti_icon1'] . '"></i> ' . $context_array['title1'] . '&nbsp;' .
-            '<i class="' . $context_array['ti_icon2'] . '"></i> ' . $context_array['title2'] .' ' .$infobtn;
+            '<i class="' . $context_array['ti_icon2'] . '"></i> ' . $context_array['title2'] . ' '. $infobtn;
     }
 
     /**

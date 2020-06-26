@@ -31,11 +31,14 @@ $this->registerCssFile('https://fonts.googleapis.com/css?family=Source+Sans+Pro:
 
     </head>
     <body class="hold-transition sidebar-mini layout-fixed">
+            
+           
 
         <?php $this->beginBody(); ?>
 
         <div class="wrapper">
-            <div id="modal"></div>
+            <div id="modal-ajax" class="iziModal"></div>
+        
 
             <?= $this->render('header.php'); ?>
             <?= $this->render('left.php'); ?>

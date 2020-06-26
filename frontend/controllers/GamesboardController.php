@@ -65,6 +65,7 @@ class GamesboardController extends Controller
         $searchModel->timefilter = 1;
         $searchModel->tokens = -1;
         $searchModel->late = -1;
+        $searchModel->coaching = -1;
         $searchModel->seasonfilter = Yii::$app->session->get('club_season');
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $dataProvider->pagination->pageSize = 64;

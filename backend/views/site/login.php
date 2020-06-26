@@ -1,45 +1,45 @@
 <?php
 
+/* @var $this yii\web\View */
+/* @var $form yii\bootstrap4\ActiveForm */
+/* @var $model \common\models\LoginForm */
+
 use yii\helpers\Html;
-use yii\widgets\ActiveForm;
+use yii\bootstrap4\ActiveForm;
 
-$this->title = Yii::$app->name . ' - ' . Yii::t('app', 'Sign in');
+$this->title = Yii::t('app', 'Login');
+
 ?>
+
 <div class="row">
-    <div class="col-lg-5">
-        <div class="text-info"><h2><?= Yii::t('app', 'Sign in to'); ?> <strong><?= Yii::$app->name; ?></strong></h2></div>
+    <div class="col-md-6 mb-5">
 
-        <?php
-        $form = ActiveForm::begin([
-                    'id'      => 'login-form',
-                    'options' => [
-                        'class' => 'secondary-form'
-                    ]
-        ]);
-        ?>
+        <div class="card-body">
+            <h2 class="card-title"><?= Html::encode($this->title) ?></h2>
+       
+                <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
 
-            <?php foreach (Yii::$app->session->getAllFlashes() as $key => $message) { ?>
-                <div class="alert"><?= $message ?></div>
-            <?php } ?>
+                    <?= $form->field($model, 'username')->textInput(['autofocus' => true]) ?>
 
-            <?= $form->field($model, 'username')->input('text'); ?>
-            <div class="sep"></div>
-            <?= $form->field($model, 'password')->passwordInput()->input('password'); ?>
+                    <?= $form->field($model, 'password')->passwordInput() ?>
 
-            <?php if ($model->isVerifyRobotRequired) : ?>
-                <?= $form->field($model, 'reCaptcha')->widget(\himiklab\yii2\recaptcha\ReCaptcha::class); ?>
-            <?php endif; ?>
+                    <?php if (Yii::$app->user->enableAutoLogin) : ?>
+                        <?= $form->field($model, 'rememberMe')->checkbox() ?>
+                    <?php endif; ?>
 
-            <div class="sep"></div>
+                    <?php if ($model->isVerifyRobotRequired) : ?>
+                        <?= $form->field($model, 'verifyCode')->widget(\yii\captcha\Captcha::className(), [
+                            'template' => '{image}{input}',
+                        ]) ?>
+                    <?php endif; ?>
 
-            <?= $form->field($model, 'rememberMe')->checkbox(); ?>
+                    <div class="form-group">
+                        <?= Html::submitButton($this->title, ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
+                    </div>
 
-
-            <div class="clear"></div>
-
-            <?= Html::submitButton(Yii::t('app', 'Login')); ?>
-
-
-        <?php ActiveForm::end(); ?>
-    </div>
+                <?php ActiveForm::end(); ?>
+           
+        </div>
+   
+  </div>
 </div>

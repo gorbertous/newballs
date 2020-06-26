@@ -24,8 +24,8 @@ class RotaSearch extends GamesBoard
     public function rules()
     {
         return [
-            [['id', 'c_id', 'termin_id', 'timefilter', 'seasonfilter','slot_id', 'member_id', 'court_id', 'status_id', 'fines'], 'integer'],
-            [['tokens', 'late'], 'safe'],
+            [['id', 'c_id', 'termin_id', 'timefilter', 'seasonfilter','slot_id', 'member_id', 'court_id', 'status_id', 'fines','coaching'], 'integer'],
+            [['tokens', 'late','coaching'], 'safe'],
         ];
     }
 
@@ -95,6 +95,11 @@ class RotaSearch extends GamesBoard
         if ($this->late != -1) {
             $query->andFilterWhere([
                 'late' => $this->late,
+            ]);
+        }
+        if ($this->coaching != -1) {
+            $query->andFilterWhere([
+                'coaching' => $this->coaching,
             ]);
         }
 

@@ -44,7 +44,7 @@ class GamesBoard extends \yii\db\ActiveRecord
     {
         return [
             [['c_id', 'termin_id', 'member_id', 'court_id', 'slot_id',], 'required'],
-            [['c_id', 'termin_id', 'member_id', 'court_id', 'slot_id', 'status_id', 'fines', 'tokens', 'late'], 'integer'],
+            [['c_id', 'termin_id', 'member_id', 'court_id', 'slot_id', 'status_id', 'fines', 'tokens', 'late', 'coaching'], 'integer'],
             [['c_id'], 'exist', 'skipOnError' => true, 'targetClass' => Clubs::className(), 'targetAttribute' => ['c_id' => 'c_id']],
             [['termin_id'], 'exist', 'skipOnError' => true, 'targetClass' => PlayDates::className(), 'targetAttribute' => ['termin_id' => 'termin_id']],
             [['member_id'], 'exist', 'skipOnError' => true, 'targetClass' => Members::className(), 'targetAttribute' => ['member_id' => 'member_id']],
@@ -67,6 +67,7 @@ class GamesBoard extends \yii\db\ActiveRecord
             'fines'         => Yii::t('modelattr', 'Fines'),
             'tokens'        => Yii::t('modelattr', 'Tokens'),
             'late'          => Yii::t('modelattr', 'Late'),
+            'coaching'      => Yii::t('modelattr', 'Coaching'),
             'timefilter'    => Yii::t('modelattr', 'Time Filter'),
             'seasonfilter'  => Yii::t('modelattr', 'Season Filter'),
             'updatedByname' => Yii::t('modelattr', 'Updated by'),
@@ -261,7 +262,7 @@ class GamesBoard extends \yii\db\ActiveRecord
             return Yii::$app->mailer->compose('rotaReminderEmail', ['model' => $model, 'count' => $count, 'date' => $date])
                             ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name . ' robot'])
                             ->setTo($model->user->email)
-                            ->setSubject(Yii::$app->name . ' - '. Yii::t('app', 'Rota Reminder Email'))
+                            ->setSubject(Yii::$app->name . ' - ' . Yii::t('app', 'Rota Reminder Email'))
                             ->send();
         } else {
             return false;
@@ -282,13 +283,13 @@ class GamesBoard extends \yii\db\ActiveRecord
                                 ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name . ' automated mail - no reply'])
                                 ->setTo($model->member->user->email)
                                 ->setBcc(Yii::$app->session->get('club_chair_email'))
-                                ->setSubject(Yii::$app->name . ' - '.Yii::t('app', 'Rota Confirmation Email'))
+                                ->setSubject(Yii::$app->name . ' - ' . Yii::t('app', 'Rota Confirmation Email'))
                                 ->send();
             } else {
                 return Yii::$app->mailer->compose('rotaConfirmationEmail', ['model' => $model])
                                 ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name . ' automated mail - no reply'])
                                 ->setTo($model->member->user->email)
-                                ->setSubject(Yii::$app->name . ' - '. Yii::t('app', 'Rota Confirmation Email'))
+                                ->setSubject(Yii::$app->name . ' - ' . Yii::t('app', 'Rota Confirmation Email'))
                                 ->send();
             }
         } else {
@@ -303,7 +304,7 @@ class GamesBoard extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Clubs::className(), ['c_id' => 'c_id']);
     }
-    
+
     /**
      * @return \yii\db\ActiveQuery
      */

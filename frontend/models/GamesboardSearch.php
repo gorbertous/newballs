@@ -18,7 +18,7 @@ class GamesboardSearch extends GamesBoard
     public function rules()
     {
         return [
-            [['id', 'c_id', 'termin_id', 'member_id', 'court_id', 'slot_id', 'status_id', 'fines', 'tokens', 'late'], 'integer'],
+            [['id', 'c_id', 'termin_id', 'member_id', 'court_id', 'slot_id', 'status_id', 'fines', 'tokens', 'late','coaching'], 'integer'],
         ];
     }
 
@@ -64,9 +64,14 @@ class GamesboardSearch extends GamesBoard
                 'tokens' => $this->tokens,
             ]);
         }
-         if ($this->late != -1) {
+        if ($this->late != -1) {
             $query->andFilterWhere([
                 'late' => $this->late,
+            ]);
+        }
+        if ($this->coaching != -1) {
+            $query->andFilterWhere([
+                'late' => $this->coaching,
             ]);
         }
 

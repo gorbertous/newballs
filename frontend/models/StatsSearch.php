@@ -20,8 +20,8 @@ class StatsSearch extends Members
     public function rules()
     {
         return [
-            [['member_id', 'user_id', 'c_id', 'mem_type_id', 'grade_id', 'gender', 'token_stats', 'player_stats_scheduled', 'player_stats_played', 'player_stats_cancelled', 'coaching_stats', 'status_stats', 'is_admin', 'is_organiser', 'is_active', 'has_paid', 'is_visible', 'ban_scoreupload', 'coaching', 'created_by', 'updated_by', 'created_at', 'updated_at'], 'integer'],
-            [['title', 'firstname', 'lastname', 'email', 'photo', 'orig_photo', 'phone', 'phone_office', 'phone_mobile', 'address', 'zip', 'city', 'co_code', 'nationality', 'dob','token_stats', 'player_stats_scheduled', 'player_stats_played', 'player_stats_cancelled', 'coaching_stats', 'status_stats', ], 'safe'],
+            [['member_id', 'user_id', 'c_id', 'mem_type_id', 'grade_id', 'gender', 'token_stats', 'scheduled_stats', 'played_stats', 'cancelled_stats', 'coaching_stats', 'noshow_stats', 'is_admin', 'is_organiser', 'is_active', 'has_paid', 'is_visible', 'ban_scoreupload', 'coaching', 'created_by', 'updated_by', 'created_at', 'updated_at'], 'integer'],
+            [['title', 'firstname', 'lastname', 'email', 'photo', 'orig_photo', 'phone', 'phone_office', 'phone_mobile', 'address', 'zip', 'city', 'co_code', 'nationality', 'dob','token_stats', 'scheduled_stats', 'played_stats', 'cancelled_stats', 'coaching_stats', 'noshow_stats', ], 'safe'],
         ];
     }
 
@@ -58,9 +58,9 @@ class StatsSearch extends Members
         $dataProvider->setSort([
             'attributes' => [
                 'member_id',
-                'player_stats_scheduled' => [
-                    'asc' => ['player_stats_scheduled' =>SORT_ASC ],
-                    'desc' => ['player_stats_scheduled' => SORT_DESC],
+                'scheduled_stats' => [
+                    'asc' => ['scheduled_stats' =>SORT_ASC ],
+                    'desc' => ['scheduled_stats' => SORT_DESC],
                     'default' => SORT_ASC
                 ],
                

@@ -11,6 +11,7 @@ use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use common\dictionaries\ContextLetter;
 
+
 /**
  * PlayerStatsController implements the CRUD actions for PlayerStats model.
  */
@@ -40,7 +41,7 @@ class PlayerstatsController extends Controller
                     [
                         'controllers' => ['playerstats'],
                         'actions'     => [
-                            'update', 'create', 'delete', 'generateplayerstats'
+                            'update', 'create', 'delete', 'generateplayerstats','generatealltimeplayerstats','updateplayerstats','updatealltimeplayerstats','generatecoachingplayerstats'
                         ],
                         'allow'       => true,
                         'roles'       => ['developer']
@@ -91,12 +92,64 @@ class PlayerstatsController extends Controller
                     'model' => $this->findModel($id),
         ]);
     }
+    
+    public function actionGeneratecoachingplayerstats()
+    {
+        if (!empty(Yii::$app->request->post('generatecoachingstats'))) {
+
+            if (PlayerStats::generateCoachingPlayerStats()) {
+                Yii::$app->session->setFlash('success', 'Stats Updated!');
+            }
+        } else {
+            Yii::$app->session->setFlash('danger', 'Error something went wrong here!');
+        }
+        return $this->redirect(Yii::$app->request->referrer);
+    }
+    
+    public function actionGeneratealltimeplayerstats()
+    {
+        if (!empty(Yii::$app->request->post('generatealltimestats'))) {
+
+            if (PlayerStats::generateAllTimePlayerStats()) {
+                Yii::$app->session->setFlash('success', 'Stats Updated!');
+            }
+        } else {
+            Yii::$app->session->setFlash('danger', 'Error something went wrong here!');
+        }
+        return $this->redirect(Yii::$app->request->referrer);
+    }
+    
+    public function actionUpdatealltimeplayerstats()
+    {
+        if (!empty(Yii::$app->request->post('updatealltimestats'))) {
+
+            if (PlayerStats::updateAllTimePlayerStats()) {
+                Yii::$app->session->setFlash('success', 'Stats Updated!');
+            }
+        } else {
+            Yii::$app->session->setFlash('danger', 'Error something went wrong here!');
+        }
+        return $this->redirect(Yii::$app->request->referrer);
+    }
 
     public function actionGenerateplayerstats()
     {
         if (!empty(Yii::$app->request->post('generatestats'))) {
 
             if (PlayerStats::generatePlayerStats()) {
+                Yii::$app->session->setFlash('success', 'Stats Updated!');
+            }
+        } else {
+            Yii::$app->session->setFlash('danger', 'Error something went wrong here!');
+        }
+        return $this->redirect(Yii::$app->request->referrer);
+    }
+    
+    public function actionUpdateplayerstats()
+    {
+        if (!empty(Yii::$app->request->post('updatestats'))) {
+
+            if (PlayerStats::updatePlayerStats()) {
                 Yii::$app->session->setFlash('success', 'Stats Updated!');
             }
         } else {

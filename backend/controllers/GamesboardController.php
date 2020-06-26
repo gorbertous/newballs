@@ -63,6 +63,7 @@ class GamesboardController extends Controller
         $searchModel = new GamesboardSearch();
         $searchModel->tokens = -1;
         $searchModel->late = -1;
+        $searchModel->coaching = -1;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [

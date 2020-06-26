@@ -33,7 +33,7 @@ AdminLtePluginAsset::register($this);
         <?php $this->beginBody(); ?>
 
         <div class="wrapper">
-            <div id="modal"></div>
+            <div id="modal-ajax"></div>
 
             <?= $this->render('header.php'); ?>
             <?= $this->render('left.php'); ?>

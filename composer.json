@@ -56,7 +56,8 @@
         "2amigos/yii2-gallery-widget": "~1.0",
         "yii2mod/yii2-google-maps-markers": "*",
         "lysenkobv/yii2-geoip": "~1.0",
-        "rmrevin/yii2-fontawesome":"~3.5"
+        "rmrevin/yii2-fontawesome":"~3.5",
+        "conquer/modal": "*"
 
     },
     "require-dev": {

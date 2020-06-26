@@ -35,11 +35,11 @@ use yii\db\Expression;
  * @property string $nationality
  * @property string $dob
  * @property int $token_stats
- * @property int $player_stats_scheduled
- * @property int $player_stats_played
- * @property int $player_stats_cancelled
+ * @property int $scheduled_stats
+ * @property int $played_stats
+ * @property int $cancelled_stats
  * @property int $coaching_stats
- * @property int $status_stats
+ * @property int $noshow_stats
  * @property int $is_admin
  * @property int $is_organiser
  * @property int $is_active
@@ -69,12 +69,12 @@ class Members extends \yii\db\ActiveRecord
     use \backend\models\base\TraitFileUploads;
     use \backend\models\base\TraitBlameableTimestamp;
 
-//    public $token_stats;
-//    public $player_stats_scheduled;
-//    public $player_stats_played;
-//    public $player_stats_cancelled;
-//    public $coaching_stats;
-//    public $status_stats;
+    public $token_stats;
+    public $scheduled_stats;
+    public $played_stats;
+    public $cancelled_stats;
+    public $coaching_stats;
+    public $noshow_stats;
     public $club_role;
 
     /**
@@ -91,10 +91,10 @@ class Members extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'c_id', 'mem_type_id', 'grade_id', 'gender', 'token_stats', 'player_stats_scheduled', 'player_stats_played', 'player_stats_cancelled', 'coaching_stats', 'status_stats', 'is_admin', 'is_organiser', 'is_active', 'has_paid', 'is_visible', 'ban_scoreupload', 'coaching', 'created_by', 'updated_by', 'created_at', 'updated_at'], 'integer'],
+            [['user_id', 'c_id', 'mem_type_id', 'grade_id', 'gender', 'token_stats', 'scheduled_stats', 'played_stats', 'cancelled_stats', 'coaching_stats', 'noshow_stats', 'is_admin', 'is_organiser', 'is_active', 'has_paid', 'is_visible', 'ban_scoreupload', 'coaching', 'created_by', 'updated_by', 'created_at', 'updated_at'], 'integer'],
 //            [['user_id', 'c_id', 'mem_type_id', 'grade_id', 'gender', 'is_admin', 'is_organiser', 'is_active', 'has_paid', 'is_visible', 'ban_scoreupload', 'coaching', 'created_by', 'updated_by', 'created_at', 'updated_at'], 'integer'],
             [['c_id'], 'required'],
-            [['dob','clubroles_ids'], 'safe'],
+            [['dob', 'clubroles_ids'], 'safe'],
             [['title', 'zip'], 'string', 'max' => 20],
             [['firstname', 'lastname', 'email', 'city'], 'string', 'max' => 50],
             [['photo', 'orig_photo'], 'string', 'max' => 150],
@@ -113,46 +113,46 @@ class Members extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'member_id'              => Yii::t('modelattr', 'Member ID'),
-            'user_id'                => Yii::t('modelattr', 'User ID'),
-            'c_id'                   => Yii::t('modelattr', 'Club'),
-            'mem_type_id'            => Yii::t('modelattr', 'Membership Type'),
-            'grade_id'               => Yii::t('modelattr', 'Grade'),
-            'title'                  => Yii::t('app', 'Title'),
-            'firstname'              => Yii::t('modelattr', 'First Name'),
-            'lastname'               => Yii::t('modelattr', 'Last Name'),
-            'name'                   => Yii::t('modelattr', 'Name'),
-            'gender'                 => Yii::t('modelattr', 'Gender'),
-            'email'                  => Yii::t('modelattr', 'Email'),
-            'photo'                  => Yii::t('modelattr', 'Photo'),
-            'orig_photo'             => Yii::t('modelattr', 'Orig Photo'),
-            'phone'                  => Yii::t('modelattr', 'Phone'),
-            'phone_office'           => Yii::t('modelattr', 'Phone Office'),
-            'phone_mobile'           => Yii::t('modelattr', 'Phone Mobile'),
-            'address'                => Yii::t('modelattr', 'Address'),
-            'zip'                    => Yii::t('modelattr', 'Zip'),
-            'city'                   => Yii::t('modelattr', 'City'),
-            'co_code'                => Yii::t('modelattr', 'Country'),
-            'nationality'            => Yii::t('modelattr', 'Nationality'),
-            'dob'                    => Yii::t('modelattr', 'Dob'),
-            'is_admin'               => Yii::t('modelattr', 'Admin'),
-            'is_organiser'           => Yii::t('modelattr', 'Organiser'),
-            'is_active'              => Yii::t('modelattr', 'Active'),
-            'has_paid'               => Yii::t('modelattr', 'Has Paid'),
-            'is_visible'             => Yii::t('modelattr', 'Visible'),
-            'ban_scoreupload'        => Yii::t('modelattr', 'Ban Score Upload'),
-            'coaching'               => Yii::t('modelattr', 'Interested in coaching lessons'),
-            'token_stats'            => Yii::t('modelattr', 'Tokens') . ' / ' . Yii::t('modelattr', 'Balls Count'),
-            'player_stats_scheduled' => Yii::t('modelattr', 'Scheduled'),
-            'player_stats_played'    => Yii::t('modelattr', 'Played'),
-            'player_stats_cancelled' => Yii::t('modelattr', 'Cancelled'),
-            'coaching_stats'         => Yii::t('modelattr', 'Coached'),
-            'status_stats'           => Yii::t('modelattr', 'No Show') . ' / ' . Yii::t('modelattr', 'Non Scheduled Play'),
-            'clubroles_ids'          => Yii::t('modelattr', 'Club Roles'),
-            'created_by'             => Yii::t('modelattr', 'Created By'),
-            'updated_by'             => Yii::t('modelattr', 'Updated By'),
-            'created_at'             => Yii::t('modelattr', 'Created At'),
-            'updated_at'             => Yii::t('modelattr', 'Updated At'),
+            'member_id'       => Yii::t('modelattr', 'Member ID'),
+            'user_id'         => Yii::t('modelattr', 'User ID'),
+            'c_id'            => Yii::t('modelattr', 'Club'),
+            'mem_type_id'     => Yii::t('modelattr', 'Membership Type'),
+            'grade_id'        => Yii::t('modelattr', 'Grade'),
+            'title'           => Yii::t('app', 'Title'),
+            'firstname'       => Yii::t('modelattr', 'First Name'),
+            'lastname'        => Yii::t('modelattr', 'Last Name'),
+            'name'            => Yii::t('modelattr', 'Name'),
+            'gender'          => Yii::t('modelattr', 'Gender'),
+            'email'           => Yii::t('modelattr', 'Email'),
+            'photo'           => Yii::t('modelattr', 'Photo'),
+            'orig_photo'      => Yii::t('modelattr', 'Orig Photo'),
+            'phone'           => Yii::t('modelattr', 'Phone'),
+            'phone_office'    => Yii::t('modelattr', 'Phone Office'),
+            'phone_mobile'    => Yii::t('modelattr', 'Phone Mobile'),
+            'address'         => Yii::t('modelattr', 'Address'),
+            'zip'             => Yii::t('modelattr', 'Zip'),
+            'city'            => Yii::t('modelattr', 'City'),
+            'co_code'         => Yii::t('modelattr', 'Country'),
+            'nationality'     => Yii::t('modelattr', 'Nationality'),
+            'dob'             => Yii::t('modelattr', 'Dob'),
+            'is_admin'        => Yii::t('modelattr', 'Admin'),
+            'is_organiser'    => Yii::t('modelattr', 'Organiser'),
+            'is_active'       => Yii::t('modelattr', 'Active'),
+            'has_paid'        => Yii::t('modelattr', 'Has Paid'),
+            'is_visible'      => Yii::t('modelattr', 'Visible'),
+            'ban_scoreupload' => Yii::t('modelattr', 'Ban Score Upload'),
+            'coaching'        => Yii::t('modelattr', 'Interested in coaching lessons'),
+            'token_stats'     => Yii::t('modelattr', 'Tokens') . ' / ' . Yii::t('modelattr', 'Balls Count'),
+            'scheduled_stats' => Yii::t('modelattr', 'Scheduled'),
+            'played_stats'    => Yii::t('modelattr', 'Played'),
+            'cancelled_stats' => Yii::t('modelattr', 'Cancelled'),
+            'coaching_stats'  => Yii::t('modelattr', 'Coached'),
+            'noshow_stats'    => Yii::t('modelattr', 'No Show') . ' / ' . Yii::t('modelattr', 'Non Scheduled Play'),
+            'clubroles_ids'   => Yii::t('modelattr', 'Club Roles'),
+            'created_by'      => Yii::t('modelattr', 'Created By'),
+            'updated_by'      => Yii::t('modelattr', 'Updated By'),
+            'created_at'      => Yii::t('modelattr', 'Created At'),
+            'updated_at'      => Yii::t('modelattr', 'Updated At'),
         ];
     }
 

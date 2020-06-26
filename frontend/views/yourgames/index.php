@@ -8,7 +8,6 @@ use common\dictionaries\OutcomeStatus;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
-
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\GamesboardSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -31,7 +30,7 @@ $pendingGamesNo = \backend\models\Members::getPendingGamesNo();
 
 
     <?php
-    if($pendingGamesNo > 0){
+    if ($pendingGamesNo > 0) {
         $gridColumn = [
             ['class' => 'yii\grid\SerialColumn'],
             [
@@ -72,7 +71,7 @@ $pendingGamesNo = \backend\models\Members::getPendingGamesNo();
                     return isset($model->status_id) ? OutcomeStatus::get($model->status_id) : null;
                 },
             ],
-    //        'fines',
+            //        'fines',
             [
                 'attribute' => 'tokens',
                 'hAlign'    => GridView::ALIGN_CENTER,
@@ -122,20 +121,20 @@ $pendingGamesNo = \backend\models\Members::getPendingGamesNo();
         ];
         $header = GridviewHelper::getHeader($context_array);
 
-    //    $gridColumn[] = GridviewHelper::getActionColumn(
-    //        '{delete}',
-    //        $currentBtn);
+        //    $gridColumn[] = GridviewHelper::getActionColumn(
+        //        '{delete}',
+        //        $currentBtn);
 
 
         $lefttoolbar = [Yii::t('modelattr', 'List of your pending games')];
 
 
         // right toolbar + custom buttons
-    //    $toolbar[] = [
-    //    'content' =>
-    //         GridviewHelper::getNewbutton($currentBtn) . ' ' .
-    //         GridviewHelper::getResetgrida($currentBtn)
-    //    ];
+        //    $toolbar[] = [
+        //    'content' =>
+        //         GridviewHelper::getNewbutton($currentBtn) . ' ' .
+        //         GridviewHelper::getResetgrida($currentBtn)
+        //    ];
         $toolbar[] = '{export}';
         $toolbar[] = '{toggleData}';
 
@@ -143,8 +142,10 @@ $pendingGamesNo = \backend\models\Members::getPendingGamesNo();
             'dataProvider'        => $dataProvider,
             'columns'             => $gridColumn,
             'id'                  => 'gridview-club-id',
-            'tableOptions' => ['class' => 'table table-responsive'],
+            'tableOptions'        => ['class' => 'table table-responsive'],
             'responsive'          => true,
+            'responsiveWrap' => false,
+            'condensed' => false,
             'panelBeforeTemplate' => GridviewHelper::getPanelBefore(),
             'panel'               => [
                 'type'    => Gridview::TYPE_PRIMARY,
@@ -155,11 +156,11 @@ $pendingGamesNo = \backend\models\Members::getPendingGamesNo();
             'itemLabelPlural'     => Yii::t('modelattr', 'records'),
             'replaceTags'         => [
                 '{lefttoolbar}' => join(' ', $lefttoolbar)
-                ],
-            ]
+            ],
+                ]
         );
-    }else {
-        echo '<h5>'.Yii::t('app', 'No Games Scheduled!').'</h5>';
+    } else {
+        echo '<h5>' . Yii::t('app', 'No Games Scheduled!') . '</h5>';
     }
     //    dd($member_model->getMemberStats());
     echo DetailView::widget([
@@ -173,13 +174,14 @@ $pendingGamesNo = \backend\models\Members::getPendingGamesNo();
         'buttons1'   => '',
         'attributes' => [
             [
-                'attribute' => 'player_stats_scheduled',
+                'attribute' => 'scheduled_stats',
+                'format'=>'raw',
                 'value'     => function($model)use ($member_model) {
                     return $member_model->getMemberStats();
                 }
             ],
             [
-                'attribute' => 'player_stats_played',
+                'attribute' => 'played_stats',
                 'value'     => function($model)use ($member_model) {
                     return $member_model->getMemberStats(['status_id' => 1]);
                 },
@@ -197,14 +199,14 @@ $pendingGamesNo = \backend\models\Members::getPendingGamesNo();
                 },
             ],
             [
-                'attribute' => 'player_stats_cancelled',
+                'attribute' => 'cancelled_stats',
                 'value'     => function($model)use ($member_model) {
                     return $member_model->getMemberStats(['status_id' => 5]);
                 },
             ],
             [
-                'attribute' => 'status_stats',
-                'format' => 'raw',
+                'attribute' => 'noshow_stats',
+                'format'    => 'raw',
                 'value'     => function($model)use ($member_model) {
                     return $member_model->getMemberStats(['status_id' => [3, 7]]) > 0 ? '<div class="text-danger">' . $member_model->getMemberStats(['status_id' => [3, 7]]) . '</div>' : $member_model->getMemberStats(['status_id' => [3, 7]]);
                 },
@@ -212,5 +214,13 @@ $pendingGamesNo = \backend\models\Members::getPendingGamesNo();
         ]
     ]);
     ?>
+
+    <div class="info-box">
+        <span class="info-box-icon bg-info"><i class="far fa-bookmark"></i></span>
+        <div class="info-box-content">
+            <span class="info-box-text"><?= Yii::t('modelattr', 'Scheduled') ?></span>
+            <span class="info-box-number"><?= $member_model->getMemberStats() ?></span>
+        </div>
+    </div>
 
 </div>

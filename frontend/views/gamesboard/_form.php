@@ -77,6 +77,7 @@ use common\helpers\ViewsHelper;
                  <div class="col-md-6">
                      <?= $form->hrwCheckboxX($model, 'tokens') ?>
                      <?= $form->hrwCheckboxX($model, 'late') ?>
+                     <?= $form->hrwCheckboxX($model, 'coaching') ?>
                 </div>
             </div>
         </div>
